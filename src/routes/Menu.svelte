@@ -27,7 +27,7 @@
 	$: activeUrl = $page.url.pathname;
 </script>
 
-<nav class="fixed w-full bg-gradient-to-b from-primary-500 to-secondary-500 bottom-0">
+<nav class="fixed w-full bg-gradient-to-b from-primary-700 to-secondary-900 bottom-0">
 	<ul class="flex p-2 justify-around sm:justify-center sm:gap-4">
 		{#each menuItems as item}
 			<li>
