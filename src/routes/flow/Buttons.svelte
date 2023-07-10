@@ -1,18 +1,28 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { session, distraction } from './stores';
+	import { session, sessionStart, distraction } from './stores';
+
+	function startSession() {
+		$session = true;
+		$sessionStart = Date.now();
+	}
+
+	function stopSession() {
+		$session = false;
+		$sessionStart = 0;
+	}
 </script>
 
 <div class="grid justify-items-center gap-4">
 	{#if $session}
 		<Button
 			class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-3xl shadow-lg w-48 h-16"
-			on:click={() => ($session = false)}><i class="fa-solid fa-stop pr-4" />Break</Button
+			on:click={stopSession}><i class="fa-solid fa-stop pr-4" />Break</Button
 		>
 	{:else}
 		<Button
 			class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-3xl shadow-lg w-48 h-16"
-			on:click={() => ($session = true)}><i class="fa-solid fa-play pr-4" />Start</Button
+			on:click={startSession}><i class="fa-solid fa-play pr-4" />Start</Button
 		>
 	{/if}
 	{#if $distraction}
