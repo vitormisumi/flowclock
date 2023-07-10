@@ -16,9 +16,9 @@
 	<div class="flex justify-center">
 		{#key date}
 			<p class="flex justify-center text-6xl sm:text-9xl w-24 m-4">
-				<span>{String(date.getHours())}</span>:
-				<span>{String(date.getMinutes())}</span>:
-				<span>{String(date.getSeconds())}</span>
+				<span>{date.getHours() > 9 ? String(date.getHours()) : "0" + String(date.getHours())}</span>:
+				<span>{date.getMinutes() > 9 ? String(date.getMinutes()) : "0" + String(date.getMinutes())}</span>:
+				<span>{date.getSeconds() > 9 ? String(date.getSeconds()) : "0" + String(date.getSeconds())}</span>
 			</p>
 		{/key}
 	</div>
