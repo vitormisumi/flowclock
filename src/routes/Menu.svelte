@@ -21,7 +21,12 @@
 		{
 			title: 'settings',
 			icon: 'fa-gear'
-		}
+		},
+		{
+			title: 'login',
+			icon: 'fa-right-to-bracket'
+		},
+
 	];
 
 	$: activeUrl = $page.url.pathname;
