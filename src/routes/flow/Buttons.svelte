@@ -1,15 +1,31 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
+	import { session, distraction } from './stores';
 </script>
 
 <div class="grid justify-items-center gap-4">
-	<Button
-		class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-3xl shadow-lg w-48 h-16"
-		>Break</Button
-	>
-	<Button
-		size="xs"
-		class="bg-secondary-100 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900 shadow-md"
-		>Distraction</Button
-	>
+	{#if $session}
+		<Button
+			class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-3xl shadow-lg w-48 h-16"
+			on:click={() => ($session = false)}><i class="fa-solid fa-stop pr-4" />Break</Button
+		>
+	{:else}
+		<Button
+			class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-3xl shadow-lg w-48 h-16"
+			on:click={() => ($session = true)}><i class="fa-solid fa-play pr-4" />Start</Button
+		>
+	{/if}
+	{#if $distraction}
+		<Button
+			class="bg-secondary-100 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900 shadow-md"
+			on:click={() => ($distraction = !$distraction)}
+			><i class="fa-solid fa-pause pr-2" />Distraction</Button
+		>
+	{:else}
+		<Button
+			class="bg-secondary-100 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900 shadow-md"
+			on:click={() => ($distraction = !$distraction)}
+			><i class="fa-solid fa-play pr-2" />Resume</Button
+		>
+	{/if}
 </div>

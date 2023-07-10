@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { session } from './stores';
 
 	let date: Date = new Date();
 
