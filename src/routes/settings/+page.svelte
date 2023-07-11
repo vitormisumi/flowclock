@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Label, Select, Tooltip, Checkbox } from 'flowbite-svelte';
-	let selected: any;
+	import { Label, Select, Tooltip } from 'flowbite-svelte';
+	import { ratio } from './stores';
 
-	let countries = [
+	let ratios = [
 		{ value: 1, name: '1:1' },
 		{ value: 2, name: '2:1' },
 		{ value: 3, name: '3:1' },
@@ -32,8 +32,8 @@
 			underline
 			placeholder="Choose a ratio"
 			class="mb-16 text-secondary-100"
-			items={countries}
-			bind:value={selected}
+			items={ratios}
+			bind:value={$ratio}
 		/>
 	</Label>
 	<Label class="text-secondary-50"

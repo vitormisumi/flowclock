@@ -5,10 +5,12 @@
 		sessionBreak,
 		sessionStart,
 		sessionEnd,
-		distraction,
 		distractionStart,
 		distractionEnd
 	} from './stores';
+	import { ratio } from '../settings/stores';
+
+	let audio: HTMLAudioElement;
 
 	function startSession() {
 		$session = true;
@@ -18,18 +20,20 @@
 		$distractionEnd = 0;
 	}
 
-	function stopSession() {
+	function startBreak() {
 		$session = false;
-		$sessionStart = 0;
 		$sessionBreak = true;
 		$sessionEnd = Date.now();
+		setTimeout(() => {
+			audio.play()
+		},($sessionEnd - $sessionStart) / $ratio)
 	}
 </script>
 
 {#if $session}
 	<Button
 		class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 text-2xl w-72 h-16"
-		on:click={stopSession}><i class="fa-solid fa-stop pr-4" />Break</Button
+		on:click={startBreak}><i class="fa-solid fa-stop pr-4" />Break</Button
 	>
 {:else}
 	<Button
@@ -37,3 +41,4 @@
 		on:click={startSession}><i class="fa-solid fa-play pr-4" />Start new session</Button
 	>
 {/if}
+<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio}></audio>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, sessionStart, sessionEnd, distractionStart, distractionEnd } from './stores';
+	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
+	import { ratio } from '../settings/stores';
 
 	let clock: number = 0;
 
@@ -31,5 +32,5 @@
 			>:<span>{seconds > 9 ? seconds : '0' + seconds}</span>
 		</p>
 	{/key}
-	<p class="text-xs text-secondary-100">You've already earned 8 minutes of break</p>
+	<p class="text-xs text-secondary-100">You've already earned {Math.round(minutes / $ratio)} minutes of break</p>
 </div>
