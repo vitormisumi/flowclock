@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
+	import { session, sessionBreak, sessionStart, sessionEnd, distractionStart, distractionEnd } from './stores';
 
 	let clock: number = 0;
 
