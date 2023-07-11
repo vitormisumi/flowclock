@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Label, Select, Tooltip } from 'flowbite-svelte';
-	import { ratio } from './stores';
+	import { Button, Label, Select, Tooltip } from 'flowbite-svelte';
+	import { ratio, maxSessionLength } from './stores';
 
 	let ratios = [
 		{ value: 1, name: '1:1' },
@@ -49,8 +49,9 @@
 		<input
 			type="number"
 			min="0"
-			value="0"
+			bind:value={$maxSessionLength}
 			class="block w-full mb-16 text-secondary-100 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-secondary-100 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
 		/>
 	</Label>
+	<Button><i class="fa-solid fa-floppy-disk pr-2"></i>Save changes</Button>
 </div>

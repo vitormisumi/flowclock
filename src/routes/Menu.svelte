@@ -7,7 +7,7 @@
 	}
 	let menuItems: Item[] = [
 		{
-			title: 'flow',
+			title: 'session',
 			icon: 'fa-clock'
 		},
 		{
