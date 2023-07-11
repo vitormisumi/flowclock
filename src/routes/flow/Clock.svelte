@@ -1,28 +1,30 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionStart } from './stores';
+	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
 
-	let sessionTime: number = 0;
+	let clock: number = 0;
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session) {
-				sessionTime = Date.now() - $sessionStart;
+				clock = Date.now() - $sessionStart;
+			} else if ($sessionBreak) {
+				clock = Date.now() - $sessionEnd;
 			} else {
-				sessionTime = 0;
+				clock = 0;
 			}
 		}, 1000);
 
 		return () => clearInterval(interval);
 	});
 
-	$: seconds = Math.floor((sessionTime / 1000) % 60);
-	$: minutes = Math.floor(sessionTime / 1000 / 60);
-	$: hours = Math.floor(sessionTime / 1000 / 60 / 60);
+	$: seconds = Math.floor((clock / 1000) % 60);
+	$: minutes = Math.floor(clock / 1000 / 60);
+	$: hours = Math.floor(clock / 1000 / 60 / 60);
 </script>
 
 <div class="grid justify-items-center text-white drop-shadow-xl shadow-orange-500">
-	{#key sessionTime}
+	{#key clock}
 		<p class="text-6xl sm:text-9xl">
 			<span>{hours > 9 ? hours : '0' + hours}</span>:<span
 				>{minutes > 9 ? minutes : '0' + minutes}</span

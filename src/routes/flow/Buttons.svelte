@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { session, sessionStart, distraction } from './stores';
+	import { session, sessionBreak, sessionStart, sessionEnd, distraction } from './stores';
 
 	function startSession() {
 		$session = true;
@@ -10,6 +10,8 @@
 	function stopSession() {
 		$session = false;
 		$sessionStart = 0;
+		$sessionBreak = true;
+		$sessionEnd = Date.now();
 	}
 </script>
 
