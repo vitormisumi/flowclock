@@ -2,7 +2,7 @@
 	import { Card, Label, Input, Button } from 'flowbite-svelte';
 </script>
 
-<div class="grid justify-center">
+<div class="grid justify-center bg-secondary-900 h-screen items-center">
 	<Card class="grid justify-center m-4">
 		<h1 class="text-center text-xl text-primary-600 font-bold mb-4">Login</h1>
 		<Label for="input-group-1" class="block mb-2">Email</Label>
