@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	interface Item {
-		title: string;
-		icon: string;
-	}
-	let menuItems: Item[] = [
+	let menuItems: {title: string, icon: string}[] = [
 		{
 			title: 'session',
 			icon: 'fa-clock'
