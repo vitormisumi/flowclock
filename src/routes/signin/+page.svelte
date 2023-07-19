@@ -1,8 +1,19 @@
 <script lang="ts">
 	import { Label, Input, Button } from 'flowbite-svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 
 	export let form;
+
+	let loading = false;
+
+	const handleSignIn: SubmitFunction = () => {
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			update();
+		};
+	};
 </script>
 
 <div class="grid justify-center bg-secondary-900 h-screen items-center">
@@ -11,7 +22,7 @@
 		<p class="text-secondary-50">
 			New to Flouu? <a href="/signup" class="text-accent-500">Sign up here</a>.
 		</p>
-		<form method="post" class="grid gap-4" use:enhance>
+		<form method="post" class="grid gap-4" use:enhance={handleSignIn}>
 			<div>
 				<Label for="email" class="text-primary-50 mb-2">Email</Label>
 				<Input
@@ -35,7 +46,7 @@
 					<i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
 				>
 			</div>
-			<Button class="w-full" type="submit">Sign In</Button>
+			<Button class="w-full" type="submit" disabled={loading}>Sign In</Button>
 		</form>
 		<div class="flex justify-center items-center gap-2">
 			<hr class="border-secondary-800 w-full" />
