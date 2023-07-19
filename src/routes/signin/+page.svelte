@@ -37,13 +37,18 @@
 			</div>
 			<Button class="w-full" type="submit">Sign In</Button>
 		</form>
-		<hr class="border border-y-1 border-secondary-800" />
+		<div class="flex justify-center items-center gap-2">
+			<hr class="border-secondary-800 w-full" />
+			<p class="text-secondary-200 whitespace-nowrap text-sm">Or with</p>
+			<hr class="border-secondary-800 w-full" />
+
+		</div>
 		<div class="grid gap-4">
 			<Button outline class="bg-secondary-50"
-				><i class="fa-brands fa-github pr-2" />Sign in with Github</Button
+				><i class="fa-brands fa-github pr-2" />Github</Button
 			>
 			<Button outline class="bg-secondary-50"
-				><i class="fa-brands fa-google pr-2" />Sign in with Google</Button
+				><i class="fa-brands fa-google pr-2" />Google</Button
 			>
 		</div>
 	</div>
