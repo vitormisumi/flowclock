@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
 	import Menu from './Menu.svelte';
+	import Avatar from './Avatar.svelte';
 
 	export let data;
 
@@ -13,4 +14,5 @@
 </script>
 
 <slot />
+<Avatar />
 <Menu />

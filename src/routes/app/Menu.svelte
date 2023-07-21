@@ -24,9 +24,6 @@
 	class="fixed w-full bg-gradient-to-b from-primary-700 to-secondary-900 bottom-0 left-0 lg:bottom-auto lg:top-0 lg:w-24 lg:h-screen"
 >
 	<ul class="flex p-2 justify-around sm:justify-center sm:gap-4 lg:grid">
-		<li class="pb-8">
-			<Avatar />
-		</li>
 		{#each menuItems as item}
 			<li>
 				<a

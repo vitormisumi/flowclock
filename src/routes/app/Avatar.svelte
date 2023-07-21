@@ -3,6 +3,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import avatar from '$lib/assets/avatar.png'
 
 	const user: { email: string } = getContext('user');
 
@@ -17,7 +18,7 @@
 	};
 </script>
 
-<Avatar id="user-drop" src="/images/profile-picture-3.webp" class="cursor-pointer" />
+<Avatar id="user-drop" src={avatar} class="cursor-pointer fixed right-4 top-4" />
 <Dropdown triggeredBy="#user-drop" class="w-fit">
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium"> {user.email} </span>
