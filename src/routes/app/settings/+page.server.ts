@@ -1,20 +1,5 @@
 import { redirect, fail } from '@sveltejs/kit'
 
-export const load = async ({ locals: { supabase, getSession } }) => {
-    const session = await getSession()
-    if (!session) {
-        throw redirect(303, '/')
-    }
-
-    const { data: settings, error } = await supabase
-        .from('settings')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .single()
-
-    return { session, settings, error }
-}
-
 export const actions = {
     default: async ({ request, locals: { supabase, getSession } }) => {
         const session = await getSession()

@@ -3,10 +3,8 @@
 	import { fly } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
+	import { getContext } from 'svelte';
 
-	export let data;
-	let { settings } = data;
-	$: ({ settings } = data);
 	export let form;
 
 	let ratios = [
@@ -30,6 +28,8 @@
 			update();
 		};
 	};
+
+	const user: { settings: {ratio: number, max_length: number}} = getContext('user')
 </script>
 
 <div class="bg-secondary-900 h-screen grid justify-center content-center gap-8">
@@ -52,7 +52,7 @@
 				placeholder="Choose a ratio"
 				class="mb-16 text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
 				items={ratios}
-				value={settings.ratio}
+				value={user.settings.ratio}
 			/>
 		</Label>
 		<Label class="text-secondary-50"
@@ -61,7 +61,7 @@
 				type="number"
 				name="max_length"
 				min="0"
-				value={settings.max_length}
+				value={user.settings.max_length}
 				class="text-sm pl-0 block w-full mb-16 text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
 			/>
 		</Label>

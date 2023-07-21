@@ -18,7 +18,7 @@
 	};
 </script>
 
-<Avatar id="user-drop" src={avatar} class="cursor-pointer fixed right-4 top-4" />
+<Avatar border id="user-drop" src={avatar} class="cursor-pointer fixed right-4 top-4" />
 <Dropdown triggeredBy="#user-drop" class="w-fit">
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium"> {user.email} </span>

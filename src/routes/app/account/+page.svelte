@@ -4,7 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 
-	const user: {email: string} = getContext('user')
+	const user: { email: string } = getContext('user')
 
 	let loading = false;
 
