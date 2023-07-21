@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { Label, Input, Button } from 'flowbite-svelte';
+	import Providers from '../oauth/Providers.svelte';
 
 	export let form;
 </script>
@@ -41,7 +42,8 @@
 				>
 			</div>
 			<div>
-				<Label for="password-confirmation" class="text-primary-50 mb-2">Password confirmation</Label>
+				<Label for="password-confirmation" class="text-primary-50 mb-2">Password confirmation</Label
+				>
 				<Input
 					class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 					name="password-confirmation"
@@ -57,15 +59,7 @@
 			<hr class="border-secondary-800 w-full" />
 			<p class="text-secondary-200 whitespace-nowrap text-sm">Or with</p>
 			<hr class="border-secondary-800 w-full" />
-
 		</div>
-		<div class="grid gap-4">
-			<Button outline class="bg-secondary-50"
-				><i class="fa-brands fa-github pr-2" />Github</Button
-			>
-			<Button outline class="bg-secondary-50"
-				><i class="fa-brands fa-google pr-2" />Google</Button
-			>
-		</div>
+		<Providers />
 	</div>
 </div>

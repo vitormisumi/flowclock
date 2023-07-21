@@ -2,7 +2,7 @@
 	import { Label, Input, Button } from 'flowbite-svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
-	import type { Provider } from '@supabase/supabase-js';
+	import Providers from '../oauth/Providers.svelte';
 
 	export let form;
 
@@ -15,21 +15,6 @@
 			update();
 		};
 	};
-
-	const providers = [
-		{
-			name: 'facebook',
-			icon: 'fa-facebook'
-		},
-		{
-			name: 'github',
-			icon: 'fa-github'
-		},
-		{
-			name: 'google',
-			icon: 'fa-google'
-		}
-	];
 </script>
 
 <div class="grid justify-center bg-secondary-900 h-screen items-center">
@@ -38,7 +23,7 @@
 		<p class="text-secondary-50">
 			New to Flouu? <a href="/signup" class="text-accent-500">Sign up here</a>.
 		</p>
-		<form method="POST" action="?/email" class="grid gap-4" use:enhance={handleSignIn}>
+		<form method="POST" class="grid gap-4" use:enhance={handleSignIn}>
 			<div>
 				<Label for="email" class="text-primary-50 mb-2">Email</Label>
 				<Input
@@ -69,18 +54,6 @@
 			<p class="text-secondary-200 whitespace-nowrap text-sm">Or with</p>
 			<hr class="border-secondary-800 w-full" />
 		</div>
-		<div class="grid gap-4">
-			{#each providers as provider}
-				<form action="?/oauth" method="POST" use:enhance={handleSignIn}>
-					<input type="hidden" name="provider" value={provider.name} />
-					<Button outline class="bg-secondary-50 w-full capitalize" type="submit"
-						><i class="fa-brands {provider.icon} pr-2" />{provider.name}</Button
-					>
-				</form>
-			{/each}
-			{#if form?.message}
-				{form.message}
-			{/if}
-		</div>
+		<Providers />
 	</div>
 </div>

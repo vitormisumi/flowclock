@@ -15,13 +15,3 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 
   return { session, profile }
 }
-
-export const actions = {
-  default: async ({ locals: { supabase, getSession } }) => {
-    const session = await getSession()
-    if (session) {
-      await supabase.auth.signOut()
-      throw redirect(303, '/')
-    }
-  },
-}
