@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import { sessionEnd, sessionStart, breakTimer } from './stores';
-	import { ratio } from '../settings/stores';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../settings/types';
+
+	const settings: Writable<Settings> = getContext('settings')
 
 	onMount(() => {
 		const interval = setInterval(() => {
-			$breakTimer = ($sessionEnd - $sessionStart) / $ratio - (Date.now() - $sessionEnd);
+			$breakTimer = ($sessionEnd - $sessionStart) / $settings.ratio - (Date.now() - $sessionEnd);
 			if ($breakTimer < 0) {
 				clearInterval(interval);
 			}

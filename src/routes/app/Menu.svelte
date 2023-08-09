@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Avatar from './Avatar.svelte';
 
 	let menuItems: { title: string; icon: string }[] = [
 		{
@@ -25,9 +24,9 @@
 >
 	<ul class="flex p-2 justify-around sm:justify-center sm:gap-4 lg:grid">
 		{#each menuItems as item}
-			<li>
+			<li class="hover:scale-105">
 				<a
-					class="aspect-square w-16 sm:w-20 text-center rounded-xl grid content-center cursor-pointer"
+					class="aspect-square w-16 sm:w-20 text-center rounded-xl grid content-center cursor-pointer "
 					style:background={activeUrl === '/app/' + item.title ? '#00000040' : 'transparent'}
 					href="/app/{item.title}"
 				>

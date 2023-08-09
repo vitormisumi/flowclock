@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { User } from '@supabase/supabase-js';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Button } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 
-	const user: { email: string } = getContext('user')
+	const user: User = getContext('user')
 
 	let loading = false;
 

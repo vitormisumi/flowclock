@@ -21,5 +21,5 @@ export const actions = {
         }
 
         return { message: 'Settings saved.'}
-  },
+    },
 }

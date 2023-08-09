@@ -4,8 +4,9 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import avatar from '$lib/assets/avatar.png'
+	import type { User } from '@supabase/supabase-js';
 
-	const user: { email: string } = getContext('user');
+	const user: User = getContext('user');
 
 	let loading = false;
 

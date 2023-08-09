@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
-	import { ratio } from '../settings/stores';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../settings/types';
+	import { getContext } from 'svelte';
+
+	const settings: Writable<Settings> = getContext('settings')
 
 	let clock: number = 0;
 
@@ -33,7 +37,7 @@
 		</p>
 	{/key}
 	<p class="text-sm md:text-md text-secondary-100">
-		You have earned {Math.floor(minutes / $ratio)}
-		{Math.floor(minutes / $ratio) > 1 ? 'minutes' : 'minute'} of break
+		You have earned {Math.floor(minutes / $settings.ratio)}
+		{Math.floor(minutes / $settings.ratio) > 1 ? 'minutes' : 'minute'} of break
 	</p>
 </div>

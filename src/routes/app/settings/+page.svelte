@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { Button, Label, Select, Popover, Toast, A } from 'flowbite-svelte';
+	import { Button, Label, Select, Popover, Toast } from 'flowbite-svelte';
 	import { fly } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import type { Settings } from './types.js';
+	import type { Writable } from 'svelte/store';
 
 	export let form;
 
@@ -20,16 +22,27 @@
 		{ value: 10, name: '10:1' }
 	];
 
+	const settings: Writable<Settings> = getContext('settings');
+
 	let loading = false;
+	let show = true;
+	let counter = 6;
+
 	const handleSave: SubmitFunction = () => {
 		loading = true;
+		show = true;
+		counter = 6;
+		timeout();
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
 
-	const user: { settings: {ratio: number, max_length: number}} = getContext('user')
+	function timeout(): any {
+		if (--counter > 0) return setTimeout(timeout, 1000);
+		show = false;
+	}
 </script>
 
 <div class="bg-secondary-900 h-screen grid justify-center content-center gap-8">
@@ -46,24 +59,27 @@
 					and 5:1.
 				</div>
 			</Popover>
-			<Select
-				underline
-				name="ratio"
-				placeholder="Choose a ratio"
-				class="mb-16 text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
-				items={ratios}
-				value={user.settings.ratio}
-			/>
+			{#key loading}
+				<Select
+					underline
+					name="ratio"
+					class="mb-16 text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
+					items={ratios}
+					bind:value={$settings.ratio}
+				/>
+			{/key}
 		</Label>
 		<Label class="text-secondary-50"
 			>Maximum focused session length (min) <i class="fa-regular fa-circle-question" id="hover-2" />
-			<input
-				type="number"
-				name="max_length"
-				min="0"
-				value={user.settings.max_length}
-				class="text-sm pl-0 block w-full mb-16 text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
-			/>
+			{#key loading}
+				<input
+					type="number"
+					name="max_length"
+					min="0"
+					bind:value={$settings.max_length}
+					class="text-sm pl-0 block w-full mb-16 text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
+				/>
+			{/key}
 		</Label>
 		<Popover triggeredBy="#hover-2" class="w-80" placement="bottom-start">
 			<div class="p-3 space-y-2 text-sm">
@@ -82,12 +98,12 @@
 	</form>
 	{#if form?.message}
 		{#if form.message === 'Settings saved.'}
-			<Toast color="green" transition={fly} position="bottom-right">
+			<Toast color="green" transition={fly} position="bottom-right" bind:open={show}>
 				<i class="fa-solid fa-check" slot="icon" />
 				{form.message}
 			</Toast>
 		{:else}
-			<Toast color="red" transition={fly} position="bottom-right">
+			<Toast color="red" transition={fly} position="bottom-right" bind:open={show}>
 				<i class="fa-solid fa-x" slot="icon" />
 				{form.message}
 			</Toast>

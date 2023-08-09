@@ -8,3 +8,4 @@ export const breakTimer = writable(0);
 export const distraction = writable(false);
 export const distractionStart = writable(0);
 export const distractionEnd = writable(0);
+export const sessionId = writable(0);

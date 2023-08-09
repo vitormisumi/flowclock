@@ -6,17 +6,11 @@
 
 	export let data;
 
-	let email = writable(data.session.user.email)
-	let ratio = writable(data.settings.ratio)
-	let max_length = writable(data.settings.max_length)
+	const settings = writable();
+	$: settings.set(data.settings);
 
-	setContext('user', {
-		email: $email,
-		settings: {
-			ratio: $ratio,
-			max_length: $max_length
-		}
-	})
+	setContext('user', data.user);
+	setContext('settings', settings);
 </script>
 
 <slot />
