@@ -1,20 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
+	import { session, sessionBreak } from './stores';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
 	import { getContext } from 'svelte';
 
+	export let form: any;
+
 	const settings: Writable<Settings> = getContext('settings')
 
-	let clock: number = 0;
+	let clock = 0;
 
 	onMount(() => {
 		const interval = setInterval(() => {
-			if ($session) {
-				clock = Date.now() - $sessionStart;
-			} else if ($sessionBreak) {
-				clock = Date.now() - $sessionEnd;
+			if ($session && form?.data) {
+				clock = Date.now() - Date.parse(form.data[0].started_at);
+			} else if ($sessionBreak && form.data) {
+				clock = Date.now() - Date.parse(form.data[0].finished_at);
 			} else {
 				clock = 0;
 			}

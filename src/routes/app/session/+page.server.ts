@@ -9,14 +9,13 @@ export const actions = {
         
         const { data, error } = await supabase
             .from('sessions')
-            .insert({ user_id: session.user.id })
+            .insert({ user_id: session.user.id, started_at: (new Date()).toISOString() })
             .select();
         
         if (error) {
             console.log(error);
             return fail(500, { message: 'Session could not be created', success: false })
         };
-        console.log(data);
         return { data, message: 'Session successfully created', success: true };
     },
 
@@ -43,7 +42,6 @@ export const actions = {
             console.log(error);
             return fail(500, { message: 'Session could not be ended', success: false })
         };
-        console.log(data);
         return { data, message: 'Session successfully ended', success: true };
     },
 }
