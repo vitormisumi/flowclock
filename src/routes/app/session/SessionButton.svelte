@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { session, sessionBreak, sessionStart, sessionEnd } from './stores';
+	import { session, sessionBreak } from './stores';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
 	import { getContext } from 'svelte';
 	import { enhance } from '$app/forms';
+	import type { Session } from './types';
 
 	const settings: Writable<Settings> = getContext('settings');
+	const lastSession: Writable<Session> = getContext('lastSession');
 
 	let audio: HTMLAudioElement;
 
@@ -20,7 +22,7 @@
 		$sessionBreak = true;
 		setTimeout(() => {
 			audio.play();
-		}, ($sessionEnd - $sessionStart) / $settings.ratio);
+		}, (Date.now() - Date.parse($lastSession.started_at)) / $settings.ratio);
 	}
 </script>
 

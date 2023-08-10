@@ -5,14 +5,24 @@
 	import BreakTimer from './BreakTimer.svelte';
 	import DistractionButton from './DistractionButton.svelte';
 	import { session, sessionBreak } from './stores';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
-	export let form;
+	export let data;
+
+	const lastSession = writable();
+	$: lastSession.set(data.lastSession);
+	setContext('lastSession', lastSession);
+
+	const currentSession = writable();
+	$: currentSession.set(data.currentSession);
+	setContext('currentSession', currentSession);
 </script>
 
 <div class="h-screen grid content-evenly pb-20 sm:pb-24 lg:pb-0 bg-primary-900">
 	{#if !$sessionBreak}
 		<!-- <Task /> -->
-		<SessionStopwatch {form}/>
+		<SessionStopwatch />
 	{:else}
 		<BreakTimer />
 	{/if}

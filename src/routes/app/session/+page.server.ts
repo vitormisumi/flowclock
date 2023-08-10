@@ -1,5 +1,32 @@
 import { redirect, fail } from '@sveltejs/kit'
 
+export const load = async ({ locals: { supabase, getSession } }) => {
+    const session = await getSession()
+
+    if (!session) {
+        throw redirect(303, '/')
+    }
+
+    const { data: currentSession } = await supabase
+        .from('sessions')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .is('finished_at', null)
+        .order('id', { ascending: false})
+        .limit(1)
+        .single()
+    
+    const { data: lastSession } = await supabase
+        .from('sessions')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('id', { ascending: false})
+        .limit(1)
+        .single()
+
+    return { session, currentSession, lastSession }
+}
+
 export const actions = {
     start: async ({ locals: { supabase, getSession } }) => {
         const session = await getSession()

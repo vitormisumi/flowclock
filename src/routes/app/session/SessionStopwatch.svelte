@@ -4,19 +4,18 @@
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
 	import { getContext } from 'svelte';
+	import type { Session } from './types';
 
-	export let form: any;
-
-	const settings: Writable<Settings> = getContext('settings')
+	const settings: Writable<Settings> = getContext('settings');
+	const lastSession: Writable<Session> = getContext('lastSession');
+	const currentSession: Writable<Session> = getContext('currentSession');
 
 	let clock = 0;
 
 	onMount(() => {
 		const interval = setInterval(() => {
-			if ($session && form?.data) {
-				clock = Date.now() - Date.parse(form.data[0].started_at);
-			} else if ($sessionBreak && form.data) {
-				clock = Date.now() - Date.parse(form.data[0].finished_at);
+			if ($session) {
+				clock = Date.now() - Date.parse($currentSession.started_at);
 			} else {
 				clock = 0;
 			}
