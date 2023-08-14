@@ -4,10 +4,6 @@
 
 	const providers = [
 		{
-			name: 'facebook',
-			icon: 'fa-facebook'
-		},
-		{
 			name: 'github',
 			icon: 'fa-github'
 		},

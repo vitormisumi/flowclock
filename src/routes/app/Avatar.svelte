@@ -29,7 +29,7 @@
 	<DropdownDivider />
 	<DropdownItem>
 		<form method="POST" action="/app" use:enhance={handleSignOut}>
-			<button>Sign Out</button>
+			<button class="text-accent-600">Sign Out</button>
 		</form>
 	</DropdownItem>
 </Dropdown>

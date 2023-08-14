@@ -1,7 +1,7 @@
 import type { Provider } from '@supabase/supabase-js'
 import { fail, redirect } from '@sveltejs/kit'
 
-const OAUTH_PROVIDERS = ['facebook', 'github', 'google']
+const OAUTH_PROVIDERS = ['github', 'google']
 
 export const actions = {
     default: async ({ request, locals: { supabase } }) => {
@@ -14,9 +14,13 @@ export const actions = {
 
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
+            options: {
+                redirectTo: 'https://flouu.vercel.app/app/account',
+            },
         })
 
         if (error) {
+            console.log(error);
             return fail(500, { message: 'Something went wrong.' })
         }
 

@@ -8,7 +8,7 @@
 
 	let audio: HTMLAudioElement;
 
-	let breakTimer: number = 0;
+	let breakTimer: number = 1;
 	let breakDuration: number = 0;
 
 	onMount(() => {
