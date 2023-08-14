@@ -23,7 +23,7 @@
 		<h1 class="text-center text-xl text-primary-600 font-bold">Account</h1>
 		<p class="text-secondary-50 text-center">{user.email}</p>
 		<form class="grid justify-center" method="POST" action="/app" use:enhance={handleSignOut}>
-			<Button type="submit" disabled={loading}>Sign Out</Button>
+			<Button type="submit" disabled={loading} class="bg-accent-700">Sign Out</Button>
 		</form>
 	</div>
 </div>

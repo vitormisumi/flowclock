@@ -3,7 +3,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import avatar from '$lib/assets/avatar.png'
+	import avatar from '$lib/assets/avatar.png';
 	import type { User } from '@supabase/supabase-js';
 
 	const user: User = getContext('user');
@@ -24,12 +24,10 @@
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium"> {user.email} </span>
 	</DropdownHeader>
-	<DropdownItem><a href="/app/account">Account</a></DropdownItem>
-	<DropdownItem><a href="/app/settings">Settings</a></DropdownItem>
+	<DropdownItem href="/app/account">Account</DropdownItem>
+	<DropdownItem href="/app/settings">Settings</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem>
-		<form method="POST" action="/app" use:enhance={handleSignOut}>
-			<button class="text-accent-600">Sign Out</button>
-		</form>
-	</DropdownItem>
+	<form method="POST" action="/app" use:enhance={handleSignOut}>
+		<DropdownItem type="submit" class="text-accent-700 rounded-b-lg">Sign Out</DropdownItem>
+	</form>
 </Dropdown>
