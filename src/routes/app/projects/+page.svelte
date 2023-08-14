@@ -1,1 +1,1 @@
-projects
+<p class="flex justify-center">Projects</p>

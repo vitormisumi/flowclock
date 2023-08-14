@@ -1,1 +1,1 @@
-dashboard
+<p class="flex justify-center">Dashboard</p>

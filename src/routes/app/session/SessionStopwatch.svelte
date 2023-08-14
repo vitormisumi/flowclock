@@ -1,21 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak } from './stores';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
 	import { getContext } from 'svelte';
-	import type { Session } from './types';
+	import { session, sessionStart } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
-	const lastSession: Writable<Session> = getContext('lastSession');
-	const currentSession: Writable<Session> = getContext('currentSession');
 
-	let clock = 0;
+	let clock: number = 0;
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session) {
-				clock = Date.now() - Date.parse($currentSession.started_at);
+				clock = Date.now() - Date.parse($sessionStart);
 			} else {
 				clock = 0;
 			}

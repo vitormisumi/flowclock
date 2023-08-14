@@ -2,17 +2,22 @@
 	import { getContext, onMount } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
-	import type { Session } from './types';
+	import { sessionEnd, sessionStart } from './stores';
 
-	const settings: Writable<Settings> = getContext('settings')
-	const lastSession: Writable<Session> = getContext('lastSession')
+	const settings: Writable<Settings> = getContext('settings');
 
-	let breakTimer: number = 1;
+	let audio: HTMLAudioElement;
+
+	let breakTimer: number = 0;
+	let breakDuration: number = 0;
+
 	onMount(() => {
+		breakDuration = (Date.parse($sessionEnd) - Date.parse($sessionStart)) / $settings.ratio;
 		const interval = setInterval(() => {
-			breakTimer = (Date.parse($lastSession.finished_at) - Date.parse($lastSession.started_at)) / $settings.ratio - (Date.now() - Date.parse($lastSession.finished_at));
+			breakTimer = breakDuration - (Date.now() - Date.parse($sessionEnd));
 			if (breakTimer < 0) {
 				clearInterval(interval);
+				audio.play()
 			}
 		}, 1000);
 
@@ -25,10 +30,12 @@
 {#if breakTimer > 0}
 	<h1 class="text-center text-3xl md:text-6xl text-white drop-shadow-xl">Enjoy your break!</h1>
 	<p class="text-center text-secondary-50">
-		You have {minutes} {minutes === 1 ? 'minute' : 'minutes'} left
+		You have {minutes}
+		{minutes === 1 ? 'minute' : 'minutes'} left
 	</p>
 {:else}
 	<h1 class="text-center text-3xl md:text-6xl text-white drop-shadow-xl md:px-40">
 		Time for your next session!
 	</h1>
 {/if}
+<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />
