@@ -1,11 +1,11 @@
 <script lang="ts">
+	import Duration from './Duration.svelte';
 	import Sessions from './Sessions.svelte';
-
-	export let data;
 </script>
 
 <div
-	class="h-screen grid justify-items-center content-evenly pb-20 sm:pb-24 lg:pb-0 bg-primary-900"
+	class="h-screen grid p-4 sm:p-6 md:p-8 lg:p-12 lg:ml-24 content-evenly mb-20 sm:mb-24 lg:mb-0 bg-primary-900 overflow-scroll"
 >
-	<Sessions {data}/>
+	<Sessions />
+    <Duration />
 </div>

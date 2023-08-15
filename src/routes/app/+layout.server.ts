@@ -8,6 +8,12 @@ export const load = async ({ locals: { supabase, getSession } }) => {
     }
 
     const { data: { user } } = await supabase.auth.getUser()
+
+    const { data: sessions } = await supabase
+        .from('sessions')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('id', { ascending: false })
     
     const { data: settings, error } = await supabase
         .from('settings')
@@ -20,8 +26,8 @@ export const load = async ({ locals: { supabase, getSession } }) => {
             .from('settings')
             .insert({ user_id: session.user.id, ratio: 3, max_length: 60 })
             .select()
-        return { session, settings, user, error }
+        return { session, sessions, settings, user, error }
     }
 
-    return { session, settings, user, error }
+    return { session, sessions, settings, user, error }
 }

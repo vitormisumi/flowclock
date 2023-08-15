@@ -8,36 +8,29 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import type { Session, SupabaseClient, User, PostgrestError } from '@supabase/supabase-js';
+	import type { Session } from '../session/types';
+	import type { Writable } from 'svelte/store';
+	import { getContext } from 'svelte';
 
-	export let data: {
-		settings: any;
-		session: Session;
-		supabase: SupabaseClient<any, 'public', any>;
-		user: User | null;
-		error: PostgrestError | null;
-		sessions: any[];
-	};
+	const sessions: Writable<Session[]> = getContext('sessions');
 </script>
 
 <h2 class="text-secondary-50 text-xl font-bold">Last Sessions</h2>
-<Table>
+<Table shadow>
 	<TableHead>
 		<TableHeadCell>Start</TableHeadCell>
 		<TableHeadCell>End</TableHeadCell>
 		<TableHeadCell>Duration</TableHeadCell>
 	</TableHead>
 	<TableBody>
-		{#each data.sessions as session}
-			<TableBodyRow>
-				<TableBodyCell>{session.started_at}</TableBodyCell>
-				<TableBodyCell>{session.ended_at}</TableBodyCell>
-				<TableBodyCell
-					>{millisecondsToClock(
-						Date.parse(session.ended_at) - Date.parse(session.started_at)
-					)}</TableBodyCell
-				>
-			</TableBodyRow>
+		{#each $sessions as session, i}
+			{#if i < 10}
+				<TableBodyRow>
+					<TableBodyCell>{session.started_at}</TableBodyCell>
+					<TableBodyCell>{session.ended_at}</TableBodyCell>
+					<TableBodyCell>{session.duration}</TableBodyCell>
+				</TableBodyRow>
+			{/if}
 		{/each}
 	</TableBody>
 </Table>
