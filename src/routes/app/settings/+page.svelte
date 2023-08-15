@@ -9,6 +9,8 @@
 
 	export let form;
 
+	$: console.log(form);
+
 	let ratios = [
 		{ value: 1, name: '1:1' },
 		{ value: 2, name: '2:1' },
@@ -26,12 +28,12 @@
 
 	let loading = false;
 	let show = true;
-	let counter = 6;
+	let counter = 5;
 
 	const handleSave: SubmitFunction = () => {
 		loading = true;
 		show = true;
-		counter = 6;
+		counter = 5;
 		timeout();
 		return async ({ update }) => {
 			loading = false;
@@ -96,16 +98,16 @@
 			><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
 		>
 	</form>
-	{#if form?.message}
-		{#if form.message === 'Settings saved.'}
+	{#if form}
+		{#if form?.success}
 			<Toast color="green" transition={fly} position="bottom-right" bind:open={show}>
 				<i class="fa-solid fa-check" slot="icon" />
-				{form.message}
+				{form?.message}
 			</Toast>
 		{:else}
 			<Toast color="red" transition={fly} position="bottom-right" bind:open={show}>
 				<i class="fa-solid fa-x" slot="icon" />
-				{form.message}
+				{form?.message}
 			</Toast>
 		{/if}
 	{/if}

@@ -17,9 +17,9 @@ export const actions = {
             .eq('user_id', session.user.id)
     
         if (error) {
-            return fail(500, { message: 'Settings could not be saved. Please try again.', success: false })
+            return fail(500, { message: 'Settings could not be saved. Please try again', success: false })
         }
 
-        return { message: 'Settings saved.'}
+        return { message: 'Settings succesfully saved', success: true}
     },
 }

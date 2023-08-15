@@ -18,8 +18,8 @@ export const actions = {
         
         if (error) {
             console.log(error);
-            return fail(500, { message: 'Session could not be created', success: false })
+            return fail(500, { message: 'Session could not be saved', success: false })
         };
-        return { data, message: 'Session successfully created', success: true };
+        return { data, message: 'Session successfully saved', success: true };
     },
 }
