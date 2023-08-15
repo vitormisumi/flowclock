@@ -4,6 +4,7 @@
 	import type { Settings } from '../settings/types';
 	import { getContext } from 'svelte';
 	import { session, sessionStart } from './stores';
+	import { millisecondsToClock } from '$lib/functions/functions';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -21,21 +22,18 @@
 		return () => clearInterval(interval);
 	});
 
-	$: seconds = Math.floor((clock / 1000) % 60);
-	$: minutes = Math.floor((clock / 60000) % 60);
-	$: hours = Math.floor(clock / 3600000);
+	$: time = millisecondsToClock(clock);
+	$: totalMinutes = Math.floor(clock / 60000);
 </script>
 
 <div class="grid justify-items-center text-white drop-shadow-xl shadow-orange-500">
 	{#key clock}
 		<p class="text-6xl md:text-9xl">
-			<span>{hours > 9 ? hours : '0' + hours}</span>:<span
-				>{minutes > 9 ? minutes : '0' + minutes}</span
-			>:<span>{seconds > 9 ? seconds : '0' + seconds}</span>
+			{time}
 		</p>
 	{/key}
 	<p class="text-sm md:text-md text-secondary-100">
-		You have earned {Math.floor(minutes / $settings.ratio)}
-		{Math.floor(minutes / $settings.ratio) > 1 ? 'minutes' : 'minute'} of break
+		You have earned {Math.floor(totalMinutes / $settings.ratio)}
+		{Math.floor(totalMinutes / $settings.ratio) > 1 ? 'minutes' : 'minute'} of break
 	</p>
 </div>
