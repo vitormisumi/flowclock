@@ -15,7 +15,7 @@ export const actions = {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
-                redirectTo: 'http://localhost:5173/auth/callback',
+                redirectTo: 'https://flouu.vercel.app/auth/callback',
             },
         })
 
