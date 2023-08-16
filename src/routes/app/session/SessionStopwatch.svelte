@@ -28,7 +28,7 @@
 
 <div class="grid justify-items-center text-white drop-shadow-xl shadow-orange-500">
 	{#key clock}
-		<p class="text-6xl md:text-9xl">
+		<p class="text-6xl md:text-9xl font-mono tracking-tighter">
 			{time}
 		</p>
 	{/key}
