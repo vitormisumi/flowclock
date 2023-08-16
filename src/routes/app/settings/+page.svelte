@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { Button, Label, Select, Popover, Toast } from 'flowbite-svelte';
+	import { Button, Label, Select, Popover, Alert } from 'flowbite-svelte';
 	import { blur } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import type { Settings } from './types.js';
 	import type { Writable } from 'svelte/store';
+	import Notification from '../Notification.svelte';
 
 	export let form;
-
-	$: console.log(form);
 
 	let ratios = [
 		{ value: 1, name: '1:1' },
@@ -100,27 +99,9 @@
 	</form>
 	{#if form}
 		{#if form?.success}
-			<Toast
-				color="green"
-				transition={blur}
-				params={{ duration: 500 }}
-				class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
-				bind:open={show}
-			>
-				<i class="fa-solid fa-check" slot="icon" />
-				{form?.message}
-			</Toast>
+			<Notification message={form?.message} success={form?.success} />
 		{:else}
-			<Toast
-				color="red"
-				transition={blur}
-				params={{ duration: 500 }}
-				class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
-				bind:open={show}
-			>
-				<i class="fa-solid fa-x" slot="icon" />
-				{form?.message}
-			</Toast>
+			<Notification message={form?.message} success={form?.success} />
 		{/if}
 	{/if}
 </div>

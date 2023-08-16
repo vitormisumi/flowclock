@@ -1,25 +1,13 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
-	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../settings/types';
-	import { sessionEnd, sessionStart, breakDuration, breakTimer, alarmPlayed } from './stores';
+	import { onMount } from 'svelte';
+	import { session, sessionBreak } from './stores';
 
-	const settings: Writable<Settings> = getContext('settings');
-
-	let audio: HTMLAudioElement;
-
+	let timer = $sessionBreak.duration - (Date.now() - Date.parse($session.end));
+	
 	onMount(() => {
-		$breakDuration = (Date.parse($sessionEnd) - Date.parse($sessionStart)) / $settings.ratio;
-		if (!$alarmPlayed) {
-			setTimeout(() => {
-				audio.play();
-				$alarmPlayed = true;
-			}, $breakDuration);
-		}
-
 		const interval = setInterval(() => {
-			$breakTimer = $breakDuration - (Date.now() - Date.parse($sessionEnd));
-			if ($breakTimer < 0) {
+			timer = $sessionBreak.duration - (Date.now() - Date.parse($session.end));
+			if (timer < 0) {
 				clearInterval(interval);
 			}
 		}, 1000);
@@ -27,10 +15,10 @@
 		return () => clearInterval(interval);
 	});
 
-	$: minutesLeft = Math.floor($breakTimer / 60000);
+	$: minutesLeft = Math.floor(timer / 60000);
 </script>
 
-{#if $breakTimer > 0}
+{#if timer > 0}
 	<div>
 		<h1 class="text-center text-3xl md:text-6xl text-white drop-shadow-xl p-4">
 			Enjoy your break!
@@ -48,4 +36,4 @@
 		Time for your next session!
 	</h1>
 {/if}
-<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />
+

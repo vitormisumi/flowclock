@@ -1,29 +1,20 @@
 <script lang="ts">
-	import { Button, Toast } from 'flowbite-svelte';
-	import { session, sessionBreak, sessionEnd, sessionStart, breakTimer, alarmPlayed } from './stores';
+	import { Button } from 'flowbite-svelte';
+	import { session, sessionBreak } from './stores';
 	import { enhance } from '$app/forms';
-	import { blur } from 'svelte/transition';
-	import type { ActionData } from './$types';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../settings/types';
+	import { getContext } from 'svelte';
 
-	export let form: ActionData;
+	const settings: Writable<Settings> = getContext('settings');
 
 	function startSession() {
-		$session = true;
-		$sessionBreak = false;
-		$sessionStart = new Date().toISOString();
-		$alarmPlayed = false;
-	}
-
-	let show = true;
-	let counter = 5;
-
-	function timeout(): any {
-		if (--counter > 0) return setTimeout(timeout, 1000);
-		show = false;
+		session.start();
+		sessionBreak.stop();
 	}
 </script>
 
-{#if !$session}
+{#if !$session.running}
 	<Button
 		class="bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 w-48 md:text-2xl md:w-72 h-12 md:h-16"
 		on:click={startSession}><i class="fa-solid fa-play pr-4" />Start new session</Button
@@ -32,15 +23,10 @@
 	<form
 		method="POST"
 		use:enhance={({ formData }) => {
-			$session = false;
-			$sessionBreak = true;
-			$breakTimer = 1;
-			$sessionEnd = new Date().toISOString();
-			formData.append('session_start', $sessionStart);
-			formData.append('session_end', $sessionEnd);
-			show = true;
-			counter = 5;
-			timeout();
+			session.end();
+			sessionBreak.start((Date.parse($session.end) - Date.parse($session.start)) / $settings.ratio);
+			formData.append('session_start', $session.start);
+			formData.append('session_end', $session.end);
 		}}
 	>
 		<Button
@@ -48,29 +34,4 @@
 			type="submit"><i class="fa-solid fa-stop pr-4" />Break</Button
 		>
 	</form>
-{/if}
-{#if form}
-	{#if form?.success}
-		<Toast
-			color="green"
-			transition={blur}
-			params={{ duration: 500 }}
-			class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
-			bind:open={show}
-		>
-			<i class="fa-solid fa-check" slot="icon" />
-			{form?.message}
-		</Toast>
-	{:else}
-		<Toast
-			color="red"
-			transition={blur}
-			params={{ duration: 500 }}
-			class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
-			bind:open={show}
-		>
-			<i class="fa-solid fa-x" slot="icon" />
-			{form?.message}
-		</Toast>
-	{/if}
 {/if}
