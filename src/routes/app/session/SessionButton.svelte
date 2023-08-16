@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button, Toast } from 'flowbite-svelte';
-	import { session, sessionBreak, sessionEnd, sessionStart } from './stores';
+	import { session, sessionBreak, sessionEnd, sessionStart, breakTimer, alarmPlayed } from './stores';
 	import { enhance } from '$app/forms';
-	import { fly } from 'svelte/transition';
+	import { blur } from 'svelte/transition';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
@@ -11,6 +11,7 @@
 		$session = true;
 		$sessionBreak = false;
 		$sessionStart = new Date().toISOString();
+		$alarmPlayed = false;
 	}
 
 	let show = true;
@@ -33,6 +34,7 @@
 		use:enhance={({ formData }) => {
 			$session = false;
 			$sessionBreak = true;
+			$breakTimer = 1;
 			$sessionEnd = new Date().toISOString();
 			formData.append('session_start', $sessionStart);
 			formData.append('session_end', $sessionEnd);
@@ -49,12 +51,24 @@
 {/if}
 {#if form}
 	{#if form?.success}
-		<Toast color="green" transition={fly} position="bottom-right" bind:open={show}>
+		<Toast
+			color="green"
+			transition={blur}
+			params={{ duration: 500 }}
+			class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
+			bind:open={show}
+		>
 			<i class="fa-solid fa-check" slot="icon" />
 			{form?.message}
 		</Toast>
 	{:else}
-		<Toast color="red" transition={fly} position="bottom-right" bind:open={show}>
+		<Toast
+			color="red"
+			transition={blur}
+			params={{ duration: 500 }}
+			class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
+			bind:open={show}
+		>
 			<i class="fa-solid fa-x" slot="icon" />
 			{form?.message}
 		</Toast>

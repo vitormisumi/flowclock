@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Label, Select, Popover, Toast } from 'flowbite-svelte';
-	import { fly } from 'svelte/transition';
+	import { blur } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="bg-secondary-900 h-screen grid justify-center content-center gap-8">
+<div class="bg-secondary-900 h-screen grid justify-items-center content-center gap-8">
 	<form class=" pt-8 px-8 pb-20 sm:pb-24 lg:pb-0" method="POST" use:enhance={handleSave}>
 		<Label class="text-secondary-50"
 			>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
@@ -100,12 +100,24 @@
 	</form>
 	{#if form}
 		{#if form?.success}
-			<Toast color="green" transition={fly} position="bottom-right" bind:open={show}>
+			<Toast
+				color="green"
+				transition={blur}
+				params={{ duration: 500 }}
+				class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
+				bind:open={show}
+			>
 				<i class="fa-solid fa-check" slot="icon" />
 				{form?.message}
 			</Toast>
 		{:else}
-			<Toast color="red" transition={fly} position="bottom-right" bind:open={show}>
+			<Toast
+				color="red"
+				transition={blur}
+				params={{ duration: 500 }}
+				class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 w-auto"
+				bind:open={show}
+			>
 				<i class="fa-solid fa-x" slot="icon" />
 				{form?.message}
 			</Toast>
