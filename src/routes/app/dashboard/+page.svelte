@@ -2,25 +2,7 @@
 	import Duration from './Duration.svelte';
 	import Sessions from './Sessions.svelte';
 	import { session } from '../session/stores';
-	import { onMount } from 'svelte';
-	import { millisecondsToClock } from '$lib/functions/functions';
-
-	let stopwatch: number = 0;
-
-	onMount(() => {
-		let start = Date.parse($session.start);
-		const interval = setInterval(() => {
-			if ($session.running) {
-				stopwatch = Date.now() - start;
-			} else {
-				stopwatch = 0;
-			}
-		}, 1000);
-
-		return () => clearInterval(interval);
-	});
-
-	$: clock = millisecondsToClock(stopwatch);
+	import Clock from '../Clock.svelte';
 </script>
 
 <div
@@ -31,10 +13,5 @@
 </div>
 
 {#if $session.running}
-	<div class="fixed bottom-0 right-0 flex divide-x text-white">
-		<i class="fa-solid fa-clock px-4" />
-		<p class="text-xl md:text-2xl font-mono tracking-tight px-4">
-			{clock}
-		</p>
-	</div>
+	<Clock />
 {/if}
