@@ -5,7 +5,7 @@
 	import DistractionButton from './DistractionButton.svelte';
 	import { session, sessionBreak } from './stores';
 	import Notification from '../Notification.svelte';
-	
+
 	export let form;
 </script>
 
@@ -17,7 +17,9 @@
 	{:else if $sessionBreak.running}
 		<BreakTimer />
 	{:else}
-		<p class="text-secondary-100">You currently have no sessions running. Click the button below to start a new one.</p>
+		<p class="text-secondary-100 text-center max-w-md">
+			You currently have no sessions running. Click the button below to start a new one.
+		</p>
 	{/if}
 	<div class="grid justify-items-center gap-4">
 		<SessionButton />
@@ -27,9 +29,9 @@
 	</div>
 	{#if form}
 		{#if form?.success}
-			<Notification message={form?.message} success={form?.success}/>
+			<Notification message={form?.message} success={form?.success} />
 		{:else}
-			<Notification message={form?.message} success={form?.success}/>
+			<Notification message={form?.message} success={form?.success} />
 		{/if}
 	{/if}
 </div>

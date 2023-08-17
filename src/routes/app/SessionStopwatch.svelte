@@ -3,6 +3,7 @@
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { session } from './session/stores';
 	import { page } from '$app/stores';
+	import { slide } from 'svelte/transition';
 
 	let stopwatch: number = 0;
 
@@ -25,13 +26,19 @@
 
 {#if $session.running}
 	<div
-		class="text-secondary-50 fixed transition-all duration-1000 rounded-lg p-2 pointer-events-none translate-x-1/2"
-		style:background={isSession ? 'transparent' : '#1b5865'}
-		style:font-size={isSession ? '5rem' : '1rem'}
-		style:top={isSession ? '30%' : '90%'}
-		style:right={isSession ? '50%' : '5%'}
+		class="text-secondary-50 fixed transition-all duration-500 delay-500 rounded-lg p-2 pointer-events-none flex items-center justify-center divide-x w-[10%] text-center"
+		style:scale={isSession ? 3 : 1}
+		style:bottom={isSession ? '50%' : '5%'}
+		style:right={isSession ? '45%' : '5%'}
 	>
-		<p class="font-mono tracking-tight">
+		{#if !isSession}
+			<i
+				class="fa-solid fa-clock text-center px-2"
+				in:slide={{ axis: 'x', duration: 500 }}
+				out:slide={{ axis: 'x', duration: 500 }}
+			/>
+		{/if}
+		<p class="font-mono tracking-tight px-2">
 			{clock}
 		</p>
 	</div>

@@ -4,8 +4,11 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Button } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { session } from '../session/stores';
+	import { navigating } from '$app/stores';
 
-	const user: User = getContext('user')
+	const user: User = getContext('user');
 
 	let loading = false;
 
@@ -18,7 +21,10 @@
 	};
 </script>
 
-<div class="grid justify-center bg-secondary-900 h-screen items-center">
+<div
+	class="grid justify-center bg-secondary-900 h-screen items-center"
+	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session' ? { duration: 500, delay: 500 } : { duration: 0 }}
+>
 	<div class="w-screen max-w-lg p-4 grid gap-8">
 		<h1 class="text-center text-xl text-primary-600 font-bold">Account</h1>
 		<p class="text-secondary-50 text-center">{user.email}</p>

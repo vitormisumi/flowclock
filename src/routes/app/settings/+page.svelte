@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Button, Label, Select, Popover, Alert } from 'flowbite-svelte';
-	import { blur } from 'svelte/transition';
+	import { Button, Label, Select, Popover } from 'flowbite-svelte';
+	import { fade } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import type { Settings } from './types.js';
 	import type { Writable } from 'svelte/store';
 	import Notification from '../Notification.svelte';
+	import { session } from '../session/stores.js';
+	import { navigating } from '$app/stores';
 
 	export let form;
 
@@ -46,7 +48,13 @@
 	}
 </script>
 
-<div class="bg-secondary-900 h-screen grid justify-items-center content-center gap-8">
+<div
+	class="bg-secondary-900 h-screen grid justify-items-center content-center gap-8"
+	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
+		? { duration: 500, delay: 500 }
+		: { duration: 0 }}
+>
+	<h1 class="text-center text-xl text-primary-600 font-bold">Settings</h1>
 	<form class=" pt-8 px-8 pb-20 sm:pb-24 lg:pb-0" method="POST" use:enhance={handleSave}>
 		<Label class="text-secondary-50"
 			>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
