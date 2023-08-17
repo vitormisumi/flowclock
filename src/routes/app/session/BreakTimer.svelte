@@ -2,11 +2,11 @@
 	import { onMount } from 'svelte';
 	import { session, sessionBreak } from './stores';
 
-	let timer = $sessionBreak.duration - (Date.now() - Date.parse($session.end));
-	
+	let timer = $sessionBreak.duration - (Date.now() - $session.end);
+
 	onMount(() => {
 		const interval = setInterval(() => {
-			timer = $sessionBreak.duration - (Date.now() - Date.parse($session.end));
+			timer = $sessionBreak.duration - (Date.now() - $session.end);
 			if (timer < 0) {
 				clearInterval(interval);
 			}

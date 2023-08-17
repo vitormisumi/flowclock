@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Duration from './Duration.svelte';
 	import Sessions from './Sessions.svelte';
-	import { session } from '../session/stores';
-	import Clock from '../Clock.svelte';
 </script>
 
 <div
@@ -11,7 +9,3 @@
 	<Sessions />
 	<Duration />
 </div>
-
-{#if $session.running}
-	<Clock />
-{/if}

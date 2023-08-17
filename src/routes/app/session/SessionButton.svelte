@@ -24,9 +24,9 @@
 		method="POST"
 		use:enhance={({ formData }) => {
 			session.end();
-			sessionBreak.start((Date.parse($session.end) - Date.parse($session.start)) / $settings.ratio);
-			formData.append('session_start', $session.start);
-			formData.append('session_end', $session.end);
+			sessionBreak.start(($session.end - $session.start) / $settings.ratio);
+			formData.append('session_start', new Date($session.start).toISOString());
+			formData.append('session_end', new Date($session.end).toISOString());
 		}}
 	>
 		<Button

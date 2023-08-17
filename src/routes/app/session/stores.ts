@@ -3,22 +3,22 @@ import { writable } from 'svelte/store';
 function createSession() {
     const { subscribe, set, update } = writable({
         running: false,
-        start: '',
-        end: '',
+        start: 0,
+        end: 0,
     });
 
 	return {
 		subscribe,
         start: () => set({
             running: true,
-            start: new Date().toISOString(),
-            end: '',
+            start: Date.now(),
+            end: 0,
         }),
         end: () => update((x) => {
             return {
                 ...x,
                 running: false,
-                end: new Date().toISOString()
+                end: Date.now()
             }
         }),
 	};
@@ -43,7 +43,7 @@ function createBreak() {
         stop: () => set({
             running: false,
             duration: 0,
-            alarmPlayed: true,
+            alarmPlayed: false,
         }),
     }
 }

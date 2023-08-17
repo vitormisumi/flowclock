@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 	import Menu from './Menu.svelte';
 	import Avatar from './Avatar.svelte';
 	import { writable } from 'svelte/store';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { sessionBreak, session } from './session/stores';
+	import SessionStopwatch from './SessionStopwatch.svelte';
 
 	export let data;
 
@@ -30,4 +30,5 @@
 <slot />
 <Avatar />
 <Menu />
+<SessionStopwatch />
 <audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />

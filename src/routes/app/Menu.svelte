@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Clock from './Clock.svelte';
 
 	let menuItems: { title: string; icon: string }[] = [
 		{
@@ -21,7 +20,7 @@
 </script>
 
 <nav
-	class="fixed w-full bg-gradient-to-b from-primary-700 to-secondary-900 bottom-0 left-0 lg:top-0 lg:w-auto lg:h-screen flex lg:flex-col justify-between"
+	class="fixed w-full bg-gradient-to-b from-primary-700 to-secondary-900 bottom-0 left-0 lg:top-0 lg:w-auto lg:h-screen"
 >
 	<ul class="flex p-2 justify-around sm:justify-center sm:gap-4 lg:grid">
 		{#each menuItems as item}
@@ -37,7 +36,4 @@
 			</li>
 		{/each}
 	</ul>
-	{#if activeUrl !== '/app/session'}
-		<Clock />
-	{/if}
 </nav>
