@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import Menu from './Menu.svelte';
 	import Avatar from './Avatar.svelte';
 	import { writable } from 'svelte/store';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import SessionStopwatch from './SessionStopwatch.svelte';
+	import { sessionBreak, session } from './session/stores';
 
 	export let data;
 
@@ -25,6 +26,19 @@
 	setContext('sessions', sessions);
 
 	let audio: HTMLAudioElement;
+
+	onMount(() => {
+		const interval = setInterval(() => {
+			if ($sessionBreak.running && !$sessionBreak.alarmPlayed) {
+				if (Date.now() - $session.end > $sessionBreak.duration) {
+					audio.play();
+					$sessionBreak.alarmPlayed = true;
+				}
+			}
+		}, 1000)
+
+		return () => clearInterval(interval);
+	})
 </script>
 
 <slot />

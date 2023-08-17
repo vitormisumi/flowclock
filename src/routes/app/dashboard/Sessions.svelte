@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { millisecondsToClock } from '$lib/functions/functions';
 	import {
 		Table,
 		TableBody,

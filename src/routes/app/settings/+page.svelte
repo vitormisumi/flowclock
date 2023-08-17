@@ -28,24 +28,14 @@
 	const settings: Writable<Settings> = getContext('settings');
 
 	let loading = false;
-	let show = true;
-	let counter = 5;
 
 	const handleSave: SubmitFunction = () => {
 		loading = true;
-		show = true;
-		counter = 5;
-		timeout();
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
-
-	function timeout(): any {
-		if (--counter > 0) return setTimeout(timeout, 1000);
-		show = false;
-	}
 </script>
 
 <div
