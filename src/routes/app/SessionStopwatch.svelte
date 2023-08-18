@@ -26,10 +26,9 @@
 
 {#if $session.running}
 	<div
-		class="text-secondary-50 fixed transition-all duration-500 delay-500 rounded-lg p-2 pointer-events-none flex items-center justify-center divide-x w-[10%] text-center"
+		class="text-secondary-50 fixed transition-all duration-500 delay-500 rounded-lg p-2 pointer-events-none flex items-center justify-center divide-x text-center w-screen"
 		style:scale={isSession ? 3 : 1}
-		style:bottom={isSession ? '50%' : '5%'}
-		style:right={isSession ? '45%' : '5%'}
+		style:top={isSession ? '25%' : '2%'}
 	>
 		{#if !isSession}
 			<i

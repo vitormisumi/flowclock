@@ -6,6 +6,7 @@
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import SessionStopwatch from './SessionStopwatch.svelte';
 	import { sessionBreak, session } from './session/stores';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -35,13 +36,18 @@
 					$sessionBreak.alarmPlayed = true;
 				}
 			}
-		}, 1000)
+		}, 1000);
 
 		return () => clearInterval(interval);
-	})
+	});
+
+	let menu = ['/app/account', '/app/settings']
+	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214'
 </script>
 
-<slot />
+<div class="absolute h-screen w-screen py-16 md:py-24 lg:p-24 grid justify-items-center content-center" style:background>
+	<slot />
+</div>
 <Avatar />
 <Menu />
 <SessionStopwatch />

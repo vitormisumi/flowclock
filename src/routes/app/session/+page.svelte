@@ -10,7 +10,7 @@
 </script>
 
 <div
-	class="h-screen grid justify-items-center content-evenly pb-20 sm:pb-24 lg:pb-0 bg-primary-900"
+	class="m-4 md:m-8 lg:m-12 grid justify-items-center content-evenly h-full"
 >
 	{#if $session.running}
 		<BreakEarned />

@@ -7,3 +7,19 @@ export function millisecondsToClock (milliseconds: number): string {
     let s = seconds > 9 ? String(seconds) : '0' + String(seconds);
     return h + ":" + m + ":" + s;
 }
+
+export function dateFromTimestamp (timestamp: string): string {
+    let date = new Date(timestamp);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + '/' + month + '/' + year;
+}
+
+export function timeFromTimestamp(timestamp: string): string {
+    let date = new Date(timestamp);
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    return  hour + ':' + minutes + ':' + seconds
+}

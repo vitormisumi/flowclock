@@ -10,6 +10,7 @@
 	import type { Session } from '../session/types';
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
+	import { dateFromTimestamp, timeFromTimestamp } from '$lib/functions/functions';
 
 	const sessions: Writable<Session[]> = getContext('sessions');
 </script>
@@ -17,6 +18,7 @@
 <h2 class="text-secondary-50 text-xl font-bold">Last Sessions</h2>
 <Table shadow>
 	<TableHead>
+		<TableHeadCell>Date</TableHeadCell>
 		<TableHeadCell>Start</TableHeadCell>
 		<TableHeadCell>End</TableHeadCell>
 		<TableHeadCell>Duration</TableHeadCell>
@@ -25,8 +27,9 @@
 		{#each $sessions as session, i}
 			{#if i < 10}
 				<TableBodyRow>
-					<TableBodyCell>{session.started_at}</TableBodyCell>
-					<TableBodyCell>{session.ended_at}</TableBodyCell>
+					<TableBodyCell>{dateFromTimestamp(session.started_at)}</TableBodyCell>
+					<TableBodyCell>{timeFromTimestamp(session.started_at)}</TableBodyCell>
+					<TableBodyCell>{timeFromTimestamp(session.ended_at)}</TableBodyCell>
 					<TableBodyCell>{session.duration}</TableBodyCell>
 				</TableBodyRow>
 			{/if}

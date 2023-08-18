@@ -39,13 +39,13 @@
 </script>
 
 <div
-	class="bg-secondary-900 h-screen grid justify-items-center content-center gap-8"
+	class="m-4 md:m-8 lg:m-12"
 	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
 	<h1 class="text-center text-xl text-primary-600 font-bold">Settings</h1>
-	<form class=" pt-8 px-8 pb-20 sm:pb-24 lg:pb-0" method="POST" use:enhance={handleSave}>
+	<form class="p-8" method="POST" use:enhance={handleSave}>
 		<Label class="text-secondary-50"
 			>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
 			<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
