@@ -39,7 +39,7 @@
 </script>
 
 <div
-	class="m-4 md:m-8 lg:m-12"
+	class="m-4 md:m-8"
 	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}

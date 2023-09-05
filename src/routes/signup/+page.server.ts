@@ -5,8 +5,13 @@ export const actions = {
     const formData = await request.formData()
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+    const passwordConfirmation = formData.get('password-confirmation') as string
 
-    const { data, error } = await supabase.auth.signUp({
+    if (password !== passwordConfirmation) {
+      return fail(500, { message: 'The passwords you typed do not match each other. Please type the same password twice.', success: false, email })
+    }
+
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {

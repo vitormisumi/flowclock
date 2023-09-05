@@ -23,7 +23,7 @@ export const actions = {
             console.log(error);
             return fail(500, { message: 'Email could not be changed. Please try again later', success: false })
         };
-        return { message: 'Email successfully changed. Check your new email address to confirm', success: true };
+        return { message: 'Email successfully changed. Please check your new email address to confirm', success: true };
     },
     
     updatePassword: async ({request, locals: { supabase, getSession } }) => {
@@ -32,19 +32,36 @@ export const actions = {
             throw redirect(303, '/')
         }
 
-        const formData = await request.formData()
-        const currentPassword = formData.get('current_password') as string
-        const newPassword = formData.get('new_password') as string
+        if (session.user.email) {
+            let { error } = await supabase.auth.resetPasswordForEmail(session.user.email, {
+                redirectTo: 'https://flouu.vercel.app/app/password'
+            })
 
-        const { error } = await supabase.auth.updateUser({
-            email: newPassword,
-        })
+            if (error) {
+                console.log(error);
+                return fail(500, { message: 'Password could not be changed. Please try again later', success: false })
+            };
+
+            return { message: 'Please check your email to complete the password reset process.', success: true };
+        }
+    },
+
+    deleteAccount: async ({locals: { supabase, getSession } }) => {
+        const session = await getSession()
+        if (!session) {
+            throw redirect(303, '/')
+        }
+        
+        const { error } = await supabase.auth.admin.deleteUser(
+            session.user.id
+        )
 
         if (error) {
             console.log(error);
-            return fail(500, { message: 'Password could not be changed. Please try again later', success: false })
+            return fail(500, { message: 'User could not be deleted. Please try again later', success: false })
         };
-        return { message: 'Password successfully changed. Plase check your email to confirm', success: true };
+        
+        throw redirect(303, '/')
     },
 
 }
