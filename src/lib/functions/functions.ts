@@ -10,8 +10,8 @@ export function millisecondsToClock (milliseconds: number): string {
 
 export function dateFromTimestamp (timestamp: string): string {
     let date = new Date(timestamp);
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
+    let day = date.getDate() < 10 ? "0" + date.getDate(): date.getDate();
+    let month = date.getMonth() < 9 ? "0" + (date.getMonth() + 1): date.getMonth() + 1;
     let year = date.getFullYear();
     return day + '/' + month + '/' + year;
 }
@@ -19,7 +19,7 @@ export function dateFromTimestamp (timestamp: string): string {
 export function timeFromTimestamp(timestamp: string): string {
     let date = new Date(timestamp);
     let hour = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
+    let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();;
     return  hour + ':' + minutes + ':' + seconds
 }
