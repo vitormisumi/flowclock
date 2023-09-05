@@ -6,7 +6,7 @@
 	import { getContext } from 'svelte';
 	import type { Settings } from './types.js';
 	import type { Writable } from 'svelte/store';
-	import Notification from '../Notification.svelte';
+	import Notification from '../../Notification.svelte';
 	import { session } from '../session/stores.js';
 	import { navigating } from '$app/stores';
 
@@ -39,13 +39,13 @@
 </script>
 
 <div
-	class="m-4 md:m-8"
+	class="m-6 md:m-8 lg:mx-40 grid gap-4 md:gap-8"
 	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
 	<h1 class="text-center text-xl text-primary-600 font-bold">Settings</h1>
-	<form class="p-8" method="POST" use:enhance={handleSave}>
+	<form class="grid gap-8 md:gap-12" method="POST" use:enhance={handleSave}>
 		<Label class="text-secondary-50"
 			>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
 			<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
@@ -62,7 +62,7 @@
 				<Select
 					underline
 					name="ratio"
-					class="mb-16 text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
+					class="text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
 					items={ratios}
 					bind:value={$settings.ratio}
 				/>
@@ -76,7 +76,7 @@
 					name="max_length"
 					min="0"
 					bind:value={$settings.max_length}
-					class="text-sm pl-0 block w-full mb-16 text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
+					class="text-sm pl-0 block w-full text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
 				/>
 			{/key}
 		</Label>
@@ -91,7 +91,7 @@
 				A value of 0 means no maximum length.
 			</div>
 		</Popover>
-		<Button class="w-full" type="submit" disabled={loading}
+		<Button type="submit" disabled={loading}
 			><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
 		>
 	</form>

@@ -45,7 +45,7 @@
 	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214'
 </script>
 
-<div class="absolute h-screen w-screen py-16 md:py-24 lg:p-24 grid justify-items-center content-center" style:background>
+<div class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24" style:background>
 	<slot />
 </div>
 <Avatar />

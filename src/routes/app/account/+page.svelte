@@ -7,7 +7,7 @@
 	import { fade } from 'svelte/transition';
 	import { session } from '../session/stores';
 	import { navigating } from '$app/stores';
-	import Notification from '../Notification.svelte';
+	import Notification from '../../Notification.svelte';
 
 	export let form;
 
@@ -30,7 +30,7 @@
 </script>
 
 <div
-	class="m-4 md:m-8 grid gap-4 md:gap-8"
+	class="m-6 md:m-8 lg:mx-40 grid gap-4 md:gap-8"
 	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}

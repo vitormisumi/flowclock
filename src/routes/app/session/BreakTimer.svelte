@@ -18,22 +18,24 @@
 	$: minutesLeft = Math.floor(timer / 60000);
 </script>
 
-{#if timer > 0}
+<div class="absolute top-0 w-full h-full grid justify-items-center content-center p-4">
+	{#if timer > 0}
 	<div>
 		<h1 class="text-center text-3xl md:text-6xl text-white drop-shadow-xl p-4">
 			Enjoy your break!
 		</h1>
 		{#if minutesLeft === 1}
-			<p class="text-center text-secondary-50">You have 1 minute left</p>
+		<p class="text-center text-secondary-50">You have 1 minute left</p>
 		{:else if minutesLeft === 0}
-			<p class="text-center text-secondary-50">You have less than a minute left</p>
+		<p class="text-center text-secondary-50">You have less than a minute left</p>
 		{:else}
-			<p class="text-center text-secondary-50">You have {minutesLeft} minutes left</p>
+		<p class="text-center text-secondary-50">You have {minutesLeft} minutes left</p>
 		{/if}
 	</div>
-{:else}
+	{:else}
 	<h1 class="text-center text-3xl md:text-6xl text-white drop-shadow-xl md:px-40">
 		Time for your next session!
 	</h1>
-{/if}
+	{/if}
+</div>
 
