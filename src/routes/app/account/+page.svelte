@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import type { User } from '@supabase/supabase-js';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Button, Input, Label, Modal, Toggle } from 'flowbite-svelte';
+	import { Button, Modal } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { session } from '../session/stores';
+	import { session, sessionBreak } from '../session/stores';
 	import { navigating } from '$app/stores';
 	import Notification from '../../Notification.svelte';
+	import UpdateEmail from './UpdateEmail.svelte';
+	import ResetPassword from './ResetPassword.svelte';
+	import DeleteAccount from './DeleteAccount.svelte';
 
 	export let form;
 
@@ -16,90 +17,37 @@
 	let emailModal: boolean = false;
 	let passwordModal: boolean = false;
 	let deleteModal: boolean = false;
-	let deleteAccount: boolean = false;
 
-	let loading: boolean = false;
-
-	const handleClick: SubmitFunction = () => {
-		loading = true;
-		return async ({ update }) => {
-			loading = false;
-			update();
-		};
-	};
+	let titles = 'text-secondary-50 font-medium';
+	let texts = 'text-secondary-300 text-sm';
 </script>
 
 <div
-	class="m-6 md:m-8 lg:mx-40 grid gap-4 md:gap-8"
-	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
+	class="p-6 md:p-8 lg:px-40 grid gap-4 md:gap-8"
+	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
+	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
 	<h1 class="text-center text-xl text-primary-600 font-bold">Account</h1>
 	<div class="grid gap-4 md:gap-8">
 		<div>
-			<p class="text-secondary-50 font-medium">Email</p>
+			<p class={titles}>Email</p>
 			<div class="grid md:flex items-center justify-between gap-2">
-				<p class="text-secondary-300 text-center text-sm">{user.email}</p>
-				<Button class="w-full md:w-40" on:click={() => (emailModal = true)}>Update email</Button>
+				<p class={texts}>{user.email}</p>
+				<Button class="w-40" on:click={() => (emailModal = true)}>Update email</Button>
 				<Modal bind:open={emailModal} outsideclose size="xs" class="bg-secondary-900">
-					<form
-						class="flex flex-col gap-4"
-						method="POST"
-						action="?/updateEmail"
-						use:enhance={handleClick}
-					>
-						<div>
-							<Label for="current_email" class="text-primary-50">Current Email</Label>
-							<Input
-								class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-								name="email"
-								type="email"
-								placeholder="Confirm your current email"
-								required
-							>
-								<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
-							>
-						</div>
-						<div>
-							<Label for="new_email" class="text-primary-50">New Email</Label>
-							<Input
-								class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-								name="email"
-								type="email"
-								placeholder="Type your new email"
-								required
-							>
-								<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
-							>
-						</div>
-						<Button type="submit" disabled={loading} class="w-40 self-center">Confirm change</Button
-						>
-					</form>
+					<UpdateEmail />
 				</Modal>
 			</div>
 		</div>
 		<div>
-			<p class="text-secondary-50 font-medium">Password</p>
+			<p class={titles}>Password</p>
 			<div class="grid md:flex items-center justify-between gap-2">
-				<p class="text-secondary-300 md:text-center text-sm">
-					Reset the password you use to log in to your account
-				</p>
+				<p class={texts}>Reset the password you use to log in to your account</p>
 				<Button class="w-40" on:click={() => (passwordModal = true)}>Reset password</Button>
 				<Modal bind:open={passwordModal} outsideclose size="xs" class="bg-secondary-900">
-					<form
-						class="flex flex-col gap-4"
-						method="POST"
-						action="?/updatePassword"
-						use:enhance={handleClick}
-					>
-						<p class="text-secondary-50">
-							By clicking the button below you will receive an email with a link to reset your
-							password.
-						</p>
-						<Button type="submit" disabled={loading} class="w-40 self-center">Reset password</Button
-						>
-					</form>
+					<ResetPassword />
 				</Modal>
 			</div>
 		</div>
@@ -108,44 +56,14 @@
 	<div>
 		<p class="text-red-700 font-medium">Delete account (still not working)</p>
 		<div class="grid md:flex items-center justify-between gap-4">
-			<p class="text-secondary-300 md:text-center text-sm">
-				Permanently delete your account and wipe all your data
-			</p>
+			<p class={texts}>Permanently delete your account and wipe all your data</p>
 			<Button
 				type="submit"
-				disabled={loading}
 				class="border-2 border-red-900 bg-transparent text-red-700 w-40 hover:bg-red-950"
 				on:click={() => (deleteModal = true)}>Delete account</Button
 			>
 			<Modal bind:open={deleteModal} outsideclose size="xs" class="bg-secondary-900">
-				<form
-					class="flex flex-col gap-4"
-					method="POST"
-					action="?/deleteAccount"
-					use:enhance={handleClick}
-				>
-					<i class="fa-solid fa-triangle-exclamation text-center w-full text-3xl text-red-800" />
-					<p class="text-center">
-						<span class="font-bold text-red-800">This action cannot be reversed!</span><br /> By deleting
-						your account you will permanently lose access to all your account data. Are you sure you
-						want to continue?
-					</p>
-					<Toggle
-						size="small"
-						color="red"
-						class="text-secondary-50"
-						on:change={() => (deleteAccount = !deleteAccount)}>Confirm account deletion</Toggle
-					>
-					<div class="grid gap-2 md:flex md:justify-between">
-						<Button class="w-full md:w-40" on:click={() => (deleteModal = false)}>Cancel</Button>
-						<Button
-							type="submit"
-							disabled={!deleteAccount}
-							class="w-full md:w-40 border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
-							>Delete</Button
-						>
-					</div>
-				</form>
+				<DeleteAccount />
 			</Modal>
 		</div>
 	</div>

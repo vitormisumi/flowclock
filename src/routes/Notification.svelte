@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Alert } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
-	import { blur } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 
 	export let message: string;
 	export let success: boolean;
@@ -15,11 +15,8 @@
 </script>
 
 {#if show}
-	<div
-		transition:blur
-		class="fixed bottom-16 sm:bottom-24 lg:bottom-0 z-50 m-4 md:m-0 md:my-8 md:right-1/2 md:translate-x-1/2 lg:pl-24"
-	>
-		<Alert color={success ? 'green' : 'red'} dismissable>
+	<div transition:slide={{duration: 500}} class="fixed top-0 left-0 lg:left-12 px-16 flex justify-center w-full z-50">
+		<Alert color={success ? 'green' : 'red'}>
 			<i class={success ? 'fa-solid fa-check' : 'fa-solid fa-circle-exclamation'} slot="icon" />
 			{message}
 		</Alert>

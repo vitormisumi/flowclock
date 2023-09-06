@@ -4,7 +4,7 @@
 	import Avatar from './Avatar.svelte';
 	import { writable } from 'svelte/store';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import SessionStopwatch from './SessionStopwatch.svelte';
+	import Clock from './Clock.svelte';
 	import { sessionBreak, session } from './session/stores';
 	import { page } from '$app/stores';
 
@@ -31,7 +31,7 @@
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($sessionBreak.running && !$sessionBreak.alarmPlayed) {
-				if (Date.now() - $session.end > $sessionBreak.duration) {
+				if (Date.now() - $session.end >= $sessionBreak.duration) {
 					audio.play();
 					$sessionBreak.alarmPlayed = true;
 				}
@@ -41,8 +41,8 @@
 		return () => clearInterval(interval);
 	});
 
-	let menu = ['/app/account', '/app/settings']
-	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214'
+	let menu = ['/app/account', '/app/settings'];
+	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214';
 </script>
 
 <div class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24" style:background>
@@ -50,5 +50,5 @@
 </div>
 <Avatar />
 <Menu />
-<SessionStopwatch />
+<Clock />
 <audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />

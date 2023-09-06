@@ -15,6 +15,6 @@ export const actions = {
       return fail(500, { message: 'User could not be logged in. Please check your email and password.', success: false, email })
     }
 
-    throw redirect(303, '/app/account')
+    throw redirect(303, '/app/session')
   },
 }

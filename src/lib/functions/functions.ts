@@ -1,4 +1,4 @@
-export function millisecondsToClock (milliseconds: number): string {
+export function millisecondsToClock(milliseconds: number): string {
     let hours = Math.floor(milliseconds / 3600000);
 	let minutes = Math.floor((milliseconds / 60000) % 60);
     let seconds = Math.floor((milliseconds / 1000) % 60);
@@ -8,7 +8,7 @@ export function millisecondsToClock (milliseconds: number): string {
     return h + ":" + m + ":" + s;
 }
 
-export function dateFromTimestamp (timestamp: string): string {
+export function dateFromTimestamp(timestamp: string): string {
     let date = new Date(timestamp);
     let day = date.getDate() < 10 ? "0" + date.getDate(): date.getDate();
     let month = date.getMonth() < 9 ? "0" + (date.getMonth() + 1): date.getMonth() + 1;

@@ -2,12 +2,13 @@
 	import { fade } from 'svelte/transition';
 	import Duration from './Duration.svelte';
 	import Sessions from './Sessions.svelte';
-	import { session } from '../session/stores';
+	import { session, sessionBreak } from '../session/stores';
 	import { navigating } from '$app/stores';
 </script>
 
 <div class="m-4 md:m-8 lg:m-12"
-	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
+	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
+	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >

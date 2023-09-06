@@ -7,7 +7,7 @@
 	import type { Settings } from './types.js';
 	import type { Writable } from 'svelte/store';
 	import Notification from '../../Notification.svelte';
-	import { session } from '../session/stores.js';
+	import { session, sessionBreak } from '../session/stores.js';
 	import { navigating } from '$app/stores';
 
 	export let form;
@@ -39,8 +39,9 @@
 </script>
 
 <div
-	class="m-6 md:m-8 lg:mx-40 grid gap-4 md:gap-8"
-	in:fade={$session.running && $navigating?.from?.url.pathname === '/app/session'
+	class="p-6 md:p-8 lg:px-40 grid gap-4 md:gap-8"
+	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
+	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >

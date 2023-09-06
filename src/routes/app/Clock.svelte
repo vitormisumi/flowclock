@@ -1,34 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { session, sessionBreak } from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { session } from './session/stores';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
 
-	let stopwatch: number = 0;
+	let clock: number = 0;
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session.running) {
-				stopwatch = Date.now() - $session.start;
+				clock = Date.now() - $session.start;
+			} else if ($sessionBreak.running && clock > 0) {
+				clock = $sessionBreak.duration - (Date.now() - $session.end);
 			} else {
-				stopwatch = 0;
+				clock = 0;
 			}
 		}, 1000);
 
 		return () => clearInterval(interval);
 	});
 
-	$: clock = millisecondsToClock(stopwatch);
+	$: clockDisplay = millisecondsToClock(clock);
 
 	$: isSession = $page.url.pathname === '/app/session';
 </script>
 
-{#if $session.running}
+{#if clock > 0}
 	<div
-		class="text-secondary-50 fixed transition-all duration-500 delay-500 divide-x pointer-events-none flex items-center justify-center text-center md:text-2xl lg:text-4xl w-screen lg:left-12"
+		class="text-secondary-50 fixed transition-all duration-500 delay-500 divide-x pointer-events-none flex items-center justify-center text-center md:text-xl lg:text-2xl w-screen lg:left-12"
 		style:scale={isSession ? 3 : 1}
-		style:top={isSession ? '40%' : '2%'}
+		style:top={isSession ? '40%' : '3%'}
 	>
 		{#if !isSession}
 			<i
@@ -38,7 +40,7 @@
 			/>
 		{/if}
 		<p class="font-mono tracking-tight px-2">
-			{clock}
+			{clockDisplay}
 		</p>
 	</div>
 {/if}
