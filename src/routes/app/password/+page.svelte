@@ -2,9 +2,9 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Button, Card, Input, Label } from 'flowbite-svelte';
-    import Notification from '../../Notification.svelte';
+	import Notification from '../../Notification.svelte';
 
-    export let form;
+	export let form;
 
 	let loading: boolean = false;
 
@@ -31,9 +31,5 @@
 	</form>
 </Card>
 {#if form}
-	{#if form?.success}
-		<Notification message={form?.message} success={form?.success} />
-	{:else}
-		<Notification message={form?.message} success={form?.success} />
-	{/if}
+	<Notification message={form?.message} success={form?.success} />
 {/if}

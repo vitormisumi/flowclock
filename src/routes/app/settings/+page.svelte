@@ -96,11 +96,7 @@
 			><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
 		>
 	</form>
-	{#if form}
-		{#if form?.success}
-			<Notification message={form?.message} success={form?.success} />
-		{:else}
-			<Notification message={form?.message} success={form?.success} />
-		{/if}
-	{/if}
 </div>
+{#if form}
+	<Notification message={form?.message} success={form?.success} />
+{/if}

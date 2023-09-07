@@ -6,8 +6,9 @@
 	export let message: string;
 	export let success: boolean;
 
-	let show: boolean = true;
+	let show: boolean = false;
 	onMount(() => {
+		show = true;
 		setTimeout(() => {
 			show = false;
 		}, 5000);
@@ -16,7 +17,7 @@
 
 {#if show}
 	<div transition:slide={{duration: 500}} class="fixed top-0 left-0 lg:left-12 px-16 flex justify-center w-full z-50">
-		<Alert color={success ? 'green' : 'red'}>
+		<Alert color={success ? 'green' : 'red'} class="rounded-t-none">
 			<i class={success ? 'fa-solid fa-check' : 'fa-solid fa-circle-exclamation'} slot="icon" />
 			{message}
 		</Alert>

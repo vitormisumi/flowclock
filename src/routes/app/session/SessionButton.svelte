@@ -10,7 +10,7 @@
 
 	function startSession() {
 		session.start();
-		sessionBreak.stop();
+		sessionBreak.end();
 	}
 </script>
 

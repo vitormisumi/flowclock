@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
-	import Menu from './Menu.svelte';
-	import Avatar from './Avatar.svelte';
+	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import Clock from './Clock.svelte';
-	import { sessionBreak, session } from './session/stores';
 	import { page } from '$app/stores';
+	import Avatar from './Avatar.svelte';
+	import Menu from './Menu.svelte';
+	import Clock from './Clock.svelte';
 
 	export let data;
 
@@ -26,21 +25,6 @@
 	setContext('settings', settings);
 	setContext('sessions', sessions);
 
-	let audio: HTMLAudioElement;
-
-	onMount(() => {
-		const interval = setInterval(() => {
-			if ($sessionBreak.running && !$sessionBreak.alarmPlayed) {
-				if (Date.now() - $session.end >= $sessionBreak.duration) {
-					audio.play();
-					$sessionBreak.alarmPlayed = true;
-				}
-			}
-		}, 1000);
-
-		return () => clearInterval(interval);
-	});
-
 	let menu = ['/app/account', '/app/settings'];
 	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214';
 </script>
@@ -51,4 +35,3 @@
 <Avatar />
 <Menu />
 <Clock />
-<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />

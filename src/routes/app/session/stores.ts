@@ -18,7 +18,7 @@ function createSession() {
             return {
                 ...x,
                 running: false,
-                end: Date.now()
+                end: Date.now(),
             }
         }),
 	};
@@ -40,15 +40,21 @@ function createBreak() {
             duration: duration,
             alarmPlayed: false,
         }),
-        stop: () => set({
+        end: () => set({
             running: false,
             duration: 0,
             alarmPlayed: false,
+        }),
+        alarm: () => set({
+            running: true,
+            duration: 0,
+            alarmPlayed: true,
         }),
     }
 }
 
 export const sessionBreak = createBreak();
+
 
 export const distraction = writable(false);
 export const distractionStart = writable(0);
