@@ -17,15 +17,15 @@
 	};
 </script>
 
-<div class="grid justify-center bg-secondary-900 h-screen items-center">
-	<div class="w-screen max-w-lg p-4 grid gap-8">
-		<h1 class="text-center text-xl text-primary-600 font-bold">Password Recovery</h1>
+<div class="grid h-screen items-center justify-center bg-secondary-900">
+	<div class="grid w-screen max-w-lg gap-8 p-4">
+		<h1 class="text-center text-xl font-bold text-primary-600">Password Recovery</h1>
 		<form method="POST" class="grid gap-4" use:enhance={handleSignIn}>
 			<p class="text-secondary-50">
 				Type your email below and we will send you a link to reset your password
 			</p>
 			<div>
-				<Label for="email" class="text-primary-50 mb-2">Email</Label>
+				<Label for="email" class="mb-2 text-primary-50">Email</Label>
 				<Input
 					class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 					name="email"
@@ -37,7 +37,7 @@
 			</div>
 			<Button class="w-full" type="submit" disabled={loading}>Recover password</Button>
 		</form>
-        <p class="text-secondary-50">
+		<p class="text-secondary-50">
 			Have you remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.
 		</p>
 	</div>

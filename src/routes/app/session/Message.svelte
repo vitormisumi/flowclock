@@ -31,4 +31,4 @@
 	}
 </script>
 
-<p class="h-20" bind:textContent={message} contenteditable />
+<p class="h-20 landscape:h-auto" bind:textContent={message} contenteditable />

@@ -8,7 +8,7 @@
 	const user: User = getContext('user');
 </script>
 
-<Avatar border id="user-drop" src={avatar} class="cursor-pointer fixed right-4 top-4" />
+<Avatar border id="user-drop" src={avatar} class="fixed right-4 top-4 cursor-pointer" />
 <Dropdown triggeredBy="#user-drop" class="w-fit">
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium"> {user.email} </span>
@@ -17,6 +17,6 @@
 	<DropdownItem href="/app/settings">Settings</DropdownItem>
 	<DropdownDivider />
 	<form method="POST" action="/app" use:enhance>
-		<DropdownItem type="submit" class="text-accent-700 rounded-b-lg">Sign Out</DropdownItem>
+		<DropdownItem type="submit" class="rounded-b-lg text-accent-700">Sign Out</DropdownItem>
 	</form>
 </Dropdown>

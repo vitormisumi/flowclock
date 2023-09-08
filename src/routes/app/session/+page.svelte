@@ -8,7 +8,7 @@
 </script>
 
 <div
-	class="grid gap-4 justify-items-center content-end p-4 text-center text-secondary-100 w-full md:text-xl lg:text-2xl font-light h-full"
+	class="grid h-full w-full content-end justify-items-center gap-2 p-4 text-center font-light text-secondary-100 md:gap-4 md:text-xl lg:gap-8 lg:text-2xl"
 >
 	<Message />
 	<SessionButton />

@@ -14,15 +14,10 @@
 </script>
 
 <div style:visibility={$session.running ? 'visible' : 'hidden'}>
-	{#if $distraction}
-		<Button
-			class="bg-secondary-100 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900"
-			on:click={stopDistraction}><i class="fa-solid fa-play pr-2" />Resume</Button
-		>
-	{:else}
-		<Button
-			class="bg-secondary-100 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900"
-			on:click={startDistraction}><i class="fa-solid fa-pause pr-2" />Distraction</Button
-		>
-	{/if}
+	<Button
+		size="sm"
+		class="bg-secondary-100 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-50"
+		on:click={$distraction ? stopDistraction : startDistraction}
+		><i class={$distraction ? 'fa-solid fa-play pr-2' : 'fa-solid fa-pause pr-2'} />Resume</Button
+	>
 </div>

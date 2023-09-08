@@ -39,18 +39,18 @@
 </script>
 
 <div
-	class="p-6 md:p-8 lg:px-40 grid gap-4 md:gap-8"
+	class="grid gap-4 p-6 md:gap-8 md:p-8 lg:px-40"
 	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
 	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<h1 class="text-center text-xl text-primary-600 font-bold">Settings</h1>
+	<h1 class="text-center text-xl font-bold text-primary-600">Settings</h1>
 	<form class="grid gap-8 md:gap-12" method="POST" use:enhance={handleSave}>
 		<Label class="text-secondary-50"
 			>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
 			<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
-				<div class="p-3 space-y-2">
+				<div class="space-y-2 p-3">
 					<h3 class="font-semibold text-gray-900 dark:text-white">
 						Ratio used to calculate break duration.
 					</h3>
@@ -63,7 +63,7 @@
 				<Select
 					underline
 					name="ratio"
-					class="text-secondary-100 border-secondary-300 dark:border-secondary-700 focus:border-secondary-100"
+					class="border-secondary-300 text-secondary-100 focus:border-secondary-100 dark:border-secondary-700"
 					items={ratios}
 					bind:value={$settings.ratio}
 				/>
@@ -77,12 +77,12 @@
 					name="max_length"
 					min="0"
 					bind:value={$settings.max_length}
-					class="text-sm pl-0 block w-full text-secondary-100 bg-transparent border-0 border-b-2 border-secondary-300 appearance-none dark:text-secondary-100 dark:border-secondary-700 focus:outline-none focus:ring-0 focus:border-secondary-100 peer"
+					class="peer block w-full appearance-none border-0 border-b-2 border-secondary-300 bg-transparent pl-0 text-sm text-secondary-100 focus:border-secondary-100 focus:outline-none focus:ring-0 dark:border-secondary-700 dark:text-secondary-100"
 				/>
 			{/key}
 		</Label>
 		<Popover triggeredBy="#hover-2" class="w-80" placement="bottom-start">
-			<div class="p-3 space-y-2 text-sm">
+			<div class="space-y-2 p-3 text-sm">
 				<h3 class="font-semibold text-gray-900 dark:text-white">
 					Limit of time a session can last.
 				</h3>

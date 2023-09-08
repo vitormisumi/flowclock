@@ -5,7 +5,7 @@
 
 <Navbar let:hidden let:toggle class="fixed bg-transparent">
 	<NavBrand href="/">
-        <p>Flouu</p>
+		<p>Flouu</p>
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
 	<NavUl {hidden} classUl="items-end md:items-center">

@@ -17,7 +17,7 @@
 </script>
 
 <form class="flex flex-col gap-4" method="POST" action="?/deleteAccount" use:enhance={handleClick}>
-	<i class="fa-solid fa-triangle-exclamation text-center w-full text-3xl text-red-800" />
+	<i class="fa-solid fa-triangle-exclamation w-full text-center text-3xl text-red-800" />
 	<p class="text-center">
 		<span class="font-bold text-red-800">This action cannot be reversed!</span><br /> By deleting your
 		account you will permanently lose access to all your account data. Are you sure you want to continue?
@@ -32,7 +32,7 @@
 		<Button
 			type="submit"
 			disabled={!deleteAccount}
-			class="w-full md:w-40 border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+			class="w-full border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950 md:w-40"
 			>Delete</Button
 		>
 	</div>

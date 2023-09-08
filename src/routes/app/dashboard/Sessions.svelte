@@ -15,7 +15,7 @@
 	const sessions: Writable<Session[]> = getContext('sessions');
 </script>
 
-<h2 class="text-secondary-50 text-xl font-bold">Last Sessions</h2>
+<h2 class="text-xl font-bold text-secondary-50">Last Sessions</h2>
 <Table shadow>
 	<TableHead>
 		<TableHeadCell>Date</TableHeadCell>

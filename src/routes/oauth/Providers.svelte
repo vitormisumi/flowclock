@@ -18,7 +18,7 @@
 	{#each providers as provider}
 		<form method="POST" action="/oauth" use:enhance>
 			<input type="hidden" name="provider" value={provider.name} />
-			<Button outline class="bg-secondary-50 w-full capitalize" type="submit"
+			<Button outline class="w-full bg-secondary-50 capitalize" type="submit"
 				><i class="fa-brands {provider.icon} pr-2" />{provider.name}</Button
 			>
 		</form>

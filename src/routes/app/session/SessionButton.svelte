@@ -32,7 +32,7 @@
 	>
 		<Button
 			size="xl"
-			class="bg-secondary-50 hover:bg-secondary-300 focus:ring-secondary-50 text-secondary-900 md:text-2xl"
+			class="bg-secondary-50 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-50 md:text-2xl"
 			type="submit"><i class="fa-solid fa-stop pr-4" />Break</Button
 		>
 	</form>

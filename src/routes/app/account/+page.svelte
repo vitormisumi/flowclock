@@ -23,17 +23,17 @@
 </script>
 
 <div
-	class="p-6 md:p-8 lg:px-40 grid gap-4 md:gap-8"
+	class="grid gap-4 p-6 md:gap-8 md:p-8 lg:px-40"
 	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
 	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<h1 class="text-center text-xl text-primary-600 font-bold">Account</h1>
+	<h1 class="text-center text-xl font-bold text-primary-600">Account</h1>
 	<div class="grid gap-4 md:gap-8">
 		<div>
 			<p class={titles}>Email</p>
-			<div class="grid md:flex items-center justify-between gap-2">
+			<div class="grid items-center justify-between gap-2 md:flex">
 				<p class={texts}>{user.email}</p>
 				<Button class="w-40" on:click={() => (emailModal = true)}>Update email</Button>
 				<Modal bind:open={emailModal} outsideclose size="xs" class="bg-secondary-900">
@@ -43,7 +43,7 @@
 		</div>
 		<div>
 			<p class={titles}>Password</p>
-			<div class="grid md:flex items-center justify-between gap-2">
+			<div class="grid items-center justify-between gap-2 md:flex">
 				<p class={texts}>Reset the password you use to log in to your account</p>
 				<Button class="w-40" on:click={() => (passwordModal = true)}>Reset password</Button>
 				<Modal bind:open={passwordModal} outsideclose size="xs" class="bg-secondary-900">
@@ -54,12 +54,12 @@
 	</div>
 	<hr class="my-4 border-secondary-800" />
 	<div>
-		<p class="text-red-700 font-medium">Delete account (still not working)</p>
-		<div class="grid md:flex items-center justify-between gap-4">
+		<p class="font-medium text-red-700">Delete account (still not working)</p>
+		<div class="grid items-center justify-between gap-4 md:flex">
 			<p class={texts}>Permanently delete your account and wipe all your data</p>
 			<Button
 				type="submit"
-				class="border-2 border-red-900 bg-transparent text-red-700 w-40 hover:bg-red-950"
+				class="w-40 border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 				on:click={() => (deleteModal = true)}>Delete account</Button
 			>
 			<Modal bind:open={deleteModal} outsideclose size="xs" class="bg-secondary-900">

@@ -34,17 +34,17 @@
 
 {#if milliseconds > 0}
 	<div
-		class="text-secondary-50 fixed transition-all duration-500 delay-500 divide-x pointer-events-none flex items-center justify-center text-center md:text-xl lg:text-2xl w-screen lg:left-12"
+		class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center text-secondary-50 transition-all delay-500 duration-500 md:text-xl lg:left-12 lg:text-2xl"
 		style:scale={isSession ? 3 : 1}
-		style:top={isSession ? '40%' : '3%'}
+		style:top={isSession ? '35%' : '3%'}
 	>
 		{#if !isSession}
 			<i
-				class={$session.running ? "fa-solid fa-clock px-2" : "fa-solid fa-mug-saucer px-2"}
+				class={$session.running ? 'fa-solid fa-clock px-2' : 'fa-solid fa-mug-saucer px-2'}
 				transition:slide={{ axis: 'x', duration: 500 }}
 			/>
 		{/if}
-		<p class="font-mono tracking-tight px-2">
+		<p class="px-2 font-mono tracking-tight">
 			{clock}
 		</p>
 	</div>
