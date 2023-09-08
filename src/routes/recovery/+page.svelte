@@ -43,9 +43,5 @@
 	</div>
 </div>
 {#if form}
-	{#if form?.success}
-		<Notification message={form?.message} success={form?.success} />
-	{:else}
-		<Notification message={form?.message} success={form?.success} />
-	{/if}
+	<Notification message={form?.message} success={form?.success} />
 {/if}

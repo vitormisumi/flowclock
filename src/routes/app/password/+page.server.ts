@@ -14,7 +14,7 @@ export const actions = {
 		if (newPassword !== newPassword2) {
 			return fail(500, {
 				message:
-					'The passwords you typed do not match each other. Please type the same password twice',
+					'The passwords you typed do not match each other.',
 				success: false
 			});
 		}
@@ -24,13 +24,13 @@ export const actions = {
 		});
 
 		if (error) {
-			console.log(error);
+			console.log(error.message);
 			return fail(500, {
-				message: 'Password could not be changed. Please try again later',
+				message: error.message,
 				success: false
 			});
 		}
 
-		return { message: 'Password successfully changed.', success: true };
+		return { message: 'Password successfully saved.', success: true }
 	}
 };
