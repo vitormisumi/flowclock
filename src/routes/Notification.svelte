@@ -18,7 +18,7 @@
 {#if show}
 	<div
 		transition:slide={{ duration: 500 }}
-		class="fixed left-0 top-0 z-50 flex w-full justify-center px-16 lg:left-12"
+		class="pointer-events-none fixed left-0 top-0 z-50 flex w-full justify-center px-16 lg:left-12"
 	>
 		<Alert color={success ? 'green' : 'red'} class="rounded-t-none">
 			<i class={success ? 'fa-solid fa-check' : 'fa-solid fa-circle-exclamation'} slot="icon" />
