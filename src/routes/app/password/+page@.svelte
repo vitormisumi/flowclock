@@ -23,29 +23,31 @@
 	{:else}
 		<div class="grid w-screen max-w-lg gap-8 p-4">
 			<h1 class="text-center text-xl font-bold text-primary-600">Password reset</h1>
-			<p class="text-center text-secondary-300">To regain access to your account, please set a new password.</p>
-			<form class="flex flex-col gap-4" method="POST" use:enhance={handleClick}>
+			<p class="text-center text-secondary-300">
+				To regain access to your account, please set a new password.
+			</p>
+			<form class="grid gap-4" method="POST" use:enhance={handleClick}>
 				<div>
-					<Label for="new_password" class="text-secondary-50">New password</Label>
+					<Label for="new_password" class="mb-2 text-primary-50">New password</Label>
 					<Input
 						class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 						type="password"
 						name="new_password"
 						placeholder="Type your new password"
-						required
-					/>
+						required><i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
+					>
 				</div>
 				<div>
-					<Label for="new_password2" class="text-secondary-50">Confirm new password</Label>
+					<Label for="new_password2" class="mb-2 text-primary-50">Confirm new password</Label>
 					<Input
 						class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 						type="password"
 						name="new_password2"
 						placeholder="Confirm your new password"
-						required
-					/>
+						required><i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
+					>
 				</div>
-				<Button type="submit" disabled={loading}>Confirm</Button>
+				<Button type="submit" disabled={loading}>Reset password</Button>
 			</form>
 			<p class="text-secondary-50">
 				Remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.

@@ -15,8 +15,13 @@
 </script>
 
 <form class="flex flex-col gap-4" method="POST" action="?/updateEmail" use:enhance={handleClick}>
+	<i class="fa-solid fa-envelope w-full text-center text-3xl text-secondary-300" />
+	<p class="text-center text-secondary-300">
+		To change the email registered to your account, fill the fields below. You will receive an email
+		on both addresses to confirm the change.
+	</p>
 	<div>
-		<Label for="current_email" class="text-primary-50">Current Email</Label>
+		<Label for="current_email" class="mb-2 text-primary-50">Current Email</Label>
 		<Input
 			class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 			name="email"
@@ -28,7 +33,7 @@
 		>
 	</div>
 	<div>
-		<Label for="new_email" class="text-primary-50">New Email</Label>
+		<Label for="new_email" class="mb-2 text-primary-50">New Email</Label>
 		<Input
 			class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 			name="email"

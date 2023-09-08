@@ -13,7 +13,7 @@ export const actions = {
 
 		if (error) {
 			return fail(500, {
-				message: 'User could not be logged in. Please check your email and password.',
+				message: 'User could not be logged in. Please check you typed your email and password correctly.',
 				success: false,
 				email
 			});

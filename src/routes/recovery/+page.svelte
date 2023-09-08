@@ -21,7 +21,7 @@
 	<div class="grid w-screen max-w-lg gap-8 p-4">
 		<h1 class="text-center text-xl font-bold text-primary-600">Password Recovery</h1>
 		<form method="POST" class="grid gap-4" use:enhance={handleSignIn}>
-			<p class="text-secondary-50">
+			<p class="text-secondary-300">
 				Type your email below and we will send you a link to reset your password
 			</p>
 			<div>

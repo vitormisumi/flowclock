@@ -30,7 +30,7 @@
 </script>
 
 <div
-	class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24 landscape:pb-0 lg:landscape:py-24"
+	class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24 landscape:pb-0 landscape:pl-24 lg:landscape:py-24"
 	style:background
 >
 	<slot />

@@ -1,23 +1,42 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
-	import { distraction, distractionStart, distractionEnd, session } from './stores';
+	import { Button, Modal, Select } from 'flowbite-svelte';
+	import { distractions, session } from './stores';
+
+	let running: boolean = false;
+
+	let reason: string;
+	let reasons = [
+		{ value: 'phone', name: 'phone' },
+		{ value: 'colleague', name: 'colleague' },
+	];
 
 	function startDistraction() {
-		$distraction = true;
-		$distractionStart = Date.now();
+		distractions.start();
+		running = true;
 	}
 
-	function stopDistraction() {
-		$distraction = false;
-		$distractionEnd = Date.now();
+	function endDistraction() {
+		distractions.end(reason);
+		running = false;
 	}
 </script>
 
 <div style:visibility={$session.running ? 'visible' : 'hidden'}>
-	<Button
-		size="sm"
-		class="bg-secondary-100 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-50"
-		on:click={$distraction ? stopDistraction : startDistraction}
-		><i class={$distraction ? 'fa-solid fa-play pr-2' : 'fa-solid fa-pause pr-2'} />Resume</Button
-	>
+	{#if !running}
+		<Button size="sm" on:click={startDistraction}
+			><i class="fa-solid fa-pause pr-4" />Distraction</Button
+		>
+	{:else}
+		<Modal bind:open={running} class="bg-secondary-900" size="sm">
+			<p>
+				Your session is paused. Select the reason for the distraction and resume your session once
+				you are ready.
+			</p>
+			<Select items={reasons} bind:value={reason} placeholder="Select a reason" />
+			<Button size="sm" on:click={endDistraction}><i class="fa-solid fa-play pr-4" />Resume</Button>
+		</Modal>
+	{/if}
 </div>
+<!-- {#each $distractions as d}
+	<p class="text-white">{Object.entries(d)}</p>
+{/each} -->

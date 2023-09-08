@@ -25,7 +25,7 @@ export const actions = {
 		if (error) {
 			console.log(error);
 			return fail(500, {
-				message: 'Email could not be changed. Please try again later',
+				message: error.message,
 				success: false
 			});
 		}
@@ -35,7 +35,7 @@ export const actions = {
 		};
 	},
 
-	updatePassword: async ({ request, locals: { supabase, getSession } }) => {
+	updatePassword: async ({ locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
 			throw redirect(303, '/');
@@ -49,7 +49,7 @@ export const actions = {
 			if (error) {
 				console.log(error);
 				return fail(500, {
-					message: 'Password could not be changed. Please try again later',
+					message: error.message,
 					success: false
 				});
 			}

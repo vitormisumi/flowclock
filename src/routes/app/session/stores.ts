@@ -60,6 +60,34 @@ function createBreak() {
 
 export const sessionBreak = createBreak();
 
-export const distraction = writable(false);
-export const distractionStart = writable(0);
-export const distractionEnd = writable(0);
+interface Distraction {
+	start: number;
+	end: number;
+	reason: string;
+}
+
+function createDistractions() {
+	const { subscribe, update } = writable<Distraction[]>([]);
+
+	return {
+		subscribe,
+		start: () =>
+			update((x) => [...x, { start: Date.now(), end: 0, reason: "" }]),
+		end: (reason: string) =>
+			update((x) => {
+				if (x.length === 0) {
+					return x
+				}
+				const distractions = [...x];
+				const currentDistraction = distractions[x.length - 1];
+				distractions[x.length - 1] = {
+					...currentDistraction,
+					end: Date.now(),
+					reason: reason,
+				};
+				return distractions;
+			})
+	};
+}
+
+export const distractions = createDistractions();

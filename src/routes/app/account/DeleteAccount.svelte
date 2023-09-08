@@ -18,22 +18,20 @@
 
 <form class="flex flex-col gap-4" method="POST" action="?/deleteAccount" use:enhance={handleClick}>
 	<i class="fa-solid fa-triangle-exclamation w-full text-center text-3xl text-red-800" />
-	<p class="text-center">
+	<p class="text-center text-secondary-300">
 		<span class="font-bold text-red-800">This action cannot be reversed!</span><br /> By deleting your
 		account you will permanently lose access to all your account data. Are you sure you want to continue?
 	</p>
 	<Toggle
 		size="small"
 		color="red"
-		class="text-secondary-50"
+		class="text-primary-50"
 		on:change={() => (deleteAccount = !deleteAccount)}>Confirm account deletion</Toggle
 	>
-	<div class="grid gap-2 md:flex md:justify-between">
-		<Button
-			type="submit"
-			disabled={!deleteAccount}
-			class="w-full border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950 md:w-40"
-			>Delete</Button
-		>
-	</div>
+	<Button
+		type="submit"
+		disabled={!deleteAccount}
+		class="w-full border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+		>Delete</Button
+	>
 </form>
