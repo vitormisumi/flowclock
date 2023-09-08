@@ -17,12 +17,13 @@
 	};
 </script>
 
-<div class="flex h-screen items-center justify-center bg-primary-900">
+<div class="grid h-screen items-center justify-center bg-secondary-900">
 	{#if form?.success}
-		<Button href="/app/session">Continue to app</Button>
+		<Button href="/app/session" size="xl">Continue to app</Button>
 	{:else}
-		<Card class="border-none bg-secondary-900">
-			<p class="pb-8">In order to regain access to your account, please set a new password.</p>
+		<div class="grid w-screen max-w-lg gap-8 p-4">
+			<h1 class="text-center text-xl font-bold text-primary-600">Password reset</h1>
+			<p class="text-center text-secondary-300">To regain access to your account, please set a new password.</p>
 			<form class="flex flex-col gap-4" method="POST" use:enhance={handleClick}>
 				<div>
 					<Label for="new_password" class="text-secondary-50">New password</Label>
@@ -46,7 +47,10 @@
 				</div>
 				<Button type="submit" disabled={loading}>Confirm</Button>
 			</form>
-		</Card>
+			<p class="text-secondary-50">
+				Remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.
+			</p>
+		</div>
 	{/if}
 </div>
 {#if form}

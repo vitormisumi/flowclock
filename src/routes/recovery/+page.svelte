@@ -38,7 +38,7 @@
 			<Button class="w-full" type="submit" disabled={loading}>Recover password</Button>
 		</form>
 		<p class="text-secondary-50">
-			Have you remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.
+			Remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.
 		</p>
 	</div>
 </div>
