@@ -20,7 +20,7 @@
 </script>
 
 <nav
-	class="absolute bottom-0 left-0 grid h-16 w-full items-center bg-gradient-to-b from-primary-700 to-secondary-900 md:h-24 lg:top-0 lg:h-screen lg:w-24 lg:items-start landscape:top-0 landscape:h-screen landscape:w-24"
+	class="fixed bottom-0 left-0 grid h-16 w-full items-center bg-gradient-to-b from-primary-700 to-secondary-900 md:h-24 lg:top-0 lg:h-screen lg:w-24 lg:items-start landscape:top-0 landscape:h-screen landscape:w-24"
 >
 	<ul class="flex justify-around p-2 sm:justify-center sm:gap-4 lg:grid landscape:grid">
 		{#each menuItems as item}
