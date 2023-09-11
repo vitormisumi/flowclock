@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Modal, Select } from 'flowbite-svelte';
-	import { distractions, session } from './stores';
+	import { distractions, session, distractionLength } from './stores';
 
 	let running: boolean = false;
 
@@ -37,6 +37,3 @@
 		</Modal>
 	{/if}
 </div>
-<!-- {#each $distractions as d}
-	<p class="text-white">{Object.entries(d)}</p>
-{/each} -->

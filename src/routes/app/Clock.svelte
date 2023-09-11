@@ -1,23 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak } from './session/stores';
+	import { session, sessionBreak, distractionLength, milliseconds } from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
 
-	let milliseconds: number = 0;
-
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session.running) {
-				milliseconds = Date.now() - $session.start;
+				$milliseconds = Date.now() - $session.start - $distractionLength;
 			} else if ($sessionBreak.running) {
-				if (milliseconds > 0) {
-					milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
+				if ($milliseconds > 0) {
+					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 				} else if (!$sessionBreak.alarmPlayed) {
 					audio.play();
 					sessionBreak.alarm();
-					milliseconds = 0;
+					$milliseconds = 0;
 				}
 			}
 		}, 1000);
@@ -25,14 +23,14 @@
 		return () => clearInterval(interval);
 	});
 
-	$: clock = millisecondsToClock(milliseconds);
+	$: clock = millisecondsToClock($milliseconds);
 
 	$: isSession = $page.url.pathname === '/app/session';
 
 	let audio: HTMLAudioElement;
 </script>
 
-{#if milliseconds > 0}
+{#if $milliseconds > 0}
 	<div
 		class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center text-secondary-50 transition-all delay-500 duration-500 md:text-xl lg:left-12 lg:text-2xl landscape:left-12"
 		style:scale={isSession ? 3 : 1}

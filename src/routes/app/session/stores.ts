@@ -1,4 +1,6 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
+
+export const milliseconds = writable(0);
 
 function createSession() {
 	const { subscribe, set, update } = writable({
@@ -91,3 +93,18 @@ function createDistractions() {
 }
 
 export const distractions = createDistractions();
+
+export const distractionLength = derived(
+	distractions,
+	($distractions) => {
+		let l: number = 0;
+		for (let i = 0; i < $distractions.length; i++) {
+			if ($distractions[i].end === 0) {
+				l += Date.now() - $distractions[i].start;
+			} else {
+				l += $distractions[i].end - $distractions[i].start;
+			}
+		}
+		return l
+	}
+)
