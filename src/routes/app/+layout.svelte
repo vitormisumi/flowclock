@@ -3,7 +3,7 @@
 	import { writable } from 'svelte/store';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
-	import Avatar from './Avatar.svelte';
+	import UserMenu from './UserMenu.svelte';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
 
@@ -35,6 +35,6 @@
 >
 	<slot />
 </div>
-<Avatar />
+<UserMenu />
 <Menu />
 <Clock />

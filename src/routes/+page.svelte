@@ -1,11 +1,12 @@
 <script>
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
+	import logo from '$lib/assets/logo.png'
 	import Hero from './Hero.svelte';
 </script>
 
-<Navbar let:hidden let:toggle class="fixed bg-transparent">
+<Navbar let:hidden let:toggle class="bg-transparent">
 	<NavBrand href="/">
-		<p>Flouu</p>
+		<img src={logo} alt="Flouu logo" class="w-12 md:w-16 lg:w-20">
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
 	<NavUl {hidden} classUl="items-end md:items-center">

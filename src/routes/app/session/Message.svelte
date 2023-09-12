@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
-	import { getContext, onMount } from 'svelte';
+	import { getContext } from 'svelte';
 	import { milliseconds, session, sessionBreak } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');

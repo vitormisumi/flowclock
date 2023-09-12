@@ -62,14 +62,14 @@ function createBreak() {
 
 export const sessionBreak = createBreak();
 
-interface Distraction {
+export interface Distraction {
 	start: number;
 	end: number;
 	reason: string;
 }
 
 function createDistractions() {
-	const { subscribe, update } = writable<Distraction[]>([]);
+	const { subscribe, update, set } = writable<Distraction[]>([]);
 
 	return {
 		subscribe,
@@ -88,7 +88,9 @@ function createDistractions() {
 					reason: reason,
 				};
 				return distractions;
-			})
+			}),
+		reset: () =>
+			set([])
 	};
 }
 

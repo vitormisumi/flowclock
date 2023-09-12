@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { session, sessionBreak } from './stores';
+	import { distractionLength, session, sessionBreak, distractions } from './stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../settings/types';
@@ -12,6 +12,8 @@
 		session.start();
 		sessionBreak.end();
 	}
+
+	$: console.log($distractions)
 </script>
 
 {#if !$session.running}
@@ -25,9 +27,10 @@
 		method="POST"
 		use:enhance={({ formData }) => {
 			session.end();
-			sessionBreak.start(($session.end - $session.start) / $settings.ratio);
+			sessionBreak.start(($session.end - $session.start - $distractionLength) / $settings.ratio);
 			formData.append('session_start', new Date($session.start).toISOString());
 			formData.append('session_end', new Date($session.end).toISOString());
+			formData.append('distractions', JSON.stringify($distractions));
 		}}
 	>
 		<Button

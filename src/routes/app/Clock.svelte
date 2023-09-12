@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, distractionLength, milliseconds } from './session/stores';
+	import { session, sessionBreak, distractionLength, milliseconds, distractions } from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
@@ -10,11 +10,12 @@
 			if ($session.running) {
 				$milliseconds = Date.now() - $session.start - $distractionLength;
 			} else if ($sessionBreak.running) {
-				if ($milliseconds > 0) {
+				if ($milliseconds > 1000) {
 					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 				} else if (!$sessionBreak.alarmPlayed) {
 					audio.play();
 					sessionBreak.alarm();
+					distractions.reset();
 					$milliseconds = 0;
 				}
 			}
