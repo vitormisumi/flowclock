@@ -48,7 +48,10 @@ const config = {
 			fontFamily: {
 				mono: ['"Chivo Mono"', 'monospace']
 			}
-		}
+		},
+		animation: {
+        'spin-slow': 'spin 600s linear infinite',
+      }
 	},
 
 	plugins: [require('flowbite/plugin')],
