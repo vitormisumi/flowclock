@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Message from './Message.svelte';
 	import SessionButton from './SessionButton.svelte';
-	import DistractionButton from './DistractionButton.svelte';
+	import Distractions from './Distractions.svelte';
 	import Notification from '../../Notification.svelte';
 
 	export let form;
@@ -12,7 +12,7 @@
 >
 	<Message />
 	<SessionButton />
-	<DistractionButton />
+	<Distractions />
 </div>
 
 {#if form}

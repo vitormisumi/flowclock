@@ -6,6 +6,7 @@
 	import UserMenu from './UserMenu.svelte';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
+	import Warning from './Warning.svelte';
 
 	export let data;
 
@@ -30,7 +31,7 @@
 </script>
 
 <div
-	class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24 landscape:pb-0 landscape:pl-24 lg:landscape:py-24"
+	class="absolute h-screen w-screen py-16 md:py-24 lg:pl-24 landscape:pb-0 landscape:pl-16 landscape:lg:pl-24 lg:landscape:py-24"
 	style:background
 >
 	<slot />
@@ -38,3 +39,4 @@
 <UserMenu />
 <Menu />
 <Clock />
+<Warning />

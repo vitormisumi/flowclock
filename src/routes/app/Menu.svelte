@@ -21,7 +21,7 @@
 </script>
 
 <nav
-	class="fixed bottom-0 left-0 flex h-16 w-full justify-center bg-gradient-to-b from-primary-700 to-secondary-900 md:h-24 lg:h-screen landscape:top-0 landscape:h-screen landscape:w-16 landscape:flex-col landscape:justify-start landscape:gap-8 landscape:pt-4 landscape:md:w-24 landscape:lg:pt-8"
+	class="fixed bottom-0 left-0 flex h-16 w-full justify-center bg-gradient-to-b from-primary-700 to-secondary-900 md:h-24 landscape:top-0 landscape:h-screen landscape:w-16 landscape:flex-col landscape:justify-start landscape:gap-4 landscape:pt-4 landscape:md:w-24 landscape:md:gap-8 landscape:lg:pt-8"
 >
 	<UserMenu />
 	<ul class="flex justify-around p-2 sm:justify-center sm:gap-4 lg:flex-col landscape:flex-col">

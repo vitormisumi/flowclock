@@ -13,10 +13,11 @@ export const actions = {
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: ratio, max_length: maxLength })
+			.update({ ratio: ratio, max_length: maxLength ? maxLength : 0 })
 			.eq('user_id', session.user.id);
 
 		if (error) {
+			console.log(error);
 			return fail(500, {
 				message: 'Settings could not be saved. Please try again',
 				success: false

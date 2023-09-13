@@ -21,4 +21,5 @@
 	}
 </script>
 
-<p class="h-20 landscape:h-auto">{message}</p>
+<p class="h-20 landscape:h-auto" style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>{message}</p>
+

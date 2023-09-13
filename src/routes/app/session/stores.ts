@@ -6,7 +6,9 @@ function createSession() {
 	const { subscribe, set, update } = writable({
 		running: false,
 		start: 0,
-		end: 0
+		end: 0,
+		pause: false,
+		warning: false
 	});
 
 	return {
@@ -15,16 +17,40 @@ function createSession() {
 			set({
 				running: true,
 				start: Date.now(),
-				end: 0
+				end: 0,
+				pause: false,
+				warning: false
 			}),
 		end: () =>
 			update((x) => {
 				return {
 					...x,
 					running: false,
-					end: Date.now()
+					end: Date.now(),
+					warning: false
 				};
-			})
+			}),
+		warning: () =>
+			update((x) => {
+				return {
+					...x,
+					warning: true
+				}
+			}),
+		pause: () =>
+			update((x) => {
+				return {
+					...x,
+					pause: true
+				}
+			}),
+		unpause: () =>
+			update((x) => {
+				return {
+					...x,
+					pause: false
+				}
+			}),
 	};
 }
 

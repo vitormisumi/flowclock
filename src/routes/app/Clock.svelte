@@ -1,23 +1,42 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from './settings/types';
+	import { getContext } from 'svelte';
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, distractionLength, milliseconds, distractions } from './session/stores';
+	import {
+		session,
+		sessionBreak,
+		distractionLength,
+		milliseconds,
+		distractions
+	} from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
 
+	const settings: Writable<Settings> = getContext('settings');
+
+	let alarm: HTMLAudioElement;
+	let warning: HTMLAudioElement;
+
 	onMount(() => {
 		const interval = setInterval(() => {
-			if ($session.running) {
+			if ($session.running && !$session.pause) {
 				$milliseconds = Date.now() - $session.start - $distractionLength;
 			} else if ($sessionBreak.running) {
 				if ($milliseconds > 1000) {
 					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 				} else if (!$sessionBreak.alarmPlayed) {
-					audio.play();
+					alarm.play();
 					sessionBreak.alarm();
 					distractions.reset();
 					$milliseconds = 0;
 				}
+			}
+
+			if ($milliseconds >= $settings.max_length * 60000 && $session.running && !$session.warning) {
+				warning.play();
+				session.warning();
 			}
 		}, 1000);
 
@@ -27,15 +46,14 @@
 	$: clock = millisecondsToClock($milliseconds);
 
 	$: isSession = $page.url.pathname === '/app/session';
-
-	let audio: HTMLAudioElement;
 </script>
 
 {#if $milliseconds > 0}
 	<div
-		class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center text-secondary-50 transition-all delay-500 duration-500 md:text-xl lg:left-12 lg:text-2xl landscape:left-12"
+		class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center text-secondary-50 transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:lg:left-12"
 		style:scale={isSession ? 3 : 1}
 		style:top={isSession ? '35%' : '3%'}
+		style:color={$session.running ? '#ebf7fa' : '#257b8d'}
 	>
 		{#if !isSession}
 			<i
@@ -48,4 +66,5 @@
 		</p>
 	</div>
 {/if}
-<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={audio} />
+<audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={alarm} />
+<audio src="https://cdn.freesound.org/previews/442/442943_71257-lq.mp3" bind:this={warning} />

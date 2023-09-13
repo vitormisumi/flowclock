@@ -1,5 +1,5 @@
 <script>
-	import { Badge, Button, Chevron, Dropdown, DropdownItem } from 'flowbite-svelte';
+	import { Badge, Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 </script>
 
 <div class="grid justify-items-center gap-4">
@@ -7,8 +7,7 @@
 	<Badge class="bg-accent-400 text-accent-100">Project X</Badge>
 	<Button
 		class="h-10 w-48 bg-secondary-50 text-secondary-900 hover:bg-secondary-100 focus:bg-secondary-200 focus:ring-secondary-500"
-		><Chevron>Task Y</Chevron></Button
-	>
+	></Button>
 	<Dropdown>
 		<DropdownItem>Task 1</DropdownItem>
 		<DropdownItem>Task 2</DropdownItem>
