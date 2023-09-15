@@ -16,6 +16,12 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.select('*')
 		.eq('user_id', session.user.id)
 		.order('id', { ascending: false });
+	
+	const { data: distractions } = await supabase
+		.from('distractions')
+		.select('*')
+		.eq('user_id', session.user.id)
+		.order('id', { ascending: false });
 
 	const { data: settings, error } = await supabase
 		.from('settings')
@@ -26,10 +32,10 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	if (!settings || settings.length === 0) {
 		const { data: settings, error } = await supabase
 			.from('settings')
-			.insert({ user_id: session.user.id, ratio: 3, max_length: 60 })
+			.insert({ user_id: session.user.id, ratio: 3, warning: 60 })
 			.select();
-		return { session, sessions, settings, user, error };
+		return { session, sessions, distractions, settings, user, error };
 	}
 
-	return { session, sessions, settings, user, error };
+	return { session, sessions, distractions, settings, user, error };
 };

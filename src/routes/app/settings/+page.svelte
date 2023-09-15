@@ -27,7 +27,7 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	let warning = $settings.max_length != 0 ? true : false;
+	let warning = $settings.warning != 0 ? true : false;
 
 	let loading = false;
 
@@ -96,9 +96,9 @@
 			{#key $settings}
 				<input
 					type="number"
-					name="max_length"
+					name="warning"
 					min="1"
-					value={$settings.max_length}
+					value={$settings.warning}
 					class="peer block w-full appearance-none border-0 border-b-2 border-secondary-300 bg-transparent pl-0 text-sm text-primary-50 focus:border-secondary-100 focus:outline-none focus:ring-0 disabled:border-secondary-800 disabled:text-secondary-800"
 					disabled={!warning}
 				/>

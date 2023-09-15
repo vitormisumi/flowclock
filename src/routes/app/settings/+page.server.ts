@@ -9,11 +9,11 @@ export const actions = {
 
 		const formData = await request.formData();
 		const ratio = formData.get('ratio') as string;
-		const maxLength = formData.get('max_length') as string;
+		const maxLength = formData.get('warning') as string;
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: ratio, max_length: maxLength ? maxLength : 0 })
+			.update({ ratio: ratio, warning: maxLength ? maxLength : 0 })
 			.eq('user_id', session.user.id);
 
 		if (error) {

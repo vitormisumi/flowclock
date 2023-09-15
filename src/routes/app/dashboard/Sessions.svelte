@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		Card,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -7,32 +8,43 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import type { Session } from '../session/types';
-	import type { Writable } from 'svelte/store';
-	import { getContext } from 'svelte';
-	import { dateFromTimestamp, timeFromTimestamp } from '$lib/functions/functions';
+	import { filteredSessions } from './stores';
+	import { dateFromTimestamp, millisecondsToClock, timeFromTimestamp } from '$lib/functions/functions';
 
-	const sessions: Writable<Session[]> = getContext('sessions');
+	$: duration = $filteredSessions.reduce((accumulator, object) => {
+		return accumulator + object.duration;
+	}, 0);
 </script>
 
-<h2 class="text-xl font-bold text-secondary-50">Last Sessions</h2>
-<Table shadow>
-	<TableHead>
-		<TableHeadCell>Date</TableHeadCell>
-		<TableHeadCell>Start</TableHeadCell>
-		<TableHeadCell>End</TableHeadCell>
-		<TableHeadCell>Duration</TableHeadCell>
-	</TableHead>
-	<TableBody>
-		{#each $sessions as session, i}
-			{#if i < 10}
-				<TableBodyRow>
-					<TableBodyCell>{dateFromTimestamp(session.started_at)}</TableBodyCell>
-					<TableBodyCell>{timeFromTimestamp(session.started_at)}</TableBodyCell>
-					<TableBodyCell>{timeFromTimestamp(session.ended_at)}</TableBodyCell>
-					<TableBodyCell>{session.duration}</TableBodyCell>
-				</TableBodyRow>
-			{/if}
-		{/each}
-	</TableBody>
-</Table>
+<Card size="md">
+	<div class="flex justify-around gap-2 text-center p-4">
+		<div>
+			<h2 class="text-xl font-bold text-primary-500">Total Number</h2>
+			<p>{$filteredSessions.length}</p>
+		</div>
+		<div>
+			<h2 class="text-xl font-bold text-primary-500">Total Duration</h2>
+			<p>{millisecondsToClock(duration)}</p>
+		</div>
+	</div>
+	<Table hoverable>
+		<TableHead>
+			<TableHeadCell>Date</TableHeadCell>
+			<TableHeadCell>Start</TableHeadCell>
+			<TableHeadCell>End</TableHeadCell>
+			<TableHeadCell>Duration</TableHeadCell>
+		</TableHead>
+		<TableBody>
+			{#each $filteredSessions as session, i}
+				{#if i < 10}
+					<TableBodyRow>
+						<TableBodyCell>{dateFromTimestamp(session.start)}</TableBodyCell>
+						<TableBodyCell>{timeFromTimestamp(session.start)}</TableBodyCell>
+						<TableBodyCell>{timeFromTimestamp(session.end)}</TableBodyCell>
+						<TableBodyCell>{millisecondsToClock(session.duration)}</TableBodyCell>
+					</TableBodyRow>
+				{/if}
+			{/each}
+		</TableBody>
+	</Table>
+</Card>

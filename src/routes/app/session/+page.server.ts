@@ -14,7 +14,7 @@ export const actions = {
 		
 		const { data, error } = await supabase
 			.from('sessions')
-			.insert({ user_id: session.user.id, started_at: sessionStart, ended_at: sessionEnd })
+			.insert({ user_id: session.user.id, start: sessionStart, end: sessionEnd })
 			.select();
 
 		if (error) {

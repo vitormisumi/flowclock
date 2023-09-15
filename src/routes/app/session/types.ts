@@ -1,8 +1,16 @@
 export interface Session {
 	id: number;
 	user_id: string;
-	started_at: string;
-	ended_at: string;
-	distractions: any;
+	start: string;
+	end: string;
 	duration: number;
+}
+
+export interface Distraction {
+	id: number;
+	user_id: string;
+	session_id: number;
+	start: string;
+	end: string;
+	reason: string;
 }
