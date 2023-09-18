@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import type { Session, Distraction } from '../session/types';
+	import type { Session, Distraction } from '../types';
 	import type { Writable } from 'svelte/store';
 	import { filter, filteredSessions, filteredDistractions } from './stores';
 	import { fade } from 'svelte/transition';
@@ -48,7 +48,6 @@
 			$filteredSessions = $sessions.filter((x) => {
 				const date = new Date(x.start);
 				return (
-					date.getDate() === today.getDate() &&
 					date.getMonth() + 1 === today.getMonth() + current &&
 					date.getFullYear() === today.getFullYear()
 				);

@@ -1,10 +1,5 @@
 import { writable } from "svelte/store";
-import type { Distraction, Session } from "../session/types";
-
-interface Filter {
-    timeframe: string;
-    current: boolean
-}
+import type { Distraction, Session, Filter } from "../types";
 
 export const filter = writable<Filter>({timeframe: 'all', current: true});
 

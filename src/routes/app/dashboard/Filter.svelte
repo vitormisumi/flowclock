@@ -59,7 +59,7 @@
 	// }
 </script>
 
-<div class="flex gap-2 pb-4">
+<div class="flex flex-wrap gap-2 pb-4">
 	{#each period as p}
 		{#if $filter.timeframe === p.timeframe && $filter.current === p.current}
 			<Button

@@ -19,7 +19,7 @@
 <Card size="md">
 	<div class="flex justify-around gap-2 text-center p-4">
 		<div>
-			<h2 class="text-xl font-bold text-primary-500">Total Number</h2>
+			<h2 class="text-xl font-bold text-primary-500">Number of Sessions</h2>
 			<p>{$filteredSessions.length}</p>
 		</div>
 		<div>

@@ -14,3 +14,8 @@ export interface Distraction {
 	end: string;
 	reason: string;
 }
+
+export interface Filter {
+    timeframe: string;
+    current: boolean
+}
