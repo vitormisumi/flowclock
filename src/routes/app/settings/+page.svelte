@@ -27,9 +27,9 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	let warning = $settings.warning != 0 ? true : false;
+	let warning: boolean = $settings.warning != 0 ? true : false;
 
-	let loading = false;
+	let loading: boolean = false;
 
 	const handleSave: SubmitFunction = () => {
 		loading = true;
@@ -38,8 +38,6 @@
 			update();
 		};
 	};
-
-	$: console.log($settings);
 </script>
 
 <div

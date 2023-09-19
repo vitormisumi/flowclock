@@ -59,7 +59,7 @@
 	// }
 </script>
 
-<div class="flex flex-wrap gap-2 pb-4">
+<div class="flex flex-wrap justify-center gap-2 pb-4">
 	{#each period as p}
 		{#if $filter.timeframe === p.timeframe && $filter.current === p.current}
 			<Button
@@ -70,7 +70,7 @@
 		{:else}
 			<Button
 				size="sm"
-				class="w-28 bg-transparent border border-primary-700"
+				class="w-28 border border-primary-700 bg-transparent"
 				on:click={() => ($filter = { timeframe: p.timeframe, current: p.current })}>{p.name}</Button
 			>
 		{/if}

@@ -34,7 +34,7 @@
 </script>
 
 <div
-	class="absolute h-[100dvh] w-screen py-16 md:pb-24 lg:pl-24 landscape:pt-10 landscape:pl-16  landscape:lg:pl-24"
+	class="fixed overflow-y-scroll h-[100dvh] w-screen py-16 md:pb-24 lg:pl-24 landscape:pl-16 landscape:pt-10 landscape:lg:pl-24"
 	style:background
 >
 	<slot />

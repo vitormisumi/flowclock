@@ -2,12 +2,15 @@
 	import { getContext } from 'svelte';
 	import type { Session, Distraction } from '../types';
 	import type { Writable } from 'svelte/store';
-	import { filter, filteredSessions, filteredDistractions } from './stores';
+	import { filter, filteredSessions } from './stores';
 	import { fade } from 'svelte/transition';
 	import { navigating } from '$app/stores';
 	import { session, sessionBreak } from '../session/stores';
 	import Filter from './Filter.svelte';
 	import Sessions from './Sessions.svelte';
+	import Notification from '../../Notification.svelte';
+
+	export let form;
 
 	const sessions: Writable<Session[]> = getContext('sessions');
 	const distractions: Writable<Distraction[]> = getContext('distractions');
@@ -74,3 +77,6 @@
 	<Filter />
 	<Sessions />
 </div>
+{#if form}
+	<Notification message={form?.message} success={form?.success} />
+{/if}
