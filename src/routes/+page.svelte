@@ -10,7 +10,7 @@
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
 	<NavUl {hidden} classUl="items-end md:items-center">
-		<NavLi href="/signin">Sign In</NavLi>
+		<NavLi href="/signin" class="text-primary-50">Sign In</NavLi>
 		<NavLi><Button href="/signup">Sign Up</Button></NavLi>
 	</NavUl>
 </Navbar>

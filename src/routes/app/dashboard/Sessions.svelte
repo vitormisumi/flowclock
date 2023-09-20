@@ -4,7 +4,6 @@
 		ButtonGroup,
 		Card,
 		Modal,
-		Pagination,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -19,7 +18,6 @@
 		timeFromTimestamp
 	} from '$lib/functions/functions';
 	import { slide } from 'svelte/transition';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 
 	$: duration = $filteredSessions.reduce((accumulator, object) => {
@@ -42,16 +40,6 @@
 	let sessionId: number | null;
 	$: sessionToDelete = $filteredSessions.find(({ id }) => id === sessionId);
 
-	let loading: boolean = false;
-
-	const handleSave: SubmitFunction = () => {
-		loading = true;
-		return async ({ update }) => {
-			loading = false;
-			update();
-		};
-	};
-
 	function previous() {
 		startRow = startRow === 0 ? startRow : startRow - 10;
 		endRow = endRow === 9 ? endRow : endRow - 10;
@@ -69,7 +57,7 @@
 		}
 	}
 
-	let paginationClass =
+	let pagination =
 		'border-primary-700 bg-primary-900 text-primary-100 focus:ring-0 hover:bg-primary-800 hover:text-primary-500 font-mono';
 
 	let disabledPagination =
@@ -92,34 +80,31 @@
 		</div>
 	</div>
 	<Table hoverable shadow>
-		<TableHead class="bg-primary-700 text-primary-50">
-			<TableHeadCell class="px-2 text-center">Date</TableHeadCell>
-			<TableHeadCell class="px-2 text-center">Duration</TableHeadCell>
-			<TableHeadCell class="px-2 text-center"></TableHeadCell>
+		<TableHead class="bg-primary-700 text-center text-primary-50">
+			<TableHeadCell class="px-2">Date</TableHeadCell>
+			<TableHeadCell class="px-2">Duration</TableHeadCell>
+			<TableHeadCell></TableHeadCell>
 		</TableHead>
 		<TableBody>
 			{#each $filteredSessions as session, i}
 				{#if i >= startRow && i <= endRow}
 					<TableBodyRow
-						class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800"
+						class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800"
 					>
-						<TableBodyCell
-							class="p-2 text-center font-light text-primary-50"
-							on:click={() => toggleRow(i)}>{dateFromTimestamp(session.start)}</TableBodyCell
+						<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
+							>{dateFromTimestamp(session.start)}</TableBodyCell
 						>
-						<TableBodyCell
-							class="p-2 text-center font-light text-primary-50"
-							on:click={() => toggleRow(i)}>{millisecondsToClock(session.duration)}</TableBodyCell
+						<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
+							>{millisecondsToClock(session.duration)}</TableBodyCell
 						>
-						<TableBodyCell class="px-0 py-2 text-center font-light text-primary-50"
+						<TableBodyCell class="px-0 py-2"
 							><Button
 								size="xs"
 								class="bg-transparent hover:bg-primary-700"
-								disabled={loading}
 								on:click={() => {
 									open = true;
 									sessionId = session.id;
-								}}><i class="fa-solid fa-trash"></i></Button
+								}}><i class="fa-solid fa-trash" /></Button
 							></TableBodyCell
 						>
 					</TableBodyRow>
@@ -127,15 +112,9 @@
 				{#if openRow === i}
 					<TableBodyRow class="border-primary-800">
 						<TableBodyCell colspan="3" class="bg-primary-900 p-0 text-primary-200">
-							<div class="flex justify-around gap-4 p-2" transition:slide>
-								<p class="font-light">
-									<i class="fa-solid fa-play"></i>
-									{timeFromTimestamp(session.start)}
-								</p>
-								<p class="font-light">
-									<i class="fa-solid fa-stop"></i>
-									{timeFromTimestamp(session.end)}
-								</p>
+							<div class="flex justify-around gap-4 p-2 font-light" transition:slide>
+								<p><i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start)}</p>
+								<p><i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end)}</p>
 							</div>
 						</TableBodyCell>
 					</TableBodyRow>
@@ -143,9 +122,9 @@
 			{/each}
 		</TableBody>
 	</Table>
-	<Modal bind:open outsideclose size="sm" class="bg-secondary-900">
-		<i class="fa-solid fa-warning w-full text-center text-3xl text-red-700"></i>
-		<p class="text-center">
+	<Modal bind:open outsideclose size="sm" class="bg-secondary-900 text-center">
+		<i class="fa-solid fa-warning w-full text-3xl text-red-700"></i>
+		<p>
 			Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start)} from
 			{timeFromTimestamp(sessionToDelete?.start)} to {timeFromTimestamp(sessionToDelete?.end)}?
 		</p>
@@ -153,7 +132,6 @@
 			class="flex w-full justify-center gap-4"
 			method="POST"
 			action="?/deleteSession"
-			use:enhance={handleSave}
 			use:enhance={({ formData }) => {
 				formData.append('session_id', JSON.stringify(sessionId));
 			}}
@@ -172,7 +150,7 @@
 				<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-left"></i></Button
 				>
 			{:else}
-				<Button class={paginationClass} on:click={previous}
+				<Button class={pagination} on:click={previous}
 					><i class="fa-solid fa-chevron-left"></i></Button
 				>
 			{/if}
@@ -180,7 +158,7 @@
 				{#if p === startRow / 10}
 					<Button disabled class={disabledPagination}>{p + 1}</Button>
 				{:else if (p < 5 && startRow < 30) || (p > (startRow - 30) / 10 && p < (startRow + 30) / 10) || (p >= pages - 5 && (startRow - 30) / 10 >= pages - 5)}
-					<Button class={paginationClass} on:click={() => page(p)}>{p + 1}</Button>
+					<Button class={pagination} on:click={() => page(p)}>{p + 1}</Button>
 				{/if}
 			{/each}
 			{#if endRow > $filteredSessions.length}
@@ -188,7 +166,7 @@
 					><i class="fa-solid fa-chevron-right"></i></Button
 				>
 			{:else}
-				<Button class={paginationClass} on:click={next}
+				<Button class={pagination} on:click={next}
 					><i class="fa-solid fa-chevron-right"></i></Button
 				>
 			{/if}

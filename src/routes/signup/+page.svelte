@@ -4,11 +4,13 @@
 	import { Label, Input, Button } from 'flowbite-svelte';
 	import Providers from '../oauth/Providers.svelte';
 	import Notification from '../Notification.svelte';
+	import logo from '$lib/assets/logo.png'
 
 	export let form;
 </script>
 
-<div class="grid h-screen items-center justify-center bg-secondary-900">
+<img src={logo} alt="Flouu logo" class="absolute left-4 top-0 h-20" />
+<div class="grid h-screen content-center justify-items-center bg-secondary-900">
 	<div class="grid w-screen max-w-lg gap-8 p-4">
 		<h1 class="text-center text-xl font-bold text-primary-600">Sign Up</h1>
 		<form method="post" class="grid gap-4" use:enhance>
