@@ -25,6 +25,7 @@ export const actions = {
 		});
 
 		if (error) {
+			console.log(error);
 			return fail(500, { message: 'Server error. Try again later.', success: false, email });
 		}
 

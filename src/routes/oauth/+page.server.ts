@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 const OAUTH_PROVIDERS = ['github', 'google'];
 
 export const actions = {
-	default: async ({ request, locals: { supabase } }) => {
+	default: async ({ request, url, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const provider = formData.get('provider') as Provider;
 
@@ -15,7 +15,7 @@ export const actions = {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: provider,
 			options: {
-				redirectTo: 'https://flouu.vercel.app/auth/callback'
+				redirectTo: `${url.origin}/auth/callback`
 			}
 		});
 

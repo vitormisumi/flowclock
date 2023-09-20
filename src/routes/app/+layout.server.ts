@@ -29,13 +29,5 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.eq('user_id', session.user.id)
 		.single();
 
-	if (!settings || settings.length === 0) {
-		const { data: settings, error } = await supabase
-			.from('settings')
-			.insert({ user_id: session.user.id, ratio: 3, warning: 60 })
-			.select();
-		return { session, sessions, distractions, settings, user, error };
-	}
-
 	return { session, sessions, distractions, settings, user, error };
 };
