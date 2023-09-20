@@ -123,7 +123,7 @@
 		</TableBody>
 	</Table>
 	<Modal bind:open outsideclose size="sm" class="bg-secondary-900 text-center">
-		<i class="fa-solid fa-warning w-full text-3xl text-red-700"></i>
+		<i class="fa-solid fa-warning w-full text-3xl text-red-700" />
 		<p>
 			Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start)} from
 			{timeFromTimestamp(sessionToDelete?.start)} to {timeFromTimestamp(sessionToDelete?.end)}?
@@ -147,11 +147,10 @@
 	<div class="flex w-full justify-center pt-2">
 		<ButtonGroup>
 			{#if startRow === 0}
-				<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-left"></i></Button
-				>
+				<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-left" /></Button>
 			{:else}
 				<Button class={pagination} on:click={previous}
-					><i class="fa-solid fa-chevron-left"></i></Button
+					><i class="fa-solid fa-chevron-left" /></Button
 				>
 			{/if}
 			{#each { length: pages } as _, p}
@@ -161,14 +160,10 @@
 					<Button class={pagination} on:click={() => page(p)}>{p + 1}</Button>
 				{/if}
 			{/each}
-			{#if endRow > $filteredSessions.length}
-				<Button disabled class={disabledPagination}
-					><i class="fa-solid fa-chevron-right"></i></Button
-				>
+			{#if endRow >= $filteredSessions.length - 1}
+				<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-right" /></Button>
 			{:else}
-				<Button class={pagination} on:click={next}
-					><i class="fa-solid fa-chevron-right"></i></Button
-				>
+				<Button class={pagination} on:click={next}><i class="fa-solid fa-chevron-right" /></Button>
 			{/if}
 		</ButtonGroup>
 	</div>
