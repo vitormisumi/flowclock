@@ -35,7 +35,7 @@ export const actions = {
 		};
 	},
 
-	updatePassword: async ({ locals: { supabase, getSession } }) => {
+	updatePassword: async ({ url, locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
 			throw redirect(303, '/');
@@ -43,7 +43,7 @@ export const actions = {
 
 		if (session.user.email) {
 			let { error } = await supabase.auth.resetPasswordForEmail(session.user.email, {
-				redirectTo: 'https://flouu.vercel.app/app/password'
+				redirectTo: `${url.origin}/auth/callback`
 			});
 
 			if (error) {

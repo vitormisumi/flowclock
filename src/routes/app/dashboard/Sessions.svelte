@@ -122,9 +122,9 @@
 			{/each}
 		</TableBody>
 	</Table>
-	<Modal bind:open outsideclose size="sm" class="bg-secondary-900 text-center">
+	<Modal bind:open outsideclose size="xs" class="bg-secondary-900 text-center">
 		<i class="fa-solid fa-warning w-full text-3xl text-red-700" />
-		<p>
+		<p class="text-secondary-200">
 			Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start)} from
 			{timeFromTimestamp(sessionToDelete?.start)} to {timeFromTimestamp(sessionToDelete?.end)}?
 		</p>
