@@ -8,7 +8,7 @@
 	const user: User = getContext('user');
 
 	let open: boolean = false;
-	
+
 	let loading: boolean = false;
 
 	const handleClick: SubmitFunction = () => {
@@ -25,7 +25,7 @@
 	<div class="grid items-center justify-between gap-2 md:flex">
 		<p class="text-sm text-secondary-300">{user.email}</p>
 		<Button class="w-40" on:click={() => (open = true)}>Update email</Button>
-		<Modal bind:open outsideclose size="xs" class="bg-secondary-900">
+		<Modal bind:open outsideclose size="xs" class="bg-secondary-900 landscape:left-8 landscape:md:left-12">
 			<form
 				class="flex flex-col gap-4"
 				method="POST"

@@ -27,7 +27,7 @@
 			class="w-40 border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 			on:click={() => (open = true)}>Delete account</Button
 		>
-		<Modal bind:open outsideclose size="xs" class="bg-secondary-900">
+		<Modal bind:open outsideclose size="xs" class="bg-secondary-900 landscape:left-8 landscape:md:left-12">
 			<form
 				class="flex flex-col gap-4"
 				method="POST"

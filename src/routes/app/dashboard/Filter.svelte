@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import { Button, Drawer } from 'flowbite-svelte';
 	import { filter } from './stores';
 
-	let period = [
+	let periods = [
 		{
 			name: 'Today',
 			timeframe: 'day',
@@ -50,30 +50,49 @@
 		}
 	];
 
-	// let startDate: string;
+	$: selected = periods.filter(
+		(x) => x.timeframe === $filter.timeframe && x.current === $filter.current
+	);
 
-	// $: if ($filter.timeframe === 'day' && $filter.current) {
-	//     startDate = new Date().toDateString()
-	// } else if ($filter.timeframe === 'day' && !$filter.current) {
-
-	// }
+	let hidden: boolean = true;
+	function open() {
+		hidden = false;
+	}
 </script>
 
-<div class="flex flex-wrap justify-center gap-2 pb-4">
-	{#each period as p}
-		{#if $filter.timeframe === p.timeframe && $filter.current === p.current}
-			<Button
-				size="sm"
-				class="w-28"
-				on:click={() => ($filter = { timeframe: p.timeframe, current: p.current })}>{p.name}</Button
-			>
-		{:else}
-			<Button
-				size="sm"
-				class="w-28 border border-primary-700 bg-transparent"
-				on:click={() => ($filter = { timeframe: p.timeframe, current: p.current })}>{p.name}</Button
-			>
-		{/if}
-	{/each}
+<div>
+	<Button size="sm" on:click={open}
+		>{selected[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
+	>
 </div>
-<!-- <p class="text-white">{startDate}</p> -->
+<Drawer
+	placement="top"
+	width="w-full"
+	transitionType="slide"
+	class="grid bg-primary-900 landscape:pr-0 landscape:pl-16 landscape:md:pl-24"
+	bind:hidden
+>
+	<div class="flex flex-wrap justify-center gap-2">
+		{#each periods as p}
+			{#if $filter.timeframe === p.timeframe && $filter.current === p.current}
+				<Button
+					size="sm"
+					class="w-28"
+					on:click={() => {
+						hidden = true;
+						$filter = { timeframe: p.timeframe, current: p.current };
+					}}>{p.name}</Button
+				>
+			{:else}
+				<Button
+					size="sm"
+					class="w-28 border border-primary-700 bg-transparent"
+					on:click={() => {
+						hidden = true;
+						$filter = { timeframe: p.timeframe, current: p.current };
+					}}>{p.name}</Button
+				>
+			{/if}
+		{/each}
+	</div>
+</Drawer>

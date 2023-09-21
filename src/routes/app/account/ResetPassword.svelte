@@ -21,7 +21,7 @@
 	<div class="grid items-center justify-between gap-2 md:flex">
 		<p class='text-secondary-300 text-sm'>Reset the password you use to log in to your account</p>
 		<Button class="w-40" on:click={() => (open = true)}>Reset password</Button>
-		<Modal bind:open outsideclose size="xs" class="bg-secondary-900">
+		<Modal bind:open outsideclose size="xs" class="bg-secondary-900 landscape:left-8 landscape:md:left-12">
 			<form
 				class="flex flex-col gap-4"
 				method="POST"

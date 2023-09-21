@@ -1,7 +1,12 @@
 <script lang="ts">
+	import type { Settings } from '../settings/types';
+	import type { Writable } from 'svelte/store';
+	import { getContext } from 'svelte';
 	import { Button, Modal, Select } from 'flowbite-svelte';
 	import { distractions, session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
+
+	const distractionData: Writable<Settings> = getContext('distractions');
 
 	let open: boolean = false;
 
@@ -30,8 +35,8 @@
 </script>
 
 <div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>
-	<Button size="sm" on:click={startDistraction}
-		><i class="fa-solid fa-pause pr-4" />Distraction</Button
+	<Button on:click={startDistraction}
+		><i class="fa-solid fa-pause pr-3" />Distraction</Button
 	>
 </div>
 <Modal

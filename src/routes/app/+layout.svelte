@@ -11,11 +11,15 @@
 
 	const sessions = writable();
 	$: sessions.set(
-		data.sessions?.map((x) =>
-			Object.assign(x, {
-				duration: Date.parse(x.end) - Date.parse(x.start)
-			})
-		)
+		data.sessions?.map((x) => {
+			let sessionDistractions = data.distractions?.filter((d) => d.session_id === x.id);
+			let distractionDuration = sessionDistractions?.reduce((accumulator, object) => {
+				return accumulator + Date.parse(object.end) - Date.parse(object.start);
+			}, 0);
+			return Object.assign(x, {
+				duration: Date.parse(x.end) - Date.parse(x.start) - distractionDuration
+			});
+		})
 	);
 
 	const distractions = writable();
@@ -34,7 +38,7 @@
 </script>
 
 <div
-	class="fixed overflow-y-scroll h-[100dvh] w-screen py-16 md:pb-24 lg:pl-24 landscape:pl-16 landscape:pt-10 landscape:lg:pl-24"
+	class="fixed h-[100dvh] w-screen overflow-y-scroll py-16 md:pb-24 lg:pl-24 landscape:pl-16 landscape:pt-10 landscape:lg:pl-24"
 	style:background
 >
 	<slot />

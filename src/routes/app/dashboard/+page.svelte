@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import type { Session, Distraction } from '../types';
+	import type { Session } from '../types';
 	import type { Writable } from 'svelte/store';
 	import { filter, filteredSessions } from './stores';
 	import { fade } from 'svelte/transition';
@@ -9,11 +9,11 @@
 	import Filter from './Filter.svelte';
 	import Sessions from './Sessions.svelte';
 	import Notification from '../../Notification.svelte';
+	import Distractions from './Distractions.svelte';
 
 	export let form;
 
 	const sessions: Writable<Session[]> = getContext('sessions');
-	const distractions: Writable<Distraction[]> = getContext('distractions');
 
 	const today = new Date();
 	$: current = $filter.current ? 1 : 0;
@@ -74,8 +74,13 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<Filter />
-	<Sessions />
+	<div class="grid gap-4">
+		<Filter />
+		<div class="grid place-items-start gap-4 md:grid-cols-2">
+			<Sessions />
+			<Distractions />
+		</div>
+	</div>
 </div>
 {#if form}
 	<Notification message={form?.message} success={form?.success} />
