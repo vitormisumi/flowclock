@@ -30,6 +30,10 @@
 		).sort((x, y) => y[1] - x[1])
 	);
 
+	$: perSession = $filteredSessions.length
+		? ($filteredDistractions.length / $filteredSessions.length).toFixed(2)
+		: 0;
+
 	let group: string = 'frequency';
 
 	$: distribution = group === 'frequency' ? reasonDistribution : durationDistribution;
@@ -38,21 +42,21 @@
 </script>
 
 <Card class="min-w-full border-0 bg-primary-800">
-	<div class="flex items-center justify-around gap-2 p-2 text-center">
+	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-center font-semibold text-primary-50 md:text-xl">Distractions</h2>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">Distractions</h2>
 			<p class="text-center text-lg text-accent-500 md:text-2xl">
 				{$filteredDistractions.length}
 			</p>
 		</div>
 		<div>
-			<h2 class="font-semibold text-primary-50 md:text-xl">per Session</h2>
-			<p class="text-center text-lg text-accent-500 md:text-2xl">
-				{($filteredDistractions.length / $filteredSessions.length).toFixed(2)}
-			</p>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">per Session</h2>
+			<p class="text-center text-lg text-accent-500 md:text-2xl">{perSession}</p>
 		</div>
-		<Button class="h-fit grid md:flex">Sort by<i class="fa-solid fa-chevron-down md:pl-2" /></Button>
-		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-4" bind:open>
+		<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
+			><i class="fa-solid fa-sort" /></Button
+		>
+		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-3" bind:open>
 			<li>
 				<Radio
 					name="sort"
@@ -106,7 +110,8 @@
 			y2={Object.keys(distribution).length * 50}
 			class="stroke-primary-800"
 		/>
-		<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter">{group} of distractions</text
+		<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter"
+			>{group} of distractions</text
 		>
 	</svg>
 </Card>

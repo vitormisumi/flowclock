@@ -12,13 +12,13 @@
 <Card class="border-0 bg-primary-800 min-w-full">
 	<div class="flex justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="font-semibold text-primary-50 md:text-xl">Sessions</h2>
+			<h2 class="font-semibold text-primary-50 text-sm md:text-xl">Sessions</h2>
 			<p class="text-lg text-accent-500 md:text-2xl">
 				{$filteredSessions.length}
 			</p>
 		</div>
 		<div>
-			<h2 class="font-semibold text-primary-50 md:text-xl">Total Duration</h2>
+			<h2 class="font-semibold text-primary-50 text-sm md:text-xl">Total Duration</h2>
 			<p class="text-lg text-accent-500 md:text-2xl">
 				{millisecondsToClock(duration)}
 			</p>

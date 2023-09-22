@@ -70,7 +70,7 @@
 					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{millisecondsToClock(session.duration)}</TableBodyCell
 					>
-					<TableBodyCell class="px-0 py-2"><DeleteSession {session} /></TableBodyCell>
+					<TableBodyCell class="px-0 py-2 w-0"><DeleteSession {session} /></TableBodyCell>
 				</TableBodyRow>
 			{/if}
 			{#if openRow === i}
