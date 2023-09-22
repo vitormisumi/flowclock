@@ -20,9 +20,7 @@
 	size="sm"
 >
 	<i class="fa-solid fa-warning" />
-	<p>
-		You have reached your session length warning.<br />How about taking a break?
-	</p>
+	<p>You have reached your session length warning.<br />How about taking a break?</p>
 	<div class="flex justify-evenly">
 		<form
 			method="POST"

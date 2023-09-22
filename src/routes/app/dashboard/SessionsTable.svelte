@@ -9,7 +9,7 @@
 		ButtonGroup,
 		Button
 	} from 'flowbite-svelte';
-	import { filteredSessions } from './stores';
+	import { filteredSessions, startRow, endRow } from './stores';
 	import {
 		dateFromTimestamp,
 		millisecondsToClock,
@@ -23,23 +23,20 @@
 		openRow = openRow === i ? null : i;
 	};
 
-	let startRow: number = 0;
-	let endRow: number = 9;
-
 	function previous() {
-		startRow = startRow === 0 ? startRow : startRow - 10;
-		endRow = endRow === 9 ? endRow : endRow - 10;
+		$startRow = $startRow === 0 ? $startRow : $startRow - 10;
+		$endRow = $endRow === 9 ? $endRow : $endRow - 10;
 	}
 
 	function page(p: number) {
-		startRow = 0 + p * 10;
-		endRow = 9 + p * 10;
+		$startRow = 0 + p * 10;
+		$endRow = 9 + p * 10;
 	}
 
 	function next() {
-		if (endRow <= $filteredSessions.length) {
-			startRow += 10;
-			endRow += 10;
+		if ($endRow <= $filteredSessions.length) {
+			$startRow += 10;
+			$endRow += 10;
 		}
 	}
 
@@ -60,7 +57,7 @@
 	</TableHead>
 	<TableBody>
 		{#each $filteredSessions as session, i}
-			{#if i >= startRow && i <= endRow}
+			{#if i >= $startRow && i <= $endRow}
 				<TableBodyRow
 					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800"
 				>
@@ -88,19 +85,19 @@
 </Table>
 <div class="flex w-full justify-center pt-2">
 	<ButtonGroup>
-		{#if startRow === 0}
+		{#if $startRow === 0}
 			<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-left" /></Button>
 		{:else}
 			<Button class={pagination} on:click={previous}><i class="fa-solid fa-chevron-left" /></Button>
 		{/if}
 		{#each { length: pages } as _, p}
-			{#if p === startRow / 10}
+			{#if p === $startRow / 10}
 				<Button disabled class={disabledPagination}>{p + 1}</Button>
-			{:else if (p < 5 && startRow < 30) || (p > (startRow - 30) / 10 && p < (startRow + 30) / 10) || (p >= pages - 5 && (startRow - 30) / 10 >= pages - 5)}
+			{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
 				<Button class={pagination} on:click={() => page(p)}>{p + 1}</Button>
 			{/if}
 		{/each}
-		{#if endRow >= $filteredSessions.length - 1}
+		{#if $endRow >= $filteredSessions.length - 1}
 			<Button disabled class={disabledPagination}><i class="fa-solid fa-chevron-right" /></Button>
 		{:else}
 			<Button class={pagination} on:click={next}><i class="fa-solid fa-chevron-right" /></Button>

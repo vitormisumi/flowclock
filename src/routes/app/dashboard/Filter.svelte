@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Drawer } from 'flowbite-svelte';
-	import { filter } from './stores';
+	import { filter, startRow, endRow } from './stores';
 
 	let periods = [
 		{
@@ -69,7 +69,7 @@
 	placement="top"
 	width="w-full"
 	transitionType="slide"
-	class="grid bg-primary-900 landscape:pr-0 landscape:pl-16 landscape:md:pl-24"
+	class="z-50 bg-primary-900 landscape:pl-16 landscape:pr-0 landscape:md:pl-24"
 	bind:hidden
 >
 	<div class="flex flex-wrap justify-center gap-2">
@@ -81,6 +81,8 @@
 					on:click={() => {
 						hidden = true;
 						$filter = { timeframe: p.timeframe, current: p.current };
+						$startRow = 0;
+						$endRow = 9;
 					}}>{p.name}</Button
 				>
 			{:else}
@@ -90,6 +92,8 @@
 					on:click={() => {
 						hidden = true;
 						$filter = { timeframe: p.timeframe, current: p.current };
+						$startRow = 0;
+						$endRow = 9;
 					}}>{p.name}</Button
 				>
 			{/if}

@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { page } from '$app/stores';
-	import UserMenu from './UserMenu.svelte';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
 	import Warning from './Warning.svelte';
+	import Screen from './Screen.svelte';
 
 	export let data;
 
@@ -32,18 +31,15 @@
 	setContext('sessions', sessions);
 	setContext('distractions', distractions);
 	setContext('settings', settings);
-
-	let menu = ['/app/account', '/app/settings'];
-	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214';
 </script>
 
-<div
-	class="fixed h-[100dvh] w-screen overflow-y-scroll py-16 md:pb-24 lg:pl-24 landscape:pl-16 landscape:pt-10 landscape:lg:pl-24"
-	style:background
->
-	<slot />
-</div>
-<UserMenu />
-<Menu />
+<Screen>
+	<span slot="main">
+		<slot />
+	</span>
+	<span slot="menu">
+		<Menu />
+	</span>
+</Screen>
 <Clock />
 <Warning />

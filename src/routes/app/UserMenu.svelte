@@ -8,7 +8,7 @@
 	const user: User = getContext('user');
 </script>
 
-<Avatar border id="user-drop" src={avatar} class="cursor-pointer self-center fixed top-4 left-4 md:top-6 md:left-6 lg:static landscape:static" />
+<Avatar border id="user-drop" src={avatar} class="cursor-pointer self-center fixed top-3 left-3 md:top-5 md:left-5 landscape:static" />
 <Dropdown triggeredBy="#user-drop" class="w-fit" placement="right-start">
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium"> {user.email} </span>

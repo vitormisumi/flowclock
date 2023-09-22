@@ -12,16 +12,15 @@
 		sessionBreak.end();
 		session.start();
 	}
-
-	$: buttonClass =
-		$sessionBreak.running && !$sessionBreak.alarmPlayed
-			? 'border-2 border-primary-600 bg-transparent hover:bg-primary-800 focus:ring-primary-700 md:text-2xl text-primary-600'
-			: 'bg-accent-500 hover:bg-accent-600 focus:ring-accent-300 md:text-2xl transition-colors duration-1000';
 </script>
 
 {#if !$session.running}
-	<Button size="xl" class={buttonClass} on:click={startSession}
-		><i class="fa-solid fa-play pr-4" />Start</Button
+	<Button
+		size="xl"
+		class={$sessionBreak.running && !$sessionBreak.alarmPlayed
+			? 'bg-primary-900 text-primary-600 hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700 md:text-2xl'
+			: 'bg-accent-500 transition-colors duration-1000 hover:bg-accent-600 focus:ring-accent-300 md:text-2xl'}
+		on:click={startSession}><i class="fa-solid fa-play pr-4" />Start</Button
 	>
 {:else}
 	<form
@@ -36,7 +35,7 @@
 	>
 		<Button
 			size="xl"
-			class="bg-secondary-50 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200 text-xl md:text-2xl"
+			class="bg-secondary-50 text-xl text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200 md:text-2xl"
 			type="submit"><i class="fa-solid fa-stop pr-4" />Break</Button
 		>
 	</form>

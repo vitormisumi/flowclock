@@ -8,11 +8,13 @@
 </script>
 
 <div
-	class="grid h-full w-full content-end justify-items-center gap-2 text-center font-light text-secondary-100 md:gap-4 md:text-xl lg:gap-8 lg:text-2xl"
+	class="grid h-full w-full content-end justify-items-center text-center font-light text-secondary-100 md:text-xl lg:text-2xl"
 >
-	<Message />
-	<SessionButton />
-	<Distractions />
+	<div class="grid gap-2 rounded-xl bg-primary-800 md:gap-4 lg:gap-8 w-full max-w-xl p-2 md:p-4 lg:p-8 justify-items-center">
+		<Message />
+		<SessionButton />
+		<Distractions />
+	</div>
 </div>
 
 {#if form}
