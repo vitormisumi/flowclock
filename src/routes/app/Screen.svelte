@@ -9,7 +9,7 @@
 	<slot name="top-bar" />
 </div>
 <div
-	class="h-screen w-screen py-16 md:pb-24 md:pt-20 landscape:pb-0 landscape:pl-16 landscape:md:pl-24"
+	class="h-[100dvh] w-screen py-16 md:pb-24 md:pt-20 landscape:pb-0 landscape:pl-16 landscape:md:pl-24"
 	style:background
 >
 	<div class="h-full w-full overflow-y-scroll p-4 md:p-8 lg:p-12">
