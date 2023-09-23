@@ -17,5 +17,11 @@ export interface Distraction {
 
 export interface Filter {
     timeframe: string;
-    current: boolean
+	current: boolean;
+}
+
+export interface Period {
+	name: string;
+	timeframe: string;
+	current: boolean;
 }

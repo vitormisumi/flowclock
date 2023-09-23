@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Drawer } from 'flowbite-svelte';
-	import { filter, startRow, endRow } from './stores';
+	import { filter, startRow, endRow, openRow } from './stores';
+	import type { Period } from '../types';
 
 	let periods = [
 		{
@@ -58,6 +59,14 @@
 	function open() {
 		hidden = false;
 	}
+
+	function applyFilter(period: Period) {
+		hidden = true;
+		$filter = { timeframe: period.timeframe, current: period.current };
+		$startRow = 0;
+		$endRow = 9;
+		$openRow = null;
+	}
 </script>
 
 <div>
@@ -73,30 +82,14 @@
 	bind:hidden
 >
 	<div class="flex flex-wrap justify-center gap-2">
-		{#each periods as p}
-			{#if $filter.timeframe === p.timeframe && $filter.current === p.current}
-				<Button
-					size="sm"
-					class="w-28"
-					on:click={() => {
-						hidden = true;
-						$filter = { timeframe: p.timeframe, current: p.current };
-						$startRow = 0;
-						$endRow = 9;
-					}}>{p.name}</Button
-				>
-			{:else}
-				<Button
-					size="sm"
-					class="w-28 border border-primary-700 bg-transparent"
-					on:click={() => {
-						hidden = true;
-						$filter = { timeframe: p.timeframe, current: p.current };
-						$startRow = 0;
-						$endRow = 9;
-					}}>{p.name}</Button
-				>
-			{/if}
+		{#each periods as period}
+			<Button
+				size="sm"
+				class={$filter.timeframe === period.timeframe && $filter.current === period.current
+					? 'w-28'
+					: 'w-28 border border-primary-700 bg-transparent'}
+				on:click={() => applyFilter(period)}>{period.name}</Button
+			>
 		{/each}
 	</div>
 </Drawer>
