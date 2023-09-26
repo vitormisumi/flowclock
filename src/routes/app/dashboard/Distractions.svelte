@@ -3,44 +3,45 @@
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { filteredDistractions, filteredSessions } from './stores';
 
-	$: reasonDistribution = Object.fromEntries(
-		Object.entries(
-			$filteredDistractions.reduce(
-				(distribution, item) => {
-					const reason = item.reason;
-					distribution[reason] = (distribution[reason] || 0) + 1;
-					return distribution;
-				},
-				{} as { [key: string]: number }
-			)
-		).sort((x, y) => y[1] - x[1])
-	);
-
-	$: durationDistribution = Object.fromEntries(
-		Object.entries(
-			$filteredDistractions.reduce(
-				(distribution, item) => {
-					const reason = item.reason;
-					distribution[reason] =
-						(distribution[reason] || 0) + Date.parse(item.end) - Date.parse(item.start);
-					return distribution;
-				},
-				{} as { [key: string]: number }
-			)
-		).sort((x, y) => y[1] - x[1])
-	);
-
 	$: perSession = $filteredSessions.length
 		? ($filteredDistractions.length / $filteredSessions.length).toFixed(2)
 		: 0;
 
 	let group: string = 'frequency';
 
-	$: distribution = group === 'frequency' ? reasonDistribution : durationDistribution;
+	$: distribution =
+		group === 'frequency'
+			? Object.fromEntries(
+					Object.entries(
+						$filteredDistractions.reduce(
+							(distribution, item) => {
+								const reason = item.reason;
+								distribution[reason] = (distribution[reason] || 0) + 1;
+								return distribution;
+							},
+							{} as { [key: string]: number }
+						)
+					).sort((x, y) => y[1] - x[1])
+			  )
+			: Object.fromEntries(
+					Object.entries(
+						$filteredDistractions.reduce(
+							(distribution, item) => {
+								const reason = item.reason;
+								distribution[reason] =
+									(distribution[reason] || 0) + Date.parse(item.end) - Date.parse(item.start);
+								return distribution;
+							},
+							{} as { [key: string]: number }
+						)
+					).sort((x, y) => y[1] - x[1])
+			  );
 
 	let open: boolean = false;
 
 	let options: string[] = ['frequency', 'duration'];
+
+	$: console.log(distribution);
 </script>
 
 <Card class="h-full min-w-full border-0 bg-primary-800">
@@ -91,6 +92,7 @@
 							return accumulator + value;
 						}, 0)) *
 						50}%"
+					rx="1%"
 					class="fill-primary-700"
 				/>
 				<text x="52%" y={value * 50 + 30} class="fill-primary-50 capitalize"
