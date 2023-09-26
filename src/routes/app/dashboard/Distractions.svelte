@@ -39,9 +39,11 @@
 	$: distribution = group === 'frequency' ? reasonDistribution : durationDistribution;
 
 	let open: boolean = false;
+
+	let options: string[] = ['frequency', 'duration'];
 </script>
 
-<Card class="min-w-full border-0 bg-primary-800">
+<Card class="h-full min-w-full border-0 bg-primary-800">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">Distractions</h2>
@@ -57,24 +59,17 @@
 			><i class="fa-solid fa-sort" /></Button
 		>
 		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-3" bind:open>
-			<li>
-				<Radio
-					name="sort"
-					bind:group
-					value="frequency"
-					on:click={() => (open = false)}
-					class="text-primary-900">frequency</Radio
-				>
-			</li>
-			<li>
-				<Radio
-					name="sort"
-					bind:group
-					value="duration"
-					on:click={() => (open = false)}
-					class="text-primary-900">duration</Radio
-				>
-			</li>
+			{#each options as option}
+				<li>
+					<Radio
+						name="sort"
+						bind:group
+						value={option}
+						on:click={() => (open = false)}
+						class="text-primary-900">{option}</Radio
+					>
+				</li>
+			{/each}
 		</Dropdown>
 	</div>
 	<svg

@@ -9,7 +9,7 @@
 	}, 0);
 </script>
 
-<Card class="min-w-full border-0 bg-primary-800">
+<Card class="h-full min-w-full border-0 bg-primary-800">
 	<div class="flex justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">Sessions</h2>

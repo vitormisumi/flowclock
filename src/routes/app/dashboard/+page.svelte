@@ -9,6 +9,7 @@
 	import Sessions from './Sessions.svelte';
 	import Notification from '../../Notification.svelte';
 	import Distractions from './Distractions.svelte';
+	import PeriodPlot from './PeriodPlot.svelte';
 
 	export let form;
 
@@ -108,8 +109,9 @@
 	<div class="flex justify-center pb-4">
 		<Filter />
 	</div>
-	<div class="grid place-items-start gap-4 lg:grid-cols-2">
+	<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
 		<Sessions />
+		<PeriodPlot />
 		<Distractions />
 	</div>
 </div>

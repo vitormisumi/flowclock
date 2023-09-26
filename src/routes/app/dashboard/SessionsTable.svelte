@@ -18,8 +18,6 @@
 	import DeleteSession from './DeleteSession.svelte';
 	import { slide } from 'svelte/transition';
 
-	let outerWidth: number;
-
 	const toggleRow = (i: number) => {
 		$openRow = $openRow === i ? null : i;
 	};
@@ -48,7 +46,6 @@
 	$: pages = Math.ceil($filteredSessions.length / 10);
 </script>
 
-<svelte:window bind:outerWidth />
 <Table hoverable shadow>
 	<TableHead class="bg-primary-700 text-center text-primary-50">
 		<TableHeadCell class="px-2">Date</TableHeadCell>
@@ -59,7 +56,7 @@
 		{#each $filteredSessions as session, i}
 			{#if i >= $startRow && i <= $endRow}
 				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800"
+					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
 				>
 					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{dateFromTimestamp(session.start)}</TableBodyCell
@@ -109,22 +106,20 @@
 			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
 			on:click={previous}><i class="fa-solid fa-chevron-left" /></Button
 		>
-		{#if outerWidth > 300}
-			{#each { length: pages } as _, p}
-				{#if p === $startRow / 10}
-					<Button
-						disabled
-						class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-						>{p + 1}</Button
-					>
-				{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
-					<Button
-						class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-						on:click={() => page(p)}>{p + 1}</Button
-					>
-				{/if}
-			{/each}
-		{/if}
+		{#each { length: pages } as _, p}
+			{#if p === $startRow / 10}
+				<Button
+					disabled
+					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+					>{p + 1}</Button
+				>
+			{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
+				<Button
+					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+					on:click={() => page(p)}>{p + 1}</Button
+				>
+			{/if}
+		{/each}
 		<Button
 			disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
 			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
