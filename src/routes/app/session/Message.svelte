@@ -21,5 +21,8 @@
 	}
 </script>
 
-<p class="h-20 w-full" style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>{message}</p>
-
+<div class="flex h-20 w-full items-center justify-center">
+	<p style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>
+		{message}
+	</p>
+</div>

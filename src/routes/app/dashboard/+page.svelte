@@ -105,12 +105,12 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<div class="grid gap-4">
+	<div class="flex justify-center pb-4">
 		<Filter />
-		<div class="grid place-items-start gap-4 lg:grid-cols-2">
-			<Sessions />
-			<Distractions />
-		</div>
+	</div>
+	<div class="grid place-items-start gap-4 lg:grid-cols-2">
+		<Sessions />
+		<Distractions />
 	</div>
 </div>
 {#if form}

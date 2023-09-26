@@ -2,6 +2,7 @@
 	import { Button, Drawer } from 'flowbite-svelte';
 	import { filter, startRow, endRow, openRow } from './stores';
 	import type { Period } from '../types';
+	import { slide } from 'svelte/transition';
 
 	let periods = [
 		{
@@ -70,17 +71,11 @@
 </script>
 
 <div>
-	<Button size="sm" on:click={open}
+	<Button size="sm" class="w-36" on:click={open}
 		>{selected[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
 	>
 </div>
-<Drawer
-	placement="top"
-	width="w-full"
-	transitionType="slide"
-	class="z-50 bg-primary-900 landscape:pl-16 landscape:pr-0 landscape:md:pl-24"
-	bind:hidden
->
+<Drawer transitionType="fly" transitionParams={{x: 100}} placement="right" width="w-40" class="z-50 bg-primary-900" bind:hidden>
 	<div class="flex flex-wrap justify-center gap-2">
 		{#each periods as period}
 			<Button
