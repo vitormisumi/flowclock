@@ -5,7 +5,6 @@
 	import { filter, filteredDistractions, filteredSessions } from './stores';
 	import { fade } from 'svelte/transition';
 	import { navigating } from '$app/stores';
-	import { session, sessionBreak } from '../session/stores';
 	import Filter from './Filter.svelte';
 	import Sessions from './Sessions.svelte';
 	import Notification from '../../Notification.svelte';
@@ -102,8 +101,7 @@
 </script>
 
 <div
-	in:fade={$navigating?.from?.url.pathname === '/app/session' &&
-	($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
+	in:fade={$navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >

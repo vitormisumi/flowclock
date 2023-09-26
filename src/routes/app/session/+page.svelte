@@ -3,6 +3,7 @@
 	import SessionButton from './SessionButton.svelte';
 	import Distractions from './Distractions.svelte';
 	import Notification from '../../Notification.svelte';
+	import { Card } from 'flowbite-svelte';
 
 	export let form;
 </script>
@@ -10,13 +11,12 @@
 <div
 	class="grid h-full w-full content-end justify-items-center text-center font-light text-secondary-100 md:text-xl lg:text-2xl"
 >
-	<div class="grid gap-2 rounded-xl bg-primary-800 md:gap-4 lg:gap-8 w-full max-w-xl p-2 md:p-4 lg:p-8 justify-items-center shadow-lg shadow-primary-800/50">
+	<Card class="max-w-lg w-full border-0 bg-primary-800">
 		<Message />
 		<SessionButton />
 		<Distractions />
-	</div>
+	</Card>
 </div>
-
 {#if form}
 	<Notification message={form?.message} success={form?.success} />
 {/if}

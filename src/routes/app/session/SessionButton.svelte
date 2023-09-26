@@ -15,13 +15,15 @@
 </script>
 
 {#if !$session.running}
-	<Button
-		size="xl"
-		class={$sessionBreak.running && !$sessionBreak.alarmPlayed
-			? 'bg-primary-900 text-xl text-primary-600 hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700 md:text-2xl'
-			: 'bg-accent-500 text-xl transition-colors duration-1000 hover:bg-accent-600 focus:ring-accent-300 md:text-2xl'}
-		on:click={startSession}><i class="fa-solid fa-play pr-4" />Start</Button
-	>
+	<div>
+		<Button
+			size="xl"
+			class={$sessionBreak.running && !$sessionBreak.alarmPlayed
+				? 'bg-primary-900 text-xl text-primary-600 hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700 md:text-2xl'
+				: 'bg-accent-500 text-xl transition-colors duration-1000 hover:bg-accent-600 focus:ring-accent-300 md:text-2xl'}
+			on:click={startSession}><i class="fa-solid fa-play pr-4" />Start</Button
+		>
+	</div>
 {:else}
 	<form
 		method="POST"

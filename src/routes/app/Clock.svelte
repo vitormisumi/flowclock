@@ -48,23 +48,22 @@
 	$: isSession = $page.url.pathname === '/app/session';
 </script>
 
-{#if $milliseconds > 0}
-	<div
-		class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:lg:left-12"
-		style:scale={isSession ? 3 : 1}
-		style:top={isSession ? '30%' : '3%'}
-		style:color={$session.running ? '#ebf7fa' : '#257b8d'}
-	>
-		{#if !isSession}
-			<i
-				class={$session.running ? 'fa-solid fa-clock px-2' : 'fa-solid fa-mug-saucer px-2'}
-				transition:slide={{ axis: 'x', duration: 500 }}
-			/>
-		{/if}
-		<p class="px-2 font-mono tracking-tight">
-			{clock}
-		</p>
-	</div>
-{/if}
+<div
+	class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:lg:left-12"
+	style:scale={isSession ? 3 : 1}
+	style:top={isSession ? '30%' : '3%'}
+	style:color={$session.running ? '#ebf7fa' : '#257b8d'}
+>
+	{#if !isSession}
+		<i
+			class={$session.running ? 'fa-solid fa-clock px-2' : 'fa-solid fa-mug-saucer px-2'}
+			transition:slide={{ axis: 'x', duration: 500 }}
+		/>
+	{/if}
+	<p class="px-2 font-mono tracking-tight">
+		{clock}
+	</p>
+</div>
+
 <audio src="https://freesound.org/data/previews/536/536420_4921277-lq.mp3" bind:this={alarm} />
 <audio src="https://cdn.freesound.org/previews/442/442943_71257-lq.mp3" bind:this={warning} />

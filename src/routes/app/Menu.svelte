@@ -21,7 +21,9 @@
 </script>
 
 <nav>
-	<ul class="flex justify-around p-2 sm:justify-center sm:gap-4 lg:flex-col landscape:flex-col">
+	<ul
+		class="flex justify-around p-2 sm:justify-center sm:gap-4 landscape:flex-col"
+	>
 		<UserMenu />
 		{#each menuItems as item}
 			<li class="transition-all duration-200 hover:scale-105">

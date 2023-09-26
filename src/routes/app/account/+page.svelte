@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { session, sessionBreak } from '../session/stores';
 	import { navigating } from '$app/stores';
 	import Notification from '../../Notification.svelte';
 	import UpdateEmail from './UpdateEmail.svelte';
@@ -13,8 +12,7 @@
 <div class="flex justify-center">
 	<div
 		class="grid w-full max-w-xl gap-4 md:gap-8"
-		in:fade={$navigating?.from?.url.pathname === '/app/session' &&
-		($session.running || ($sessionBreak.running && !$sessionBreak.alarmPlayed))
+		in:fade={$navigating?.from?.url.pathname === '/app/session'
 			? { duration: 500, delay: 500 }
 			: { duration: 0 }}
 	>
