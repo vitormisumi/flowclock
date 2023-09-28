@@ -202,7 +202,7 @@
 				width="{100 / (periods[group].length + 1)}%"
 				height="{barHeight(period)}%"
 				rx="1%"
-				class="fill-primary-700 transition-colors hover:fill-primary-600 focus:fill-primary-600"
+				class="fill-primary-700 transition-colors hover:fill-primary-600 focus:fill-primary-600 focus:outline-none"
 				role="figure"
 				on:mouseover={() => handleTooltip(period, index)}
 				on:focus={() => handleTooltip(period, index)}
