@@ -15,7 +15,7 @@
 		millisecondsToClock,
 		timeFromTimestamp
 	} from '$lib/functions/functions';
-	import DeleteSession from './DeleteSession.svelte';
+	import DeleteSession from './DeleteSessionButton.svelte';
 	import { slide } from 'svelte/transition';
 
 	const toggleRow = (i: number) => {

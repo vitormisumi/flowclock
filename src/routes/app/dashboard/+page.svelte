@@ -6,10 +6,10 @@
 	import { fade } from 'svelte/transition';
 	import { navigating } from '$app/stores';
 	import Filter from './Filter.svelte';
-	import Sessions from './Sessions.svelte';
+	import SessionsCard from './SessionsCard.svelte';
 	import Notification from '../../Notification.svelte';
-	import Distractions from './Distractions.svelte';
-	import PeriodPlot from './PeriodPlot.svelte';
+	import DistractionsCard from './DistractionsCard.svelte';
+	import TimeFrameCard from './TimeFrameCard.svelte';
 
 	export let form;
 
@@ -110,9 +110,9 @@
 		<Filter />
 	</div>
 	<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
-		<Sessions />
-		<PeriodPlot />
-		<Distractions />
+		<SessionsCard />
+		<TimeFrameCard />
+		<DistractionsCard />
 	</div>
 </div>
 {#if form}

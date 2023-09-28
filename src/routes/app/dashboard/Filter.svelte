@@ -2,7 +2,6 @@
 	import { Button, Drawer } from 'flowbite-svelte';
 	import { filter, startRow, endRow, openRow } from './stores';
 	import type { Period } from '../types';
-	import { slide } from 'svelte/transition';
 
 	let periods = [
 		{
