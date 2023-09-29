@@ -1,23 +1,74 @@
 <script lang="ts">
-	import { Image } from '@unpic/svelte';
-	import foreground from '$lib/assets/foreground.png';
-	import stars from '$lib/assets/stars.jpg';
+	import { Button } from 'flowbite-svelte';
+
+	interface HandSettings {
+		x1: number;
+		x2: number;
+		y1: number;
+		y2: number;
+		width: number;
+		animation: string;
+	}
+
+	let hands: { [key: string]: HandSettings } = {
+		hours: {
+			x1: 50,
+			x2: 40,
+			y1: 50,
+			y2: 35,
+			width: 10,
+			animation: 'animate-hours-hand'
+		},
+		minutes: {
+			x1: 50,
+			x2: 75,
+			y1: 50,
+			y2: 15,
+			width: 5,
+			animation: 'animate-minutes-hand'
+		},
+		seconds: {
+			x1: 50,
+			x2: 75,
+			y1: 50,
+			y2: 15,
+			width: 1,
+			animation: 'animate-seconds-hand'
+		}
+	};
 </script>
 
-<div class="absolute top-0 left-0 -z-10 overflow-hidden h-screen">
-	<Image src={stars} alt="Sky" layout="fullWidth" class="animate-spin-slow opacity-20" />
-</div>
 <section
-	class="pointer-events-none absolute top-0 grid h-screen w-full place-items-center content-center gap-8 p-4"
+	class="bg-gradient-radial relative grid aspect-square place-items-center content-center gap-8 overflow-hidden from-primary-800 to-primary-900 to-70% p-4 landscape:to-60%"
 >
-	<Image src={foreground} alt="Sky" layout="fullWidth" class="absolute bottom-0 left-0" />
 	<h1
-		class="z-10 text-center text-5xl font-semibold tracking-wider text-secondary-100 md:text-6xl lg:text-7xl"
+		class="z-10 text-center text-2xl font-semibold tracking-wider text-secondary-100 md:text-6xl lg:text-7xl"
 	>
-		Your <span class="text-primary-500">time</span>,<br />your
-		<span class="text-accent-500">way</span>
+		Track your <span class="text-primary-500">time</span>,<br />to lose sense of it
 	</h1>
-	<p class="z-10 max-w-sm text-center font-extralight text-secondary-200 md:text-lg">
+	<p
+		class="z-10 max-w-xs text-center text-sm font-extralight text-secondary-200 md:max-w-sm md:text-lg lg:text-xl"
+	>
 		The first dedicated app for the flowtime technique, the evolution of the pomodoro
 	</p>
+	<Button size="xl" href="/signup" class="z-50 bg-accent-500 transition-colors hover:bg-accent-600"
+		>Sign Up For FREE</Button
+	>
+	{#each Object.values(hands) as hand}
+		<svg
+			width="100%"
+			height="100%"
+			class="{hand.animation} pointer-events-none absolute p-4 md:p-8 lg:p-12"
+		>
+			<line
+				x1="{hand.x1}%"
+				x2="{hand.x2}%"
+				y1="{hand.y1}%"
+				y2="{hand.y2}%"
+				stroke-width={hand.width}
+				stroke-linecap="round"
+				class="stroke-primary-800"
+			></line>
+		</svg>
+	{/each}
 </section>

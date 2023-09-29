@@ -47,10 +47,15 @@ const config = {
 			},
 			fontFamily: {
 				mono: ['"Chivo Mono"', 'monospace']
-			}
+			},
+			backgroundImage: {
+       			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      		}
 		},
 		animation: {
-        'spin-slow': 'spin 600s linear infinite',
+        'seconds-hand': 'spin 60s linear infinite',
+        'minutes-hand': 'spin 3600s linear infinite',
+        'hours-hand': 'spin 43200s linear infinite',
       }
 	},
 
