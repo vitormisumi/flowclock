@@ -87,7 +87,7 @@
 						Sitting down for long periods of time is not good for your body, so it is a good idea to
 						set a warning after a specific session duration. When your session has reached the specified
 						length we'll give you a sound warning so you can remember to start your break and move your
-						body. We recommend a value between 30 and 60 minutes.
+						body. We recommend a value between 45 and 90 minutes.
 					</div>
 				</Popover>
 				{#key $settings}
