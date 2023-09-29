@@ -49,7 +49,7 @@
 	<p
 		class="z-10 max-w-xs text-center text-sm font-extralight text-secondary-200 md:max-w-sm md:text-lg lg:text-xl"
 	>
-		The first dedicated app for the flowtime technique, the evolution of the pomodoro
+		The best dedicated app for the flowtime technique, the evolution of the pomodoro
 	</p>
 	<Button size="xl" href="/signup" class="z-50 bg-accent-500 transition-colors hover:bg-accent-600"
 		>Sign Up For FREE</Button
