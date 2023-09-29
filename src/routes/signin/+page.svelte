@@ -19,9 +19,15 @@
 	};
 </script>
 
-<img src={logo} alt="Flouu logo" class="absolute left-4 top-0 h-20" />
+<a href="/">
+	<img
+		src={logo}
+		alt="FlowClock logo"
+		class="absolute left-4 top-4 w-32 md:left-8 md:top-8 md:w-40 lg:left-12 lg:top-12 lg:w-48"
+	/>
+</a>
 <div class="grid h-screen content-center justify-items-center bg-secondary-900">
-	<div class="grid w-screen max-w-lg gap-8 p-4">
+	<div class="grid w-screen max-w-lg gap-6 p-4">
 		<h1 class="text-center text-xl font-bold text-primary-600">Sign In</h1>
 		<form method="POST" class="grid gap-4" use:enhance={handleSignIn}>
 			<div>

@@ -39,7 +39,7 @@
 </script>
 
 <section
-	class="bg-gradient-radial relative grid aspect-square place-items-center content-center gap-8 overflow-hidden from-primary-800 to-primary-900 to-70% p-4 landscape:to-60%"
+	class="bg-gradient-radial relative grid aspect-square place-items-center content-center gap-8 overflow-hidden from-primary-800 to-secondary-900 to-70% p-4 landscape:to-60%"
 >
 	<h1
 		class="z-10 text-center text-2xl font-semibold tracking-wider text-secondary-100 md:text-6xl lg:text-7xl"
