@@ -43,15 +43,12 @@ export const actions = {
 
 		if (session.user.email) {
 			let { error } = await supabase.auth.resetPasswordForEmail(session.user.email, {
-				redirectTo: `${url.origin}/auth/callback`
+				redirectTo: `${url.origin}/password`
 			});
 
 			if (error) {
 				console.log(error);
-				return fail(500, {
-					message: error.message,
-					success: false
-				});
+				return fail(500, { message: error.message, success: false });
 			}
 
 			return {

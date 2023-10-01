@@ -1,17 +1,17 @@
 import { fail } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ request, locals: { supabase } }) => {
+	default: async ({ request, url, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 
 		let { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: 'https://flouu.vercel.app/app/password'
+			redirectTo: `${url.origin}/password`
 		});
 
 		if (error) {
 			console.log(error);
-			return fail(500, { message: 'Server error. Please try again later', success: false });
+			return fail(500, { message: error.message, success: false });
 		}
 
 		return {

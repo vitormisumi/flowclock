@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Button, Input, Label } from 'flowbite-svelte';
-	import Notification from '../../Notification.svelte';
+	import Notification from '../Notification.svelte';
 
 	export let form;
 
