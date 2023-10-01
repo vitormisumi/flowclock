@@ -34,7 +34,7 @@
 				}
 			}
 
-			if ($milliseconds >= $settings.warning * 60000 && $session.running && !$session.warning) {
+			if ($milliseconds >= $settings.warning * 60000 && $session.running && !$session.warning && !$session.dismiss) {
 				warning.play();
 				session.warning();
 			}

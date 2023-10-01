@@ -1,22 +1,100 @@
 <script lang="ts">
-	import { Avatar, Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
+	import {
+		Avatar,
+		Dropdown,
+		DropdownHeader,
+		DropdownItem,
+		DropdownDivider,
+		Modal,
+		Button
+	} from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import avatar from '$lib/assets/avatar.png';
 	import type { User } from '@supabase/supabase-js';
+	import { distractionLength, distractions, session, sessionBreak } from './session/stores';
+	import type { Settings } from './settings/types';
+	import type { Writable } from 'svelte/store';
 
 	const user: User = getContext('user');
+	const settings: Writable<Settings> = getContext('settings');
+
+	let open: boolean = false;
 </script>
 
-<Avatar border id="user-drop" src={avatar} class="cursor-pointer self-center fixed top-3 left-3 md:top-5 md:left-5 landscape:static" />
+<Avatar
+	border
+	id="user-drop"
+	src={avatar}
+	class="fixed left-3 top-3 cursor-pointer self-center md:left-5 md:top-5 landscape:static"
+/>
 <Dropdown triggeredBy="#user-drop" class="w-fit" placement="right-start">
 	<DropdownHeader>
-		<span class="block truncate text-sm font-medium"> {user.email} </span>
+		<span class="block truncate text-sm font-medium text-primary-900">{user.email}</span>
 	</DropdownHeader>
-	<DropdownItem href="/app/account">Account</DropdownItem>
-	<DropdownItem href="/app/settings">Settings</DropdownItem>
+	<DropdownItem href="/app/account"><i class="fa-solid fa-user pr-2" />Account</DropdownItem>
+	<DropdownItem href="/app/settings"><i class="fa-solid fa-gear pr-2" />Settings</DropdownItem>
+	<DropdownItem href="/app/contact"><i class="fa-solid fa-envelope pr-2" />Contact</DropdownItem>
 	<DropdownDivider />
-	<form method="POST" action="/app" use:enhance>
-		<DropdownItem type="submit" class="rounded-b-lg text-accent-700">Sign Out</DropdownItem>
+	<form
+		method="POST"
+		action="/app?/signOut"
+		use:enhance={({ cancel }) => {
+			if ($session.running) {
+				cancel();
+				open = true;
+			}
+			return async ({ update }) => {
+				await update();
+			};
+		}}
+	>
+		<DropdownItem type="submit" class="rounded-b-lg text-accent-700"
+			><i class="fa-solid fa-right-from-bracket pr-2" />Sign Out</DropdownItem
+		>
 	</form>
 </Dropdown>
+<Modal
+	bind:open
+	size="sm"
+	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
+>
+	<i class="fa-solid fa-warning text-center text-3xl text-secondary-300" />
+	<p class="text-secondary-200">
+		You currently have a session running.<br />Would you like to save your current session before
+		signing out?
+	</p>
+	<div class="flex justify-between">
+		<form method="POST" action="/app?/signOut" use:enhance>
+			<Button
+				size="sm"
+				type="submit"
+				class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+				>Don't Save</Button
+			>
+		</form>
+		<div class="flex gap-2">
+			<form
+				method="POST"
+				action="/app?/saveAndSignOut"
+				use:enhance={({ formData }) => {
+					session.end();
+					sessionBreak.start(
+						($session.end - $session.start - $distractionLength) / $settings.ratio
+					);
+					formData.append('session_start', new Date($session.start).toISOString());
+					formData.append('session_end', new Date($session.end).toISOString());
+					formData.append('distractions', JSON.stringify($distractions));
+				}}
+			>
+				<Button
+					size="sm"
+					class="w-20 border-2 border-primary-700 hover:border-primary-800"
+					type="submit"
+					on:click={() => (open = false)}>Save</Button
+				>
+			</form>
+			<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
+		</div>
+	</div>
+</Modal>

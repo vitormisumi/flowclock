@@ -6,8 +6,6 @@
 	import { distractions, session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 
-	const distractionData: Writable<Settings> = getContext('distractions');
-
 	let open: boolean = false;
 
 	let reason: string;
@@ -37,13 +35,13 @@
 </div>
 <Modal
 	bind:open
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
-	size="sm"
 	dismissable={false}
+	size="sm"
+	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
-	<i class="fa-solid fa-pause font-semibold text-accent-500" />
+	<i class="fa-solid fa-pause text-3xl text-secondary-300" />
 	<p>{millisecondsToClock($milliseconds)}</p>
-	<p class="text-secondary-100">
+	<p class="text-secondary-200">
 		Select the reason for the distraction and resume your session once you are ready.
 	</p>
 	<Select
@@ -53,5 +51,5 @@
 		placeholder="Select a reason"
 		class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
 	/>
-	<Button size="sm" on:click={endDistraction}><i class="fa-solid fa-play pr-4" />Resume</Button>
+	<Button size="sm" on:click={endDistraction}><i class="fa-solid fa-play pr-2" />Resume</Button>
 </Modal>

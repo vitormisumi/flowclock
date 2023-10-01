@@ -21,8 +21,8 @@
 			<UpdateEmail />
 			<ResetPassword />
 		</div>
-		<hr class="my-4 border-secondary-800" />
-		<DeleteAccount />
+		<!-- <hr class="my-4 border-secondary-800" />
+		<DeleteAccount /> -->
 	</div>
 </div>
 {#if form}

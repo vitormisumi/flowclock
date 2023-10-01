@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Label, Select, Popover, Checkbox, Toggle } from 'flowbite-svelte';
+	import { Button, Label, Select, Popover, Toggle } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
@@ -48,10 +48,10 @@
 	>
 		<h1 class="text-center text-xl font-bold text-primary-600">Settings</h1>
 		<form class="grid gap-8 md:gap-12" method="POST" use:enhance={handleSave}>
-			<Label class="text-primary-50"
+			<Label class="text-primary-50 text-md"
 				>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
 				<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
-					<div class="space-y-2 p-3">
+					<div class="space-y-2 p-3 text-sm">
 						<h3 class="font-semibold text-gray-900 dark:text-white">
 							Ratio used to calculate break duration
 						</h3>
@@ -72,7 +72,7 @@
 			</Label>
 			<div>
 				{#key loading}
-					<Toggle bind:checked={warning} class="text-primary-50"
+					<Toggle bind:checked={warning} class="text-primary-50 text-md"
 						>Session length warning (min)&nbsp; <i
 							class="fa-regular fa-circle-question"
 							id="hover-2"

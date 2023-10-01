@@ -7,8 +7,9 @@ function createSession() {
 		running: false,
 		start: 0,
 		end: 0,
+		warning: false,
+		dismiss: false,
 		pause: false,
-		warning: false
 	});
 
 	return {
@@ -18,8 +19,9 @@ function createSession() {
 				running: true,
 				start: Date.now(),
 				end: 0,
+				warning: false,
+				dismiss: false,
 				pause: false,
-				warning: false
 			}),
 		end: () =>
 			update((x) => {
@@ -35,6 +37,13 @@ function createSession() {
 				return {
 					...x,
 					warning: true
+				}
+			}),
+		dismiss: () =>
+			update((x) => {
+				return {
+					...x,
+					dismiss: true
 				}
 			}),
 		pause: () =>

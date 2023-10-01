@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	let menu = ['/app/account', '/app/settings'];
+	let menu = ['/app/account', '/app/settings', '/app/contact', '/app/contact/thanks'];
 	$: background = menu.includes($page.url.pathname) ? '#0b0e0e' : '#051214';
 </script>
 

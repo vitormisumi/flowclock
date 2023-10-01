@@ -7,9 +7,9 @@ export function paint(context: CanvasRenderingContext2D, t: number): void {
 			const x = i % width;
 			const y = (i / width) >>> 0;
 
-			const red = 64 + (128 * x) / width + 64 * Math.sin(t / 1000);
-			const green = 64 + (128 * y) / height + 64 * Math.cos(t / 1000);
-			const blue = 128;
+			const red = 32 + (32 * x) / width + 255 * Math.sin(t / 1000);
+			const green = 64;
+			const blue = 32 + (32 * x) / width + 32 * Math.sin(t / 500);
 
 			imageData.data[p + 0] = red;
 			imageData.data[p + 1] = green;

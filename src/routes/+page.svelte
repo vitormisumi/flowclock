@@ -40,7 +40,7 @@
 			classUl="items-end bg-primary-800 border-none shadow-lg shadow-primary-900 md:shadow-none md:items-center md:bg-transparent"
 			divClass="absolute top-10 right-2 md:static md:block"
 		>
-			<NavLi href="/signin" class="text-primary-50">Sign In</NavLi>
+			<NavLi href="/signin" nonActiveClass="text-primary-50 hover:text-primary-200">Sign In</NavLi>
 			<NavLi
 				><Button
 					href="/signup"

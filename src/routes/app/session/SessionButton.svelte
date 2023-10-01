@@ -11,6 +11,7 @@
 	function startSession() {
 		sessionBreak.end();
 		session.start();
+		distractions.reset();
 	}
 </script>
 
