@@ -9,13 +9,14 @@ export const actions = {
 
 		const formData = await request.formData();
 		const ratio = formData.get('ratio') as string;
-		const maxLength = formData.get('warning') as string;
+		const warning = formData.get('warning') as string;
 		const dateFormat = formData.get('date_format') as string;
 		const separator = formData.get('separator') as string;
+		const clockFormat = formData.get('clock_format') as string;
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: ratio, warning: maxLength ? maxLength : 0, date_format: dateFormat, separator: Number(separator) })
+			.update({ ratio: ratio, warning: warning ? warning : 0, date_format: dateFormat, separator: separator, clock_format: clockFormat === '1' ? true : false})
 			.eq('user_id', session.user.id);
 
 		if (error) {

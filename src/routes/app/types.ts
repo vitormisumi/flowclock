@@ -22,6 +22,7 @@ export interface Settings {
 	warning: number;
 	date_format: string;
 	separator: number;
+	clock_format: boolean;
 }
 
 export interface Filter {

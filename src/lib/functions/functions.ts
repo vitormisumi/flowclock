@@ -43,7 +43,7 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 	};
 }
 
-export function timeFromTimestamp(timestamp: string | undefined): string {
+export function timeFromTimestamp(timestamp: string | undefined, format: boolean): string {
 	if (timestamp === undefined) {
 		return ''
 	}
@@ -51,5 +51,17 @@ export function timeFromTimestamp(timestamp: string | undefined): string {
 	let hour = date.getHours();
 	let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
 	let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-	return hour + ':' + minutes + ':' + seconds;
+	if (format) {
+		return (hour < 10 ? '0' + hour : hour) + ':' + minutes + ':' + seconds;
+	} else {
+		if (hour === 0) {
+			return '12:' + minutes + ':' + seconds + ' AM'
+		} else if (hour === 12) {
+			return hour + ':' + minutes + ':' + seconds + ' PM'
+		} else if (hour > 12) {
+			return (hour - 12 < 10 ? '0' + (hour - 12) : (hour - 12)) + ':' + minutes + ':' + seconds + ' PM';
+		} else {
+			return (hour < 10 ? '0' + hour : hour) + ':' + minutes + ':' + seconds + ' AM';
+		}
+	}
 }

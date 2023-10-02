@@ -80,17 +80,17 @@
 							transition:slide
 						>
 							<p class="col-start-1 text-primary-100">
-								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start)}
+								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start, $settings.clock_format)}
 							</p>
 							<p class="col-start-2 text-primary-100">
-								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end)}
+								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
 							</p>
 							<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
 								{#each Object.entries($filteredDistractions.filter((x) => x.session_id === session.id)) as distraction}
 									<div class="flex items-center justify-center font-extralight text-secondary-100">
 										<i class="fa-solid fa-pause pr-1" />
-										<p>{timeFromTimestamp(distraction[1].start)} -&nbsp</p>
-										<p>{timeFromTimestamp(distraction[1].end)}</p>
+										<p>{timeFromTimestamp(distraction[1].start, $settings.clock_format)} -&nbsp</p>
+										<p>{timeFromTimestamp(distraction[1].end, $settings.clock_format)}</p>
 										{#if distraction[1].reason}
 											<p class="pl-1">({distraction[1].reason})</p>
 										{/if}

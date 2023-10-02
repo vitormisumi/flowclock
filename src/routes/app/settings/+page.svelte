@@ -43,6 +43,8 @@
 
 	let warning: boolean = $settings.warning != 0 ? true : false;
 
+	let clockFormat: boolean = $settings.clock_format ? true : false;
+
 	let loading: boolean = false;
 
 	const handleSave: SubmitFunction = () => {
@@ -143,6 +145,10 @@
 					{/key}
 				</Label>
 			</div>
+			{#key $settings}
+				<Toggle bind:checked={clockFormat} class="text-md text-primary-50">24-hour clock</Toggle>
+				<input type="number" name="clock_format" value={clockFormat ? 1 : 0} hidden />
+			{/key}
 			<Button type="submit" disabled={loading}
 				><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
 			>
