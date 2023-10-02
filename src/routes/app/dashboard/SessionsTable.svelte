@@ -17,6 +17,11 @@
 	} from '$lib/functions/functions';
 	import DeleteSession from './DeleteSessionButton.svelte';
 	import { slide } from 'svelte/transition';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../types';
+	import { getContext } from 'svelte';
+
+	const settings: Writable<Settings> = getContext('settings');
 
 	const toggleRow = (i: number) => {
 		$openRow = $openRow === i ? null : i;
@@ -59,7 +64,7 @@
 					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
 				>
 					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
-						>{dateFromTimestamp(session.start)}</TableBodyCell
+						>{dateFromTimestamp(session.start, $settings.date_format, $settings.separator)}</TableBodyCell
 					>
 					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{millisecondsToClock(session.duration)}</TableBodyCell

@@ -8,15 +8,43 @@ export function millisecondsToClock(milliseconds: number): string {
 	return h + ':' + m + ':' + s;
 }
 
-export function dateFromTimestamp(timestamp: string | undefined): string {
+export function dateFromTimestamp(timestamp: string | undefined, format: string, separator: number): string {
 	if (timestamp === undefined) {
 		return ''
+	}
+	let sep;
+	if (separator === 0) {
+		sep = '/'
+	} else if (separator === 1) {
+		sep = '-'
+	} else {
+		sep = '.'
 	}
 	let date = new Date(timestamp);
 	let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 	let month = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
 	let year = date.getFullYear();
-	return day + '/' + month + '/' + year;
+	let shortYear = String(date.getFullYear()).slice(2, 4);
+	switch (format) {
+		case 'ddmmyyyy':
+			return day + sep + month + sep + year;
+			break;
+		case 'mmddyyyy':
+			return month + sep + day + sep + year;
+			break;
+		case 'yyyymmdd':
+			return year + sep + month + sep + day;
+			break;
+		case 'ddmmyy':
+			return day + sep + month + sep + shortYear;
+			break;
+		case 'mmddyy':
+			return month + sep + day + sep + shortYear;
+			break;
+		case 'yymmdd':
+			return shortYear + sep + month + sep + day;
+			break;
+	}
 }
 
 export function timeFromTimestamp(timestamp: string | undefined): string {

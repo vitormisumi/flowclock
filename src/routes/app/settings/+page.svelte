@@ -4,7 +4,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import type { Settings } from './types.js';
+	import type { Settings } from '../types';
 	import type { Writable } from 'svelte/store';
 	import Notification from '../../Notification.svelte';
 	import { navigating } from '$app/stores';
@@ -22,6 +22,21 @@
 		{ value: 8, name: '8:1' },
 		{ value: 9, name: '9:1' },
 		{ value: 10, name: '10:1' }
+	];
+
+	let formats = [
+		{ value: 'ddmmyyyy', name: 'DDMMYYYY' },
+		{ value: 'mmddyyyy', name: 'MMDDYYYY' },
+		{ value: 'yyyymmdd', name: 'YYYYMMDD' },
+		{ value: 'ddmmyy', name: 'DDMMYY' },
+		{ value: 'mmddyy', name: 'MMDDYY' },
+		{ value: 'yymmdd', name: 'YYMMDD' }
+	];
+
+	let separators = [
+		{ value: 0, name: '/' },
+		{ value: 1, name: '-' },
+		{ value: 2, name: '.' }
 	];
 
 	const settings: Writable<Settings> = getContext('settings');
@@ -48,7 +63,7 @@
 	>
 		<h1 class="text-center text-xl font-bold text-primary-600">Settings</h1>
 		<form class="grid gap-8 md:gap-12" method="POST" use:enhance={handleSave}>
-			<Label class="text-primary-50 text-md"
+			<Label class="text-md text-primary-50"
 				>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
 				<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
 					<div class="space-y-2 p-3 text-sm">
@@ -72,7 +87,7 @@
 			</Label>
 			<div>
 				{#key loading}
-					<Toggle bind:checked={warning} class="text-primary-50 text-md"
+					<Toggle bind:checked={warning} class="text-md text-primary-50"
 						>Session length warning (min)&nbsp; <i
 							class="fa-regular fa-circle-question"
 							id="hover-2"
@@ -100,6 +115,33 @@
 						disabled={!warning}
 					/>
 				{/key}
+			</div>
+			<hr class="my-4 border-secondary-800" />
+			<div class="flex gap-4">
+				<Label class="text-md w-full text-primary-50"
+					>Date format
+					{#key $settings}
+						<Select
+							underline
+							name="date_format"
+							class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+							items={formats}
+							value={$settings.date_format}
+						/>
+					{/key}
+				</Label>
+				<Label class="text-md text-primary-50"
+					>Separator
+					{#key $settings}
+						<Select
+							underline
+							name="separator"
+							class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+							items={separators}
+							value={$settings.separator}
+						/>
+					{/key}
+				</Label>
 			</div>
 			<Button type="submit" disabled={loading}
 				><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button

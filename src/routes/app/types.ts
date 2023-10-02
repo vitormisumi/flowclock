@@ -15,6 +15,15 @@ export interface Distraction {
 	reason: string;
 }
 
+export interface Settings {
+	id: number;
+	user_id: string;
+	ratio: number;
+	warning: number;
+	date_format: string;
+	separator: number;
+}
+
 export interface Filter {
     timeframe: string;
 	current: boolean;

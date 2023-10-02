@@ -3,6 +3,11 @@
 	import { dateFromTimestamp } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
 	import TimeFramePlot from './TimeFramePlot.svelte';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../types';
+	import { getContext } from 'svelte';
+
+	const settings: Writable<Settings> = getContext('settings');
 
 	let dates: string;
 
@@ -28,15 +33,15 @@
 	$: if ($filteredSessions.length === 0) {
 		dates = '-';
 	} else if (
-		dateFromTimestamp($filteredSessions.slice(-1)[0].start) !=
-		dateFromTimestamp($filteredSessions[0].start)
+		dateFromTimestamp($filteredSessions.slice(-1)[0].start, $settings.date_format, $settings.separator) !=
+		dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator)
 	) {
 		dates =
-			dateFromTimestamp($filteredSessions.slice(-1)[0].start) +
+			dateFromTimestamp($filteredSessions.slice(-1)[0].start, $settings.date_format, $settings.separator) +
 			' - ' +
-			dateFromTimestamp($filteredSessions[0].start);
+			dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator);
 	} else {
-		dates = dateFromTimestamp($filteredSessions[0].start);
+		dates = dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator);
 	}
 </script>
 

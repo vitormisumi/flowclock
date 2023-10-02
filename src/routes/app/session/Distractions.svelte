@@ -1,7 +1,4 @@
 <script lang="ts">
-	import type { Settings } from '../settings/types';
-	import type { Writable } from 'svelte/store';
-	import { getContext } from 'svelte';
 	import { Button, Modal, Select } from 'flowbite-svelte';
 	import { distractions, session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
