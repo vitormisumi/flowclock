@@ -63,7 +63,7 @@
 		</div>
 		<Providers />
 		<p class="text-secondary-50">
-			New to Flouu? <a href="/signup" class="text-accent-500">Sign up here</a>.
+			New to FlowClock? <a href="/signup" class="text-accent-500">Sign up here</a>.
 		</p>
 	</div>
 </div>
