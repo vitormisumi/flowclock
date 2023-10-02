@@ -17,14 +17,14 @@
 <Card class="h-full min-w-full border-0 bg-primary-800">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">Distractions</h2>
-			<p class="text-center text-lg text-accent-500 md:text-2xl">
+			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Distractions</h2>
+			<p class="text-center text-accent-500 md:text-xl">
 				{$filteredDistractions.length}
 			</p>
 		</div>
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">per Session</h2>
-			<p class="text-center text-lg text-accent-500 md:text-2xl">{perSession}</p>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">per Session</h2>
+			<p class="text-center text-accent-500 md:text-xl">{perSession}</p>
 		</div>
 		<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
 			><i class="fa-solid fa-sort" /></Button

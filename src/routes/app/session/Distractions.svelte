@@ -31,7 +31,7 @@
 </script>
 
 <div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>
-	<Button on:click={startDistraction}><i class="fa-solid fa-pause pr-3" />Distraction</Button>
+	<Button on:click={startDistraction} class="bg-primary-600 hover:bg-primary-700"><i class="fa-solid fa-pause pr-3" />Distraction</Button>
 </div>
 <Modal
 	bind:open

@@ -43,8 +43,8 @@
 <Card class=" h-96 min-h-full min-w-full border-0 bg-primary-800">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-xl">Time Frame</h2>
-			<p class="text-center text-lg text-accent-500 md:text-2xl">{dates}</p>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Time Frame</h2>
+			<p class="text-center text-accent-500 md:text-xl">{dates}</p>
 		</div>
 		<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
 			><i class="fa-solid fa-calendar" /></Button

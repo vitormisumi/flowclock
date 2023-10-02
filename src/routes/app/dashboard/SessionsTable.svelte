@@ -58,40 +58,40 @@
 				<TableBodyRow
 					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
 				>
-					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
+					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{dateFromTimestamp(session.start)}</TableBodyCell
 					>
-					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
+					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{millisecondsToClock(session.duration)}</TableBodyCell
 					>
-					<TableBodyCell class="w-0 px-0 py-2"><DeleteSession {session} /></TableBodyCell>
+					<TableBodyCell class="w-0 px-0 py-1"><DeleteSession {session} /></TableBodyCell>
 				</TableBodyRow>
 			{/if}
 			{#if $openRow === i}
 				<TableBodyRow class="border-primary-800">
-					<TableBodyCell colspan="3" class="bg-primary-900 p-0 text-primary-200">
+					<TableBodyCell colspan="3" class="bg-primary-900 p-0">
 						<div
-							class="grid grid-cols-2 place-items-center justify-evenly gap-2 p-2 font-light md:grid-cols-3"
+							class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light"
 							transition:slide
 						>
-							<p class="col-start-1">
+							<p class="col-start-1 text-primary-100">
 								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start)}
 							</p>
-							<div
-								class="col-span-2 col-start-1 row-start-2 grid justify-items-start md:col-span-1 md:col-start-2 md:row-start-1"
-							>
+							<p class="col-start-2 text-primary-100">
+								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end)}
+							</p>
+							<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
 								{#each Object.entries($filteredDistractions.filter((x) => x.session_id === session.id)) as distraction}
-									<div class="flex items-center justify-center font-extralight">
+									<div class="flex items-center justify-center font-extralight text-secondary-100">
 										<i class="fa-solid fa-pause pr-1" />
 										<p>{timeFromTimestamp(distraction[1].start)} -&nbsp</p>
 										<p>{timeFromTimestamp(distraction[1].end)}</p>
-										<p class="pl-1">({distraction[1].reason})</p>
+										{#if distraction[1].reason}
+											<p class="pl-1">({distraction[1].reason})</p>
+										{/if}
 									</div>
 								{/each}
 							</div>
-							<p class="col-start-2 md:col-start-3">
-								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end)}
-							</p>
 						</div>
 					</TableBodyCell>
 				</TableBodyRow>
