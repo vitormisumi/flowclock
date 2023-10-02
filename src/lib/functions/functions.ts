@@ -28,22 +28,16 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 	switch (format) {
 		case 'ddmmyyyy':
 			return day + sep + month + sep + year;
-			break;
 		case 'mmddyyyy':
 			return month + sep + day + sep + year;
-			break;
 		case 'yyyymmdd':
 			return year + sep + month + sep + day;
-			break;
 		case 'ddmmyy':
 			return day + sep + month + sep + shortYear;
-			break;
 		case 'mmddyy':
 			return month + sep + day + sep + shortYear;
-			break;
 		case 'yymmdd':
 			return shortYear + sep + month + sep + day;
-			break;
 		default:
 			return '';
 	};
