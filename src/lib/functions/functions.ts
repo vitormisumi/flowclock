@@ -44,7 +44,9 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 		case 'yymmdd':
 			return shortYear + sep + month + sep + day;
 			break;
-	}
+		default:
+			return '';
+	};
 }
 
 export function timeFromTimestamp(timestamp: string | undefined): string {
