@@ -24,9 +24,9 @@
 			</p>
 		</div>
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Session Average</h2>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Average Session</h2>
 			<p class="text-accent-500 md:text-xl">
-				{millisecondsToClock(duration / $filteredSessions.length)}
+				{duration ? millisecondsToClock(duration / $filteredSessions.length): '-'}
 			</p>
 		</div>
 	</div>

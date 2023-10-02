@@ -25,7 +25,10 @@
 		day: Array.from({ length: 31 }, (value, index) => index + 1),
 		weekday: Array.from({ length: 7 }, (value, index) => index),
 		month: Array.from({ length: 12 }, (value, index) => index),
-		year: Array.from({ length: years[1] - years[0] + 1 }, (value, index) => years[0] + index)
+		year: Array.from(
+			{ length: years.length === 1 ? 1 : years[1] - years[0] + 1 },
+			(value, index) => years[0] + index
+		)
 	};
 
 	let group: keyof typeof periods = 'weekday';
@@ -33,19 +36,30 @@
 	$: if ($filteredSessions.length === 0) {
 		dates = '-';
 	} else if (
-		dateFromTimestamp($filteredSessions.slice(-1)[0].start, $settings.date_format, $settings.separator) !=
-		dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator)
+		dateFromTimestamp(
+			$filteredSessions.slice(-1)[0].start,
+			$settings.date_format,
+			$settings.separator
+		) != dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator)
 	) {
 		dates =
-			dateFromTimestamp($filteredSessions.slice(-1)[0].start, $settings.date_format, $settings.separator) +
+			dateFromTimestamp(
+				$filteredSessions.slice(-1)[0].start,
+				$settings.date_format,
+				$settings.separator
+			) +
 			' - ' +
 			dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator);
 	} else {
-		dates = dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator);
+		dates = dateFromTimestamp(
+			$filteredSessions[0].start,
+			$settings.date_format,
+			$settings.separator
+		);
 	}
 </script>
 
-<Card class=" h-96 min-h-full min-w-full border-0 bg-primary-800">
+<Card class="h-[max(50vh,_400px)] min-h-full min-w-full border-0 bg-primary-800">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Time Frame</h2>

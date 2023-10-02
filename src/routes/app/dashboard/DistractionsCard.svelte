@@ -5,7 +5,7 @@
 
 	$: perSession = $filteredSessions.length
 		? ($filteredDistractions.length / $filteredSessions.length).toFixed(2)
-		: 0;
+		: '-';
 
 	let group: string = 'frequency';
 
@@ -43,5 +43,7 @@
 			{/each}
 		</Dropdown>
 	</div>
-	<DistractionsPlot {group}/>
+	{#if $filteredDistractions.length}
+		<DistractionsPlot {group} />
+	{/if}
 </Card>

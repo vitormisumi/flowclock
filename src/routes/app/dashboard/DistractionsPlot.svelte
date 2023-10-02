@@ -55,7 +55,7 @@
 				rx="1%"
 				class="fill-primary-700"
 			/>
-			<text x="52%" y={value * 50 + 30} class="fill-primary-50 capitalize"
+			<text x="52%" y={value * 50 + 30} class="fill-primary-50 capitalize text-sm"
 				>{group === 'frequency' ? reason[1] : millisecondsToClock(reason[1])}</text
 			>
 		{/if}

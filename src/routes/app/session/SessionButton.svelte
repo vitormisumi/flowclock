@@ -3,7 +3,7 @@
 	import { distractionLength, session, sessionBreak, distractions } from './stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../settings/types';
+	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
