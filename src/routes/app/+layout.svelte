@@ -31,6 +31,8 @@
 	setContext('sessions', sessions);
 	setContext('distractions', distractions);
 	setContext('settings', settings);
+
+	$: console.log($sessions);
 </script>
 
 <Screen>

@@ -26,7 +26,7 @@ export const actions = {
 
 		if (error) {
 			console.log(error);
-			return fail(500, { message: 'Server error. Try again later.', success: false, email });
+			return fail(500, { message: error.message, success: false, email });
 		}
 
 		return {

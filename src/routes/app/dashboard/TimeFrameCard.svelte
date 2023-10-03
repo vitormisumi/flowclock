@@ -13,12 +13,18 @@
 
 	let open: boolean = false;
 
-	const years = [
-		...new Set([
-			new Date($filteredSessions.slice(-1)[0].start).getFullYear(),
-			new Date($filteredSessions[0].start).getFullYear()
-		])
-	];
+	let years: number[];
+
+	if ($filteredSessions.length === 0) {
+		years = [new Date().getFullYear()];
+	} else {
+		years = [
+			...new Set([
+				new Date($filteredSessions.slice(-1)[0].start).getFullYear(),
+				new Date($filteredSessions[0].start).getFullYear()
+			])
+		];
+	}
 
 	const periods = {
 		hour: Array.from({ length: 24 }, (value, index) => index),
