@@ -106,14 +106,22 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<div class="flex justify-center pb-4">
-		<Filter />
-	</div>
-	<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
-		<SessionsCard />
-		<TimeFrameCard />
-		<DistractionsCard />
-	</div>
+	{#if $sessions.length === 0}
+		<div class="flex items-center absolute inset-0 justify-center">
+			<p class="text-center text-lg text-secondary-100">
+				You have no sessions yet. <br />Complete your first session to start analysing your data.
+			</p>
+		</div>
+	{:else}
+		<div class="flex justify-center pb-4">
+			<Filter />
+		</div>
+		<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
+			<SessionsCard />
+			<TimeFrameCard />
+			<DistractionsCard />
+		</div>
+	{/if}
 </div>
 {#if form}
 	<Notification message={form?.message} success={form?.success} />

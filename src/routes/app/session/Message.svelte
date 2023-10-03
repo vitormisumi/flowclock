@@ -22,7 +22,7 @@
 </script>
 
 <div class="flex h-20 landscape:h-14 w-full items-center justify-center">
-	<p class="font-extralight" style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>
+	<p class="text-primary-50" style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>
 		{message}
 	</p>
 </div>

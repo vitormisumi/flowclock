@@ -42,36 +42,42 @@
 </script>
 
 <form class="grid gap-8 md:gap-12" method="POST">
-	<Label class="text-md text-primary-50"
-		>Session duration : break duration <i class="fa-regular fa-circle-question" id="hover-1" />
-		<Popover triggeredBy="#hover-1" class="w-80" placement="bottom-start">
-			<div class="space-y-2 p-3 text-sm">
-				<h3 class="font-semibold text-gray-900 dark:text-white">
-					Ratio used to calculate break duration
-				</h3>
-				E.g. Your focused session lasts 60 minutes. If you choose a ratio of 2:1, your break duration
-				will be 30 minutes, if you choose 3:1, it'll be 20 minutes. We recommend a value between 2:1
-				and 5:1.
-			</div>
-		</Popover>
-		<Select
-			underline
-			name="ratio"
-			class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
-			items={ratios}
-			value={$settings.ratio}
-		/>
-	</Label>
-	<div>
+	<div class="relative">
+		<Label class="text-md w-full text-primary-50"
+			>Session duration : break duration
+			<Select
+				underline
+				name="ratio"
+				class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+				items={ratios}
+				value={$settings.ratio}
+			/>
+		</Label>
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-1" />
+	</div>
+	<Popover triggeredBy="#hover-1" class="w-60 bg-primary-100 md:w-80 z-10" placement="bottom-start">
+		<div class="p-2 text-sm">
+			<h3 class="font-semibold text-secondary-900">Ratio used to calculate break duration</h3>
+			E.g. Your focused session lasts 60 minutes. If you choose a ratio of 2:1, your break duration will
+			be 30 minutes, if you choose 3:1, it'll be 20 minutes. We recommend a value between 2:1 and 5:1.
+		</div>
+	</Popover>
+	<div class="relative">
 		<Toggle bind:checked={warning} class="text-md text-primary-50"
-			>Session length warning (min)&nbsp; <i
-				class="fa-regular fa-circle-question"
-				id="hover-2"
-			/></Toggle
+			>Session length warning (min)</Toggle
 		>
-		<Popover triggeredBy="#hover-2" class="w-80" placement="bottom-start">
-			<div class="space-y-2 p-3 text-sm">
-				<h3 class="font-semibold text-gray-900 dark:text-white">
+		<input
+			type="number"
+			name="warning"
+			min="1"
+			value={$settings.warning}
+			class="block w-full appearance-none border-0 border-b-2 border-secondary-300 bg-transparent pl-0 text-sm text-primary-50 focus:border-secondary-100 focus:outline-none focus:ring-0 disabled:border-secondary-800 disabled:text-secondary-800"
+			disabled={!warning}
+		/>
+		<i class="fa-regular fa-circle-question absolute top-0 right-0 text-primary-50" id="hover-2" />
+		<Popover triggeredBy="#hover-2" class="w-60 bg-primary-100 md:w-80" placement="bottom-start">
+			<div class="p-2 text-sm">
+				<h3 class="font-semibold text-secondary-900">
 					Sound warning after a specific session length
 				</h3>
 				Sitting down for long periods of time is not good for your body, so it is a good idea to set
@@ -80,14 +86,6 @@
 				recommend a value between 45 and 90 minutes.
 			</div>
 		</Popover>
-		<input
-			type="number"
-			name="warning"
-			min="1"
-			value={$settings.warning}
-			class="peer block w-full appearance-none border-0 border-b-2 border-secondary-300 bg-transparent pl-0 text-sm text-primary-50 focus:border-secondary-100 focus:outline-none focus:ring-0 disabled:border-secondary-800 disabled:text-secondary-800"
-			disabled={!warning}
-		/>
 	</div>
 	<hr class="my-4 border-secondary-800" />
 	<div class="flex gap-4">

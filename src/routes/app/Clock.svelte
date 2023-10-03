@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from './settings/types';
+	import type { Settings } from './types';
 	import { getContext } from 'svelte';
 	import { onMount } from 'svelte';
 	import {
@@ -34,7 +34,12 @@
 				}
 			}
 
-			if ($milliseconds >= $settings.warning * 60000 && $session.running && !$session.warning && !$session.dismiss) {
+			if (
+				$milliseconds >= $settings.warning * 60000 &&
+				$session.running &&
+				!$session.warning &&
+				!$session.dismiss
+			) {
 				warning.play();
 				session.warning();
 			}
@@ -49,7 +54,9 @@
 </script>
 
 <div
-	class="pointer-events-none fixed flex w-screen items-center justify-center divide-x text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:md:left-12"
+	class="pointer-events-none fixed flex w-screen items-center justify-center divide-x {$session.running
+		? 'divide-primary-50'
+		: 'divide-primary-600'} text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:md:left-12"
 	style:scale={isSession ? 3 : 1}
 	style:top={isSession ? '25%' : '3%'}
 	style:color={$session.running ? '#ebf7fa' : '#257b8d'}
