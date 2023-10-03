@@ -7,11 +7,12 @@
 
 	let reason: string;
 	let reasons = [
-		{ value: 'phone', name: 'phone' },
+		{ value: 'bathroom', name: 'bathroom' },
 		{ value: 'colleague', name: 'colleague' },
 		{ value: 'message', name: 'message' },
-		{ value: 'bathroom', name: 'bathroom' },
 		{ value: 'pet', name: 'pet' },
+		{ value: 'phone', name: 'phone' },
+		{ value: 'relative', name: 'relative' },
 	];
 
 	function startDistraction() {
