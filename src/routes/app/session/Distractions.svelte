@@ -9,6 +9,7 @@
 	let reasons = [
 		{ value: 'bathroom', name: 'bathroom' },
 		{ value: 'colleague', name: 'colleague' },
+		{ value: 'door bell', name: 'door bell' },
 		{ value: 'message', name: 'message' },
 		{ value: 'pet', name: 'pet' },
 		{ value: 'phone', name: 'phone' },
