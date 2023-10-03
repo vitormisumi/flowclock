@@ -43,7 +43,7 @@
 			<Label for="current_email" class="mb-2 text-primary-50">Current Email</Label>
 			<Input
 				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-				name="email"
+				name="current_email"
 				type="email"
 				placeholder="Confirm your current email"
 				required
@@ -55,7 +55,7 @@
 			<Label for="new_email" class="mb-2 text-primary-50">New Email</Label>
 			<Input
 				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-				name="email"
+				name="new_email"
 				type="email"
 				placeholder="Type your new email"
 				required
