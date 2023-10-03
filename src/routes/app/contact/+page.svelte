@@ -34,7 +34,7 @@
 	>
 		<h1 class="text-center text-xl font-bold text-primary-600">Contact</h1>
 		<form
-			action="https://formsubmit.co/ee041d27aae0edef210e8ff6571fdf22"
+			action="https://formsubmit.co/a6a9f6f60a30300e58d39ed98bb18025"
 			method="POST"
 			class="grid gap-4 md:gap-8"
 		>
