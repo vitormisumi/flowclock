@@ -14,7 +14,7 @@
 	];
 </script>
 
-<div class="grid gap-4">
+<div class="grid gap-4 w-full">
 	{#each providers as provider}
 		<form method="POST" action="/oauth" use:enhance>
 			<input type="hidden" name="provider" value={provider.name} />
