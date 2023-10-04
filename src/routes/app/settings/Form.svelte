@@ -46,9 +46,8 @@
 		<Label class="text-md w-full text-primary-50"
 			>Session duration : break duration
 			<Select
-				underline
 				name="ratio"
-				class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 				items={ratios}
 				value={$settings.ratio}
 			/>
@@ -63,7 +62,7 @@
 		</div>
 	</Popover>
 	<div class="relative">
-		<Toggle bind:checked={warning} class="text-md text-primary-50"
+		<Toggle size="small" bind:checked={warning} class="text-md text-primary-50"
 			>Session length warning (min)</Toggle
 		>
 		<input
@@ -71,7 +70,7 @@
 			name="warning"
 			min="1"
 			value={$settings.warning}
-			class="block w-full appearance-none border-0 border-b-2 border-secondary-300 bg-transparent pl-0 text-sm text-primary-50 focus:border-secondary-100 focus:outline-none focus:ring-0 disabled:border-secondary-800 disabled:text-secondary-800"
+			class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-primary-500 w-full"
 			disabled={!warning}
 		/>
 		<i class="fa-regular fa-circle-question absolute top-0 right-0 text-primary-50" id="hover-2" />
@@ -92,9 +91,8 @@
 		<Label class="text-md w-full text-primary-50"
 			>Date format
 			<Select
-				underline
 				name="date_format"
-				class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 				items={formats}
 				value={$settings.date_format}
 			/>
@@ -102,15 +100,14 @@
 		<Label class="text-md text-primary-50"
 			>Separator
 			<Select
-				underline
 				name="separator"
-				class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
+				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
 				items={separators}
 				value={$settings.separator}
 			/>
 		</Label>
 	</div>
-	<Toggle bind:checked={clockFormat} class="text-md text-primary-50">24-hour clock</Toggle>
+	<Toggle size="small" bind:checked={clockFormat} class="text-md text-primary-50">24-hour clock</Toggle>
 	<input type="number" name="clock_format" value={clockFormat ? 1 : 0} hidden />
 	<Button type="submit" disabled={loading}
 		><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button

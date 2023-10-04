@@ -56,7 +56,7 @@
 <div
 	class="pointer-events-none fixed flex w-screen items-center justify-center divide-x {$session.running
 		? 'divide-primary-50'
-		: 'divide-primary-600'} text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:md:left-12"
+		: 'divide-primary-600'} text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-8 landscape:md:left-12"
 	style:scale={isSession ? 3 : 1}
 	style:top={isSession ? '35%' : '3%'}
 	style:color={$session.running ? '#ebf7fa' : '#257b8d'}

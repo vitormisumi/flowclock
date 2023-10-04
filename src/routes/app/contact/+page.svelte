@@ -46,7 +46,7 @@
 					placeholder="Select the subject of your message"
 					items={subjects}
 					bind:value={selectedSubject}
-					class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
+					class="bg-primary-900 {selectedSubject === '' ? 'text-secondary-500' : 'text-secondary-50'}"
 					required
 				></Select>
 			</div>
