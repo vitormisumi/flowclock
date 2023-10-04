@@ -8,21 +8,22 @@
 
 	$: minutes = Math.floor($milliseconds / 60000 / $settings.ratio);
 
-	let message: string =
-		'You currently have no sessions running. Click the button below to start a new one.';
+	let message: string;
 
 	$: if ($session.running) {
-		message =
-			'You have earned ' + minutes + (minutes === 1 ? ' minute ' : ' minutes ') + 'of break';
+		message = 'Break time: ' + minutes + ' min';
 	} else if ($sessionBreak.running) {
 		message = $sessionBreak.alarmPlayed ? 'Time for your next session!' : 'Enjoy your break!';
 	} else {
-		message = 'You currently have no sessions running. Click the button below to start a new one.';
+		message = '';
 	}
 </script>
 
-<div class="flex h-20 landscape:h-14 w-full items-center justify-center">
-	<p class="text-primary-50" style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}>
+<div class="flex w-full items-center justify-center">
+	<p
+		class="text-primary-50"
+		style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}
+	>
 		{message}
 	</p>
 </div>

@@ -11,25 +11,25 @@
 	const sessions = writable();
 	$: sessions.set(
 		data.sessions?.map((x) => {
-			let sessionDistractions = data.distractions?.filter((d) => d.session_id === x.id);
-			let distractionDuration = sessionDistractions?.reduce((accumulator, object) => {
+			let sessionInterruptions = data.interruptions?.filter((d) => d.session_id === x.id);
+			let interruptionDuration = sessionInterruptions?.reduce((accumulator, object) => {
 				return accumulator + Date.parse(object.end) - Date.parse(object.start);
 			}, 0);
 			return Object.assign(x, {
-				duration: Date.parse(x.end) - Date.parse(x.start) - distractionDuration
+				duration: Date.parse(x.end) - Date.parse(x.start) - interruptionDuration
 			});
 		})
 	);
 
-	const distractions = writable();
-	$: distractions.set(data.distractions);
+	const interruptions = writable();
+	$: interruptions.set(data.interruptions);
 
 	const settings = writable();
 	$: settings.set(data.settings);
 
 	setContext('user', data.user);
 	setContext('sessions', sessions);
-	setContext('distractions', distractions);
+	setContext('interruptions', interruptions);
 	setContext('settings', settings);
 
 	$: console.log($sessions);

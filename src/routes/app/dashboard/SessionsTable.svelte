@@ -9,7 +9,7 @@
 		ButtonGroup,
 		Button
 	} from 'flowbite-svelte';
-	import { filteredSessions, startRow, endRow, filteredDistractions, openRow } from './stores';
+	import { filteredSessions, startRow, endRow, filteredInterruptions, openRow } from './stores';
 	import {
 		dateFromTimestamp,
 		millisecondsToClock,
@@ -86,13 +86,13 @@
 								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
 							</p>
 							<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
-								{#each Object.entries($filteredDistractions.filter((x) => x.session_id === session.id)) as distraction}
+								{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
 									<div class="flex items-center justify-center font-extralight text-secondary-100">
 										<i class="fa-solid fa-pause pr-1" />
-										<p>{timeFromTimestamp(distraction[1].start, $settings.clock_format)} -&nbsp</p>
-										<p>{timeFromTimestamp(distraction[1].end, $settings.clock_format)}</p>
-										{#if distraction[1].reason}
-											<p class="pl-1">({distraction[1].reason})</p>
+										<p>{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp</p>
+										<p>{timeFromTimestamp(interruption[1].end, $settings.clock_format)}</p>
+										{#if interruption[1].reason}
+											<p class="pl-1">({interruption[1].reason})</p>
 										{/if}
 									</div>
 								{/each}

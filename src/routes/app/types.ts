@@ -6,7 +6,7 @@ export interface Session {
 	duration: number;
 }
 
-export interface Distraction {
+export interface Interruption {
 	id: number;
 	user_id: string;
 	session_id: number;

@@ -10,7 +10,7 @@ export const actions = {
 		const formData = await request.formData();
 		const sessionStart = formData.get('session_start') as string;
 		const sessionEnd = formData.get('session_end') as string;
-		const distractions = formData.get('distractions') as string;
+		const interruptions = formData.get('interruptions') as string;
 		
 		const { data, error } = await supabase
 			.from('sessions')
@@ -21,7 +21,7 @@ export const actions = {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		} else {
-			const distractionMapped = JSON.parse(distractions).map((x: {start: number, end: number, reason: string}) => ({ 
+			const interruptionMapped = JSON.parse(interruptions).map((x: {start: number, end: number, reason: string}) => ({ 
 				...x,
 				start: new Date (x.start).toISOString(),
 				end: new Date (x.end).toISOString(),
@@ -30,8 +30,8 @@ export const actions = {
 			}))
 	
 			const { error } = await supabase
-				.from('distractions')
-				.insert(distractionMapped)
+				.from('interruptions')
+				.insert(interruptionMapped)
 	
 			if (error) {
 				console.log(error);

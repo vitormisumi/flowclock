@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Button, Card, Dropdown, Radio } from 'flowbite-svelte';
-	import { filteredDistractions, filteredSessions } from './stores';
-	import DistractionsPlot from './DistractionsPlot.svelte';
+	import { filteredInterruptions, filteredSessions } from './stores';
+	import InterruptionsPlot from './InterruptionsPlot.svelte';
 
 	$: perSession = $filteredSessions.length
-		? ($filteredDistractions.length / $filteredSessions.length).toFixed(2)
+		? ($filteredInterruptions.length / $filteredSessions.length).toFixed(2)
 		: '-';
 
 	let group: string = 'frequency';
@@ -17,9 +17,9 @@
 <Card class="h-full min-w-full border-0 bg-primary-800">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Distractions</h2>
+			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Interruptions</h2>
 			<p class="text-center text-accent-500 md:text-xl">
-				{$filteredDistractions.length}
+				{$filteredInterruptions.length}
 			</p>
 		</div>
 		<div>
@@ -43,7 +43,7 @@
 			{/each}
 		</Dropdown>
 	</div>
-	{#if $filteredDistractions.length}
-		<DistractionsPlot {group} />
+	{#if $filteredInterruptions.length}
+		<InterruptionsPlot {group} />
 	{/if}
 </Card>

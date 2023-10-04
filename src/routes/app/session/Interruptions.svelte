@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Modal, Select } from 'flowbite-svelte';
-	import { distractions, session, milliseconds } from './stores';
+	import { interruptions, session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 
 	let open: boolean = false;
@@ -13,24 +13,24 @@
 		{ value: 'message', name: 'message' },
 		{ value: 'pet', name: 'pet' },
 		{ value: 'phone', name: 'phone' },
-		{ value: 'relative', name: 'relative' },
+		{ value: 'relative', name: 'relative' }
 	];
 
-	function startDistraction() {
-		distractions.start();
+	function startInterruption() {
+		interruptions.start();
 		session.pause();
 		open = true;
 	}
 
-	function endDistraction() {
-		distractions.end(reason);
+	function endInterruption() {
+		interruptions.end(reason);
 		session.unpause();
 		open = false;
 	}
 </script>
 
 <div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>
-	<Button on:click={startDistraction} class="bg-primary-600 hover:bg-primary-700"><i class="fa-solid fa-pause pr-3" />Distraction</Button>
+	<Button on:click={startInterruption}><i class="fa-solid fa-pause pr-3" />Interruption</Button>
 </div>
 <Modal
 	bind:open
@@ -41,7 +41,7 @@
 	<i class="fa-solid fa-pause text-3xl text-secondary-300" />
 	<p>{millisecondsToClock($milliseconds)}</p>
 	<p class="text-secondary-200">
-		Select the reason for the distraction and resume your session once you are ready.
+		Select the reason for the interruption and resume your session once you are ready.
 	</p>
 	<Select
 		underline
@@ -50,5 +50,5 @@
 		placeholder="Select a reason"
 		class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
 	/>
-	<Button size="sm" on:click={endDistraction}><i class="fa-solid fa-play pr-2" />Resume</Button>
+	<Button size="sm" on:click={endInterruption}><i class="fa-solid fa-play pr-2" />Resume</Button>
 </Modal>

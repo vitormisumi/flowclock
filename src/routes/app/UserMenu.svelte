@@ -12,8 +12,8 @@
 	import { getContext } from 'svelte';
 	import avatar from '$lib/assets/avatar.png';
 	import type { User } from '@supabase/supabase-js';
-	import { distractionLength, distractions, session, sessionBreak } from './session/stores';
-	import type { Settings } from './settings/types';
+	import { interruptionLength, interruptions, session, sessionBreak } from './session/stores';
+	import type { Settings } from './types';
 	import type { Writable } from 'svelte/store';
 
 	const user: User = getContext('user');
@@ -80,11 +80,11 @@
 				use:enhance={({ formData }) => {
 					session.end();
 					sessionBreak.start(
-						($session.end - $session.start - $distractionLength) / $settings.ratio
+						($session.end - $session.start - $interruptionLength) / $settings.ratio
 					);
 					formData.append('session_start', new Date($session.start).toISOString());
 					formData.append('session_end', new Date($session.end).toISOString());
-					formData.append('distractions', JSON.stringify($distractions));
+					formData.append('interruptions', JSON.stringify($interruptions));
 				}}
 			>
 				<Button

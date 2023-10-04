@@ -17,8 +17,8 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.eq('user_id', session.user.id)
 		.order('id', { ascending: false });
 	
-	const { data: distractions } = await supabase
-		.from('distractions')
+	const { data: interruptions } = await supabase
+		.from('interruptions')
 		.select('*')
 		.eq('user_id', session.user.id)
 		.order('id', { ascending: false });
@@ -29,5 +29,5 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.eq('user_id', session.user.id)
 		.single();
 
-	return { session, sessions, distractions, settings, user, error };
+	return { session, sessions, interruptions, settings, user, error };
 };

@@ -6,9 +6,9 @@
 	import {
 		session,
 		sessionBreak,
-		distractionLength,
+		interruptionLength,
 		milliseconds,
-		distractions
+		interruptions
 	} from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
@@ -22,14 +22,14 @@
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
-				$milliseconds = Date.now() - $session.start - $distractionLength;
+				$milliseconds = Date.now() - $session.start - $interruptionLength;
 			} else if ($sessionBreak.running) {
 				if ($milliseconds > 1000) {
 					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 				} else if (!$sessionBreak.alarmPlayed) {
 					alarm.play();
 					sessionBreak.alarm();
-					distractions.reset();
+					interruptions.reset();
 					$milliseconds = 0;
 				}
 			}
@@ -58,7 +58,7 @@
 		? 'divide-primary-50'
 		: 'divide-primary-600'} text-center transition-all delay-500 duration-500 md:text-xl lg:text-2xl landscape:left-6 landscape:md:left-12"
 	style:scale={isSession ? 3 : 1}
-	style:top={isSession ? '25%' : '3%'}
+	style:top={isSession ? '35%' : '3%'}
 	style:color={$session.running ? '#ebf7fa' : '#257b8d'}
 >
 	{#if !isSession}

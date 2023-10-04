@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import type { Distraction, Session } from '../types';
+	import type { Interruption, Session } from '../types';
 	import type { Writable } from 'svelte/store';
-	import { filter, filteredDistractions, filteredSessions } from './stores';
+	import { filter, filteredInterruptions, filteredSessions } from './stores';
 	import { fade } from 'svelte/transition';
 	import { navigating } from '$app/stores';
 	import Filter from './Filter.svelte';
 	import SessionsCard from './SessionsCard.svelte';
 	import Notification from '../../Notification.svelte';
-	import DistractionsCard from './DistractionsCard.svelte';
+	import InterruptionsCard from './InterruptionsCard.svelte';
 	import TimeFrameCard from './TimeFrameCard.svelte';
 
 	export let form;
 
 	const sessions: Writable<Session[]> = getContext('sessions');
-	const distractions: Writable<Distraction[]> = getContext('distractions');
+	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
 	const today = new Date();
 	$: current = $filter.current ? 1 : 0;
@@ -29,7 +29,7 @@
 					date.getFullYear() === today.getFullYear()
 				);
 			});
-			$filteredDistractions = $distractions.filter((x) => {
+			$filteredInterruptions = $interruptions.filter((x) => {
 				const date = new Date(x.start);
 				return (
 					date.getDate() + 1 === today.getDate() + current &&
@@ -45,7 +45,7 @@
 					const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
 					return date > beginningOfWeek;
 				});
-				$filteredDistractions = $distractions.filter((x) => {
+				$filteredInterruptions = $interruptions.filter((x) => {
 					const date = Date.parse(x.start);
 					const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
 					return date > beginningOfWeek;
@@ -59,7 +59,7 @@
 						new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
 					return date > beginningOfLastWeek && date < endOfLastWeek;
 				});
-				$filteredDistractions = $distractions.filter((x) => {
+				$filteredInterruptions = $interruptions.filter((x) => {
 					const date = Date.parse(x.start);
 					const beginningOfLastWeek =
 						new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
@@ -77,7 +77,7 @@
 					date.getFullYear() === today.getFullYear()
 				);
 			});
-			$filteredDistractions = $distractions.filter((x) => {
+			$filteredInterruptions = $interruptions.filter((x) => {
 				const date = new Date(x.start);
 				return (
 					date.getMonth() + 1 === today.getMonth() + current &&
@@ -90,14 +90,14 @@
 				const date = new Date(x.start);
 				return date.getFullYear() + 1 === today.getFullYear() + current;
 			});
-			$filteredDistractions = $distractions.filter((x) => {
+			$filteredInterruptions = $interruptions.filter((x) => {
 				const date = new Date(x.start);
 				return date.getFullYear() + 1 === today.getFullYear() + current;
 			});
 			break;
 		default:
 			$filteredSessions = $sessions;
-			$filteredDistractions = $distractions;
+			$filteredInterruptions = $interruptions;
 	}
 </script>
 
@@ -119,7 +119,7 @@
 		<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
 			<SessionsCard />
 			<TimeFrameCard />
-			<DistractionsCard />
+			<InterruptionsCard />
 		</div>
 	{/if}
 </div>

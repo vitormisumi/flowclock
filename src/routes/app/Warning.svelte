@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Modal, Button } from 'flowbite-svelte';
-	import { distractionLength, session, sessionBreak, distractions } from './session/stores';
+	import { interruptionLength, session, sessionBreak, interruptions } from './session/stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from './settings/types';
+	import type { Settings } from './types';
 	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
@@ -32,10 +32,10 @@
 			action="/app/session"
 			use:enhance={({ formData }) => {
 				session.end();
-				sessionBreak.start(($session.end - $session.start - $distractionLength) / $settings.ratio);
+				sessionBreak.start(($session.end - $session.start - $interruptionLength) / $settings.ratio);
 				formData.append('session_start', new Date($session.start).toISOString());
 				formData.append('session_end', new Date($session.end).toISOString());
-				formData.append('distractions', JSON.stringify($distractions));
+				formData.append('interruptions', JSON.stringify($interruptions));
 			}}
 		>
 			<Button

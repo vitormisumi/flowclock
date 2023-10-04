@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { filteredDistractions } from './stores';
+	import { filteredInterruptions } from './stores';
 
 	export let group: string;
 
@@ -8,7 +8,7 @@
 		group === 'frequency'
 			? Object.fromEntries(
 					Object.entries(
-						$filteredDistractions.reduce(
+						$filteredInterruptions.reduce(
 							(distribution, item) => {
 								const reason = item.reason;
 								distribution[reason] = (distribution[reason] || 0) + 1;
@@ -20,7 +20,7 @@
 			  )
 			: Object.fromEntries(
 					Object.entries(
-						$filteredDistractions.reduce(
+						$filteredInterruptions.reduce(
 							(distribution, item) => {
 								const reason = item.reason;
 								distribution[reason] =
@@ -68,6 +68,6 @@
 		class="stroke-primary-800"
 	/>
 	<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter"
-		>{group} of distractions</text
+		>{group} of interruptions</text
 	>
 </svg>

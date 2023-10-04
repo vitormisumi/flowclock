@@ -97,14 +97,14 @@ function createBreak() {
 
 export const sessionBreak = createBreak();
 
-export interface Distraction {
+export interface Interruption {
 	start: number;
 	end: number;
 	reason: string;
 }
 
-function createDistractions() {
-	const { subscribe, update, set } = writable<Distraction[]>([]);
+function createInterruptions() {
+	const { subscribe, update, set } = writable<Interruption[]>([]);
 
 	return {
 		subscribe,
@@ -115,31 +115,31 @@ function createDistractions() {
 				if (x.length === 0) {
 					return x
 				}
-				const distractions = [...x];
-				const currentDistraction = distractions[x.length - 1];
-				distractions[x.length - 1] = {
-					...currentDistraction,
+				const interruptions = [...x];
+				const currentInterruption = interruptions[x.length - 1];
+				interruptions[x.length - 1] = {
+					...currentInterruption,
 					end: Date.now(),
 					reason: reason,
 				};
-				return distractions;
+				return interruptions;
 			}),
 		reset: () =>
 			set([])
 	};
 }
 
-export const distractions = createDistractions();
+export const interruptions = createInterruptions();
 
-export const distractionLength = derived(
-	distractions,
-	($distractions) => {
+export const interruptionLength = derived(
+	interruptions,
+	($interruptions) => {
 		let l: number = 0;
-		for (let i = 0; i < $distractions.length; i++) {
-			if ($distractions[i].end === 0) {
-				l += Date.now() - $distractions[i].start;
+		for (let i = 0; i < $interruptions.length; i++) {
+			if ($interruptions[i].end === 0) {
+				l += Date.now() - $interruptions[i].start;
 			} else {
-				l += $distractions[i].end - $distractions[i].start;
+				l += $interruptions[i].end - $interruptions[i].start;
 			}
 		}
 		return l

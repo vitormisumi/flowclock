@@ -1,11 +1,11 @@
 import { writable } from "svelte/store";
-import type { Distraction, Session, Filter } from "../types";
+import type { Interruption, Session, Filter } from "../types";
 
 export const filter = writable<Filter>({timeframe: 'all', current: true});
 
 export const filteredSessions = writable<Session[]>([]);
 
-export const filteredDistractions = writable<Distraction[]>([]);
+export const filteredInterruptions = writable<Interruption[]>([]);
 
 export const openRow = writable<null | number>(null);
 
