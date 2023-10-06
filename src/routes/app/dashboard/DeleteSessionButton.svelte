@@ -4,6 +4,11 @@
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
 	import type { Session } from '../types';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../types';
+	import { getContext } from 'svelte';
+
+	const settings: Writable<Settings> = getContext('settings');
 
 	export let session: Session;
 
@@ -29,8 +34,8 @@
 >
 	<i class="fa-solid fa-warning text-3xl text-red-700" />
 	<p class="text-secondary-200 whitespace-normal">
-		Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start)} from
-		{timeFromTimestamp(sessionToDelete?.start)} to {timeFromTimestamp(sessionToDelete?.end)}?
+		Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start, $settings.date_format, $settings.separator)} from
+		{timeFromTimestamp(sessionToDelete?.start, $settings.clock_format)} to {timeFromTimestamp(sessionToDelete?.end, $settings.clock_format)}?
 	</p>
 	<form
 		class="flex w-full justify-center gap-4"
