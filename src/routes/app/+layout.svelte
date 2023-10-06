@@ -31,8 +31,6 @@
 	setContext('sessions', sessions);
 	setContext('interruptions', interruptions);
 	setContext('settings', settings);
-
-	$: console.log($sessions);
 </script>
 
 <Screen>
