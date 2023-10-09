@@ -27,10 +27,14 @@
 	const settings = writable();
 	$: settings.set(data.settings);
 
+	const projects = writable();
+	$: projects.set(data.projects);
+
 	setContext('user', data.user);
 	setContext('sessions', sessions);
 	setContext('interruptions', interruptions);
 	setContext('settings', settings);
+	setContext('projects', projects);
 </script>
 
 <Screen>

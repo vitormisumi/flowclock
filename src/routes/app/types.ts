@@ -25,6 +25,17 @@ export interface Settings {
 	clock_format: boolean;
 }
 
+export interface Project {
+	id: number;
+	user_id: string;
+	created_at: string;
+	name: string;
+	status: string;
+	goal: string;
+	description: string;
+	focus: string;
+}
+
 export interface Filter {
     timeframe: string;
 	current: boolean;

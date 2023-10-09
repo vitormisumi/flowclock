@@ -7,10 +7,10 @@
 			title: 'session',
 			icon: 'fa-clock'
 		},
-		// {
-		// 	title: 'projects',
-		// 	icon: 'fa-square-check'
-		// },
+		{
+			title: 'projects',
+			icon: 'fa-square-check'
+		},
 		{
 			title: 'dashboard',
 			icon: 'fa-chart-pie'

@@ -23,11 +23,17 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.eq('user_id', session.user.id)
 		.order('id', { ascending: false });
 
-	const { data: settings, error } = await supabase
+	const { data: settings } = await supabase
 		.from('settings')
 		.select('*')
 		.eq('user_id', session.user.id)
 		.single();
+	
+	const { data: projects } = await supabase
+		.from('projects')
+		.select('*')
+		.eq('user_id', session.user.id)
+		.order('id', { ascending: false });
 
-	return { session, sessions, interruptions, settings, user, error };
+	return { session, sessions, interruptions, settings, projects, user };
 };
