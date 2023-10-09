@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Drawer } from 'flowbite-svelte';
+	import { Button, Drawer, Tooltip } from 'flowbite-svelte';
 	import { filter, startRow, endRow, openRow } from './stores';
 	import type { Period } from '../types';
 
@@ -73,6 +73,7 @@
 	<Button size="sm" class="w-36" on:click={open}
 		>{selected[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
 	>
+	<Tooltip>Select time period</Tooltip>
 </div>
 <Drawer transitionType="fly" transitionParams={{x: 100}} placement="right" width="w-40" class="z-50 bg-primary-900" bind:hidden>
 	<div class="flex flex-wrap justify-center gap-2">

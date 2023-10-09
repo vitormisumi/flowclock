@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card, Dropdown, Radio } from 'flowbite-svelte';
+	import { Button, Card, Dropdown, Radio, Tooltip } from 'flowbite-svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
 	import TimeFramePlot from './TimeFramePlot.svelte';
@@ -76,15 +76,15 @@
 		>
 		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-3" bind:open>
 			{#each Object.keys(periods) as period}
-				<li>
-					<Radio
-						name="sort"
-						bind:group
-						value={period}
-						on:click={() => (open = false)}
-						class="text-primary-900">{period}</Radio
-					>
-				</li>
+			<li>
+				<Radio
+				name="sort"
+				bind:group
+				value={period}
+				on:click={() => (open = false)}
+				class="text-primary-900">{period}</Radio
+				>
+			</li>
 			{/each}
 		</Dropdown>
 	</div>

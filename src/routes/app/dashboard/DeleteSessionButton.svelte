@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Modal } from 'flowbite-svelte';
+	import { Button, Modal, Tooltip } from 'flowbite-svelte';
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
@@ -26,6 +26,7 @@
 		sessionId = session.id;
 	}}><i class="fa-solid fa-trash" /></Button
 >
+<Tooltip>Delete session</Tooltip>
 <Modal
 	bind:open
 	outsideclose
@@ -33,9 +34,16 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<i class="fa-solid fa-warning text-3xl text-red-700" />
-	<p class="text-secondary-200 whitespace-normal">
-		Are you sure you want to delete your session at {dateFromTimestamp(sessionToDelete?.start, $settings.date_format, $settings.separator)} from
-		{timeFromTimestamp(sessionToDelete?.start, $settings.clock_format)} to {timeFromTimestamp(sessionToDelete?.end, $settings.clock_format)}?
+	<p class="whitespace-normal text-secondary-200">
+		Are you sure you want to delete your session at {dateFromTimestamp(
+			sessionToDelete?.start,
+			$settings.date_format,
+			$settings.separator
+		)} from
+		{timeFromTimestamp(sessionToDelete?.start, $settings.clock_format)} to {timeFromTimestamp(
+			sessionToDelete?.end,
+			$settings.clock_format
+		)}?
 	</p>
 	<form
 		class="flex w-full justify-center gap-4"
