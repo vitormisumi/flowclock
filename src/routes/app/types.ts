@@ -34,6 +34,7 @@ export interface Project {
 	goal: string;
 	description: string;
 	focus: string;
+	last_edited: string;
 }
 
 export interface Filter {

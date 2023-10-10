@@ -42,7 +42,7 @@
 		<Button
 			type="submit"
 			disabled={loading}
-			class="w-40 self-center"
+			class="w-40 self-center bg-accent-500 hover:bg-accent-600"
 			on:click={() => (open = false)}>Reset password</Button
 		>
 	</form>

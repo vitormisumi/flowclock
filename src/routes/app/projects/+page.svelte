@@ -6,10 +6,24 @@
 	import TasksCard from './TasksCard.svelte';
 	import ToDosCards from './ToDosCards.svelte';
 	import IntentionsCard from './IntentionsCard.svelte';
-	import Menu from './Menu.svelte';
-	import { selectedProject } from './stores';
+	import SelectProjectButton from './SelectProjectButton.svelte';
+	import { selectedProject, selectedProjectId } from './stores';
+	import AddProjectButton from './AddProjectButton.svelte';
+	import type { Writable } from 'svelte/store';
+	import type { Project } from '../types';
+	import { getContext } from 'svelte';
+
+	const projects: Writable<Project[]> = getContext('projects');
 
 	export let form;
+
+	$: if ($projects.length === 0) {
+		selectedProject.reset();
+	} else if ($selectedProjectId != 0) {
+		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
+	} else {
+		selectedProject.select($projects[0]);
+	}
 </script>
 
 <div
@@ -18,10 +32,15 @@
 		: { duration: 0 }}
 >
 	<div class="flex w-full justify-between gap-2 pb-4">
-		<Menu />
+		<SelectProjectButton />
+		<AddProjectButton />
 	</div>
-	{#if $selectedProject.id === 0}
-		<p>Select a project above</p>
+	{#if $projects.length === 0}
+		<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+			<p class="text-center text-lg text-secondary-100">
+				You have no projects yet. Click the button above to create one.
+			</p>
+		</div>
 	{:else}
 		<div class="grid grid-cols-2 gap-4">
 			<InfoCard />

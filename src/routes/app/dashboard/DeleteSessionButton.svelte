@@ -20,7 +20,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent hover:bg-primary-700"
+	class="bg-transparent hover:bg-primary-700 text-red-700"
 	on:click={() => {
 		open = true;
 		sessionId = session.id;
@@ -35,7 +35,7 @@
 >
 	<i class="fa-solid fa-warning text-3xl text-red-700" />
 	<p class="whitespace-normal text-secondary-200">
-		Are you sure you want to delete your session at {dateFromTimestamp(
+		Delete session at {dateFromTimestamp(
 			sessionToDelete?.start,
 			$settings.date_format,
 			$settings.separator

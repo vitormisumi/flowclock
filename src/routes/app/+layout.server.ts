@@ -33,7 +33,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.from('projects')
 		.select('*')
 		.eq('user_id', session.user.id)
-		.order('id', { ascending: false });
+		.order('last_edited', { ascending: false });
 
 	return { session, sessions, interruptions, settings, projects, user };
 };

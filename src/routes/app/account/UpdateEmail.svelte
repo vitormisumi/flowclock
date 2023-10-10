@@ -38,31 +38,30 @@
 		To change the email registered to your account, fill the fields below. You will receive an email
 		on both addresses to confirm the change.
 	</p>
-	<form class="flex flex-col gap-4 text-left" method="POST" action="?/updateEmail" use:enhance={handleClick}>
-		<div>
-			<Label for="current_email" class="mb-2 text-primary-50">Current Email</Label>
-			<Input
-				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-				name="current_email"
-				type="email"
-				placeholder="Confirm your current email"
-				required
-			>
-				<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
-			>
-		</div>
-		<div>
-			<Label for="new_email" class="mb-2 text-primary-50">New Email</Label>
-			<Input
-				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
-				name="new_email"
-				type="email"
-				placeholder="Type your new email"
-				required
-			>
-				<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
-			>
-		</div>
-		<Button type="submit" disabled={loading} class="w-40 self-center">Confirm change</Button>
+	<form
+		class="flex flex-col gap-4 text-left"
+		method="POST"
+		action="?/updateEmail"
+		use:enhance={handleClick}
+	>
+		<Input
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			name="current_email"
+			type="email"
+			placeholder="Current email"
+			required
+		>
+			<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
+		>
+		<Input
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			name="new_email"
+			type="email"
+			placeholder="New email"
+			required
+		>
+			<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
+		>
+		<Button type="submit" disabled={loading} class="w-40 self-center bg-accent-500 hover:bg-accent-600">Confirm change</Button>
 	</form>
 </Modal>

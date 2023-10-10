@@ -1,7 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 
 export const actions = {
-	addProject: async ({ request, locals: { supabase, getSession } }) => {
+	add: async ({ request, locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
 			throw redirect(303, '/');
@@ -25,7 +25,7 @@ export const actions = {
 		return { message: 'Project successfully created', success: true };
     },
     
-	editProject: async ({ request, locals: { supabase, getSession } }) => {
+	edit: async ({ request, locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
 			throw redirect(303, '/');
@@ -49,5 +49,27 @@ export const actions = {
 		}
 
 		return { message: 'Project successfully updated', success: true };
+    },
+    
+	delete: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+        }
+        
+        const formData = await request.formData();
+        const id = formData.get('id') as string;
+		
+        const { error } = await supabase
+            .from('projects')
+            .delete()
+            .eq('id', id)
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: error.message, success: false });
+		}
+
+		return { message: 'Project successfully deleted', success: true };
 	}
 };
