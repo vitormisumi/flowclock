@@ -38,7 +38,7 @@
 
 	let clockFormat: boolean = $settings.clock_format;
 
-	let loading: boolean = false;
+	let loading = false;
 </script>
 
 <form class="grid gap-8 md:gap-12" method="POST">

@@ -3,7 +3,7 @@
 	import { selectedProject } from './stores';
 	import { enhance } from '$app/forms';
 
-	let open: boolean = false;
+	let open = false;
 
 	let statusOptions = [
 		{ name: 'idea', value: 'idea' },

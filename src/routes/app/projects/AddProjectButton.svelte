@@ -2,7 +2,7 @@
 	import { Tooltip, Button, Modal, Input, Select } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 
-	let open: boolean = false;
+	let open = false;
 
 	let statusOptions = [
 		{ name: 'idea', value: 'idea' },
@@ -14,7 +14,7 @@
 	];
 </script>
 
-<Button on:click={() => (open = true)}><i class="fa-solid fa-plus" /></Button>
+<Button on:click={() => (open = true)} class="self-end"><i class="fa-solid fa-plus" /></Button>
 <Tooltip>Add new project</Tooltip>
 <Modal
 	bind:open

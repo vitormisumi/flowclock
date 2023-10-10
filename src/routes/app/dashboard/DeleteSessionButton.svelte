@@ -12,7 +12,7 @@
 
 	export let session: Session;
 
-	let open: boolean = false;
+	let open = false;
 
 	let sessionId: number | null;
 	$: sessionToDelete = $filteredSessions.find(({ id }) => id === sessionId);

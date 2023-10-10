@@ -3,9 +3,9 @@
 	import { Button, Modal } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 
-	let open: boolean = false;
+	let open = false;
 
-	let loading: boolean = false;
+	let loading = false;
 
 	const handleClick: SubmitFunction = () => {
 		loading = true;

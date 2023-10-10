@@ -34,6 +34,11 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.select('*')
 		.eq('user_id', session.user.id)
 		.order('last_edited', { ascending: false });
+	
+	const { data: projectGroups } = await supabase
+		.from('project_groups')
+		.select('*')
+		.eq('user_id', session.user.id)
 
-	return { session, sessions, interruptions, settings, projects, user };
+	return { session, sessions, interruptions, settings, projects, projectGroups, user };
 };

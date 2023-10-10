@@ -6,7 +6,7 @@
 
 	export let form;
 
-	let loading: boolean = false;
+	let loading = false;
 
 	const handleClick: SubmitFunction = () => {
 		loading = true;

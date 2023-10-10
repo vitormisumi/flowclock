@@ -3,7 +3,7 @@
 	import { interruptions, session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 
-	let open: boolean = false;
+	let open = false;
 
 	let reason: string;
 	let reasons = [

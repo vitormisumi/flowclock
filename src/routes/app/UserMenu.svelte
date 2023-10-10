@@ -19,7 +19,7 @@
 	const user: User = getContext('user');
 	const settings: Writable<Settings> = getContext('settings');
 
-	let open: boolean = false;
+	let open = false;
 </script>
 
 <Avatar

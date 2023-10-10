@@ -17,10 +17,18 @@
 
 	export let form;
 
-	selectedProject.select($projects[0]);
-	
-	$: if (form?.success) {
+	if ($projects.length) {
 		selectedProject.select($projects[0]);
+	} else {
+		selectedProject.reset();
+	}
+
+	$: if (form?.success) {
+		if ($projects.length) {
+			selectedProject.select($projects[0]);
+		} else {
+			selectedProject.reset();
+		}
 	}
 	$: if ($selectedProjectId) {
 		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
@@ -36,18 +44,18 @@
 		<SelectProjectButton />
 		<AddProjectButton />
 	</div>
-	{#if $projects.length === 0}
-		<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-			<p class="text-center text-lg text-secondary-100">
-				You have no projects yet. Click the button above to create one.
-			</p>
-		</div>
-	{:else}
+	{#if $projects.length}
 		<div class="grid grid-cols-2 gap-4">
 			<InfoCard />
 			<TasksCard />
 			<ToDosCards />
 			<IntentionsCard />
+		</div>
+	{:else}
+		<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+			<p class="text-center text-lg text-secondary-100">
+				You have no projects yet. Click the button above to create one.
+			</p>
 		</div>
 	{/if}
 </div>

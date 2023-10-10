@@ -9,7 +9,7 @@
 
 	let group: string = 'frequency';
 
-	let open: boolean = false;
+	let open = false;
 
 	let options: string[] = ['frequency', 'duration'];
 </script>

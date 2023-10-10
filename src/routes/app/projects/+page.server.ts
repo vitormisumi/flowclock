@@ -71,5 +71,26 @@ export const actions = {
 		}
 
 		return { message: 'Project successfully deleted', success: true };
-	}
+    },
+    
+    addGroup: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+        }
+
+		const formData = await request.formData();
+        const name = formData.get('name') as string;
+		
+        const { error } = await supabase
+            .from('project_groups')
+            .insert({ user_id: session.user.id, name: name });
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: error.message, success: false });
+		}
+
+		return { message: 'Group successfully created', success: true };
+    },
 };

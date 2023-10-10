@@ -7,9 +7,9 @@
 
 	const user: User = getContext('user');
 
-	let open: boolean = false;
+	let open = false;
 
-	let loading: boolean = false;
+	let loading = false;
 
 	const handleClick: SubmitFunction = () => {
 		loading = true;

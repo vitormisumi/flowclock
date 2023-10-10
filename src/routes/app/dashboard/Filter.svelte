@@ -55,7 +55,7 @@
 		(x) => x.timeframe === $filter.timeframe && x.current === $filter.current
 	);
 
-	let hidden: boolean = true;
+	let hidden = true;
 	function open() {
 		hidden = false;
 	}

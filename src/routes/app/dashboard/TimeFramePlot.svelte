@@ -126,7 +126,7 @@
 		);
 	}
 
-	let tooltip: boolean = false;
+	let tooltip = false;
 	let tooltipData: { period: number; value: number };
 	let x: number = 0;
 	let y: number = 0;

@@ -11,7 +11,7 @@
 
 	let dates: string;
 
-	let open: boolean = false;
+	let open = false;
 
 	let years: number[];
 

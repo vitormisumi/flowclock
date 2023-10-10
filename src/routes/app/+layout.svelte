@@ -30,11 +30,15 @@
 	const projects = writable();
 	$: projects.set(data.projects);
 
+	const projectGroups = writable();
+	$: projectGroups.set(data.projectGroups);
+
 	setContext('user', data.user);
 	setContext('sessions', sessions);
 	setContext('interruptions', interruptions);
 	setContext('settings', settings);
 	setContext('projects', projects);
+	setContext('projectGroups', projectGroups);
 </script>
 
 <Screen>

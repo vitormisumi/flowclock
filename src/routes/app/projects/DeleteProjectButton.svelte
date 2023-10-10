@@ -3,7 +3,7 @@
 	import { selectedProject, selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
 
-	let open: boolean = false;
+	let open = false;
 </script>
 
 <Button

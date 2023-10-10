@@ -7,7 +7,7 @@
 	export let message: string;
 	export let success: boolean;
 
-	let show: boolean = false;
+	let show = false;
 	onMount(() => {
 		show = true;
 		setTimeout(() => {

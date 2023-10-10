@@ -13,7 +13,9 @@
 			<DeleteProjectButton />
 		</div>
 	</div>
-	<p>name: {$selectedProject.name}</p>
-	<p>goal: {$selectedProject.goal}</p>
-	<p>description: {$selectedProject.description}</p>
+	<div class="grid gap-4">
+		<p>name: {$selectedProject.name}</p>
+		<p>goal: {$selectedProject.goal}</p>
+		<p>description: {$selectedProject.description}</p>
+	</div>
 </Card>

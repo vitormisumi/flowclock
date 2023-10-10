@@ -5,9 +5,9 @@
 
 	let open: boolean;
 
-	let confirmDelete: boolean = false;
+	let confirmDelete = false;
 
-	let loading: boolean = false;
+	let loading = false;
 
 	const handleClick: SubmitFunction = () => {
 		loading = true;
