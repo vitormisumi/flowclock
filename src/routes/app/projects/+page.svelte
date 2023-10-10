@@ -17,12 +17,13 @@
 
 	export let form;
 
-	$: if ($projects.length === 0) {
-		selectedProject.reset();
-	} else if ($selectedProjectId != 0) {
-		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
-	} else {
+	selectedProject.select($projects[0]);
+	
+	$: if (form?.success) {
 		selectedProject.select($projects[0]);
+	}
+	$: if ($selectedProjectId) {
+		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
 	}
 </script>
 
