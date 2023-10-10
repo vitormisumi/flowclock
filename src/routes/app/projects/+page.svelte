@@ -40,8 +40,7 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<div class="flex w-full justify-between gap-2 pb-4">
-		<AddProjectButton />
+	<div class="flex w-full justify-center pb-4">
 		<SelectProjectButton />
 	</div>
 	{#if $projects.length}

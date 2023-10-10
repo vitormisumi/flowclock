@@ -63,12 +63,14 @@
 		<Select
 			items={statusOptions}
 			name="status"
+			placeholder="Select status..."
 			value={$selectedProject.status}
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>
 		<Select
 			items={groupOptions}
 			name="group_id"
+			placeholder="Select group..."
 			value={groupValue}
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>

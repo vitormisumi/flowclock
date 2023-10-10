@@ -6,6 +6,7 @@
 	import { getContext } from 'svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import AddProjectButton from './AddProjectButton.svelte';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
@@ -24,13 +25,12 @@
 			update();
 		};
 	};
-
-	let button: boolean;
-	$: button = $projects.length ? true : false;
 </script>
 
-<Button on:click={() => (hidden = false)} class="w-40 {button ? 'visible' : 'invisible'}"
-	>{$selectedProject.name}<i class="fa-solid fa-chevron-down pl-2" /></Button
+<Button class="bg-transparent hover:bg-primary-800" size="xl" on:click={() => (hidden = false)}
+	>{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}<i
+		class="fa-solid fa-chevron-down pl-2"
+	/></Button
 >
 <Tooltip>Select project</Tooltip>
 <Drawer
@@ -41,27 +41,32 @@
 	class="z-50 bg-primary-900"
 	bind:hidden
 >
-	<div class="grid gap-2">
+	<div class="grid gap-4">
 		<h2 class="text-center font-bold text-primary-50">Projects</h2>
 		{#each $projectGroups as group}
-			<p class="text-primary-50">{group.name}</p>
-			{#each $projects.filter((x) => x.group_id === group.id) as project}
-				<Button
-					class={project.id != $selectedProject.id
-						? 'border border-primary-700 bg-transparent'
-						: ''}
-					on:click={() => {
-						$selectedProjectId = project.id;
-						hidden = true;
-					}}>{project.name}</Button
-				>
-			{/each}
+			<div class="flex w-full items-center justify-center gap-2">
+				<hr class="w-full border-secondary-800" />
+				<p class="whitespace-nowrap text-sm text-secondary-400">{group.name}</p>
+				<hr class="w-full border-secondary-800" />
+			</div>
+			<div class="grid gap-2">
+				{#each $projects.filter((x) => x.group_id === group.id) as project}
+					<Button
+						class={project.id != $selectedProject.id ? 'bg-transparent' : 'bg-primary-800 '}
+						on:click={() => {
+							$selectedProjectId = project.id;
+							hidden = true;
+						}}>{project.name}</Button
+					>
+				{/each}
+				<AddProjectButton {group}/>
+			</div>
 		{/each}
 		{#if !open}
 			<Button
 				size="sm"
 				type="submit"
-				class="self-center bg-transparent text-secondary-400"
+				class="self-center bg-transparent text-secondary-400 hover:bg-secondary-800 hover:text-secondary-100 focus:ring-0"
 				on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />new group</Button
 			>
 		{/if}

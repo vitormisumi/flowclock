@@ -5,6 +5,8 @@
 	import type { ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
 
+	export let group: ProjectGroup;
+
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
 	let open = false;
@@ -25,8 +27,9 @@
 	});
 </script>
 
-<Button on:click={() => (open = true)} class="self-end"><i class="fa-solid fa-plus" /></Button>
-<Tooltip>Add new project</Tooltip>
+<Button size="sm" class="bg-transparent" on:click={() => (open = true)}
+	><i class="fa-solid fa-plus pr-2" />new project</Button
+>
 <Modal
 	bind:open
 	outsideclose
@@ -63,6 +66,7 @@
 			items={groupOptions}
 			name="group_id"
 			placeholder="Project group..."
+			value={group.id}
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>
 		<Button
