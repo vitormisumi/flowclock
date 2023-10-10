@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { Tooltip, Button, Modal, Input, Select } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
+	import type { Writable } from 'svelte/store';
+	import type { ProjectGroup } from '../types';
+	import { getContext } from 'svelte';
+
+	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
 	let open = false;
 
@@ -12,6 +17,12 @@
 		{ name: 'suspended', value: 'suspended' },
 		{ name: 'cancelled', value: 'cancelled' }
 	];
+
+	let groupOptions: { name: string; value: number }[] = [];
+
+	$: groupOptions = $projectGroups.map((x) => {
+		return { name: x.name, value: x.id };
+	});
 </script>
 
 <Button on:click={() => (open = true)} class="self-end"><i class="fa-solid fa-plus" /></Button>
@@ -48,8 +59,16 @@
 			placeholder="Project status..."
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>
-		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600" on:click={() => (open = false)}
-			><i class="fa-solid fa-plus pr-2" />New project</Button
+		<Select
+			items={groupOptions}
+			name="group_id"
+			placeholder="Project group..."
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+		/>
+		<Button
+			type="submit"
+			class="self-center bg-accent-500 hover:bg-accent-600"
+			on:click={() => (open = false)}><i class="fa-solid fa-plus pr-2" />New project</Button
 		>
 	</form>
 </Modal>

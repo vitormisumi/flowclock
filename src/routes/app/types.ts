@@ -35,6 +35,14 @@ export interface Project {
 	description: string;
 	focus: string;
 	last_edited: string;
+	group_id: number;
+}
+
+export interface ProjectGroup {
+	id: number;
+	created_at: string;
+	user_id: string;
+	name: string;
 }
 
 export interface Filter {

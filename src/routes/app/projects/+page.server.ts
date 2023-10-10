@@ -12,10 +12,11 @@ export const actions = {
         const goal = formData.get('goal') as string;
         const description = formData.get('description') as string;
         const status = formData.get('status') as string;
+        const group_id = formData.get('group_id') as string;
 		
         const { error } = await supabase
             .from('projects')
-            .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status });
+            .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status, group_id: group_id });
 
 		if (error) {
 			console.log(error);
@@ -37,10 +38,11 @@ export const actions = {
         const description = formData.get('description') as string;
         const status = formData.get('status') as string;
         const id = formData.get('id') as string;
+        const group_id = formData.get('group_id') as string;
 		
         const { error } = await supabase
             .from('projects')
-            .update({ name: name, goal: goal, description: description, status: status })
+            .update({ name: name, goal: goal, description: description, status: status, group_id: group_id })
             .eq('id', id);
 
 		if (error) {

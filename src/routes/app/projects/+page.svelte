@@ -41,8 +41,8 @@
 		: { duration: 0 }}
 >
 	<div class="flex w-full justify-between gap-2 pb-4">
-		<SelectProjectButton />
 		<AddProjectButton />
+		<SelectProjectButton />
 	</div>
 	{#if $projects.length}
 		<div class="grid grid-cols-2 gap-4">

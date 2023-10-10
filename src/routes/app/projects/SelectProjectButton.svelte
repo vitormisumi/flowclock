@@ -2,12 +2,13 @@
 	import { Button, Tooltip, Drawer, Input } from 'flowbite-svelte';
 	import { selectedProject, selectedProjectId } from './stores';
 	import type { Writable } from 'svelte/store';
-	import type { Project } from '../types';
+	import type { Project, ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const projects: Writable<Project[]> = getContext('projects');
+	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
 	let hidden = true;
 
@@ -42,16 +43,19 @@
 >
 	<div class="grid gap-2">
 		<h2 class="text-center font-bold text-primary-50">Projects</h2>
-		{#each $projects as project}
-			<Button
-				class="{project.id != $selectedProject.id
-					? 'border border-primary-700 bg-transparent'
-					: ''}"
-				on:click={() => {
-					$selectedProjectId = project.id;
-					hidden = true;
-				}}>{project.name}</Button
-			>
+		{#each $projectGroups as group}
+			<p class="text-primary-50">{group.name}</p>
+			{#each $projects.filter((x) => x.group_id === group.id) as project}
+				<Button
+					class={project.id != $selectedProject.id
+						? 'border border-primary-700 bg-transparent'
+						: ''}
+					on:click={() => {
+						$selectedProjectId = project.id;
+						hidden = true;
+					}}>{project.name}</Button
+				>
+			{/each}
 		{/each}
 		{#if !open}
 			<Button

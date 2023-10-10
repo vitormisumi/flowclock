@@ -11,7 +11,8 @@ function createSelectedProject() {
         goal: '',
         description: '',
         focus: '',
-        last_edited: ''
+        last_edited: '',
+        group_id: 0
 	});
 
 	return {
@@ -28,7 +29,8 @@ function createSelectedProject() {
             goal: '',
             description: '',
             focus: '',
-            last_edited: ''
+            last_edited: '',
+            group_id: 0
         })
 	};
 }

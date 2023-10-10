@@ -1,7 +1,12 @@
 <script lang="ts">
-	import { Button, Tooltip, Label, Input, Modal, Select } from 'flowbite-svelte';
+	import { Button, Tooltip, Input, Modal, Select } from 'flowbite-svelte';
 	import { selectedProject } from './stores';
 	import { enhance } from '$app/forms';
+	import type { Writable } from 'svelte/store';
+	import type { ProjectGroup } from '../types';
+	import { getContext } from 'svelte';
+
+	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
 	let open = false;
 
@@ -13,6 +18,14 @@
 		{ name: 'suspended', value: 'suspended' },
 		{ name: 'cancelled', value: 'cancelled' }
 	];
+
+	let groupOptions: { name: string; value: number }[] = [];
+
+	$: groupOptions = $projectGroups.map((x) => {
+		return { name: x.name, value: x.id };
+	});
+
+	$: groupValue = groupOptions.find((x) => x.value === $selectedProject.group_id)?.value;
 </script>
 
 <Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => (open = true)}
@@ -53,9 +66,17 @@
 			value={$selectedProject.status}
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>
+		<Select
+			items={groupOptions}
+			name="group_id"
+			value={groupValue}
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+		/>
 		<input type="number" name="id" hidden value={$selectedProject.id} />
-		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600" on:click={() => (open = false)}
-			><i class="fa-solid fa-save pr-2" />Save</Button
+		<Button
+			type="submit"
+			class="self-center bg-accent-500 hover:bg-accent-600"
+			on:click={() => (open = false)}><i class="fa-solid fa-save pr-2" />Save</Button
 		>
 	</form>
 </Modal>
