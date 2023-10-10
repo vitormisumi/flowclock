@@ -13,6 +13,7 @@
 		loading = true;
 		return async ({ update }) => {
 			loading = false;
+			open = false;
 			update();
 		};
 	};
@@ -53,7 +54,7 @@
 						class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 						>Delete</Button
 					>
-					<Button on:click={() => (open = false)}>Cancel</Button>
+					<Button disabled={loading}>Cancel</Button>
 				</div>
 			</form>
 		</Modal>

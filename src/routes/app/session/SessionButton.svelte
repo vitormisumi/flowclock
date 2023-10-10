@@ -5,6 +5,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -13,6 +14,21 @@
 		session.start();
 		interruptions.reset();
 	}
+
+	let loading = false;
+
+	const handleClick: SubmitFunction = ({ formData }) => {
+		loading = true;
+		session.end();
+		sessionBreak.start(($session.end - $session.start - $interruptionLength) / $settings.ratio);
+		formData.append('session_start', new Date($session.start).toISOString());
+		formData.append('session_end', new Date($session.end).toISOString());
+		formData.append('interruptions', JSON.stringify($interruptions));
+		return async ({ update }) => {
+			loading = false;
+			update();
+		};
+	};
 </script>
 
 {#if !$session.running}
@@ -26,20 +42,12 @@
 		>
 	</div>
 {:else}
-	<form
-		method="POST"
-		use:enhance={({ formData }) => {
-			session.end();
-			sessionBreak.start(($session.end - $session.start - $interruptionLength) / $settings.ratio);
-			formData.append('session_start', new Date($session.start).toISOString());
-			formData.append('session_end', new Date($session.end).toISOString());
-			formData.append('interruptions', JSON.stringify($interruptions));
-		}}
-	>
+	<form method="POST" use:enhance={handleClick}>
 		<Button
 			size="xl"
 			class="bg-secondary-50 text-xl text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200 md:text-2xl"
-			type="submit"><i class="fa-solid fa-stop pr-4" />Break</Button
+			type="submit"
+			disabled={loading}><i class="fa-solid fa-stop pr-4" />Break</Button
 		>
 	</form>
 {/if}

@@ -2,8 +2,21 @@
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
 	import { selectedProject, selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let open = false;
+
+	let loading = false;
+
+	const handleClick: SubmitFunction = ({ formData }) => {
+		loading = true;
+		formData.append('id', String($selectedProject.id));
+		return async ({ update }) => {
+			loading = false;
+			$selectedProjectId = 0;
+			update();
+		};
+	};
 </script>
 
 <Button
@@ -26,19 +39,13 @@
 		class="flex w-full justify-center gap-4"
 		method="POST"
 		action="?/delete"
-		use:enhance={({ formData }) => {
-			formData.append('id', String($selectedProject.id));
-			return async ({ update }) => {
-				$selectedProjectId = 0;
-				update();
-			};
-		}}
+		use:enhance={handleClick}
 	>
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 			type="submit"
-			on:click={() => (open = false)}>Delete</Button
+			disabled={loading}>Delete</Button
 		>
-		<Button on:click={() => (open = false)}>Cancel</Button>
+		<Button disabled={loading}>Cancel</Button>
 	</form>
 </Modal>

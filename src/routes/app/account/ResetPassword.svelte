@@ -11,6 +11,7 @@
 		loading = true;
 		return async ({ update }) => {
 			loading = false;
+			open = false;
 			update();
 		};
 	};
@@ -42,8 +43,7 @@
 		<Button
 			type="submit"
 			disabled={loading}
-			class="w-40 self-center bg-accent-500 hover:bg-accent-600"
-			on:click={() => (open = false)}>Reset password</Button
+			class="w-40 self-center bg-accent-500 hover:bg-accent-600">Reset password</Button
 		>
 	</form>
 </Modal>

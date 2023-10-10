@@ -4,6 +4,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
+    import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
 
@@ -25,6 +26,17 @@
 	$: groupOptions = $projectGroups.map((x) => {
 		return { name: x.name, value: x.id };
 	});
+
+    let loading = false;
+
+    const handleClick: SubmitFunction = () => {
+        loading = true;
+		return async ({ update }) => {
+            loading = false;
+			open = false;
+			update();
+		};
+	};
 </script>
 
 <Button size="sm" class="bg-transparent" on:click={() => (open = true)}
@@ -37,12 +49,12 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<h2 class="text-lg font-bold text-primary-50">New project</h2>
-	<form class="flex flex-col gap-4 text-left" method="POST" action="?/add" use:enhance>
+	<form class="flex flex-col gap-4 text-left" method="POST" action="?/add" use:enhance={handleClick}>
 		<Input
 			name="name"
 			placeholder="Project name"
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
-			><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
+			required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
 		>
 		<Input
 			name="goal"
@@ -61,7 +73,8 @@
 			name="status"
 			placeholder="Project status..."
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
-		/>
+			required
+		></Select>
 		<Select
 			items={groupOptions}
 			name="group_id"
@@ -69,10 +82,8 @@
 			value={group.id}
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
 		/>
-		<Button
-			type="submit"
-			class="self-center bg-accent-500 hover:bg-accent-600"
-			on:click={() => (open = false)}><i class="fa-solid fa-plus pr-2" />New project</Button
+		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600" disabled={loading}
+			><i class="fa-solid fa-plus pr-2" />New project</Button
 		>
 	</form>
 </Modal>

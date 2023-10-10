@@ -7,6 +7,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -16,17 +17,29 @@
 
 	let sessionId: number | null;
 	$: sessionToDelete = $filteredSessions.find(({ id }) => id === sessionId);
+
+	let loading = false;
+
+	const handleClick: SubmitFunction = ({ formData }) => {
+		formData.append('session_id', JSON.stringify(sessionId));
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			open = false;
+			update();
+		};
+	};
 </script>
 
 <Button
 	size="xs"
-	class="bg-transparent hover:bg-primary-700 text-red-700"
+	class="bg-transparent text-red-700 hover:bg-primary-700"
 	on:click={() => {
 		open = true;
 		sessionId = session.id;
 	}}><i class="fa-solid fa-trash" /></Button
 >
-<Tooltip>Delete session</Tooltip>
+<Tooltip placement="left">Delete session</Tooltip>
 <Modal
 	bind:open
 	outsideclose
@@ -49,15 +62,13 @@
 		class="flex w-full justify-center gap-4"
 		method="POST"
 		action="?/deleteSession"
-		use:enhance={({ formData }) => {
-			formData.append('session_id', JSON.stringify(sessionId));
-		}}
+		use:enhance={handleClick}
 	>
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 			type="submit"
-			on:click={() => (open = false)}>Delete</Button
+			disabled={loading}>Delete</Button
 		>
-		<Button on:click={() => (open = false)}>Cancel</Button>
+		<Button disabled={loading}>Cancel</Button>
 	</form>
 </Modal>

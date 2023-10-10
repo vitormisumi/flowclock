@@ -15,11 +15,38 @@
 	import { interruptionLength, interruptions, session, sessionBreak } from './session/stores';
 	import type { Settings } from './types';
 	import type { Writable } from 'svelte/store';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const user: User = getContext('user');
 	const settings: Writable<Settings> = getContext('settings');
 
 	let open = false;
+
+	let loading = false;
+
+	const signOut: SubmitFunction = ({ cancel }) => {
+		if ($session.running) {
+			cancel();
+			open = true;
+		}
+		return async ({ update }) => {
+			await update();
+		};
+	};
+
+	const saveAndSignOut: SubmitFunction = ({ formData }) => {
+		loading = true;
+		session.end();
+		sessionBreak.start(($session.end - $session.start - $interruptionLength) / $settings.ratio);
+		formData.append('session_start', new Date($session.start).toISOString());
+		formData.append('session_end', new Date($session.end).toISOString());
+		formData.append('interruptions', JSON.stringify($interruptions));
+		return async ({ update }) => {
+			loading = false;
+			open = false;
+			update();
+		};
+	};
 </script>
 
 <Avatar
@@ -36,19 +63,7 @@
 	<DropdownItem href="/app/settings"><i class="fa-solid fa-gear pr-2" />Settings</DropdownItem>
 	<DropdownItem href="/app/contact"><i class="fa-solid fa-envelope pr-2" />Contact</DropdownItem>
 	<DropdownDivider />
-	<form
-		method="POST"
-		action="/app?/signOut"
-		use:enhance={({ cancel }) => {
-			if ($session.running) {
-				cancel();
-				open = true;
-			}
-			return async ({ update }) => {
-				await update();
-			};
-		}}
-	>
+	<form method="POST" action="/app?/signOut" use:enhance={signOut}>
 		<DropdownItem type="submit" class="rounded-b-lg text-accent-700"
 			><i class="fa-solid fa-right-from-bracket pr-2" />Sign Out</DropdownItem
 		>
@@ -74,24 +89,12 @@
 			>
 		</form>
 		<div class="flex gap-2">
-			<form
-				method="POST"
-				action="/app?/saveAndSignOut"
-				use:enhance={({ formData }) => {
-					session.end();
-					sessionBreak.start(
-						($session.end - $session.start - $interruptionLength) / $settings.ratio
-					);
-					formData.append('session_start', new Date($session.start).toISOString());
-					formData.append('session_end', new Date($session.end).toISOString());
-					formData.append('interruptions', JSON.stringify($interruptions));
-				}}
-			>
+			<form method="POST" action="/app?/saveAndSignOut" use:enhance={saveAndSignOut}>
 				<Button
 					size="sm"
 					class="w-20 border-2 border-primary-700 hover:border-primary-800"
 					type="submit"
-					on:click={() => (open = false)}>Save</Button
+					disabled={loading}>Save</Button
 				>
 			</form>
 			<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
