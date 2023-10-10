@@ -47,14 +47,15 @@
 			>Session duration : break duration
 			<Select
 				name="ratio"
-				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
+				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				underline
 				items={ratios}
 				value={$settings.ratio}
 			/>
 		</Label>
 		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-1" />
 	</div>
-	<Popover triggeredBy="#hover-1" class="w-60 bg-primary-100 md:w-80 z-10" placement="bottom-start">
+	<Popover triggeredBy="#hover-1" class="z-10 w-60 md:w-80" placement="bottom-start">
 		<div class="p-2 text-sm">
 			<h3 class="font-semibold text-secondary-900">Ratio used to calculate break duration</h3>
 			E.g. Your focused session lasts 60 minutes. If you choose a ratio of 2:1, your break duration will
@@ -70,11 +71,11 @@
 			name="warning"
 			min="1"
 			value={$settings.warning}
-			class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-primary-500 w-full"
+			class="w-full border-0 border-b-2 border-gray-300 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 disabled:text-secondary-600 disabled:border-secondary-600"
 			disabled={!warning}
 		/>
-		<i class="fa-regular fa-circle-question absolute top-0 right-0 text-primary-50" id="hover-2" />
-		<Popover triggeredBy="#hover-2" class="w-60 bg-primary-100 md:w-80" placement="bottom-start">
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-2" />
+		<Popover triggeredBy="#hover-2" class="w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
 				<h3 class="font-semibold text-secondary-900">
 					Sound warning after a specific session length
@@ -92,7 +93,8 @@
 			>Date format
 			<Select
 				name="date_format"
-				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
+				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				underline
 				items={formats}
 				value={$settings.date_format}
 			/>
@@ -101,13 +103,16 @@
 			>Separator
 			<Select
 				name="separator"
-				class="bg-primary-900 text-secondary-50 placeholder:text-secondary-500"
+				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				underline
 				items={separators}
 				value={$settings.separator}
 			/>
 		</Label>
 	</div>
-	<Toggle size="small" bind:checked={clockFormat} class="text-md text-primary-50">24-hour clock</Toggle>
+	<Toggle size="small" bind:checked={clockFormat} class="text-md text-primary-50"
+		>24-hour clock</Toggle
+	>
 	<input type="number" name="clock_format" value={clockFormat ? 1 : 0} hidden />
 	<Button type="submit" disabled={loading}
 		><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
