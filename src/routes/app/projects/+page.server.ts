@@ -95,4 +95,30 @@ export const actions = {
 
 		return { message: 'Group successfully created', success: true };
     },
+
+    addTask: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+        }
+
+		const formData = await request.formData();
+        const name = formData.get('name') as string;
+        const type = formData.get('type') as string;
+        const status = formData.get('status') as string;
+        const due_date = formData.get('due_date') as string;
+		
+        const { error } = await supabase
+            .from('tasks')
+            .insert({ user_id: session.user.id, name: name, type: type, status: status, due_date: due_date });
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: error.message, success: false });
+		}
+
+		return { message: 'Task successfully created', success: true };
+    },
+
+    
 };

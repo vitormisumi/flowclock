@@ -45,6 +45,19 @@ export interface ProjectGroup {
 	name: string;
 }
 
+export interface Task {
+	id: number;
+	created_at: string;
+	user_id: string;
+	name: string;
+	due_date: string;
+	priority: number;
+	description: string;
+	type: string;
+	status: string;
+	last_edited: string;
+}
+
 export interface Filter {
     timeframe: string;
 	current: boolean;

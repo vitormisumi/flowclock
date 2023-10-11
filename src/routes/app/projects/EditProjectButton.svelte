@@ -51,12 +51,12 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<p class="text-lg font-bold text-secondary-50">Edit project {$selectedProject.name}</p>
-	<form class="flex flex-col gap-4 text-left" method="POST" action="?/edit" use:enhance={handleClick}>
+	<form class="flex flex-col gap-2 text-left" method="POST" action="?/edit" use:enhance={handleClick}>
 		<Input
 			name="name"
             placeholder="Project name"
 			value={$selectedProject.name}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 text-xl"
             required
 			><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
 		>
@@ -64,14 +64,14 @@
 			name="goal"
 			placeholder="Project goal"
 			value={$selectedProject.goal}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			><i class="fa-solid fa-bullseye" aria-hidden="true" slot="left" /></Input
 		>
 		<Input
 			name="description"
 			placeholder="Description"
 			value={$selectedProject.description}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			><i class="fa-solid fa-file-lines" aria-hidden="true" slot="left" /></Input
 		>
 		<Select
@@ -79,7 +79,7 @@
 			name="status"
 			placeholder="Select status..."
 			value={$selectedProject.status}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			required
 		/>
 		<Select
@@ -87,7 +87,7 @@
 			name="group_id"
 			placeholder="Select group..."
 			value={groupValue}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 		/>
 		<input type="number" name="id" hidden value={$selectedProject.id} />
 		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600"

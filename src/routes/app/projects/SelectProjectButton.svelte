@@ -27,7 +27,7 @@
 	};
 </script>
 
-<Button class="bg-transparent hover:bg-primary-800" size="xl" on:click={() => (hidden = false)}
+<Button size="sm" on:click={() => (hidden = false)}
 	>{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}<i
 		class="fa-solid fa-chevron-down pl-2"
 	/></Button

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Tooltip, Button, Modal, Input, Select } from 'flowbite-svelte';
+	import { Button, Modal, Input, Select } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import type { ProjectGroup } from '../types';
@@ -49,30 +49,30 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<h2 class="text-lg font-bold text-primary-50">New project</h2>
-	<form class="flex flex-col gap-4 text-left" method="POST" action="?/add" use:enhance={handleClick}>
+	<form class="flex flex-col gap-2 text-left" method="POST" action="?/add" use:enhance={handleClick}>
 		<Input
 			name="name"
 			placeholder="Project name"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 text-xl"
 			required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
 		>
 		<Input
 			name="goal"
 			placeholder="Project goal"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			><i class="fa-solid fa-bullseye" aria-hidden="true" slot="left" /></Input
 		>
 		<Input
 			name="description"
 			placeholder="Description"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			><i class="fa-solid fa-file-lines" aria-hidden="true" slot="left" /></Input
 		>
 		<Select
 			items={statusOptions}
 			name="status"
 			placeholder="Project status..."
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 			required
 		></Select>
 		<Select
@@ -80,7 +80,7 @@
 			name="group_id"
 			placeholder="Project group..."
 			value={group.id}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 		/>
 		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600" disabled={loading}
 			><i class="fa-solid fa-plus pr-2" />New project</Button
