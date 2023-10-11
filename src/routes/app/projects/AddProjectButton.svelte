@@ -39,7 +39,7 @@
 	};
 </script>
 
-<Button size="sm" class="bg-transparent" on:click={() => (open = true)}
+<Button size="xs" class="bg-transparent" on:click={() => (open = true)}
 	><i class="fa-solid fa-plus pr-2" />new project</Button
 >
 <Modal

@@ -16,6 +16,9 @@
 	import type { Settings } from './types';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { page } from '$app/stores';
+
+	$: activeUrl = $page.url.pathname;
 
 	const user: User = getContext('user');
 	const settings: Writable<Settings> = getContext('settings');
@@ -55,7 +58,7 @@
 	src={avatar}
 	class="fixed left-3 top-3 cursor-pointer self-center md:left-5 md:top-5 landscape:static"
 />
-<Dropdown triggeredBy="#user-drop" class="w-fit" placement="right-start">
+<Dropdown triggeredBy="#user-drop" class="w-fit" placement="right-start" {activeUrl}>
 	<DropdownHeader>
 		<span class="block truncate text-sm font-medium text-primary-900">{user.email}</span>
 	</DropdownHeader>

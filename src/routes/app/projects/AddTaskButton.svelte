@@ -8,6 +8,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
+	import { selectedProject } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -22,6 +23,27 @@
 		yymmdd: 'yy-MM-dd'
 	};
 
+	let priority: number = 0;
+
+	const priorityOptions = [
+		{
+			name: 'High',
+			value: 3
+		},
+		{
+			name: 'Medium',
+			value: 2
+		},
+		{
+			name: 'Low',
+			value: 1
+		},
+		{
+			name: 'None',
+			value: 0
+		}
+	];
+
 	let open = false;
 
 	let openDate = false;
@@ -30,9 +52,13 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
+		formData.append('project_id', String($selectedProject.id));
 		formData.append('type', 'task');
 		formData.append('status', 'planned');
-		formData.append('due_date', date.toISOString());
+		formData.append('priority', String(priority));
+		if (date) {
+			formData.append('due_date', date.toISOString());
+		}
 		return async ({ update }) => {
 			loading = false;
 			open = false;
@@ -43,7 +69,7 @@
 
 {#if open}
 	<div
-		class=" rounded-lg border text-center landscape:left-8 landscape:md:left-12"
+		class="rounded-lg bg-primary-900 p-4 text-center landscape:left-8 landscape:md:left-12"
 		transition:slide
 	>
 		<form
@@ -67,13 +93,16 @@
 			</Input>
 			<div class="flex justify-between gap-2">
 				<div>
-					<Button disabled={loading}>Priority</Button>
+					<Button size="xs" disabled={loading}>Priority {priority}</Button>
 					<Dropdown>
-						<DropdownItem>High</DropdownItem>
-						<DropdownItem>Medium</DropdownItem>
-						<DropdownItem>Low</DropdownItem>
+						{#each priorityOptions as option}
+							<DropdownItem
+								class={priority === option.value ? 'bg-secondary-50' : 'bg-transparent'}
+								on:click={() => (priority = option.value)}>{option.name}</DropdownItem
+							>
+						{/each}
 					</Dropdown>
-					<Button on:click={() => (openDate = true)}>
+					<Button size="xs" on:click={() => (openDate = true)}>
 						Due {date && !openDate
 							? dateFromTimestamp(String(date), $settings.date_format, $settings.separator)
 							: ''}
@@ -91,8 +120,13 @@
 					{/if}
 				</div>
 				<div>
-					<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
-					<Button type="submit" class="bg-accent-500 hover:bg-accent-600" disabled={loading}>
+					<Button size="xs" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+					<Button
+						size="xs"
+						type="submit"
+						class="bg-accent-500 hover:bg-accent-600"
+						disabled={loading}
+					>
 						Add task
 					</Button>
 				</div>
@@ -100,7 +134,7 @@
 		</form>
 	</div>
 {:else}
-	<Button size="sm" class="bg-transparent text-secondary-400" on:click={() => (open = true)}
+	<Button size="xs" class="bg-transparent text-secondary-400" on:click={() => (open = true)}
 		><i class="fa-solid fa-plus pr-2" />add task</Button
 	>
 {/if}

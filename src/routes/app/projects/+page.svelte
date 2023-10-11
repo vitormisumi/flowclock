@@ -44,7 +44,7 @@
 		<SelectProjectButton />
 	</div>
 	{#if $projects.length}
-		<div class="grid grid-cols-2 gap-4">
+		<div class="flex flex-wrap gap-4">
 			<InfoCard />
 			<TasksCard />
 			<ToDosCards />

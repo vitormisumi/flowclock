@@ -23,6 +23,8 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 
+	let show = false;
+
 	const toggleRow = (i: number) => {
 		$openRow = $openRow === i ? null : i;
 	};
@@ -64,7 +66,11 @@
 					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
 				>
 					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
-						>{dateFromTimestamp(session.start, $settings.date_format, $settings.separator)}</TableBodyCell
+						>{dateFromTimestamp(
+							session.start,
+							$settings.date_format,
+							$settings.separator
+						)}</TableBodyCell
 					>
 					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{millisecondsToClock(session.duration)}</TableBodyCell
@@ -80,10 +86,16 @@
 							transition:slide
 						>
 							<p class="col-start-1 text-primary-100">
-								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start, $settings.clock_format)}
+								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
+									session.start,
+									$settings.clock_format
+								)}
 							</p>
 							<p class="col-start-2 text-primary-100">
-								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
+								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(
+									session.end,
+									$settings.clock_format
+								)}
 							</p>
 							<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
 								{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}

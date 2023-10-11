@@ -49,6 +49,7 @@ export interface Task {
 	id: number;
 	created_at: string;
 	user_id: string;
+	project_id: number;
 	name: string;
 	due_date: string;
 	priority: number;

@@ -62,9 +62,10 @@
 				<AddProjectButton {group}/>
 			</div>
 		{/each}
+		<hr class="w-full border-secondary-800" />
 		{#if !open}
 			<Button
-				size="sm"
+				size="xs"
 				type="submit"
 				class="self-center bg-transparent text-secondary-400 hover:bg-secondary-800 hover:text-secondary-100 focus:ring-0"
 				on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />new group</Button
