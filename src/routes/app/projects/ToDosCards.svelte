@@ -2,7 +2,8 @@
 	import {
 		Button,
 		Card,
-		Checkbox,
+		Dropdown,
+		DropdownItem,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -14,6 +15,7 @@
 	import AddTaskButton from './AddTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
+	import CompleteTaskButton from './CompleteTaskButton.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { Task } from '../types';
 
@@ -42,15 +44,25 @@
 		openEdit = null;
 	}
 
-	let clicked: number;
+	let show = false;
 </script>
 
 <Card class="h-full min-w-full gap-1 border-0 bg-primary-800">
-	<h2>To-Dos</h2>
+	<div class="flex justify-between">
+		<p class="text-xl text-primary-50"><i class="fa-solid fa-check pr-2" />To-Dos</p>
+		<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
+			><i class="fa-solid fa-ellipsis-vertical" /></Button
+		>
+		<Dropdown>
+			<DropdownItem>
+				<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
+			</DropdownItem>
+		</Dropdown>
+	</div>
 	<Table hoverable shadow>
 		<TableBody>
 			{#each $tasks as task, i}
-				{#if task.project_id === $selectedProject.id && task.type === 'to-do'}
+				{#if task.project_id === $selectedProject.id && task.type === 'to-do' && (task.status != 'done' || show === true)}
 					<TableBodyRow
 						class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
 					>
@@ -62,10 +74,7 @@
 								role="row"
 								tabindex={i}
 							>
-								<form method="POST" action="?/completeTask">
-									<input type="number" name="id" value={task.id} hidden />
-									<Button type="submit" class="h-5 w-5 rounded-full p-0"></Button>
-								</form>
+								<CompleteTaskButton id={task.id} />
 								<div
 									on:click={() => toggleRow(i)}
 									on:keydown={() => toggleRow(i)}
@@ -73,7 +82,9 @@
 									tabindex={i}
 									class="w-full"
 								>
-									<p class="{task.status === 'done' ? 'line-through': 'no-underline'}">{task.name}</p>
+									<p class="{task.status === 'done' ? 'line-through' : 'no-underline'} pl-2">
+										{task.name}
+									</p>
 								</div>
 								{#if openEdit === i}
 									<div transition:fade class="flex">

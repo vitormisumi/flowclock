@@ -67,9 +67,9 @@
 	<DropdownItem href="/app/contact"><i class="fa-solid fa-envelope pr-2" />Contact</DropdownItem>
 	<DropdownDivider />
 	<form method="POST" action="/app?/signOut" use:enhance={signOut}>
-		<DropdownItem type="submit" class="rounded-b-lg text-accent-700"
-			><i class="fa-solid fa-right-from-bracket pr-2" />Sign Out</DropdownItem
-		>
+		<DropdownItem type="submit" class="rounded-b-lg text-accent-700">
+			<i class="fa-solid fa-right-from-bracket pr-2" />Sign Out
+		</DropdownItem>
 	</form>
 </Dropdown>
 <Modal

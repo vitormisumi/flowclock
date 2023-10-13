@@ -202,8 +202,6 @@ export const actions = {
 
       const formData = await request.formData();
       const id = formData.get('id') as string;
-        console.log(id)
-      
           
       const { error } = await supabase
         .from('tasks')
