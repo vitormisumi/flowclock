@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Card, Table, TableBody, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
-	import AddTaskButton from './AddTaskButton.svelte';
-	import type { Writable } from 'svelte/store';
-	import type { Task } from '../types';
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
+	import { fade, slide } from 'svelte/transition';
+	import AddTaskButton from './AddTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
-	import { fade, slide } from 'svelte/transition';
+	import type { Writable } from 'svelte/store';
+	import type { Task } from '../types';
 
 	const tasks: Writable<Task[]> = getContext('tasks');
 
@@ -40,7 +40,7 @@
 	<Table hoverable shadow>
 		<TableBody>
 			{#each $tasks as task, i}
-				{#if task.project_id === $selectedProject.id}
+				{#if task.project_id === $selectedProject.id && task.type === 'task'}
 					<TableBodyRow
 						class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
 					>
@@ -97,5 +97,5 @@
 			{/each}
 		</TableBody>
 	</Table>
-	<AddTaskButton />
+	<AddTaskButton type="task"/>
 </Card>

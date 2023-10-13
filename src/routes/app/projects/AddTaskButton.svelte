@@ -2,13 +2,15 @@
 	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
 	import { DateInput } from 'date-picker-svelte';
 	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { slide } from 'svelte/transition';
 	import { dateFromTimestamp } from '$lib/functions/functions';
-	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { Writable } from 'svelte/store';
+	import type { Settings } from '../types';
+
+	export let type: 'task' | 'to-do';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -53,7 +55,7 @@
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
 		formData.append('project_id', String($selectedProject.id));
-		formData.append('type', 'task');
+		formData.append('type', type);
 		formData.append('status', 'planned');
 		formData.append('priority', String(priority));
 		if (date) {
@@ -73,15 +75,15 @@
 		transition:slide
 	>
 		<form
-			class="flex flex-col gap-2 text-left"
+			class="flex flex-col gap-1 text-left"
 			method="POST"
 			action="?/addTask"
 			use:enhance={handleClick}
 		>
 			<Input
 				name="name"
-				placeholder="Task name"
-				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
+				placeholder={type}
+				class="border-0 bg-transparent text-lg text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
 				required
 			></Input>
 			<Textarea
@@ -125,7 +127,7 @@
 						class="bg-accent-500 hover:bg-accent-600"
 						disabled={loading}
 					>
-						Add task
+						Add {type}
 					</Button>
 				</div>
 			</div>
@@ -133,7 +135,7 @@
 	</div>
 {:else}
 	<Button size="xs" class="bg-transparent text-secondary-400" on:click={() => (open = true)}
-		><i class="fa-solid fa-plus pr-2" />add task</Button
+		><i class="fa-solid fa-plus pr-2" />add {type}</Button
 	>
 {/if}
 
