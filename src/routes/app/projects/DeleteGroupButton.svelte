@@ -3,6 +3,9 @@
 	import { selectedProject, selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ProjectGroup } from '../types';
+
+	export let group: ProjectGroup;
 
 	let open = false;
 
@@ -10,10 +13,10 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
-		formData.append('id', String($selectedProject.id));
+		formData.append('id', String(group.id));
 		return async ({ update }) => {
 			loading = false;
-            open = false;
+			open = false;
 			$selectedProjectId = 0;
 			update();
 		};
@@ -25,7 +28,6 @@
 	class="bg-transparent text-red-700 hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
-<Tooltip>Delete project</Tooltip>
 <Modal
 	bind:open
 	outsideclose
@@ -34,12 +36,12 @@
 >
 	<i class="fa-solid fa-warning text-xl text-red-700" />
 	<p class="whitespace-normal text-secondary-200">
-		Delete project {$selectedProject.name}?
+		Delete group {group.name} and ALL of its projects?
 	</p>
 	<form
 		class="flex w-full justify-center gap-4"
 		method="POST"
-		action="?/delete"
+		action="?/deleteGroup"
 		use:enhance={handleClick}
 	>
 		<Button
@@ -47,6 +49,6 @@
 			type="submit"
 			disabled={loading}>Delete</Button
 		>
-		<Button disabled={loading} on:click={() => open = false}>Cancel</Button>
+		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

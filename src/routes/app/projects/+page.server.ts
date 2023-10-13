@@ -95,6 +95,28 @@ export const actions = {
 
 		return { message: 'Group successfully created', success: true };
     },
+    
+    deleteGroup: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+        }
+
+		const formData = await request.formData();
+        const id = formData.get('id') as string;
+		
+        const { error } = await supabase
+            .from('project_groups')
+            .delete()
+            .eq('id', id);
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: error.message, success: false });
+		}
+
+		return { message: 'Group successfully deleted', success: true };
+    },
 
     addTask: async ({ request, locals: { supabase, getSession } }) => {
 		const session = await getSession();
@@ -109,10 +131,11 @@ export const actions = {
         const status = formData.get('status') as string;
         const due_date = formData.get('due_date') as string;
         const priority = formData.get('priority') as string;
+        const description = formData.get('description') as string;
 		
         const { error } = await supabase
             .from('tasks')
-            .insert({ user_id: session.user.id, project_id: project_id, name: name, type: type, status: status, due_date: due_date, priority: priority });
+            .insert({ user_id: session.user.id, project_id: project_id, name: name, type: type, status: status, due_date: due_date, priority: priority, description: description });
 
 		if (error) {
 			console.log(error);
@@ -135,10 +158,11 @@ export const actions = {
         // const type = formData.get('type') as string;
         // const status = formData.get('status') as string;
         // const due_date = formData.get('due_date') as string;
+        const description = formData.get('description') as string;
 		
         const { error } = await supabase
             .from('tasks')
-            .update({ user_id: session.user.id, name: name })
+            .update({ user_id: session.user.id, name: name, description: description })
             .eq('id', id );
 
 		if (error) {

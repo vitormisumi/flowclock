@@ -11,6 +11,13 @@
 
 	const tasks: Writable<Task[]> = getContext('tasks');
 
+	const priorityOptions: {[key: number]: string} = {
+		3: 'High',
+		2: 'Medium',
+		1: 'Low',
+		0: 'None'
+	}
+
 	let openRow: number | null = null;
 
 	const toggleRow = (i: number) => {
@@ -41,16 +48,22 @@
 				{#if openRow === i}
 					<TableBodyRow class="border-primary-800">
 						<TableBodyCell colspan="3" class="bg-primary-900 p-0">
-							<div class="flex gap-4 p-2 font-light" transition:slide>
-								<p class="text-primary-100">
-									{task.description ? task.description : ''}
-								</p>
-								<p class="text-primary-100">
-									<i class="fa-solid fa-calendar pr-2" />{task.due_date}
-								</p>
-								<p class="text-primary-100">
-									<i class="fa-solid fa-flag pr-2" />{task.priority ? task.priority : ''}
-								</p>
+							<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
+								{#if task.description}
+									<p class="text-primary-100 whitespace-normal">
+										{task.description}
+									</p>
+								{/if}
+								{#if task.due_date}
+									<p class="text-primary-100">
+										<i class="fa-solid fa-calendar pr-2" />{task.due_date}
+									</p>
+								{/if}
+								{#if task.priority}
+									<p class="text-primary-100">
+										<i class="fa-solid fa-flag pr-2" />{priorityOptions[task.priority]}
+									</p>
+								{/if}
 							</div>
 						</TableBodyCell>
 					</TableBodyRow>

@@ -7,7 +7,10 @@
 		TableBodyCell,
 		TableBodyRow,
 		ButtonGroup,
-		Button
+		Button,
+
+		Tooltip
+
 	} from 'flowbite-svelte';
 	import { filteredSessions, startRow, endRow, filteredInterruptions, openRow } from './stores';
 	import {
@@ -16,7 +19,7 @@
 		timeFromTimestamp
 	} from '$lib/functions/functions';
 	import DeleteSession from './DeleteSessionButton.svelte';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
@@ -55,9 +58,11 @@
 
 <Table hoverable shadow>
 	<TableHead class="bg-primary-700 text-center text-primary-50">
-		<TableHeadCell class="px-2">Date</TableHeadCell>
-		<TableHeadCell class="px-2">Duration</TableHeadCell>
-		<TableHeadCell></TableHeadCell>
+		<TableHeadCell class="p-2">Date</TableHeadCell>
+		<TableHeadCell class="p-2">Duration</TableHeadCell>
+		<TableHeadCell class="px-1 py-0">
+			<Button size="xs" on:click={() => (show = !show)}><i class="fa-solid fa-pen-to-square" /></Button>
+		</TableHeadCell>
 	</TableHead>
 	<TableBody>
 		{#each $filteredSessions as session, i}
@@ -65,17 +70,23 @@
 				<TableBodyRow
 					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
 				>
-					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
+					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{dateFromTimestamp(
 							session.start,
 							$settings.date_format,
 							$settings.separator
 						)}</TableBodyCell
 					>
-					<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}
+					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
 						>{millisecondsToClock(session.duration)}</TableBodyCell
 					>
-					<TableBodyCell class="w-0 px-0 py-1"><DeleteSession {session} /></TableBodyCell>
+					<TableBodyCell class="w-0 p-0">
+						{#if show}
+							<div transition:fade>
+								<DeleteSession {session} />
+							</div>
+						{/if}
+					</TableBodyCell>
 				</TableBodyRow>
 			{/if}
 			{#if $openRow === i}
