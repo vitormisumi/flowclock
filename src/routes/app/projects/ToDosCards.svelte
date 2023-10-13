@@ -74,7 +74,7 @@
 								role="row"
 								tabindex={i}
 							>
-								<CompleteTaskButton id={task.id} />
+								<CompleteTaskButton id={task.id} status={task.status}/>
 								<div
 									on:click={() => toggleRow(i)}
 									on:keydown={() => toggleRow(i)}

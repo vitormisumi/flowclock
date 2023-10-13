@@ -202,10 +202,16 @@ export const actions = {
 
       const formData = await request.formData();
       const id = formData.get('id') as string;
+      let status = formData.get('status') as string;
+      if (status === 'done') {
+        status = 'planned'
+      } else {
+        status = 'done'
+      }
           
       const { error } = await supabase
         .from('tasks')
-        .update({ status: 'done' })
+        .update({ status: status })
         .eq('id', id)
 
       if (error) {
