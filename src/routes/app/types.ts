@@ -23,6 +23,7 @@ export interface Settings {
 	date_format: string;
 	separator: number;
 	clock_format: boolean;
+	break_message: string;
 }
 
 export interface Project {

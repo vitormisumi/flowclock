@@ -47,7 +47,7 @@
 			>Session duration : break duration
 			<Select
 				name="ratio"
-				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
 				underline
 				items={ratios}
 				value={$settings.ratio}
@@ -70,12 +70,13 @@
 			type="number"
 			name="warning"
 			min="1"
+			max="720"
 			value={$settings.warning}
-			class="w-full border-0 border-b-2 border-gray-300 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 disabled:text-secondary-600 disabled:border-secondary-600"
+			class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
 			disabled={!warning}
 		/>
 		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-2" />
-		<Popover triggeredBy="#hover-2" class="w-60 md:w-80" placement="bottom-start">
+		<Popover triggeredBy="#hover-2" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
 				<h3 class="font-semibold text-secondary-900">
 					Sound warning after a specific session length
@@ -87,13 +88,31 @@
 			</div>
 		</Popover>
 	</div>
+	<div class="relative">
+		<Label class="text-md w-full text-primary-50"
+			>Break message
+			<input
+				type="text"
+				name="break_message"
+				value={$settings.break_message}
+				class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
+			/>
+		</Label>
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-3" />
+		<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
+			<div class="p-2 text-sm">
+				The message that appears while you are on a break. You can use this to remind you of how you
+				want to spend your break time.
+			</div>
+		</Popover>
+	</div>
 	<hr class="my-4 border-secondary-800" />
 	<div class="flex gap-4">
 		<Label class="text-md w-full text-primary-50"
 			>Date format
 			<Select
 				name="date_format"
-				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
 				underline
 				items={formats}
 				value={$settings.date_format}
@@ -103,7 +122,7 @@
 			>Separator
 			<Select
 				name="separator"
-				class="text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
 				underline
 				items={separators}
 				value={$settings.separator}

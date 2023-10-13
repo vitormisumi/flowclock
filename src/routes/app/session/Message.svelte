@@ -13,7 +13,7 @@
 	$: if ($session.running) {
 		message = 'Break time: ' + minutes + ' min';
 	} else if ($sessionBreak.running) {
-		message = $sessionBreak.alarmPlayed ? 'Time for your next session!' : 'Enjoy your break!';
+		message = $sessionBreak.alarmPlayed ? 'Time for your next session!' : $settings.break_message;
 	} else {
 		message = '';
 	}

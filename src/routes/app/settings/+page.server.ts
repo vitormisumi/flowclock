@@ -13,10 +13,11 @@ export const actions = {
 		const dateFormat = formData.get('date_format') as string;
 		const separator = formData.get('separator') as string;
 		const clockFormat = formData.get('clock_format') as string;
+		const breakMessage = formData.get('break_message') as string;
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: ratio, warning: warning ? warning : 0, date_format: dateFormat, separator: separator, clock_format: clockFormat === '1' ? true : false})
+			.update({ ratio: ratio, warning: warning ? warning : 0, date_format: dateFormat, separator: separator, clock_format: clockFormat === '1' ? true : false, break_message: breakMessage})
 			.eq('user_id', session.user.id);
 
 		if (error) {
