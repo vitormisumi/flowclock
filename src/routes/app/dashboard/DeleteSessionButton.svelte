@@ -37,8 +37,10 @@
 	on:click={() => {
 		open = true;
 		sessionId = session.id;
-	}}><i class="fa-solid fa-trash" /></Button
+	}}
 >
+	<i class="fa-solid fa-trash" />
+</Button>
 <Tooltip placement="left">Delete session</Tooltip>
 <Modal
 	bind:open
@@ -67,8 +69,10 @@
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 			type="submit"
-			disabled={loading}>Delete</Button
+			disabled={loading}
 		>
+			Delete
+		</Button>
 		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

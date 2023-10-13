@@ -35,7 +35,7 @@
 	}
 </script>
 
-<Card class="h-full min-w-full border-0 bg-primary-800 gap-1">
+<Card class="h-full min-w-full gap-1 border-0 bg-primary-800">
 	<h2>Tasks</h2>
 	<Table hoverable shadow>
 		<TableBody>
@@ -43,7 +43,6 @@
 				{#if task.project_id === $selectedProject.id}
 					<TableBodyRow
 						class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
-						on:click={() => toggleRow(i)}
 					>
 						<TableBodyCell class="p-0 font-light text-primary-50">
 							<div
@@ -53,9 +52,15 @@
 								role="row"
 								tabindex={i}
 							>
-								<p class="w-full">
-									{task.name}
-								</p>
+								<div
+									on:click={() => toggleRow(i)}
+									on:keydown={() => toggleRow(i)}
+									role="row"
+									tabindex={i}
+									class="w-full"
+								>
+									<p>{task.name}</p>
+								</div>
 								{#if openEdit === i}
 									<div transition:fade class="flex">
 										<EditTaskButton {task} />

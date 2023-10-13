@@ -7,10 +7,7 @@
 		TableBodyCell,
 		TableBodyRow,
 		ButtonGroup,
-		Button,
-
-		Tooltip
-
+		Button
 	} from 'flowbite-svelte';
 	import { filteredSessions, startRow, endRow, filteredInterruptions, openRow } from './stores';
 	import {
@@ -26,11 +23,19 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	let show = false;
+	let edit: number | null = null;
 
-	const toggleRow = (i: number) => {
+	function toggleRow(i: number) {
 		$openRow = $openRow === i ? null : i;
-	};
+	}
+
+	function mouseEnter(i: number) {
+		edit = i;
+	}
+
+	function mouseLeave() {
+		edit = null;
+	}
 
 	function previous() {
 		$startRow = $startRow === 0 ? $startRow : $startRow - 10;
@@ -58,35 +63,48 @@
 
 <Table hoverable shadow>
 	<TableHead class="bg-primary-700 text-center text-primary-50">
-		<TableHeadCell class="p-2">Date</TableHeadCell>
-		<TableHeadCell class="p-2">Duration</TableHeadCell>
-		<TableHeadCell class="px-1 py-0">
-			<Button size="xs" on:click={() => (show = !show)}><i class="fa-solid {show ? 'fa-x' : 'fa-pen'} w-3" /></Button>
-		</TableHeadCell>
+		<div class="flex justify-around p-2 font-bold">
+			<p>Date</p>
+			<p>Duration</p>
+		</div>
 	</TableHead>
 	<TableBody>
 		{#each $filteredSessions as session, i}
 			{#if i >= $startRow && i <= $endRow}
 				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800 lg:text-base"
+					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800"
 				>
-					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
-						>{dateFromTimestamp(
-							session.start,
-							$settings.date_format,
-							$settings.separator
-						)}</TableBodyCell
+					<div
+						class="relative flex justify-around font-light text-primary-50"
+						role="row"
+						tabindex={i}
+						on:mouseenter={() => mouseEnter(i)}
+						on:mouseleave={mouseLeave}
 					>
-					<TableBodyCell class="p-2 font-light text-primary-50" on:click={() => toggleRow(i)}
-						>{millisecondsToClock(session.duration)}</TableBodyCell
-					>
-					<TableBodyCell class="w-0 p-0">
-						{#if show}
-							<div transition:fade>
+						<div
+							class="w-full p-2"
+							role="cell"
+							tabindex="0"
+							on:click={() => toggleRow(i)}
+							on:keydown={() => toggleRow(i)}
+						>
+							{dateFromTimestamp(session.start, $settings.date_format, $settings.separator)}
+						</div>
+						<div
+							class="w-full p-2"
+							role="cell"
+							tabindex="0"
+							on:click={() => toggleRow(i)}
+							on:keydown={() => toggleRow(i)}
+						>
+							{millisecondsToClock(session.duration)}
+						</div>
+						{#if edit === i}
+							<div class="absolute right-1 top-1" transition:fade>
 								<DeleteSession {session} />
 							</div>
 						{/if}
-					</TableBodyCell>
+					</div>
 				</TableBodyRow>
 			{/if}
 			{#if $openRow === i}
@@ -132,26 +150,33 @@
 		<Button
 			disabled={$startRow === 0 ? true : false}
 			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-			on:click={previous}><i class="fa-solid fa-chevron-left" /></Button
+			on:click={previous}
 		>
+			<i class="fa-solid fa-chevron-left" />
+		</Button>
 		{#each { length: pages } as _, p}
 			{#if p === $startRow / 10}
 				<Button
 					disabled
 					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
-					>{p + 1}</Button
 				>
+					{p + 1}
+				</Button>
 			{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
 				<Button
 					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
-					on:click={() => page(p)}>{p + 1}</Button
+					on:click={() => page(p)}
 				>
+					{p + 1}
+				</Button>
 			{/if}
 		{/each}
 		<Button
 			disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
 			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-			on:click={next}><i class="fa-solid fa-chevron-right" /></Button
+			on:click={next}
 		>
+			<i class="fa-solid fa-chevron-right" />
+		</Button>
 	</ButtonGroup>
 </div>
