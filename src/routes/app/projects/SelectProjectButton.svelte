@@ -55,9 +55,10 @@
 	<div class="grid gap-4">
 		<h2 class="text-center font-bold text-primary-50">Projects</h2>
 		<div class="flex justify-end">
-			<Button size="xs" class="bg-transparent" on:click={() => (edit = !edit)}
-				><i class="fa-solid {edit ? 'fa-x' : 'fa-pen'} w-3" /></Button
-			>
+			<Button size="xs" class="bg-transparent" on:click={() => (edit = !edit)}>
+				<i class="fa-solid {edit ? 'fa-x' : 'fa-pen'} w-3" />
+			</Button>
+			<Tooltip>Edit groups</Tooltip>
 		</div>
 		{#each $projectGroups as group}
 			<div class="flex h-8 w-full items-center justify-center gap-2">

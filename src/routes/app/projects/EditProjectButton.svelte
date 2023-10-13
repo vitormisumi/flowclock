@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Button, Tooltip, Input, Modal, Select } from 'flowbite-svelte';
+	import { Button, Tooltip, Input, Modal, Select, Textarea } from 'flowbite-svelte';
 	import { selectedProject } from './stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import type { ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
-    import type { SubmitFunction } from '@sveltejs/kit';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
@@ -28,12 +28,12 @@
 
 	$: groupValue = groupOptions.find((x) => x.value === $selectedProject.group_id)?.value;
 
-    let loading = false;
+	let loading = false;
 
-    const handleClick: SubmitFunction = () => {
+	const handleClick: SubmitFunction = () => {
 		loading = true;
 		return async ({ update }) => {
-            open = false;
+			open = false;
 			loading = false;
 			update();
 		};
@@ -51,29 +51,31 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<p class="text-lg font-bold text-secondary-50">Edit project {$selectedProject.name}</p>
-	<form class="flex flex-col gap-2 text-left" method="POST" action="?/edit" use:enhance={handleClick}>
+	<form
+		class="flex flex-col gap-2 text-left"
+		method="POST"
+		action="?/edit"
+		use:enhance={handleClick}
+	>
 		<Input
 			name="name"
-            placeholder="Project name"
+			placeholder="Project name"
 			value={$selectedProject.name}
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 text-xl"
-            required
-			><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
-		>
+			class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
+			required
+		></Input>
 		<Input
 			name="goal"
 			placeholder="Project goal"
 			value={$selectedProject.goal}
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			><i class="fa-solid fa-bullseye" aria-hidden="true" slot="left" /></Input
-		>
-		<Input
+		></Input>
+		<Textarea
 			name="description"
 			placeholder="Description"
 			value={$selectedProject.description}
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			><i class="fa-solid fa-file-lines" aria-hidden="true" slot="left" /></Input
-		>
+		></Textarea>
 		<Select
 			items={statusOptions}
 			name="status"

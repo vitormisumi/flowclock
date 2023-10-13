@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem, Input } from 'flowbite-svelte';
+	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
 	import { DateInput } from 'date-picker-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -82,15 +82,13 @@
 				name="name"
 				placeholder="Task name"
 				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
-				required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
-			>
-			<Input
+				required
+			></Input>
+			<Textarea
 				name="description"
 				placeholder="Description"
 				class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
-			>
-				<i class="fa-solid fa-file-lines" aria-hidden="true" slot="left" />
-			</Input>
+			></Textarea>
 			<div class="flex justify-between gap-2">
 				<div>
 					<Button size="xs" disabled={loading}>Priority {priority}</Button>

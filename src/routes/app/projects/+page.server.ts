@@ -153,16 +153,17 @@ export const actions = {
 
 		const formData = await request.formData();
         const id = formData.get('id') as string;
-        // const project_id = formData.get('project_id') as string;
+        const project_id = formData.get('project_id') as string;
         const name = formData.get('name') as string;
         // const type = formData.get('type') as string;
         // const status = formData.get('status') as string;
-        // const due_date = formData.get('due_date') as string;
+        const priority = formData.get('priority') as string;
+        const due_date = formData.get('due_date') as string;
         const description = formData.get('description') as string;
 		
         const { error } = await supabase
             .from('tasks')
-            .update({ user_id: session.user.id, name: name, description: description })
+            .update({ user_id: session.user.id, project_id: project_id, name: name, description: description, priority: priority, due_date: due_date })
             .eq('id', id );
 
 		if (error) {
@@ -170,7 +171,7 @@ export const actions = {
 			return fail(500, { message: error.message, success: false });
 		}
 
-		return { message: 'Task successfully deleted', success: true };
+		return { message: 'Task successfully edited', success: true };
     },
 
     deleteTask: async ({ request, locals: { supabase, getSession } }) => {

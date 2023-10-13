@@ -26,8 +26,11 @@
 <Button
 	size="xs"
 	class="bg-transparent text-red-700 hover:bg-primary-700"
-	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
+	on:click={() => (open = true)}
 >
+	<i class="fa-solid fa-trash" />
+</Button>
+<Tooltip>Delete</Tooltip>
 <Modal
 	bind:open
 	outsideclose

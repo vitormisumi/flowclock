@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Modal, Input, Select } from 'flowbite-svelte';
+	import { Button, Modal, Input, Select, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import type { ProjectGroup } from '../types';
@@ -54,19 +54,19 @@
 			name="name"
 			placeholder="Project name"
 			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 text-xl"
-			required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
+			required></Input
 		>
 		<Input
 			name="goal"
 			placeholder="Project goal"
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			><i class="fa-solid fa-bullseye" aria-hidden="true" slot="left" /></Input
+			></Input
 		>
-		<Input
+		<Textarea
 			name="description"
 			placeholder="Description"
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			><i class="fa-solid fa-file-lines" aria-hidden="true" slot="left" /></Input
+			></Textarea
 		>
 		<Select
 			items={statusOptions}

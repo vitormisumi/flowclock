@@ -7,25 +7,35 @@
 	import { selectedProject } from './stores';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 
 	const tasks: Writable<Task[]> = getContext('tasks');
 
-	const priorityOptions: {[key: number]: string} = {
+	const priorityOptions: { [key: number]: string } = {
 		3: 'High',
 		2: 'Medium',
 		1: 'Low',
 		0: 'None'
-	}
+	};
 
 	let openRow: number | null = null;
 
-	const toggleRow = (i: number) => {
+	function toggleRow(i: number) {
 		openRow = openRow === i ? null : i;
-	};
+	}
+
+	let openEdit: number | null = null;
+
+	function mouseEnter(i: number) {
+		openEdit = i;
+	}
+
+	function mouseLeave() {
+		openEdit = null;
+	}
 </script>
 
-<Card class="h-full min-w-full border-0 bg-primary-800">
+<Card class="h-full min-w-full border-0 bg-primary-800 gap-1">
 	<h2>Tasks</h2>
 	<Table hoverable shadow>
 		<TableBody>
@@ -33,15 +43,26 @@
 				{#if task.project_id === $selectedProject.id}
 					<TableBodyRow
 						class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
+						on:click={() => toggleRow(i)}
 					>
-						<TableBodyCell class="p-1 font-light text-primary-50" on:click={() => toggleRow(i)}>
-							<p>{task.name}</p>
-						</TableBodyCell>
-						<TableBodyCell class="w-0 px-0 py-1">
-							<EditTaskButton {task} />
-						</TableBodyCell>
-						<TableBodyCell class="w-0 px-0 py-1">
-							<DeleteTaskButton {task} />
+						<TableBodyCell class="p-0 font-light text-primary-50">
+							<div
+								class="flex h-10 items-center justify-between p-2"
+								on:mouseenter={() => mouseEnter(i)}
+								on:mouseleave={() => mouseLeave()}
+								role="row"
+								tabindex={i}
+							>
+								<p class="w-full">
+									{task.name}
+								</p>
+								{#if openEdit === i}
+									<div transition:fade class="flex">
+										<EditTaskButton {task} />
+										<DeleteTaskButton {task} />
+									</div>
+								{/if}
+							</div>
 						</TableBodyCell>
 					</TableBodyRow>
 				{/if}
@@ -50,7 +71,7 @@
 						<TableBodyCell colspan="3" class="bg-primary-900 p-0">
 							<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
 								{#if task.description}
-									<p class="text-primary-100 whitespace-normal">
+									<p class="whitespace-normal text-primary-100">
 										{task.description}
 									</p>
 								{/if}

@@ -61,7 +61,7 @@
 		<TableHeadCell class="p-2">Date</TableHeadCell>
 		<TableHeadCell class="p-2">Duration</TableHeadCell>
 		<TableHeadCell class="px-1 py-0">
-			<Button size="xs" on:click={() => (show = !show)}><i class="fa-solid fa-pen-to-square" /></Button>
+			<Button size="xs" on:click={() => (show = !show)}><i class="fa-solid {show ? 'fa-x' : 'fa-pen'} w-3" /></Button>
 		</TableHeadCell>
 	</TableHead>
 	<TableBody>

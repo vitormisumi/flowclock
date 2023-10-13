@@ -69,6 +69,6 @@
 			type="submit"
 			disabled={loading}>Delete</Button
 		>
-		<Button disabled={loading}>Cancel</Button>
+		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>
