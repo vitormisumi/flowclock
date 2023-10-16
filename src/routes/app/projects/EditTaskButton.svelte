@@ -13,6 +13,7 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
+	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Project, Task } from '../types';
 	import type { Writable } from 'svelte/store';
@@ -78,6 +79,7 @@
 		return async ({ update }) => {
 			open = false;
 			loading = false;
+			$selectedProjectId = Number(formData.get('project_id'))
 			update();
 		};
 	};

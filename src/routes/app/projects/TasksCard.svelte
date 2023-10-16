@@ -36,7 +36,7 @@
 </script>
 
 <Card class="h-full min-w-full gap-1 border-0 bg-primary-800">
-	<h2>Tasks</h2>
+	<p class="text-xl text-primary-50"><i class="fa-solid fa-check pr-2" />Tasks</p>
 	<Table hoverable shadow>
 		<TableBody>
 			{#each $tasks as task, i}

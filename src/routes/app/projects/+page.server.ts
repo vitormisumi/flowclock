@@ -219,7 +219,11 @@ export const actions = {
         return fail(500, { message: error.message, success: false });
       }
 
-      return { message: 'Task successfully completed', success: true };
+      if (status === 'done') {
+        return { message: 'Task successfully completed', success: true };
+      } else {
+        return { message: 'Task successfully undone', success: true };
+      }
   },
     
     

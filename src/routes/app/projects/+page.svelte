@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import { fade } from 'svelte/transition';
+	import { selectedProject, selectedProjectId } from './stores';
+	import { getContext } from 'svelte';
 	import Notification from '../../Notification.svelte';
 	import InfoCard from './InfoCard.svelte';
 	import TasksCard from './TasksCard.svelte';
 	import ToDosCards from './ToDosCards.svelte';
 	import IntentionsCard from './IntentionsCard.svelte';
 	import SelectProjectButton from './SelectProjectButton.svelte';
-	import { selectedProject, selectedProjectId } from './stores';
-	import AddProjectButton from './AddProjectButton.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { Project } from '../types';
-	import { getContext } from 'svelte';
 
 	const projects: Writable<Project[]> = getContext('projects');
 

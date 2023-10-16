@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { Button, Tooltip, Drawer, Input } from 'flowbite-svelte';
 	import { selectedProject, selectedProjectId } from './stores';
-	import type { Writable } from 'svelte/store';
-	import type { Project, ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
 	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { fade } from 'svelte/transition';
 	import AddProjectButton from './AddProjectButton.svelte';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
-	import { fade } from 'svelte/transition';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { Writable } from 'svelte/store';
+	import type { Project, ProjectGroup } from '../types';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
