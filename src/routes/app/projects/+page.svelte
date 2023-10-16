@@ -6,7 +6,6 @@
 	import Notification from '../../Notification.svelte';
 	import InfoCard from './InfoCard.svelte';
 	import TasksCard from './TasksCard.svelte';
-	import ToDosCards from './ToDosCards.svelte';
 	import IntentionsCard from './IntentionsCard.svelte';
 	import SelectProjectButton from './SelectProjectButton.svelte';
 	import type { Writable } from 'svelte/store';
@@ -39,14 +38,13 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	<div class="flex w-full justify-center pb-4">
+	<div class="flex w-full justify-end pb-4">
 		<SelectProjectButton />
 	</div>
 	{#if $projects.length}
 		<div class="flex flex-wrap gap-4">
 			<InfoCard />
 			<TasksCard />
-			<ToDosCards />
 			<IntentionsCard />
 		</div>
 	{:else}

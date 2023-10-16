@@ -26,8 +26,9 @@
 	on:mouseenter={() => (show = true)}
 	on:mouseleave={() => (show = false)}
 >
-	<div class="flex justify-between h-6">
-		<div>
+	<div class="flex h-6 justify-between">
+		<div class="flex gap-2">
+			<h2 class="font-bold">{$selectedProject.name}</h2>
 			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
 			<Badge class="bg-primary-50"
 				>#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}</Badge
@@ -49,8 +50,14 @@
 	</div>
 	{#if !hidden}
 		<div class="grid gap-4 text-secondary-50" transition:slide>
-			<p><i class="fa-solid fa-bullseye pr-2" />{$selectedProject.goal}</p>
-			<p><i class="fa-solid fa-file-lines pr-2" />{$selectedProject.description}</p>
+			<div>
+				<h3 class="font-medium">Goal</h3>
+				<p class="text-secondary-200">{$selectedProject.goal}</p>
+			</div>
+			<div>
+				<h3 class="font-medium">Description</h3>
+				<p class="text-secondary-200">{$selectedProject.description}</p>
+			</div>
 		</div>
 	{/if}
 </Card>

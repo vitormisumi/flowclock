@@ -142,7 +142,11 @@ export const actions = {
         return fail(500, { message: error.message, success: false });
       }
 
-      return { message: type.toUpperCase() + ' successfully created', success: true };
+      let message = 'Task successfully created'
+      if (type === 'to-do') {
+        message = 'To-Do successfully created'
+      } 
+      return { message: message, success: true };
     },
 
     editTask: async ({ request, locals: { supabase, getSession } }) => {
