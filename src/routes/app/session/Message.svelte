@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 	import { milliseconds, session, sessionBreak } from './stores';
 

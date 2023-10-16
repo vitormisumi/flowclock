@@ -16,7 +16,7 @@ export const actions = {
 		
         const { error } = await supabase
             .from('projects')
-            .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status, group_id: group_id });
+            .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status, group_id: Number(group_id) });
 
 		if (error) {
 			console.log(error);
@@ -42,7 +42,7 @@ export const actions = {
 		
         const { error } = await supabase
             .from('projects')
-            .update({ name: name, goal: goal, description: description, status: status, group_id: group_id })
+            .update({ name: name, goal: goal, description: description, status: status, group_id: Number(group_id) })
             .eq('id', id);
 
 		if (error) {
@@ -135,7 +135,7 @@ export const actions = {
       
           const { error } = await supabase
               .from('tasks')
-              .insert({ user_id: session.user.id, project_id: project_id, name: name, type: type, status: status, due_date: due_date, priority: priority, description: description });
+              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, status: status, due_date: due_date, priority: Number(priority), description: description });
 
       if (error) {
         console.log(error);
@@ -165,7 +165,7 @@ export const actions = {
       
           const { error } = await supabase
               .from('tasks')
-              .update({ user_id: session.user.id, project_id: project_id, name: name, description: description, priority: priority, due_date: due_date })
+              .update({ user_id: session.user.id, project_id: Number(project_id), name: name, description: description, priority: Number(priority), due_date: due_date })
               .eq('id', id );
 
       if (error) {

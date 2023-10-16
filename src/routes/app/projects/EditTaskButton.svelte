@@ -15,9 +15,7 @@
 	import { dateFromTimestamp } from '$lib/functions/functions';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Project, Task } from '../types';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const projects: Writable<Project[]> = getContext('projects');

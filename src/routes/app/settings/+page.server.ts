@@ -17,7 +17,7 @@ export const actions = {
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: ratio, warning: warning ? warning : 0, date_format: dateFormat, separator: separator, clock_format: clockFormat === '1' ? true : false, break_message: breakMessage})
+			.update({ ratio: Number(ratio), warning: warning ? Number(warning) : 0, date_format: dateFormat, separator: Number(separator), clock_format: clockFormat === '1' ? true : false, break_message: breakMessage})
 			.eq('user_id', session.user.id);
 
 		if (error) {

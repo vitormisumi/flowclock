@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button, Label, Select, Popover, Toggle } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
-	import type { Settings } from '../types';
 	import type { Writable } from 'svelte/store';
 
 	let ratios = [

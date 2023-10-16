@@ -1,5 +1,4 @@
 import { writable } from "svelte/store";
-import type { Project } from "../types";
 
 function createSelectedProject() {
     const { subscribe, set } = writable<Project>({

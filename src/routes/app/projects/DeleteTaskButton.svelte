@@ -2,7 +2,6 @@
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Task } from '../types';
 
     export let task: Task;
 

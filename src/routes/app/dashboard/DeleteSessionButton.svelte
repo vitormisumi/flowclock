@@ -3,15 +3,13 @@
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
-	import type { Session } from '../types';
-	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	export let session: Session;
+	export let session: UserSession;
 
 	let open = false;
 

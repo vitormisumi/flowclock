@@ -2,7 +2,6 @@
 	import {
 		Table,
 		TableHead,
-		TableHeadCell,
 		TableBody,
 		TableBodyCell,
 		TableBodyRow,
@@ -18,7 +17,6 @@
 	import DeleteSession from './DeleteSessionButton.svelte';
 	import { fade, slide } from 'svelte/transition';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');

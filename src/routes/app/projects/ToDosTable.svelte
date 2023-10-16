@@ -7,7 +7,6 @@
 	import EditTaskButton from './EditTaskButton.svelte';
 	import CompleteTaskButton from './CompleteTaskButton.svelte';
 	import type { Writable } from 'svelte/store';
-	import type { Task } from '../types';
 
 	const tasks: Writable<Task[]> = getContext('tasks');
 

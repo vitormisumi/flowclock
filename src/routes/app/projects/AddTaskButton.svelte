@@ -8,7 +8,6 @@
 	import { selectedProject } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 
 	export let type: 'task' | 'to-do';
 

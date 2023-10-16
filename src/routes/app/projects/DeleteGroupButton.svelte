@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
-	import { selectedProject, selectedProjectId } from './stores';
+	import { selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { ProjectGroup } from '../types';
 
 	export let group: ProjectGroup;
 

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { Badge, Button, Card, Tooltip } from 'flowbite-svelte';
 	import { selectedProject } from './stores';
+	import { getContext } from 'svelte';
+	import { fly, slide } from 'svelte/transition';
 	import DeleteProjectButton from './DeleteProjectButton.svelte';
 	import EditProjectButton from './EditProjectButton.svelte';
 	import type { Writable } from 'svelte/store';
-	import type { ProjectGroup } from '../types';
-	import { getContext } from 'svelte';
-	import { fade, fly, slide } from 'svelte/transition';
 
 	let show = false;
 

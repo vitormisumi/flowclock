@@ -9,7 +9,6 @@
 	import IntentionsCard from './IntentionsCard.svelte';
 	import SelectProjectButton from './SelectProjectButton.svelte';
 	import type { Writable } from 'svelte/store';
-	import type { Project } from '../types';
 
 	const projects: Writable<Project[]> = getContext('projects');
 

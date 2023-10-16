@@ -10,13 +10,12 @@
 	} from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import { interruptionLength, interruptions, session, sessionBreak } from './session/stores';
+	import { page } from '$app/stores';
 	import avatar from '$lib/assets/avatar.png';
 	import type { User } from '@supabase/supabase-js';
-	import { interruptionLength, interruptions, session, sessionBreak } from './session/stores';
-	import type { Settings } from './types';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { page } from '$app/stores';
 
 	$: activeUrl = $page.url.pathname;
 
