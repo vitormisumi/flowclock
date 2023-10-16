@@ -19,12 +19,3 @@ declare global {
 	type Settings = Database['public']['Tables']['settings']['Row'];
 	type ProjectGroup = Database['public']['Tables']['project_groups']['Row'];
 }
-
-declare type Item = import("svelte-dnd-action").Item;
-declare type DndEvent<ItemType = Item> = import("svelte-dnd-action").DndEvent<ItemType>;
-declare namespace svelteHTML {
-    interface HTMLAttributes<T> {
-        "on:consider"?: (event: CustomEvent<DndEvent<ItemType>> & {target: EventTarget & T}) => void;
-        "on:finalize"?: (event: CustomEvent<DndEvent<ItemType>> & {target: EventTarget & T}) => void;
-    }
-}

@@ -37,8 +37,6 @@
 		}
 	];
 
-	const flipDurationMs = 200;
-
 	function handleConsiderColumns(e: CustomEvent<DndEvent<Board>>) {
 		board = e.detail.items;
 	}
@@ -61,25 +59,22 @@
 </script>
 
 <section
-	class="board flex w-full"
-	use:dndzone={{ items: board, flipDurationMs, type: 'columns' }}
+	class="flex w-full gap-2"
+	use:dndzone={{ items: board, type: 'columns' }}
 	on:consider={handleConsiderColumns}
 	on:finalize={handleFinalizeColumns}
 >
 	{#each board as column (column.id)}
-		<div class="w-full bg-primary-900 p-2" animate:flip={{ duration: flipDurationMs }}>
+		<div class="w-full rounded-lg bg-primary-900 p-2" animate:flip>
 			<div>{column.name}</div>
 			<div
-				class="flex h-full flex-col justify-start gap-2 border-white"
-				use:dndzone={{ items: column.items, flipDurationMs }}
+				class="flex h-full flex-col justify-start gap-2 rounded-lg"
+				use:dndzone={{ items: column.items }}
 				on:consider={(e) => handleConsiderCards(column.id, e)}
 				on:finalize={(e) => handleFinalizeCards(column.id, e)}
 			>
 				{#each column.items as item (item.id)}
-					<div
-						class="h-8 rounded-lg bg-primary-800 p-2"
-						animate:flip={{ duration: flipDurationMs }}
-					>
+					<div class="rounded-lg bg-primary-800 p-2 text-primary-50" animate:flip>
 						{item.name}
 					</div>
 				{/each}

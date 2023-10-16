@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Card, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import AddTaskButton from './AddTaskButton.svelte';
+	import Board from './board.svelte';
 	import TasksTable from './TasksTable.svelte';
 	import ToDosTable from './ToDosTable.svelte';
 
@@ -9,6 +10,7 @@
 
 <Card class="h-full min-w-full gap-1 border-0 bg-primary-800">
 	<p class="text-xl text-primary-50">Tasks</p>
+	<Board />
 	<TasksTable />
 	<AddTaskButton type="task" />
 	<div class="flex justify-between">
