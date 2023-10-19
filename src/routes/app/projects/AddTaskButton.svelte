@@ -10,6 +10,7 @@
 	import type { Writable } from 'svelte/store';
 
 	export let type: 'task' | 'to-do';
+	export let status: number;
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -55,7 +56,7 @@
 		loading = true;
 		formData.append('project_id', String($selectedProject.id));
 		formData.append('type', type);
-		formData.append('status', 'planned');
+		formData.append('status', String(status));
 		formData.append('priority', String(priority));
 		if (date) {
 			formData.append('due_date', date.toISOString());

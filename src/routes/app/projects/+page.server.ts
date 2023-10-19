@@ -229,5 +229,49 @@ export const actions = {
       }
   },
     
+    addStatus: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let status = formData.get('status') as string;
+      let projectId = formData.get('project_id') as string;
+          
+      const { error } = await supabase
+        .from('task_statuses')
+        .insert({ user_id: session.user.id, status: status, project_id: Number(projectId)})
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Status successfully added', success: true };
+  },
+    
+    deleteStatus: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let id = formData.get('id') as string;
+          
+      const { error } = await supabase
+        .from('task_statuses')
+        .delete()
+        .eq('id', Number(id))
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Status successfully deleted', success: true };
+  },
+    
     
 };
