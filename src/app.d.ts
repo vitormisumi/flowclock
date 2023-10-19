@@ -13,7 +13,11 @@ declare global {
 	}
 	type Database = DB;
 	type UserSession = Database['public']['Tables']['sessions']['Row'];
+	type FilteredSession = UserSession & {
+		duration: number;
+	};
 	type Task = Database['public']['Tables']['tasks']['Row'];
+	type Interruption = Database['public']['Tables']['interruptions']['Row'];
 	type Project = Database['public']['Tables']['projects']['Row'];
 	type Project = Database['public']['Tables']['projects']['Row'];
 	type Settings = Database['public']['Tables']['settings']['Row'];
@@ -21,4 +25,13 @@ declare global {
 	type TaskStatuses = Database['public']['Tables']['task_statuses']['Row'] & {
 		tasks: Task[];
 	};
+	type Period = {
+		name: string;
+		timeframe: string;
+		current: boolean;
+	}
+	type Filter = {
+		timeframe: string;
+		current: boolean;
+	}
 }

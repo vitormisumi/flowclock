@@ -43,8 +43,8 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 	};
 }
 
-export function timeFromTimestamp(timestamp: string | undefined, format: boolean): string {
-	if (timestamp === undefined) {
+export function timeFromTimestamp(timestamp: string | null | undefined, format: boolean): string {
+	if (timestamp === undefined || timestamp === null) {
 		return ''
 	}
 	let date = new Date(timestamp);

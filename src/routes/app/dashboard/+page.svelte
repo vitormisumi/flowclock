@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import type { Interruption, Session } from '../types';
 	import type { Writable } from 'svelte/store';
 	import { filter, filteredInterruptions, filteredSessions } from './stores';
 	import { fade } from 'svelte/transition';
@@ -13,7 +12,7 @@
 
 	export let form;
 
-	const sessions: Writable<Session[]> = getContext('sessions');
+	const sessions: Writable<FilteredSession[]> = getContext('sessions');
 	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
 	const today = new Date();

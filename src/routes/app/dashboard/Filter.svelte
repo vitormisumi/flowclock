@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button, Drawer, Tooltip } from 'flowbite-svelte';
 	import { filter, startRow, endRow, openRow } from './stores';
-	import type { Period } from '../types';
 
 	let periods = [
 		{

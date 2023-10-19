@@ -2,10 +2,10 @@
 	import { flip } from 'svelte/animate';
 	import { dndzone } from 'svelte-dnd-action';
 	import type { DndEvent } from 'svelte-dnd-action';
-    import type { Writable } from 'svelte/store';
-    import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { getContext } from 'svelte';
 
-    const status: Writable<TaskStatuses[]> = getContext('status');
+	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	function handleConsiderColumns(e: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = e.detail.items;
@@ -20,11 +20,18 @@
 		$status[colIdx].tasks = e.detail.items;
 		$status = [...$status];
 	}
-
-	function handleFinalizeCards(cardId: number, e: CustomEvent<DndEvent<Task>>) {
-		const colIdx = $status.findIndex((c) => c.id === cardId);
+    
+	async function handleFinalizeCards(cardId: number, e: CustomEvent<DndEvent<Task>>) {
+        const colIdx = $status.findIndex((c) => c.id === cardId);
 		$status[colIdx].tasks = e.detail.items;
 		$status = [...$status];
+		const response = await fetch('/api', {
+			method: 'POST',
+			body: JSON.stringify({cardId, e: e.detail}),
+			headers: {
+				'content-type': 'application/json',
+			},
+		});
 	}
 </script>
 
@@ -36,7 +43,7 @@
 >
 	{#each $status as column (column.id)}
 		<div class="w-full rounded-lg bg-primary-900 p-2" animate:flip>
-			<div>{column.status}</div>
+			<h3>{column.status}</h3>
 			<div
 				class="flex h-full flex-col justify-start gap-2 rounded-lg"
 				use:dndzone={{ items: column.tasks }}

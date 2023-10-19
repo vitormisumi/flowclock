@@ -9,7 +9,7 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	export let session: UserSession;
+	export let session: FilteredSession;
 
 	let open = false;
 

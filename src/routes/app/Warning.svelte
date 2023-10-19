@@ -3,7 +3,6 @@
 	import { interruptionLength, session, sessionBreak, interruptions } from './session/stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from './types';
 	import { getContext } from 'svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 

@@ -1,9 +1,8 @@
 import { writable } from "svelte/store";
-import type { Interruption, Session, Filter } from "../types";
 
 export const filter = writable<Filter>({timeframe: 'all', current: true});
 
-export const filteredSessions = writable<Session[]>([]);
+export const filteredSessions = writable<FilteredSession[]>([]);
 
 export const filteredInterruptions = writable<Interruption[]>([]);
 

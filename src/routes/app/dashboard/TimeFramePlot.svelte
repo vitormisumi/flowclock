@@ -2,7 +2,6 @@
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
