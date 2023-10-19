@@ -18,4 +18,7 @@ declare global {
 	type Project = Database['public']['Tables']['projects']['Row'];
 	type Settings = Database['public']['Tables']['settings']['Row'];
 	type ProjectGroup = Database['public']['Tables']['project_groups']['Row'];
+	type TaskStatuses = Database['public']['Tables']['task_statuses']['Row'] & {
+		tasks: Task[];
+	};
 }

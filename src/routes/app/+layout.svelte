@@ -15,9 +15,15 @@
 			let interruptionDuration = sessionInterruptions?.reduce((accumulator, object) => {
 				return accumulator + Date.parse(object.end) - Date.parse(object.start);
 			}, 0);
-			return Object.assign(x, {
-				duration: Date.parse(x.end) - Date.parse(x.start) - interruptionDuration
-			});
+			if (interruptionDuration && x.end) {
+				return Object.assign(x, {
+					duration: Date.parse(x.end) - Date.parse(x.start) - interruptionDuration
+				});
+			} else {
+				return Object.assign(x, {
+					duration: Date.now() - Date.parse(x.start)
+				})
+			}
 		})
 	);
 
@@ -36,6 +42,9 @@
 	const tasks = writable();
 	$: tasks.set(data.tasks);
 
+	const status = writable();
+	$: status.set(data.status);
+
 	setContext('user', data.user);
 	setContext('sessions', sessions);
 	setContext('interruptions', interruptions);
@@ -43,6 +52,7 @@
 	setContext('projects', projects);
 	setContext('projectGroups', projectGroups);
 	setContext('tasks', tasks);
+	setContext('status', status);
 </script>
 
 <Screen>

@@ -128,14 +128,13 @@ export const actions = {
           const project_id = formData.get('project_id') as string;
           const name = formData.get('name') as string;
           const type = formData.get('type') as string;
-          const status = formData.get('status') as string;
           const due_date = formData.get('due_date') as string;
           const priority = formData.get('priority') as string;
           const description = formData.get('description') as string;
       
           const { error } = await supabase
               .from('tasks')
-              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, status: status, due_date: due_date, priority: Number(priority), description: description });
+              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, due_date: due_date, status_id: 17, priority: Number(priority), description: description });
 
       if (error) {
         console.log(error);
@@ -215,7 +214,7 @@ export const actions = {
           
       const { error } = await supabase
         .from('tasks')
-        .update({ status: status })
+        .update({ status_id: 19 })
         .eq('id', id)
 
       if (error) {

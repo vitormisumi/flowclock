@@ -11,7 +11,7 @@
 <Card class="h-full min-w-full gap-1 border-0 bg-primary-800">
 	<p class="text-xl text-primary-50">Tasks</p>
 	<Board />
-	<TasksTable />
+	<!-- <TasksTable /> -->
 	<AddTaskButton type="task" />
 	<div class="flex justify-between">
 		<p class="text-xl text-primary-50">To-Dos</p>

@@ -39,7 +39,7 @@
 <Table hoverable shadow>
 	<TableBody>
 		{#each $tasks as task, i}
-			{#if task.project_id === $selectedProject.id && task.type === 'to-do' && (task.status != 'done' || show === true)}
+			{#if task.project_id === $selectedProject.id && task.type === 'to-do' && (task.status_id != 19 || show === true)}
 				<TableBodyRow
 					class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
 				>
@@ -51,7 +51,7 @@
 							role="row"
 							tabindex={i}
 						>
-							<CompleteTaskButton id={task.id} status={task.status} />
+							<CompleteTaskButton id={task.id} status={task.status_id} />
 							<div
 								on:click={() => toggleRow(i)}
 								on:keydown={() => toggleRow(i)}
@@ -59,7 +59,7 @@
 								tabindex={i}
 								class="w-full"
 							>
-								<p class="{task.status === 'done' ? 'line-through' : 'no-underline'} pl-2">
+								<p class="{task.status_id === 19 ? 'line-through' : 'no-underline'} pl-2">
 									{task.name}
 								</p>
 							</div>

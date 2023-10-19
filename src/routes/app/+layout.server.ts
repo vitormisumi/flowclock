@@ -46,6 +46,12 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.select('*')
 		.eq('user_id', session.user.id)
 		.order('id')
+	
+	const { data: status } = await supabase
+		.from('task_statuses')
+		.select('*, tasks(*)')
+		.eq('user_id', session.user.id)
+		.order('id')
 
-	return { session, sessions, interruptions, settings, projects, projectGroups, tasks, user };
+	return { session, sessions, interruptions, settings, projects, projectGroups, tasks, status, user };
 };

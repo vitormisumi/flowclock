@@ -323,6 +323,43 @@ export interface Database {
           }
         ]
       }
+      task_statuses: {
+        Row: {
+          created_at: string
+          id: number
+          project_id: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          project_id: number
+          status: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          project_id?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_statuses_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_statuses_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       tasks: {
         Row: {
           created_at: string
@@ -333,7 +370,7 @@ export interface Database {
           name: string
           priority: number | null
           project_id: number
-          status: string
+          status_id: number
           type: string
           user_id: string
         }
@@ -346,7 +383,7 @@ export interface Database {
           name: string
           priority?: number | null
           project_id: number
-          status: string
+          status_id: number
           type?: string
           user_id: string
         }
@@ -359,7 +396,7 @@ export interface Database {
           name?: string
           priority?: number | null
           project_id?: number
-          status?: string
+          status_id?: number
           type?: string
           user_id?: string
         }
@@ -368,6 +405,12 @@ export interface Database {
             foreignKeyName: "tasks_project_id_fkey"
             columns: ["project_id"]
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_status_id_fkey"
+            columns: ["status_id"]
+            referencedRelation: "task_statuses"
             referencedColumns: ["id"]
           },
           {
