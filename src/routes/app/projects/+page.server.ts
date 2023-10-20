@@ -96,6 +96,29 @@ export const actions = {
 		return { message: 'Group successfully created', success: true };
     },
     
+    editGroup: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+        }
+
+		const formData = await request.formData();
+    const name = formData.get('name') as string;
+    const id = formData.get('id') as string;
+
+    const { error } = await supabase
+        .from('project_groups')
+        .update({ name: name })
+        .eq('id', Number(id))
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: error.message, success: false });
+		}
+
+		return { message: 'Group successfully edited', success: true };
+    },
+    
     deleteGroup: async ({ request, locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
@@ -129,12 +152,13 @@ export const actions = {
           const name = formData.get('name') as string;
           const type = formData.get('type') as string;
           const due_date = formData.get('due_date') as string;
+          const statusId = formData.get('status_id') as string;
           const priority = formData.get('priority') as string;
           const description = formData.get('description') as string;
       
           const { error } = await supabase
               .from('tasks')
-              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, due_date: due_date, status_id: 17, priority: Number(priority), description: description });
+              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, due_date: due_date, status_id: Number(statusId), priority: Number(priority), description: description });
 
       if (error) {
         console.log(error);

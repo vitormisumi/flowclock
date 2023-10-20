@@ -56,7 +56,7 @@
 		loading = true;
 		formData.append('project_id', String($selectedProject.id));
 		formData.append('type', type);
-		formData.append('status', String(status));
+		formData.append('status_id', String(status));
 		formData.append('priority', String(priority));
 		if (date) {
 			formData.append('due_date', date.toISOString());
@@ -134,7 +134,7 @@
 		</form>
 	</div>
 {:else}
-	<Button size="xs" class="bg-transparent text-secondary-400" on:click={() => (open = true)}
+	<Button size="xs" class="bg-transparent hover:bg-transparent text-secondary-400" on:click={() => (open = true)}
 		><i class="fa-solid fa-plus pr-2" />add {type}</Button
 	>
 {/if}

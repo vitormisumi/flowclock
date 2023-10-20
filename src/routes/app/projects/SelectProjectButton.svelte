@@ -1,24 +1,21 @@
 <script lang="ts">
 	import { Button, Tooltip, Drawer, Input } from 'flowbite-svelte';
-	import { selectedProject } from './stores';
+	import { selectedProject, selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
+	import { getContext } from 'svelte';
+	import AddProjectButton from './AddProjectButton.svelte';
+	import EditGroupButton from './EditGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import ProjectList from './ProjectList.svelte';
+	import type { Writable } from 'svelte/store';
 
-	let edit = false;
+	const projects: Writable<Project[]> = getContext('projects');
+	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
-	let hidden = true;
+	let hidden = false;
 
 	let open = false;
 
 	let loading = false;
-
-	$: if (hidden) {
-		edit = false;
-		open = false;
-	} else if (open) {
-		edit = false;
-	}
 
 	const handleClick: SubmitFunction = () => {
 		loading = true;
@@ -46,13 +43,22 @@
 >
 	<div class="grid gap-4">
 		<h2 class="text-center font-bold text-primary-50">Projects</h2>
-		<div class="flex justify-end">
-			<Button size="xs" class="bg-transparent" on:click={() => (edit = !edit)}>
-				<i class="fa-solid {edit ? 'fa-x' : 'fa-pen'} w-3" />
-			</Button>
-			<Tooltip>Edit groups</Tooltip>
-		</div>
-		<ProjectList {edit} {hidden}/>
+		{#each $projectGroups as group}
+			<EditGroupButton {group}/>
+			<div class="grid gap-2">
+				{#each $projects.filter((x) => x.group_id === group.id) as project}
+					<Button
+						class={project.id != $selectedProject.id ? 'bg-transparent' : 'bg-primary-800 '}
+						on:click={() => {
+							$selectedProjectId = project.id;
+							hidden = true;
+						}}
+						>{project.name}
+					</Button>
+				{/each}
+				<AddProjectButton {group} />
+			</div>
+		{/each}
 		<hr class="w-full border-secondary-800" />
 		{#if !open}
 			<Button

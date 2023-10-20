@@ -29,7 +29,7 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip>Delete</Tooltip>
+<Tooltip placement="left">Delete group</Tooltip>
 <Modal
 	bind:open
 	outsideclose

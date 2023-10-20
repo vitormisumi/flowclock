@@ -5,6 +5,7 @@
 	import Clock from './Clock.svelte';
 	import Warning from './Warning.svelte';
 	import Screen from './Screen.svelte';
+	import { selectedProject } from './projects/stores';
 
 	export let data;
 
@@ -22,7 +23,7 @@
 			} else {
 				return Object.assign(x, {
 					duration: Date.now() - Date.parse(x.start)
-				})
+				});
 			}
 		})
 	);
@@ -43,7 +44,7 @@
 	$: tasks.set(data.tasks);
 
 	const status = writable();
-	$: status.set(data.status);
+	$: status.set(data.status?.filter((x) => x.project_id === $selectedProject.id));
 
 	setContext('user', data.user);
 	setContext('sessions', sessions);

@@ -41,40 +41,46 @@
 </script>
 
 <section
-	class="flex w-full gap-2 overflow-x-scroll"
-	use:dndzone={{ items: $status, type: 'columns' }}
+	class="flex justify-stretch gap-2 overflow-x-scroll"
+	use:dndzone={{ items: $status, type: 'columns', flipDurationMs: 50 }}
 	on:consider={handleConsiderColumns}
 	on:finalize={handleFinalizeColumns}
 >
-	{#each $status as column (column.id)}
-		<div class="w-full rounded-lg bg-primary-900 p-2" animate:flip>
+	{#each $status as status (status.id)}
+		<div
+			class="relative grid w-32 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-primary-900 p-2"
+			animate:flip
+		>
 			<div
-				class="flex justify-between"
-				on:mouseenter={() => (show = column.id)}
+				class="absolute flex w-full justify-between p-2"
+				on:mouseenter={() => (show = status.id)}
 				on:mouseleave={() => (show = 0)}
 				role="heading"
 				aria-level={3}
 			>
-				<h3>
-					{column.status}
+				<h3 class="font-medium text-primary-100">
+					{status.status}
 				</h3>
-				{#if show === column.id}
-					<DeleteStatusButton id={column.id}/>
+				{#if show === status.id}
+					<DeleteStatusButton {status} />
 				{/if}
 			</div>
 			<div
-				class="flex h-full flex-col justify-start gap-2 rounded-lg"
-				use:dndzone={{ items: column.tasks }}
-				on:consider={(event) => handleConsiderCards(column.id, event)}
-				on:finalize={(event) => handleFinalizeCards(column.id, event)}
+				class="flex flex-col justify-start gap-2 rounded-lg pt-8"
+				use:dndzone={{
+					items: status.tasks,
+					dropTargetStyle: { outline: '#E35402 solid 1px' }
+				}}
+				on:consider={(event) => handleConsiderCards(status.id, event)}
+				on:finalize={(event) => handleFinalizeCards(status.id, event)}
 			>
-				{#each column.tasks as item (item.id)}
+				{#each status.tasks as item (item.id)}
 					<div class="rounded-lg bg-primary-800 p-2 text-primary-50" animate:flip>
 						{item.name}
 					</div>
 				{/each}
 			</div>
-			<AddTaskButton type="task" status={column.id} />
+			<AddTaskButton type="task" status={status.id} />
 		</div>
 	{/each}
 	<AddStatusButton />

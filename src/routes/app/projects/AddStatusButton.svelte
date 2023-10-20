@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { Button } from "flowbite-svelte";
-    import { enhance } from "$app/forms";
-    import { selectedProject } from "./stores";
-    import type { SubmitFunction } from "@sveltejs/kit";
+	import { Button } from 'flowbite-svelte';
+	import { enhance } from '$app/forms';
+	import { selectedProject } from './stores';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let addStatus = false;
 
@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="w-full">
+<div>
 	{#if addStatus}
 		<form
 			class="grid h-full rounded-lg bg-primary-900"
@@ -31,13 +31,17 @@
 				type="text"
 				class="border-none bg-transparent text-primary-50 focus:ring-0"
 			/>
-			<Button type="submit" class="place-self-end self-end bg-accent-500 ring-0" disabled={loading}>Save</Button>
+			<Button type="submit" class="place-self-end self-end bg-accent-500 ring-0" disabled={loading}>
+				Save
+			</Button>
 		</form>
 	{:else}
 		<Button
 			size="xs"
-			class="w-full h-full bg-transparent text-secondary-400 transition-colors hover:bg-primary-900 hover:bg-opacity-50"
-			on:click={() => (addStatus = true)}><i class="fa-solid fa-plus pr-2" />add status</Button
+			class="h-full w-full rounded-r-none bg-transparent text-secondary-400 transition-colors hover:bg-primary-900 hover:bg-opacity-50"
+			on:click={() => (addStatus = true)}
 		>
+			<i class="fa-solid fa-plus pr-2" />add status
+		</Button>
 	{/if}
 </div>

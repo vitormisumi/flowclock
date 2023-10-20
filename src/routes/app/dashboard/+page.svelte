@@ -112,7 +112,7 @@
 			</p>
 		</div>
 	{:else}
-		<div class="flex justify-center pb-4">
+		<div class="flex justify-end pb-4">
 			<Filter />
 		</div>
 		<div class="grid place-items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
