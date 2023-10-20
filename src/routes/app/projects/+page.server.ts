@@ -276,6 +276,29 @@ export const actions = {
       return { message: 'Status successfully added', success: true };
   },
     
+    editStatus: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let status = formData.get('status') as string;
+      let id = formData.get('id') as string;
+          
+      const { error } = await supabase
+        .from('task_statuses')
+        .update({ status: status })
+        .eq('id', id)
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Status successfully edited', success: true };
+  },
+    
     deleteStatus: async ({ request, locals: { supabase, getSession } }) => {
       const session = await getSession();
       if (!session) {

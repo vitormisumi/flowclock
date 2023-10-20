@@ -27,24 +27,32 @@
 	};
 </script>
 
-<Button size="sm" on:click={() => (hidden = false)}
-	>{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}<i
-		class="fa-solid fa-chevron-down pl-2"
-	/></Button
->
+<Button size="sm" on:click={() => (hidden = false)}>
+	{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}
+	<i class="fa-solid fa-chevron-down pl-2" />
+</Button>
 <Tooltip>Select project</Tooltip>
 <Drawer
 	transitionType="fly"
 	transitionParams={{ x: 100 }}
 	placement="right"
-	width="w-52 md:w-60 lg:w-80"
+	width="w-full md:w-80 lg:w-96"
 	class="z-50 bg-primary-900"
 	bind:hidden
 >
 	<div class="grid gap-4">
-		<h2 class="text-center font-bold text-primary-50">Projects</h2>
+		<div class="grid grid-cols-3 place-items-center">
+			<h2 class="col-start-2 text-center font-bold text-primary-50">Projects</h2>
+			<Button
+				size="xs"
+				on:click={() => (hidden = true)}
+				class="col-start-3 w-fit place-self-end bg-transparent md:invisible"
+			>
+				<i class="fa-solid fa-x" />
+			</Button>
+		</div>
 		{#each $projectGroups as group}
-			<EditGroupButton {group}/>
+			<EditGroupButton {group} />
 			<div class="grid gap-2">
 				{#each $projects.filter((x) => x.group_id === group.id) as project}
 					<Button
@@ -58,15 +66,17 @@
 				{/each}
 				<AddProjectButton {group} />
 			</div>
+			<hr class="w-full border-secondary-800" />
 		{/each}
-		<hr class="w-full border-secondary-800" />
 		{#if !open}
 			<Button
 				size="xs"
 				type="submit"
-				class="self-center bg-transparent text-secondary-400 hover:bg-secondary-800 hover:text-secondary-100 focus:ring-0"
-				on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />new group</Button
+				class="self-center bg-transparent text-secondary-400 hover:bg-secondary-800 hover:bg-opacity-50 hover:text-secondary-100 focus:ring-0"
+				on:click={() => (open = true)}
 			>
+				<i class="fa-solid fa-plus pr-2" />new group
+			</Button>
 		{/if}
 		{#if open}
 			<form

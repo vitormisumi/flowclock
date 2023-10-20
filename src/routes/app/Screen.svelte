@@ -4,7 +4,7 @@
 <div
 	class="h-[100dvh] w-screen py-16 md:pb-24 md:pt-20 landscape:pb-0 landscape:pl-16 landscape:pt-12 landscape:md:pl-24 landscape:md:pt-16 landscape:lg:pt-20"
 >
-	<div class="relative h-full w-full overflow-y-scroll p-4 md:p-8 lg:p-12">
+	<div class="relative h-full w-full overflow-y-scroll p-4 pt-0 md:p-8 md:pt-0 lg:p-12 lg:pt-0">
 		<slot name="main" />
 	</div>
 </div>

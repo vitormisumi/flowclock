@@ -2,7 +2,7 @@
 	import { Badge, Button, Card, Tooltip } from 'flowbite-svelte';
 	import { selectedProject } from './stores';
 	import { getContext } from 'svelte';
-	import { fly, slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import DeleteProjectButton from './DeleteProjectButton.svelte';
 	import EditProjectButton from './EditProjectButton.svelte';
 	import type { Writable } from 'svelte/store';
@@ -21,26 +21,27 @@
 </script>
 
 <Card
-	class="grid h-full w-1/3 min-w-full gap-4 border-0 bg-primary-800 text-primary-50"
+	class="grid h-full min-w-full gap-4 border-0 bg-primary-800 text-primary-50"
 	on:mouseenter={() => (show = true)}
 	on:mouseleave={() => (show = false)}
 >
-	<div class="flex h-6 justify-between">
-		<div class="flex gap-2">
+	<div class="flex justify-between h-8">
+		<div class="grid gap-2 md:flex h-fit">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
 			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
-			<Badge class="bg-primary-50"
-				>#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}</Badge
-			>
+			<Badge class="bg-primary-50">
+				#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
+			</Badge>
 		</div>
 		{#if show}
-			<div transition:fly>
+			<div class="grid md:flex" in:fade>
 				<Button
 					size="xs"
 					class="bg-transparent hover:bg-primary-700"
 					on:click={() => (hidden = !hidden)}
-					><i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}"></i></Button
 				>
+					<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
+				</Button>
 				<Tooltip>{hidden ? 'Show card' : 'Hide card'}</Tooltip>
 				<EditProjectButton />
 				<DeleteProjectButton />

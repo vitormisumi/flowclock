@@ -7,6 +7,8 @@
 
 	export let group: ProjectGroup;
 
+	let innerWidth: number;
+
 	let edit: number;
 
 	let showDelete: number;
@@ -25,8 +27,9 @@
 	};
 </script>
 
+<svelte:window bind:innerWidth />
 <div
-	class="flex h-8 w-full items-center justify-center gap-2"
+	class="flex h-8 w-full justify-between"
 	on:mouseenter={() => {
 		if (!edit) {
 			showDelete = group.id;
@@ -35,23 +38,22 @@
 	on:mouseleave={() => (showDelete = 0)}
 	role="group"
 >
-	<hr class="w-full border-secondary-800" />
 	{#if edit === group.id}
-		<form class="flex gap-1" method="POST" action="?/editGroup" use:enhance={handleClick}>
+		<form class="flex h-8 gap-1" method="POST" action="?/editGroup" use:enhance={handleClick}>
 			<input
 				type="text"
 				name="name"
 				placeholder={group.name}
-				class="w-32 rounded-md bg-transparent text-secondary-300 focus:border-primary-700 focus:ring-0"
+				class="w-20 rounded-md bg-transparent pl-2 text-secondary-300 focus:border-primary-700 focus:ring-0 md:w-32 lg:w-40"
 			/>
-			<Button size="xs" on:click={() => (edit = 0)}>
-				Cancel
-			</Button>
-			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600">Save</Button>
+			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
+			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600" disabled={loading}
+				>Save</Button
+			>
 		</form>
 	{:else}
 		<Button
-			class="cursor-text bg-transparent hover:bg-transparent focus:ring-0"
+			class="cursor-text bg-transparent pl-2 hover:bg-transparent focus:ring-0"
 			on:click={() => {
 				edit = group.id;
 				showDelete = 0;
@@ -61,17 +63,14 @@
 				showDelete = 0;
 			}}
 		>
-			<h3 class="whitespace-nowrap text-sm font-bold text-secondary-300">
+			<h3 class="whitespace-nowrap font-bold text-secondary-300">
 				{group.name}
 			</h3>
 		</Button>
 	{/if}
-	<div class="flex w-full items-center">
-		<hr class="w-full border-secondary-800" />
-		{#if showDelete === group.id}
-			<div in:fade>
-				<DeleteGroupButton {group} />
-			</div>
-		{/if}
-	</div>
+	{#if showDelete === group.id || innerWidth <= 1024}
+		<div in:fade>
+			<DeleteGroupButton {group} />
+		</div>
+	{/if}
 </div>

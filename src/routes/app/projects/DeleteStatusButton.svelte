@@ -44,8 +44,10 @@
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
 			type="submit"
-			disabled={loading}>Delete</Button
+			disabled={loading}
 		>
+			Delete
+		</Button>
 		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

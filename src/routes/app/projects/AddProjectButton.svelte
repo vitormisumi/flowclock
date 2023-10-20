@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
-    import type { SubmitFunction } from '@sveltejs/kit';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
 
@@ -26,21 +26,21 @@
 		return { name: x.name, value: x.id };
 	});
 
-    let loading = false;
+	let loading = false;
 
-    const handleClick: SubmitFunction = () => {
-        loading = true;
+	const handleClick: SubmitFunction = () => {
+		loading = true;
 		return async ({ update }) => {
-            loading = false;
+			loading = false;
 			open = false;
 			update();
 		};
 	};
 </script>
 
-<Button size="xs" class="bg-transparent text-secondary-400" on:click={() => (open = true)}
-	><i class="fa-solid fa-plus pr-2" />new project</Button
->
+<Button size="xs" class="bg-transparent text-secondary-400 hover:bg-opacity-50" on:click={() => (open = true)}>
+	<i class="fa-solid fa-plus pr-2" />new project
+</Button>
 <Modal
 	bind:open
 	outsideclose
@@ -48,25 +48,28 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<h2 class="text-lg font-bold text-primary-50">New project</h2>
-	<form class="flex flex-col gap-2 text-left" method="POST" action="?/add" use:enhance={handleClick}>
+	<form
+		class="flex flex-col gap-2 text-left"
+		method="POST"
+		action="?/add"
+		use:enhance={handleClick}
+	>
 		<Input
 			name="name"
 			placeholder="Project name"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 text-xl"
-			required></Input
-		>
+			class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
+			required
+		></Input>
 		<Input
 			name="goal"
 			placeholder="Project goal"
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			></Input
-		>
+		></Input>
 		<Textarea
 			name="description"
 			placeholder="Description"
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-			></Textarea
-		>
+		></Textarea>
 		<Select
 			items={statusOptions}
 			name="status"
