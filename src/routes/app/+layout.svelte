@@ -20,13 +20,14 @@
 				return Object.assign(x, {
 					duration: Date.parse(x.end) - Date.parse(x.start) - interruptionDuration
 				});
-			} else {
+			} else if (x.end) {
 				return Object.assign(x, {
-					duration: Date.now() - Date.parse(x.start)
+					duration: Date.parse(x.end) - Date.parse(x.start)
 				});
 			}
 		})
 	);
+	$: console.log($sessions)
 
 	const interruptions = writable();
 	$: interruptions.set(data.interruptions);

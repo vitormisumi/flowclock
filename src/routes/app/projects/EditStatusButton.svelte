@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
+	import DeleteStatusButton from './DeleteStatusButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let status: TaskStatuses;
+
+	let innerWidth: number;
 
 	let edit: number;
 
@@ -23,8 +26,9 @@
 	};
 </script>
 
+<svelte:window bind:innerWidth />
 <div
-	class="flex w-full"
+	class="flex w-full justify-between"
 	on:mouseenter={() => {
 		if (!edit) {
 			showDelete = status.id;
@@ -39,7 +43,7 @@
 				type="text"
 				name="status"
 				placeholder={status.status}
-				class="w-16 rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0 lg:w-24"
+				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
 			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600" disabled={loading}>
@@ -63,4 +67,7 @@
 			</h3>
 		</Button>
 	{/if}
+    {#if showDelete === status.id || (innerWidth <= 1024 && !edit)}
+        <DeleteStatusButton {status} />
+    {/if}
 </div>

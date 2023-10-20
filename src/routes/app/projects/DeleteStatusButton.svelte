@@ -20,7 +20,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700"
+	class="bg-transparent text-red-700 hover:bg-primary-700 z-10"
 	disabled={loading}
 	on:click={() => (open = true)}
 >

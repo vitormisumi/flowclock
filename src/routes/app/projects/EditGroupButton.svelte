@@ -44,7 +44,7 @@
 				type="text"
 				name="name"
 				placeholder={group.name}
-				class="w-20 rounded-md bg-transparent pl-2 text-secondary-300 focus:border-primary-700 focus:ring-0 md:w-32 lg:w-40"
+				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
 			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600" disabled={loading}

@@ -79,20 +79,22 @@
 			</Button>
 		{/if}
 		{#if open}
-			<form
-				class="flex gap-2 text-left"
-				method="POST"
-				action="?/addGroup"
-				use:enhance={handleClick}
-			>
-				<Input
+			<form class="flex h-8 gap-1" method="POST" action="?/addGroup" use:enhance={handleClick}>
+				<input
+					type="text"
 					name="name"
 					placeholder="Group name"
-					class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500"
-				></Input>
-				<Button size="xs" type="submit" class="bg-accent-500 hover:bg-accent-600" disabled={loading}
-					><i class="fa-solid fa-save pr-2" />Save</Button
+					class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
+				/>
+				<Button size="xs" on:click={() => (open = false)}>Cancel</Button>
+				<Button
+					size="xs"
+					type="submit"
+					class="bg-accent-500 hover:bg-accent-600"
+					disabled={loading}
 				>
+					Save
+				</Button>
 			</form>
 		{/if}
 	</div>
