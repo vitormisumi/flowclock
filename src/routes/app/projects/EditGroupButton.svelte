@@ -25,7 +25,16 @@
 	};
 </script>
 
-<div class="flex h-8 w-full items-center justify-center gap-2">
+<div
+	class="flex h-8 w-full items-center justify-center gap-2"
+	on:mouseenter={() => {
+		if (!edit) {
+			showDelete = group.id;
+		}
+	}}
+	on:mouseleave={() => (showDelete = 0)}
+	role="group"
+>
 	<hr class="w-full border-secondary-800" />
 	{#if edit === group.id}
 		<form class="flex" method="POST" action="?/editGroup" use:enhance={handleClick}>
@@ -48,8 +57,6 @@
 				edit = group.id;
 				showDelete = 0;
 			}}
-			on:mouseenter={() => (showDelete = group.id)}
-			on:mouseleave={() => (showDelete = 0)}
 		>
 			<h3 class="whitespace-nowrap text-sm font-bold text-secondary-300">
 				{group.name}
