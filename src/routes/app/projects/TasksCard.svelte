@@ -18,8 +18,8 @@
 			<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
 				><i class="fa-solid fa-ellipsis-vertical" /></Button
 			>
-			<Dropdown>
-				<DropdownItem>
+			<Dropdown class="p-0">
+				<DropdownItem class="p-0">
 					<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
 				</DropdownItem>
 			</Dropdown>

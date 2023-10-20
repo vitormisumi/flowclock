@@ -262,10 +262,11 @@ export const actions = {
       const formData = await request.formData();
       let status = formData.get('status') as string;
       let projectId = formData.get('project_id') as string;
+      let order = formData.get('order') as string;
           
       const { error } = await supabase
         .from('task_statuses')
-        .insert({ user_id: session.user.id, status: status, project_id: Number(projectId)})
+        .insert({ user_id: session.user.id, status: status, project_id: Number(projectId), order: Number(order)})
 
       if (error) {
         console.log(error);

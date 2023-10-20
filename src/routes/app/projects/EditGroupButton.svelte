@@ -37,13 +37,16 @@
 >
 	<hr class="w-full border-secondary-800" />
 	{#if edit === group.id}
-		<form class="flex" method="POST" action="?/editGroup" use:enhance={handleClick}>
+		<form class="flex gap-1" method="POST" action="?/editGroup" use:enhance={handleClick}>
 			<input
 				type="text"
 				name="name"
 				placeholder={group.name}
 				class="w-32 rounded-md bg-transparent text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
+			<Button size="xs" on:click={() => (edit = 0)}>
+				Cancel
+			</Button>
 			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600">Save</Button>
 		</form>
 	{:else}

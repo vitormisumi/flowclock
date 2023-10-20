@@ -327,6 +327,7 @@ export interface Database {
         Row: {
           created_at: string
           id: number
+          order: number
           project_id: number
           status: string
           user_id: string
@@ -334,6 +335,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: number
+          order: number
           project_id: number
           status: string
           user_id: string
@@ -341,6 +343,7 @@ export interface Database {
         Update: {
           created_at?: string
           id?: number
+          order?: number
           project_id?: number
           status?: string
           user_id?: string

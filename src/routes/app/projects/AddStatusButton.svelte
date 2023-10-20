@@ -2,7 +2,11 @@
 	import { Button } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject } from './stores';
+    import { getContext } from 'svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+    import type { Writable } from 'svelte/store';
+
+    const status: Writable<TaskStatuses[]> = getContext('status');
 
 	let addStatus = false;
 
@@ -10,6 +14,7 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		formData.append('project_id', String($selectedProject.id));
+		formData.append('order', String($status.length + 1));
 		return async ({ update }) => {
 			addStatus = false;
 			loading = false;

@@ -6,17 +6,18 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			throw redirect(303, '/');
 		}
 	
-	const { cardId, event } = await request.json();
+	const event = await request.json();
 
-	if (event.info.trigger === 'droppedIntoZone') {
+	const order = event.event.map((x: any, index: number) => ({ id: x.id, order: index + 1 }));
+
+	for (let i = 0; i < order.length; i++) {
 		const { error } = await supabase
-			.from('tasks')
-			.update({ status_id: cardId })
-			.eq('id', event.info.id)
-		
+			.from('task_statuses')
+			.update({ order: order[i].order })
+			.eq('id', order[i].id)
+
 		if (error) {
 			console.log(error);
-			// return new Response({ message: error.message, success: false });
 		}
 	}
 	

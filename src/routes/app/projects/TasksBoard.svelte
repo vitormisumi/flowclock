@@ -14,8 +14,15 @@
 		$status = event.detail.items;
 	}
 
-	function handleFinalizeColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
+	async function handleFinalizeColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
+		const response = await fetch('/api/status', {
+			method: 'POST',
+			body: JSON.stringify({ event: event.detail.items }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
 	}
 
 	function handleConsiderCards(cardId: number, event: CustomEvent<DndEvent<Task>>) {
@@ -28,7 +35,7 @@
 		const colIdx = $status.findIndex((c) => c.id === cardId);
 		$status[colIdx].tasks = event.detail.items;
 		$status = [...$status];
-		const response = await fetch('/api', {
+		const response = await fetch('/api/tasks', {
 			method: 'POST',
 			body: JSON.stringify({ cardId, event: event.detail }),
 			headers: {
