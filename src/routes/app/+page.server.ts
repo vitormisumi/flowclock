@@ -18,33 +18,14 @@ export const actions = {
 		const formData = await request.formData();
 		const sessionStart = formData.get('session_start') as string;
 		const sessionEnd = formData.get('session_end') as string;
-		const interruptions = formData.get('interruptions') as string;
 		
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from('sessions')
-			.insert({ user_id: session.user.id, start: sessionStart, end: sessionEnd })
-			.select();
+			.insert({ user_id: session.user.id, start: sessionStart, end: sessionEnd });
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
-		} else {
-			const interruptionMapped = JSON.parse(interruptions).map((x: {start: number, end: number, reason: string}) => ({ 
-				...x,
-				start: new Date (x.start).toISOString(),
-				end: new Date (x.end).toISOString(),
-				user_id: session.user.id,
-				session_id: data[0].id
-			}))
-	
-			const { error } = await supabase
-				.from('interruptions')
-				.insert(interruptionMapped)
-	
-			if (error) {
-				console.log(error);
-				return fail(500, { message: 'Session could not be saved', success: false });
-			}
 		}
 
 		if (session) {

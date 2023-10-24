@@ -5,8 +5,6 @@ export const milliseconds = writable(0);
 function createSession() {
 	const { subscribe, set, update } = writable({
 		running: false,
-		start: 0,
-		end: 0,
 		warning: false,
 		dismiss: false,
 		pause: false,
@@ -17,8 +15,6 @@ function createSession() {
 		start: () =>
 			set({
 				running: true,
-				start: Date.now(),
-				end: 0,
 				warning: false,
 				dismiss: false,
 				pause: false,
@@ -28,7 +24,6 @@ function createSession() {
 				return {
 					...x,
 					running: false,
-					end: Date.now(),
 					warning: false
 				};
 			}),
@@ -97,51 +92,51 @@ function createBreak() {
 
 export const sessionBreak = createBreak();
 
-export interface Interruption {
-	start: number;
-	end: number;
-	reason: string;
-}
+// export interface Interruption {
+// 	start: number;
+// 	end: number;
+// 	reason: string;
+// }
 
-function createInterruptions() {
-	const { subscribe, update, set } = writable<Interruption[]>([]);
+// function createInterruptions() {
+// 	const { subscribe, update, set } = writable<Interruption[]>([]);
 
-	return {
-		subscribe,
-		start: () =>
-			update((x) => [...x, { start: Date.now(), end: 0, reason: "" }]),
-		end: (reason: string) =>
-			update((x) => {
-				if (x.length === 0) {
-					return x
-				}
-				const interruptions = [...x];
-				const currentInterruption = interruptions[x.length - 1];
-				interruptions[x.length - 1] = {
-					...currentInterruption,
-					end: Date.now(),
-					reason: reason,
-				};
-				return interruptions;
-			}),
-		reset: () =>
-			set([])
-	};
-}
+// 	return {
+// 		subscribe,
+// 		start: () =>
+// 			update((x) => [...x, { start: Date.now(), end: 0, reason: "" }]),
+// 		end: (reason: string) =>
+// 			update((x) => {
+// 				if (x.length === 0) {
+// 					return x
+// 				}
+// 				const interruptions = [...x];
+// 				const currentInterruption = interruptions[x.length - 1];
+// 				interruptions[x.length - 1] = {
+// 					...currentInterruption,
+// 					end: Date.now(),
+// 					reason: reason,
+// 				};
+// 				return interruptions;
+// 			}),
+// 		reset: () =>
+// 			set([])
+// 	};
+// }
 
-export const interruptions = createInterruptions();
+// export const interruptions = createInterruptions();
 
-export const interruptionLength = derived(
-	interruptions,
-	($interruptions) => {
-		let l: number = 0;
-		for (let i = 0; i < $interruptions.length; i++) {
-			if ($interruptions[i].end === 0) {
-				l += Date.now() - $interruptions[i].start;
-			} else {
-				l += $interruptions[i].end - $interruptions[i].start;
-			}
-		}
-		return l
-	}
-)
+// export const interruptionLength = derived(
+// 	interruptions,
+// 	($interruptions) => {
+// 		let l: number = 0;
+// 		for (let i = 0; i < $interruptions.length; i++) {
+// 			if ($interruptions[i].end === 0) {
+// 				l += Date.now() - $interruptions[i].start;
+// 			} else {
+// 				l += $interruptions[i].end - $interruptions[i].start;
+// 			}
+// 		}
+// 		return l
+// 	}
+// )

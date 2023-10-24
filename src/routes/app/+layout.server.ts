@@ -15,7 +15,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.from('sessions')
 		.select('*')
 		.eq('user_id', session.user.id)
-		.order('id', { ascending: false });
+		.order('start', { ascending: false });
 	
 	const { data: interruptions } = await supabase
 		.from('interruptions')

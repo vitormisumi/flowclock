@@ -1,7 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ request, locals: { supabase, getSession } }) => {
+	start: async ({ request, locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
 			throw redirect(303, '/');
@@ -9,36 +9,87 @@ export const actions = {
 
 		const formData = await request.formData();
 		const sessionStart = formData.get('session_start') as string;
-		const sessionEnd = formData.get('session_end') as string;
-		const interruptions = formData.get('interruptions') as string;
 		
 		const { data, error } = await supabase
 			.from('sessions')
-			.insert({ user_id: session.user.id, start: sessionStart, end: sessionEnd })
+			.insert({ user_id: session.user.id, start: sessionStart })
+			.select()
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: 'Session could not be saved', success: false });
+		} 
+
+		return { message: 'Session started', success: true, data: data };
+	},
+
+	break: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const formData = await request.formData();
+		const id = formData.get('id') as string;
+		const sessionEnd = formData.get('session_end') as string;
+		
+		const { error } = await supabase
+			.from('sessions')
+			.update({ user_id: session.user.id, end: sessionEnd })
+			.eq('id', id)
 			.select();
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
-		} else {
-			const interruptionMapped = JSON.parse(interruptions).map((x: {start: number, end: number, reason: string}) => ({ 
-				...x,
-				start: new Date (x.start).toISOString(),
-				end: new Date (x.end).toISOString(),
-				user_id: session.user.id,
-				session_id: data[0].id
-			}))
-	
-			const { error } = await supabase
-				.from('interruptions')
-				.insert(interruptionMapped)
-	
-			if (error) {
-				console.log(error);
-				return fail(500, { message: 'Session could not be saved', success: false });
-			}
 		}
 
-		return { message: 'Session successfully saved', success: true };
-	}
+		return { message: 'Session ended', success: true };
+	},
+
+	startInterruption: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const formData = await request.formData();
+		const sessionId = formData.get('session_id') as string;
+		
+		const { error } = await supabase
+			.from('interruptions')
+			.insert({ user_id: session.user.id, session_id: Number(sessionId)})
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: 'Interruption could not be saved', success: false });
+		} 
+
+		return { message: 'Interruption started', success: true };
+	},
+
+	endInterruption: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const formData = await request.formData();
+		const id = formData.get('id') as string;
+		const sessionId = formData.get('session_id') as string;
+		const end = formData.get('end') as string;
+		const reason = formData.get('reason') as string;
+		
+		const { error } = await supabase
+			.from('interruptions')
+			.update({ user_id: session.user.id, session_id: Number(sessionId), reason: reason, end: end })
+			.eq('id', id)
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: 'Interruption could not be saved', success: false });
+		} 
+
+		return { message: 'Interruption ended', success: true };
+	},
 };

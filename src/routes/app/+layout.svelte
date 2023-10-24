@@ -10,23 +10,7 @@
 	export let data;
 
 	const sessions = writable();
-	$: sessions.set(
-		data.sessions?.map((x) => {
-			let sessionInterruptions = data.interruptions?.filter((d) => d.session_id === x.id);
-			let interruptionDuration = sessionInterruptions?.reduce((accumulator, object) => {
-				return accumulator + Date.parse(object.end) - Date.parse(object.start);
-			}, 0);
-			if (interruptionDuration && x.end) {
-				return Object.assign(x, {
-					duration: Date.parse(x.end) - Date.parse(x.start) - interruptionDuration
-				});
-			} else if (x.end) {
-				return Object.assign(x, {
-					duration: Date.parse(x.end) - Date.parse(x.start)
-				});
-			}
-		})
-	);
+	$: sessions.set(data.sessions);
 
 	const interruptions = writable();
 	$: interruptions.set(data.interruptions);

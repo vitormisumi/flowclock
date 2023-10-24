@@ -14,6 +14,7 @@ export interface Database {
           created_at: string
           description: string | null
           id: number
+          last_edited: string
           name: string
           project_id: number
           user_id: string | null
@@ -23,6 +24,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: number
+          last_edited?: string
           name: string
           project_id: number
           user_id?: string | null
@@ -32,6 +34,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: number
+          last_edited?: string
           name?: string
           project_id?: number
           user_id?: string | null
@@ -54,25 +57,25 @@ export interface Database {
       }
       interruptions: {
         Row: {
-          end: string
+          end: string | null
           id: number
-          reason: string
+          reason: string | null
           session_id: number
           start: string
           user_id: string
         }
         Insert: {
-          end: string
+          end?: string | null
           id?: number
-          reason: string
+          reason?: string | null
           session_id: number
           start?: string
           user_id: string
         }
         Update: {
-          end?: string
+          end?: string | null
           id?: number
-          reason?: string
+          reason?: string | null
           session_id?: number
           start?: string
           user_id?: string
@@ -234,22 +237,46 @@ export interface Database {
         Row: {
           end: string | null
           id: number
+          intention_id: number | null
+          interruption_duration: number | null
+          last_edited: string
           start: string
+          task_id: number | null
           user_id: string
         }
         Insert: {
           end?: string | null
           id?: number
+          intention_id?: number | null
+          interruption_duration?: number | null
+          last_edited?: string
           start?: string
+          task_id?: number | null
           user_id: string
         }
         Update: {
           end?: string | null
           id?: number
+          intention_id?: number | null
+          interruption_duration?: number | null
+          last_edited?: string
           start?: string
+          task_id?: number | null
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "sessions_intention_id_fkey"
+            columns: ["intention_id"]
+            referencedRelation: "intentions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sessions_task_id_fkey"
+            columns: ["task_id"]
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "sessions_user_id_fkey"
             columns: ["user_id"]

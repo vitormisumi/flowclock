@@ -2,18 +2,14 @@
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
 	import { onMount } from 'svelte';
-	import {
-		session,
-		sessionBreak,
-		interruptionLength,
-		milliseconds,
-		interruptions
-	} from './session/stores';
+	import { session, sessionBreak, milliseconds } from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
 
 	const settings: Writable<Settings> = getContext('settings');
+	const sessions: Writable<UserSession[]> = getContext('sessions');
+	$: console.log($sessions[0])
 
 	let alarm: HTMLAudioElement;
 	let warning: HTMLAudioElement;
@@ -21,14 +17,13 @@
 	onMount(() => {
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
-				$milliseconds = Date.now() - $session.start - $interruptionLength;
+				$milliseconds = Date.now() - Date.parse($sessions[0].start) - ($sessions[0].interruption_duration ?? 0);
 			} else if ($sessionBreak.running) {
-				if ($milliseconds > 1000) {
-					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
+				if ($milliseconds > 1000 && $sessions[0].end) {
+					$milliseconds = $sessionBreak.duration - (Date.now() - Date.parse($sessions[0].end));
 				} else if (!$sessionBreak.alarmPlayed) {
 					alarm.play();
 					sessionBreak.alarm();
-					interruptions.reset();
 					$milliseconds = 0;
 				}
 			}
