@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { Card, Popover } from 'flowbite-svelte';
+	import IntentionsTable from './IntentionsTable.svelte';
+	import AddIntentionButton from './AddIntentionButton.svelte';
 </script>
 
 <Card class="h-full min-w-full border-0 bg-primary-800">
@@ -16,4 +18,6 @@
 			lifelong pursuits like learning a new language or mastering a musical instrument.
 		</div>
 	</Popover>
+	<IntentionsTable />
+	<AddIntentionButton />
 </Card>

@@ -3,7 +3,6 @@
 	import { selectedProject } from './stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
-	import type { ProjectGroup } from '../types';
 	import { getContext } from 'svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 

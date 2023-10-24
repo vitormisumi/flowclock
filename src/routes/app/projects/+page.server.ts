@@ -385,5 +385,74 @@ export const actions = {
       return { message: 'Status successfully deleted', success: true };
   },
     
+    addIntention: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let projectId = formData.get('project_id') as string;
+      let name = formData.get('name') as string;
+      let description = formData.get('description') as string;
+      let goal = formData.get('goal') as string;
+          
+      const { error } = await supabase
+        .from('intentions')
+        .insert({ user_id: session.user.id, name: name, description: description, weekly_hours_goal: Number(goal), project_id: Number(projectId)})
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Intention successfully added', success: true };
+  },
     
+    editIntention: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let name = formData.get('name') as string;
+      let description = formData.get('description') as string;
+      let goal = formData.get('goal') as string;
+      let id = formData.get('id') as string;
+          
+      const { error } = await supabase
+        .from('intentions')
+        .update({ name: name, description: description, weekly_hours_goal: Number(goal) })
+        .eq('id', id)
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Intention successfully edited', success: true };
+  },
+    
+    deleteIntention: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+      let id = formData.get('id') as string;
+          
+      const { error } = await supabase
+        .from('intentions')
+        .delete()
+        .eq('id', Number(id))
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'Intention successfully deleted', success: true };
+  },
 };

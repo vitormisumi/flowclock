@@ -46,6 +46,9 @@
 	const toDos = writable();
 	$: toDos.set(data.toDos);
 
+	const intentions = writable();
+	$: intentions.set(data.intentions);
+
 	const status = writable();
 	$: status.set(data.status?.filter((x) => x.project_id === $selectedProject.id));
 
@@ -57,6 +60,7 @@
 	setContext('projectGroups', projectGroups);
 	setContext('tasks', tasks);
 	setContext('toDos', toDos);
+	setContext('intentions', intentions);
 	setContext('status', status);
 </script>
 

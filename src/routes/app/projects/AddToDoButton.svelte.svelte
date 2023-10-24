@@ -77,6 +77,7 @@
 		>
 			<Input
 				name="name"
+				placeholder="To-Do"
 				class="border-0 bg-transparent text-lg text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
 				required
 			></Input>

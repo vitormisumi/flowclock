@@ -8,6 +8,7 @@
 	import EditStatusButton from './EditStatusButton.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
+	import StartTaskButton from './StartTaskButton.svelte';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -72,7 +73,7 @@
 >
 	{#each $status as status (status.id)}
 		<div
-			class="relative grid max-h-96 w-52 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-transparent border-2 border-primary-900 p-2 md:w-60"
+			class="relative grid max-h-96 w-52 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-primary-900 p-2 md:w-60"
 			animate:flip
 		>
 			<div class="absolute flex h-12 w-full justify-between p-2">
@@ -89,8 +90,12 @@
 				on:finalize={(event) => handleFinalizeCards(status.id, event)}
 			>
 				{#each status.tasks as item (item.id)}
-					<div class="w-full rounded-lg bg-primary-900 p-2 text-primary-50 shadow-md" animate:flip>
-						{item.name}
+					<div
+						class="flex w-full justify-between rounded-lg bg-primary-800 p-2 text-primary-50"
+						animate:flip
+					>
+						<p>{item.name}</p>
+						<StartTaskButton />
 					</div>
 				{/each}
 			</div>

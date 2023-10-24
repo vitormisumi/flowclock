@@ -4,7 +4,6 @@
 	import { filteredSessions } from './stores';
 	import TimeFramePlot from './TimeFramePlot.svelte';
 	import type { Writable } from 'svelte/store';
-	import type { Settings } from '../types';
 	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
