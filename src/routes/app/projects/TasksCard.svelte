@@ -1,30 +1,24 @@
 <script lang="ts">
-	import { Button, Card, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import AddToDoButton from './AddToDoButton.svelte.svelte';
+	import { Card, Popover } from 'flowbite-svelte';
 	import TasksBoard from './TasksBoard.svelte';
-	import ToDosTable from './ToDosTable.svelte';
-
-	let show = false;
 </script>
 
 <Card class="h-full min-w-full gap-8 border-0 bg-primary-800">
 	<div>
-		<p class="font-bold text-primary-50">Tasks</p>
-		<TasksBoard />
-	</div>
-	<div class="grid">
-		<div class="flex justify-between">
-			<p class="font-bold text-primary-50">To-Dos</p>
-			<Button size="xs" class="bg-primary-800 hover:bg-primary-700">
-				<i class="fa-solid fa-ellipsis-vertical" />
-			</Button>
-			<Dropdown class="p-0">
-				<DropdownItem class="p-0 hover:bg-transparent">
-					<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
-				</DropdownItem>
-			</Dropdown>
+		<div class="flex items-center">
+			<h2 class="pr-1 font-bold text-primary-50">Tasks</h2>
+			<i class="fa-regular fa-circle-question right-0 top-0 text-primary-50" id="hover-2" />
+			<Popover triggeredBy="#hover-2" class="z-10 w-60 md:w-80" placement="bottom-start">
+				<div class="p-2 text-sm">
+					<h3 class="font-semibold text-secondary-900">Extended Assignments</h3>
+					Tasks are the ideal choice for assignments that require a substantial time commitment and might
+					involve multiple stages of completion. You can think of tasks as your go-to for managing projects
+					that span an extended period, like preparing a comprehensive research report or organizing
+					a major event. Tasks can be linked to sessions to conveniently track the time you spend on each
+					one, helping you stay organized and efficient in managing your workload.
+				</div>
+			</Popover>
 		</div>
-		<ToDosTable {show} />
-		<AddToDoButton />
+		<TasksBoard />
 	</div>
 </Card>

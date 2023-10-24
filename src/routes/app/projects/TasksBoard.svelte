@@ -11,12 +11,15 @@
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
+	let loading = false;
+
 	function handleConsiderColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
 	}
 
 	async function handleFinalizeColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
+		loading = true;
 		const response = await fetch('/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ event: event.detail.items }),
@@ -24,6 +27,9 @@
 				'content-type': 'application/json'
 			}
 		});
+		if (response) {
+			loading = false;
+		}
 		invalidateAll();
 	}
 
@@ -37,6 +43,7 @@
 		const colIdx = $status.findIndex((c) => c.id === cardId);
 		$status[colIdx].tasks = event.detail.items;
 		$status = [...$status];
+		loading = true;
 		const response = await fetch('/api/tasks', {
 			method: 'POST',
 			body: JSON.stringify({ cardId, event: event.detail }),
@@ -44,6 +51,9 @@
 				'content-type': 'application/json'
 			}
 		});
+		if (response) {
+			loading = false;
+		}
 		invalidateAll();
 	}
 </script>
@@ -54,14 +64,15 @@
 		items: $status,
 		type: 'columns',
 		flipDurationMs: 50,
-		dropTargetStyle: { outline: '#E35402 solid 1px' }
+		dropTargetStyle: { outline: '#E35402 solid 1px' },
+		dragDisabled: loading
 	}}
 	on:consider={handleConsiderColumns}
 	on:finalize={handleFinalizeColumns}
 >
 	{#each $status as status (status.id)}
 		<div
-			class="relative grid max-h-96 w-52 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-primary-900 p-2 md:w-60"
+			class="relative grid max-h-96 w-52 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-transparent border-2 border-primary-900 p-2 md:w-60"
 			animate:flip
 		>
 			<div class="absolute flex h-12 w-full justify-between p-2">
@@ -71,13 +82,14 @@
 				class="grid w-full gap-2 rounded-lg pt-10"
 				use:dndzone={{
 					items: status.tasks,
-					dropTargetStyle: { outline: '#E35402 solid 1px' }
+					dropTargetStyle: { outline: '#E35402 solid 1px' },
+					dragDisabled: loading
 				}}
 				on:consider={(event) => handleConsiderCards(status.id, event)}
 				on:finalize={(event) => handleFinalizeCards(status.id, event)}
 			>
 				{#each status.tasks as item (item.id)}
-					<div class="w-full rounded-lg bg-primary-800 p-2 text-primary-50" animate:flip>
+					<div class="w-full rounded-lg bg-primary-900 p-2 text-primary-50 shadow-md" animate:flip>
 						{item.name}
 					</div>
 				{/each}

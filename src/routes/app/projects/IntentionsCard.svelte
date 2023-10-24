@@ -1,7 +1,19 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
+	import { Card, Popover } from 'flowbite-svelte';
 </script>
 
 <Card class="h-full min-w-full border-0 bg-primary-800">
-	<h2>Intentions</h2>
+	<div class="flex items-center">
+		<h2 class="pr-1 font-bold text-primary-50">Intentions</h2>
+		<i class="fa-regular fa-circle-question text-primary-50" id="hover-3" />
+	</div>
+	<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
+		<div class="p-2 text-sm">
+			<h3 class="font-semibold text-secondary-900">Lifetime Goals</h3>
+			Intentions are your tool for continuous self-improvement and long-term objectives. Just like Tasks,
+			you can track the time you invest in each Intention, helping you measure your progress over time,
+			but what sets them apart is that Intentions don't have a specific due date. They're perfect for
+			lifelong pursuits like learning a new language or mastering a musical instrument.
+		</div>
+	</Popover>
 </Card>
