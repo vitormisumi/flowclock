@@ -98,7 +98,7 @@
 							{millisecondsToClock(session.duration)}
 						</div>
 						{#if edit === i}
-							<div class="absolute right-1 top-1" transition:fade>
+							<div class="absolute right-1 top-1" in:fade>
 								<DeleteSession {session} />
 							</div>
 						{/if}

@@ -6,4 +6,4 @@
 <Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => session.start()}>
 	<i class="fa-solid fa-clock text-primary-50" />
 </Button>
-<Tooltip placement="left">Start task</Tooltip>
+<Tooltip placement="left">Start task session</Tooltip>

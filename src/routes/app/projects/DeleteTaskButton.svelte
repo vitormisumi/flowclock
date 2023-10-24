@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-    export let task: Task;
+	export let task: Task;
 
 	let open = false;
 
@@ -14,7 +14,7 @@
 		formData.append('id', String(task.id));
 		return async ({ update }) => {
 			loading = false;
-            open = false;
+			open = false;
 			update();
 		};
 	};
@@ -23,8 +23,10 @@
 <Button
 	size="xs"
 	class="bg-transparent text-red-700 hover:bg-primary-700"
-	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
+	on:click={() => (open = true)}
 >
+	<i class="fa-solid fa-trash" />
+</Button>
 <Tooltip placement="left">Delete task</Tooltip>
 <Modal
 	bind:open

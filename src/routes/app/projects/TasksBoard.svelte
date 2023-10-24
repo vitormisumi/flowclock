@@ -6,13 +6,16 @@
 	import AddTaskButton from './AddTaskButton.svelte';
 	import AddStatusButton from './AddStatusButton.svelte';
 	import EditStatusButton from './EditStatusButton.svelte';
+	import StartTaskButton from './StartTaskButton.svelte';
+	import EditTaskButton from './EditTaskButton.svelte';
+	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
-	import StartTaskButton from './StartTaskButton.svelte';
+	import { fade } from 'svelte/transition';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
-	let loading = false;
+	let hover = false;
 
 	function handleConsiderColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
@@ -20,7 +23,6 @@
 
 	async function handleFinalizeColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
-		loading = true;
 		const response = await fetch('/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ event: event.detail.items }),
@@ -28,9 +30,6 @@
 				'content-type': 'application/json'
 			}
 		});
-		if (response) {
-			loading = false;
-		}
 		invalidateAll();
 	}
 
@@ -44,7 +43,6 @@
 		const colIdx = $status.findIndex((c) => c.id === cardId);
 		$status[colIdx].tasks = event.detail.items;
 		$status = [...$status];
-		loading = true;
 		const response = await fetch('/api/tasks', {
 			method: 'POST',
 			body: JSON.stringify({ cardId, event: event.detail }),
@@ -52,9 +50,6 @@
 				'content-type': 'application/json'
 			}
 		});
-		if (response) {
-			loading = false;
-		}
 		invalidateAll();
 	}
 </script>
@@ -65,8 +60,7 @@
 		items: $status,
 		type: 'columns',
 		flipDurationMs: 50,
-		dropTargetStyle: { outline: '#E35402 solid 1px' },
-		dragDisabled: loading
+		dropTargetStyle: { outline: '#E35402 solid 1px' }
 	}}
 	on:consider={handleConsiderColumns}
 	on:finalize={handleFinalizeColumns}
@@ -83,19 +77,28 @@
 				class="grid w-full gap-2 rounded-lg pt-10"
 				use:dndzone={{
 					items: status.tasks,
-					dropTargetStyle: { outline: '#E35402 solid 1px' },
-					dragDisabled: loading
+					dropTargetStyle: { outline: '#E35402 solid 1px' }
 				}}
 				on:consider={(event) => handleConsiderCards(status.id, event)}
 				on:finalize={(event) => handleFinalizeCards(status.id, event)}
 			>
-				{#each status.tasks as item (item.id)}
+				{#each status.tasks as task (task.id)}
 					<div
-						class="flex w-full justify-between rounded-lg bg-primary-800 p-2 text-primary-50"
+						class="flex h-10 w-full items-center justify-between rounded-lg bg-primary-800 p-2 text-primary-50"
+						on:mouseenter={() => (hover = true)}
+						on:mouseleave={() => (hover = false)}
 						animate:flip
+						role="cell"
+						tabindex="0"
 					>
-						<p>{item.name}</p>
-						<StartTaskButton />
+						<p>{task.name}</p>
+						{#if hover}
+							<div class="flex p-0" in:fade>
+								<StartTaskButton />
+								<EditTaskButton {task} />
+								<DeleteTaskButton {task} />
+							</div>
+						{/if}
 					</div>
 				{/each}
 			</div>

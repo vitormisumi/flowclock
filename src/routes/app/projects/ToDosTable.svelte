@@ -64,7 +64,7 @@
 								</p>
 							</div>
 							{#if openEdit === i}
-								<div transition:fade class="flex">
+								<div in:fade class="flex">
 									<EditToDoButton {toDo} />
 									<DeleteToDoButton {toDo} />
 								</div>

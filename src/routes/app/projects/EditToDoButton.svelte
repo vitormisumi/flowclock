@@ -86,7 +86,7 @@
 <Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => (open = true)}
 	><i class="fa-solid fa-pen text-primary-50" /></Button
 >
-<Tooltip placement="left">Edit task</Tooltip>
+<Tooltip placement="left">Edit to-do</Tooltip>
 <Modal
 	bind:open
 	outsideclose

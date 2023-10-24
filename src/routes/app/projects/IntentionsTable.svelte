@@ -53,7 +53,7 @@
 								</p>
 							</div>
 							{#if openEdit === i}
-								<div transition:fade class="flex">
+								<div in:fade class="flex">
 									<EditIntentionButton {intention} />
 									<DeleteIntentionButton {intention} />
 								</div>

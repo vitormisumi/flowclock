@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
+	import { fade } from 'svelte/transition';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -68,6 +69,8 @@
 		</Button>
 	{/if}
     {#if showDelete === status.id || (innerWidth <= 1024 && !edit)}
-        <DeleteStatusButton {status} />
+        <div in:fade>
+            <DeleteStatusButton {status} />
+        </div>
     {/if}
 </div>
