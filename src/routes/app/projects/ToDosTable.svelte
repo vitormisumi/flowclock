@@ -3,12 +3,12 @@
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
 	import { fade, slide } from 'svelte/transition';
-	import DeleteTaskButton from './DeleteTaskButton.svelte';
-	import EditTaskButton from './EditTaskButton.svelte';
+	import EditToDoButton from './EditToDoButton.svelte';
+	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteTaskButton from './CompleteTaskButton.svelte';
 	import type { Writable } from 'svelte/store';
 
-	const tasks: Writable<Task[]> = getContext('tasks');
+	const toDos: Writable<ToDo[]> = getContext('toDos');
 
 	export let show: boolean;
 
@@ -38,8 +38,8 @@
 
 <Table hoverable shadow>
 	<TableBody>
-		{#each $tasks as task, i}
-			{#if task.project_id === $selectedProject.id && task.type === 'to-do' && (task.status_id != 19 || show === true)}
+		{#each $toDos as toDo, i}
+			{#if toDo.project_id === $selectedProject.id && (toDo.done ===false || show === true)}
 				<TableBodyRow
 					class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
 				>
@@ -51,7 +51,7 @@
 							role="row"
 							tabindex={i}
 						>
-							<CompleteTaskButton id={task.id} status={task.status_id} />
+							<CompleteTaskButton id={toDo.id} status={toDo.done} />
 							<div
 								on:click={() => toggleRow(i)}
 								on:keydown={() => toggleRow(i)}
@@ -59,14 +59,14 @@
 								tabindex={i}
 								class="w-full"
 							>
-								<p class="{task.status_id === 19 ? 'line-through' : 'no-underline'} pl-2">
-									{task.name}
+								<p class="{toDo.done === true ? 'line-through' : 'no-underline'} pl-2">
+									{toDo.name}
 								</p>
 							</div>
 							{#if openEdit === i}
 								<div transition:fade class="flex">
-									<EditTaskButton {task} />
-									<DeleteTaskButton {task} />
+									<EditToDoButton {toDo} />
+									<DeleteToDoButton {toDo} />
 								</div>
 							{/if}
 						</div>
@@ -77,19 +77,19 @@
 				<TableBodyRow class="border-primary-800">
 					<TableBodyCell colspan="3" class="bg-primary-900 p-0">
 						<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-							{#if task.description}
+							{#if toDo.description}
 								<p class="whitespace-normal text-primary-100">
-									{task.description}
+									{toDo.description}
 								</p>
 							{/if}
-							{#if task.due_date}
+							{#if toDo.due_date}
 								<p class="text-primary-100">
-									<i class="fa-solid fa-calendar pr-2" />{task.due_date}
+									<i class="fa-solid fa-calendar pr-2" />{toDo.due_date}
 								</p>
 							{/if}
-							{#if task.priority}
+							{#if toDo.priority}
 								<p class="text-primary-100">
-									<i class="fa-solid fa-flag pr-2" />{priorityOptions[task.priority]}
+									<i class="fa-solid fa-flag pr-2" />{priorityOptions[toDo.priority]}
 								</p>
 							{/if}
 						</div>

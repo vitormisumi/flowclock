@@ -3,15 +3,15 @@
 	import { Button } from 'flowbite-svelte';
 
 	export let id: number;
-	export let status: number;
+	export let status: boolean;
 </script>
 
 <form
 	method="POST"
-	action="?/completeTask"
+	action="?/completeToDo"
 	use:enhance={({ formData }) => {
 		formData.append('id', String(id));
-		formData.append('status_id', String(status));
+		formData.append('done', String(status));
 	}}
 >
 	<Button

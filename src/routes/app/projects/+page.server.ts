@@ -150,7 +150,6 @@ export const actions = {
       const formData = await request.formData();
           const project_id = formData.get('project_id') as string;
           const name = formData.get('name') as string;
-          const type = formData.get('type') as string;
           const due_date = formData.get('due_date') as string;
           const statusId = formData.get('status_id') as string;
           const priority = formData.get('priority') as string;
@@ -158,18 +157,14 @@ export const actions = {
       
           const { error } = await supabase
               .from('tasks')
-              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, type: type, due_date: due_date, status_id: Number(statusId), priority: Number(priority), description: description });
+              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, status_id: Number(statusId), priority: Number(priority), description: description });
 
       if (error) {
         console.log(error);
         return fail(500, { message: error.message, success: false });
       }
-
-      let message = 'Task successfully created'
-      if (type === 'to-do') {
-        message = 'To-Do successfully created'
-      } 
-      return { message: message, success: true };
+      
+      return { message: 'Task succesfully created', success: true };
     },
 
     editTask: async ({ request, locals: { supabase, getSession } }) => {
@@ -221,7 +216,81 @@ export const actions = {
       return { message: 'Task successfully deleted', success: true };
   },
 
-    completeTask: async ({ request, locals: { supabase, getSession } }) => {
+    addToDo: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+          const project_id = formData.get('project_id') as string;
+          const name = formData.get('name') as string;
+          const due_date = formData.get('due_date') as string;
+          const priority = formData.get('priority') as string;
+          const description = formData.get('description') as string;
+      
+          const { error } = await supabase
+              .from('to_dos')
+              .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, done: false, priority: Number(priority), description: description });
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'To-Do succesfully created', success: true };
+    },
+
+    editToDo: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+          const id = formData.get('id') as string;
+          const project_id = formData.get('project_id') as string;
+          const name = formData.get('name') as string;
+          const priority = formData.get('priority') as string;
+          const due_date = formData.get('due_date') as string;
+          const description = formData.get('description') as string;
+      
+          const { error } = await supabase
+              .from('to_dos')
+              .update({ user_id: session.user.id, project_id: Number(project_id), name: name, description: description, priority: Number(priority), due_date: due_date })
+              .eq('id', id );
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'To-Do successfully edited', success: true };
+    },
+
+    deleteToDo: async ({ request, locals: { supabase, getSession } }) => {
+      const session = await getSession();
+      if (!session) {
+        throw redirect(303, '/');
+          }
+
+      const formData = await request.formData();
+          const id = formData.get('id') as string;
+      
+          const { error } = await supabase
+              .from('to_dos')
+              .delete()
+              .eq('id', id );
+
+      if (error) {
+        console.log(error);
+        return fail(500, { message: error.message, success: false });
+      }
+
+      return { message: 'To-Do successfully deleted', success: true };
+  },
+
+    completeToDo: async ({ request, locals: { supabase, getSession } }) => {
       const session = await getSession();
       if (!session) {
         throw redirect(303, '/');
@@ -229,16 +298,11 @@ export const actions = {
 
       const formData = await request.formData();
       const id = formData.get('id') as string;
-      let status = formData.get('status') as string;
-      if (status === 'done') {
-        status = 'planned'
-      } else {
-        status = 'done'
-      }
+      let done = formData.get('done') as string === 'true';
           
       const { error } = await supabase
-        .from('tasks')
-        .update({ status_id: 19 })
+        .from('to_dos')
+        .update({ done: !done })
         .eq('id', id)
 
       if (error) {
@@ -246,10 +310,10 @@ export const actions = {
         return fail(500, { message: error.message, success: false });
       }
 
-      if (status === 'done') {
-        return { message: 'Task successfully completed', success: true };
+      if (done) {
+        return { message: 'To-Do successfully undone', success: true };
       } else {
-        return { message: 'Task successfully undone', success: true };
+        return { message: 'To-Do successfully completed', success: true };
       }
   },
     

@@ -82,7 +82,7 @@
 					</div>
 				{/each}
 			</div>
-			<AddTaskButton type="task" status={status.id} />
+			<AddTaskButton status={status.id} />
 		</div>
 	{/each}
 	<AddStatusButton />

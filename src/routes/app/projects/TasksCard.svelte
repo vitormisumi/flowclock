@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import AddTaskButton from './AddTaskButton.svelte';
+	import AddToDoButton from './AddToDoButton.svelte.svelte';
 	import TasksBoard from './TasksBoard.svelte';
 	import ToDosTable from './ToDosTable.svelte';
 
@@ -15,16 +15,16 @@
 	<div class="grid">
 		<div class="flex justify-between">
 			<p class="font-bold text-primary-50">To-Dos</p>
-			<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
-				><i class="fa-solid fa-ellipsis-vertical" /></Button
-			>
+			<Button size="xs" class="bg-primary-800 hover:bg-primary-700">
+				<i class="fa-solid fa-ellipsis-vertical" />
+			</Button>
 			<Dropdown class="p-0">
-				<DropdownItem class="p-0">
+				<DropdownItem class="p-0 hover:bg-transparent">
 					<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
 				</DropdownItem>
 			</Dropdown>
 		</div>
 		<ToDosTable {show} />
-		<AddTaskButton type="to-do" status={19} />
+		<AddToDoButton />
 	</div>
 </Card>

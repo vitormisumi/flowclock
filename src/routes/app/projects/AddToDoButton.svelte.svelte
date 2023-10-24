@@ -9,8 +9,6 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
 
-	export let status: number;
-
 	const settings: Writable<Settings> = getContext('settings');
 
 	let date: Date;
@@ -54,7 +52,6 @@
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
 		formData.append('project_id', String($selectedProject.id));
-		formData.append('status_id', String(status));
 		formData.append('priority', String(priority));
 		if (date) {
 			formData.append('due_date', date.toISOString());
@@ -75,7 +72,7 @@
 		<form
 			class="flex flex-col gap-1 text-left"
 			method="POST"
-			action="?/addTask"
+			action="?/addToDo"
 			use:enhance={handleClick}
 		>
 			<Input
@@ -124,7 +121,7 @@
 						class="bg-accent-500 hover:bg-accent-600"
 						disabled={loading}
 					>
-						Add Task
+						Add To-Do
 					</Button>
 				</div>
 			</div>
@@ -132,7 +129,7 @@
 	</div>
 {:else}
 	<Button size="xs" class="bg-transparent hover:bg-transparent text-secondary-400" on:click={() => (open = true)}
-		><i class="fa-solid fa-plus pr-2" />add task</Button
+		><i class="fa-solid fa-plus pr-2" />add to-do</Button
 	>
 {/if}
 

@@ -27,7 +27,6 @@
 			}
 		})
 	);
-	$: console.log($sessions)
 
 	const interruptions = writable();
 	$: interruptions.set(data.interruptions);
@@ -44,6 +43,9 @@
 	const tasks = writable();
 	$: tasks.set(data.tasks);
 
+	const toDos = writable();
+	$: toDos.set(data.toDos);
+
 	const status = writable();
 	$: status.set(data.status?.filter((x) => x.project_id === $selectedProject.id));
 
@@ -54,6 +56,7 @@
 	setContext('projects', projects);
 	setContext('projectGroups', projectGroups);
 	setContext('tasks', tasks);
+	setContext('toDos', toDos);
 	setContext('status', status);
 </script>
 

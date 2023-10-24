@@ -17,6 +17,7 @@ declare global {
 		duration: number;
 	};
 	type Task = Database['public']['Tables']['tasks']['Row'];
+	type ToDo = Database['public']['Tables']['to_dos']['Row'];
 	type Interruption = Database['public']['Tables']['interruptions']['Row'];
 	type Project = Database['public']['Tables']['projects']['Row'];
 	type Project = Database['public']['Tables']['projects']['Row'];

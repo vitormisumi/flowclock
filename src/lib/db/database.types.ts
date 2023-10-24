@@ -374,7 +374,6 @@ export interface Database {
           priority: number | null
           project_id: number
           status_id: number
-          type: string
           user_id: string
         }
         Insert: {
@@ -387,7 +386,6 @@ export interface Database {
           priority?: number | null
           project_id: number
           status_id: number
-          type?: string
           user_id: string
         }
         Update: {
@@ -400,7 +398,6 @@ export interface Database {
           priority?: number | null
           project_id?: number
           status_id?: number
-          type?: string
           user_id?: string
         }
         Relationships: [
@@ -418,6 +415,58 @@ export interface Database {
           },
           {
             foreignKeyName: "tasks_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      to_dos: {
+        Row: {
+          created_at: string
+          description: string | null
+          done: boolean
+          due_date: string | null
+          id: number
+          last_edited: string
+          name: string
+          priority: number | null
+          project_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          done?: boolean
+          due_date?: string | null
+          id?: number
+          last_edited?: string
+          name: string
+          priority?: number | null
+          project_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          done?: boolean
+          due_date?: string | null
+          id?: number
+          last_edited?: string
+          name?: string
+          priority?: number | null
+          project_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "to_dos_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "to_dos_user_id_fkey"
             columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
