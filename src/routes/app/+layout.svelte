@@ -52,10 +52,10 @@
 	$page.data.supabase
 		.channel('sessions-channel')
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload: any) => {
-			console.log(payload);
 			if (payload.eventType === 'INSERT' && !payload.new.end) {
 				session.start(Date.parse(payload.new.start));
-			} else if (payload.eventType === 'UPDATE' && payload.new.id === session.id) {
+			} else if (payload.eventType === 'UPDATE' && payload.new.id === $session.id) {
+				console.log('break');
 				session.end(Date.parse(payload.new.end));
 			}
 		})
