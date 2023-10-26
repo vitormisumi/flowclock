@@ -8,7 +8,6 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 	const sessions: Writable<UserSession[]> = getContext('sessions');
-	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
 	let loading = false;
 
@@ -16,7 +15,7 @@
 		loading = true;
 		sessionBreak.end();
 		session.start();
-		formData.append('session_start', new Date().toISOString());
+		formData.append('start', new Date().toISOString());
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -26,13 +25,11 @@
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
 		session.end();
-		let duration = Math.round((Date.now() - $session.start - $interruptionLength) / $settings.ratio);
-		console.log(duration);
+		const duration = Math.round((Date.now() - $session.start - $interruptionLength) / $settings.ratio);
 		sessionBreak.start(duration);
 		formData.append('id', String($sessions[0].id));
+		formData.append('end', new Date().toISOString());
 		formData.append('length', String(duration));
-		formData.append('session_end', new Date().toISOString());
-		formData.append('interruptions', JSON.stringify($interruptions));
 		return async ({ update }) => {
 			loading = false;
 			update();

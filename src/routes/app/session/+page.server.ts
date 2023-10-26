@@ -8,12 +8,13 @@ export const actions = {
 		}
 
 		const formData = await request.formData();
-		const sessionStart = formData.get('session_start') as string;
+		const start = formData.get('start') as string;
 		
 		const { data, error } = await supabase
 			.from('sessions')
-			.insert({ user_id: session.user.id, start: sessionStart })
+			.insert({ user_id: session.user.id, start: start })
 			.select()
+			.single()
 
 		if (error) {
 			console.log(error);
@@ -32,13 +33,12 @@ export const actions = {
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
 		const length = formData.get('length') as string;
-		const sessionEnd = formData.get('session_end') as string;
+		const end = formData.get('end') as string;
 		
 		const { error: sessionError } = await supabase
 			.from('sessions')
-			.update({ user_id: session.user.id, end: sessionEnd })
-			.eq('id', id)
-			.select();
+			.update({ end: end })
+			.eq('id', id);
 
 		if (sessionError) {
 			console.log(sessionError);
@@ -86,13 +86,12 @@ export const actions = {
 
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
-		const sessionId = formData.get('session_id') as string;
 		const end = formData.get('end') as string;
 		const reason = formData.get('reason') as string;
 		
 		const { error } = await supabase
 			.from('interruptions')
-			.update({ user_id: session.user.id, session_id: Number(sessionId), reason: reason, end: end })
+			.update({ reason: reason, end: end })
 			.eq('id', id)
 
 		if (error) {

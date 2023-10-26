@@ -1,10 +1,10 @@
 import { writable, derived } from 'svelte/store';
-import { supabase } from '../../../supabase';
 
 export const milliseconds = writable(0);
 
 function createSession() {
 	const { subscribe, set, update } = writable({
+		id: 0,
 		running: false,
 		start: 0,
 		end: 0,
@@ -17,6 +17,7 @@ function createSession() {
 		subscribe,
 		start: (start: number = Date.now()) =>
 			set({
+				id: 0,
 				running: true,
 				start: start,
 				end: 0,
@@ -24,12 +25,12 @@ function createSession() {
 				dismiss: false,
 				pause: false,
 			}),
-		end: () =>
+		end: (end: number = Date.now()) =>
 			update((x) => {
 				return {
 					...x,
 					running: false,
-					end: Date.now(),
+					end: end,
 					warning: false
 				};
 			}),
@@ -61,20 +62,17 @@ function createSession() {
 					pause: false
 				}
 			}),
+		id: (id: number) =>
+			update((x) => {
+				return {
+					...x,
+					id: id
+				}
+			}),
 	};
 }
 
 export const session = createSession();
-
-const realtime = supabase
-	.channel('sessions-channel')
-	.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload) => {
-		console.log(payload);
-		if (payload.eventType === 'INSERT') {
-			session.start(Date.parse(payload.new.start))
-		}
-	})
-	.subscribe();
 
 function createBreak() {
 	const { subscribe, set } = writable({
