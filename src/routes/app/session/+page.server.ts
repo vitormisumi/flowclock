@@ -31,16 +31,26 @@ export const actions = {
 
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
+		const length = formData.get('length') as string;
 		const sessionEnd = formData.get('session_end') as string;
 		
-		const { error } = await supabase
+		const { error: sessionError } = await supabase
 			.from('sessions')
 			.update({ user_id: session.user.id, end: sessionEnd })
 			.eq('id', id)
 			.select();
 
-		if (error) {
-			console.log(error);
+		if (sessionError) {
+			console.log(sessionError);
+			return fail(500, { message: 'Session could not be saved', success: false });
+		}
+		
+		const { error: breakError } = await supabase
+			.from('breaks')
+			.insert({ user_id: session.user.id, calculated_length: Number(length), session_id: Number(id)})
+		
+		if (breakError) {
+			console.log(breakError);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		}
 

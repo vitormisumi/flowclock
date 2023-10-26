@@ -18,11 +18,14 @@
 	}
 </script>
 
-<div class="flex w-full items-center justify-center">
+<div class="grid w-full items-center justify-center">
 	<p
 		class="text-primary-50"
 		style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}
 	>
 		{message}
 	</p>
+	<p>{$session.start}</p>
+	<p>{$session.end}</p>
+	<p>{$sessionBreak.duration}</p>
 </div>

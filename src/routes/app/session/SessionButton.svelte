@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { session, sessionBreak } from './stores';
+	import { interruptionLength, session, sessionBreak } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
@@ -26,11 +26,11 @@
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
 		session.end();
-		sessionBreak.start(
-			(Date.now() - Date.parse($sessions[0].start) - ($sessions[0].interruption_duration ?? 0)) /
-				$settings.ratio
-		);
+		let duration = Math.round((Date.now() - $session.start - $interruptionLength) / $settings.ratio);
+		console.log(duration);
+		sessionBreak.start(duration);
 		formData.append('id', String($sessions[0].id));
+		formData.append('length', String(duration));
 		formData.append('session_end', new Date().toISOString());
 		formData.append('interruptions', JSON.stringify($interruptions));
 		return async ({ update }) => {

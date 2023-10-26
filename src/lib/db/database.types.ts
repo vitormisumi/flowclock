@@ -9,6 +9,46 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      breaks: {
+        Row: {
+          actual_length: number | null
+          calculated_length: number
+          created_at: string
+          id: number
+          session_id: number
+          user_id: string
+        }
+        Insert: {
+          actual_length?: number | null
+          calculated_length: number
+          created_at?: string
+          id?: number
+          session_id: number
+          user_id: string
+        }
+        Update: {
+          actual_length?: number | null
+          calculated_length?: number
+          created_at?: string
+          id?: number
+          session_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "breaks_session_id_fkey"
+            columns: ["session_id"]
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "breaks_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       intentions: {
         Row: {
           created_at: string

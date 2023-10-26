@@ -10,7 +10,7 @@
 	} from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import { session, sessionBreak } from './session/stores';
+	import { session } from './session/stores';
 	import { page } from '$app/stores';
 	import avatar from '$lib/assets/avatar.png';
 	import type { User } from '@supabase/supabase-js';
@@ -20,7 +20,6 @@
 	$: activeUrl = $page.url.pathname;
 
 	const user: User = getContext('user');
-	const settings: Writable<Settings> = getContext('settings');
 	const sessions: Writable<UserSession[]> = getContext('sessions');
 
 	let open = false;
@@ -40,7 +39,6 @@
 	const saveAndSignOut: SubmitFunction = ({ formData }) => {
 		loading = true;
 		session.end();
-		// sessionBreak.start((Date.now() - Date.parse($sessions[0].start) - $interruptionLength) / $settings.ratio);
 		formData.append('id', String($sessions[0].id));
 		formData.append('session_end', new Date().toISOString());
 		return async ({ update }) => {

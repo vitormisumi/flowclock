@@ -7,9 +7,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		throw redirect(303, '/');
 	}
 
-	const {
-		data: { user }
-	} = await supabase.auth.getUser();
+	const { data: { user }} = await supabase.auth.getUser();
 
 	const { data: sessions } = await supabase
 		.from('sessions')

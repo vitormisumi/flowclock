@@ -24,7 +24,7 @@ export const actions = {
 		});
 
 		if (error) {
-			console.log(error.message);
+			console.log(error);
 			return fail(500, {
 				message: error.message,
 				success: false

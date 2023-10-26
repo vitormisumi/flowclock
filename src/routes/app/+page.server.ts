@@ -16,12 +16,13 @@ export const actions = {
 		}
 
 		const formData = await request.formData();
-		const sessionStart = formData.get('session_start') as string;
+		const id = formData.get('id') as string;
 		const sessionEnd = formData.get('session_end') as string;
 		
 		const { error } = await supabase
 			.from('sessions')
-			.insert({ user_id: session.user.id, start: sessionStart, end: sessionEnd });
+			.update({ user_id: session.user.id, end: sessionEnd })
+			.eq('id', id)
 
 		if (error) {
 			console.log(error);

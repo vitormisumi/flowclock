@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { selectedProject } from './projects/stores';
+	import { supabase } from '../../supabase';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
 	import Warning from './Warning.svelte';
 	import Screen from './Screen.svelte';
-	import { selectedProject } from './projects/stores';
 
 	export let data;
 
