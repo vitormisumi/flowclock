@@ -25,7 +25,4 @@
 	>
 		{message}
 	</p>
-	<p>{$session.start}</p>
-	<p>{$session.end}</p>
-	<p>{$sessionBreak.duration}</p>
 </div>

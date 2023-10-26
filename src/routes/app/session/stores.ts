@@ -3,17 +3,6 @@ import { supabase } from '../../../supabase';
 
 export const milliseconds = writable(0);
 
-const realtime = supabase
-	.channel('sessions-channel')
-	.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload) => {
-		console.log(payload);
-		if (payload.eventType === 'INSERT') {
-			milliseconds.set(Date.now() - Date.parse(payload.new.start))
-			console.log(milliseconds)
-		}
-	})
-	.subscribe();
-
 function createSession() {
 	const { subscribe, set, update } = writable({
 		running: false,
@@ -76,6 +65,16 @@ function createSession() {
 }
 
 export const session = createSession();
+
+const realtime = supabase
+	.channel('sessions-channel')
+	.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload) => {
+		console.log(payload);
+		if (payload.eventType === 'INSERT') {
+			session.start(Date.parse(payload.new.start))
+		}
+	})
+	.subscribe();
 
 function createBreak() {
 	const { subscribe, set } = writable({
