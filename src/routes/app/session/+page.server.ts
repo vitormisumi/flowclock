@@ -10,18 +10,16 @@ export const actions = {
 		const formData = await request.formData();
 		const start = formData.get('start') as string;
 		
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from('sessions')
 			.insert({ user_id: session.user.id, start: start })
-			.select()
-			.single()
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		} 
 
-		return { message: 'Session started', success: true, data: data };
+		return { message: 'Session started', success: true };
 	},
 
 	break: async ({ request, locals: { supabase, getSession } }) => {
@@ -32,25 +30,15 @@ export const actions = {
 
 		const formData = await request.formData();
 		const id = formData.get('id') as string;
-		const length = formData.get('length') as string;
 		const end = formData.get('end') as string;
 		
-		const { error: sessionError } = await supabase
+		const { error } = await supabase
 			.from('sessions')
 			.update({ end: end })
 			.eq('id', id);
 
-		if (sessionError) {
-			console.log(sessionError);
-			return fail(500, { message: 'Session could not be saved', success: false });
-		}
-		
-		const { error: breakError } = await supabase
-			.from('breaks')
-			.insert({ user_id: session.user.id, calculated_length: Number(length), session_id: Number(id)})
-		
-		if (breakError) {
-			console.log(breakError);
+		if (error) {
+			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		}
 
@@ -65,10 +53,11 @@ export const actions = {
 
 		const formData = await request.formData();
 		const sessionId = formData.get('session_id') as string;
+		const start = formData.get('start') as string;
 		
 		const { error } = await supabase
 			.from('interruptions')
-			.insert({ user_id: session.user.id, session_id: Number(sessionId)})
+			.insert({ user_id: session.user.id, session_id: Number(sessionId), start: start})
 
 		if (error) {
 			console.log(error);

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, milliseconds, interruptionLength } from './session/stores';
+	import { session, sessionBreak, milliseconds, sessionInterruptions } from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
@@ -19,7 +19,7 @@
 		}
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
-				$milliseconds = Date.now() - $session.start - $interruptionLength;
+				$milliseconds = Date.now() - $session.start - $sessionInterruptions.duration;
 			} else if ($sessionBreak.running) {
 				if ($milliseconds > 1000) {
 					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
@@ -29,7 +29,6 @@
 					$milliseconds = 0;
 				}
 			}
-
 			if (
 				$milliseconds >= $settings.warning * 60000 &&
 				$session.running &&

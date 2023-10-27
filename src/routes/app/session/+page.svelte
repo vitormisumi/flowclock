@@ -3,13 +3,8 @@
 	import SessionButton from './SessionButton.svelte';
 	import Interruptions from './Interruptions.svelte';
 	import Notification from '../../Notification.svelte';
-	import { session } from './stores';
 
 	export let form;
-	
-	$: if (form?.data) {
-		session.id(form.data.id)
-	}
 </script>
 
 <div

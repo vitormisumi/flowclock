@@ -2,8 +2,6 @@
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { selectedProject } from './projects/stores';
-	import { page } from '$app/stores';
-	import { session } from './session/stores';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
 	import Warning from './Warning.svelte';
@@ -48,18 +46,6 @@
 	setContext('toDos', toDos);
 	setContext('intentions', intentions);
 	setContext('status', status);
-
-	$page.data.supabase
-		.channel('sessions-channel')
-		.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload: any) => {
-			if (payload.eventType === 'INSERT' && !payload.new.end) {
-				session.start(Date.parse(payload.new.start));
-			} else if (payload.eventType === 'UPDATE' && payload.new.id === $session.id) {
-				console.log('break');
-				session.end(Date.parse(payload.new.end));
-			}
-		})
-		.subscribe();
 </script>
 
 <Screen>

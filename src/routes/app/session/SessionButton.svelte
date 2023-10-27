@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { interruptionLength, session, sessionBreak } from './stores';
+	import { sessionInterruptions, session, sessionBreak } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import { page } from '$app/stores';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
-	const sessions: Writable<UserSession[]> = getContext('sessions');
 
 	let loading = false;
 
@@ -25,16 +25,35 @@
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
 		session.end();
-		const duration = Math.round((Date.now() - $session.start - $interruptionLength) / $settings.ratio);
-		sessionBreak.start(duration);
-		formData.append('id', String($sessions[0].id));
+		sessionBreak.start(
+			Math.round((Date.now() - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+		);
+		sessionInterruptions.reset();
+		formData.append('id', String($session.id));
 		formData.append('end', new Date().toISOString());
-		formData.append('length', String(duration));
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
+
+	$page.data.supabase
+		.channel('sessions-channel')
+		.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload: any) => {
+			console.log(payload);
+			if (payload.eventType === 'INSERT' && payload.new && !payload.new.end) {
+				session.start(payload.new.id, Date.parse(payload.new.start));
+			} else if (
+				payload.eventType === 'UPDATE' &&
+				payload.new.end &&
+				payload.new.id === $session.id
+			) {
+				session.end(Date.parse(payload.new.end));
+			} else if (payload.eventType === 'UPDATE' && payload.new.id === $session.id) {
+				sessionInterruptions.update(payload.new.interruption_duration);
+			}
+		})
+		.subscribe();
 </script>
 
 {#if !$session.running}

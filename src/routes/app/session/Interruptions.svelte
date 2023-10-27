@@ -3,12 +3,9 @@
 	import { session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
+	import { sessionInterruptions } from './stores';
+	import { page } from '$app/stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
-
-	const sessions: Writable<UserSession[]> = getContext('sessions');
-	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
 	let open = false;
 
@@ -27,28 +24,46 @@
 
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
-		session.pause();
 		open = true;
-		formData.append('session_id', String($sessions[0].id));
+		const start = Date.now();
+		session.pause();
+		sessionInterruptions.start(start);
+		formData.append('session_id', String($session.id));
+		formData.append('start', new Date(start).toISOString());
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
-	
+
 	const handleEnd: SubmitFunction = ({ formData }) => {
 		loading = true;
-		session.unpause();
 		open = false;
-		formData.append('id', String($interruptions[0].id));
-		formData.append('session_id', String($sessions[0].id));
-		formData.append('end', new Date().toISOString());
+		const end = Date.now();
+		session.unpause();
+		sessionInterruptions.end(end);
+		formData.append('id', String($sessionInterruptions.currentId));
+		formData.append('session_id', String($session.id));
+		formData.append('end', new Date(end).toISOString());
 		formData.append('reason', reason);
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
+
+	$page.data.supabase
+		.channel('interruptions-channel')
+		.on(
+			'postgres_changes',
+			{ event: '*', schema: 'public', table: 'interruptions' },
+			(payload: any) => {
+				if (payload.eventType === 'INSERT' && payload.new && !payload.new.end) {
+					sessionInterruptions.id(payload.new.id);
+				}
+			}
+		)
+		.subscribe();
 </script>
 
 <div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>
@@ -77,6 +92,8 @@
 			placeholder="Select a reason"
 			class="border-secondary-300 text-primary-50 focus:border-secondary-100 dark:border-secondary-700"
 		/>
-		<Button size="sm" type="submit" disabled={loading}><i class="fa-solid fa-play pr-2" />Resume</Button>
+		<Button size="sm" type="submit" disabled={loading}
+			><i class="fa-solid fa-play pr-2" />Resume</Button
+		>
 	</form>
 </Modal>

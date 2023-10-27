@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
-	import { milliseconds, session, sessionBreak } from './stores';
+	import { milliseconds, session, sessionBreak, sessionInterruptions } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -27,10 +27,13 @@
 	</p>
 	<p>id:{$session.id}</p>
 	<p>running:{$session.running}</p>
-	<p>start:{$session.start}</p>
-	<p>end:{$session.end}</p>
-	<p>warning:{$session.warning}</p>
-	<p>pause:{$session.pause}</p>
-	<p>break:{$sessionBreak.running}</p>
-	<p>duration:{$sessionBreak.duration}</p>
+	<p>interruptionId:{$sessionInterruptions.currentId}</p>
+	<p>duration:{$sessionInterruptions.duration}</p>
+	<p>start:{$sessionInterruptions.currentStart}</p>
+	<!-- <p>start:{$session.start}</p>
+	<p>end:{$session.end}</p> -->
+	<!-- <p>warning:{$session.warning}</p>
+	<p>pause:{$session.pause}</p> -->
+	<!-- <p>break:{$sessionBreak.running}</p>
+	<p>duration:{$sessionBreak.duration}</p> -->
 </div>
