@@ -13,9 +13,10 @@
 
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
+		const start = Date.now();
 		sessionBreak.end();
-		session.start();
-		formData.append('start', new Date().toISOString());
+		session.start(0, start);
+		formData.append('start', new Date(start).toISOString());
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -24,13 +25,14 @@
 
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
-		session.end();
+		const end = Date.now();
+		session.end(end);
 		sessionBreak.start(
-			Math.round((Date.now() - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
 		);
 		sessionInterruptions.reset();
 		formData.append('id', String($session.id));
-		formData.append('end', new Date().toISOString());
+		formData.append('end', new Date(end).toISOString());
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -51,6 +53,16 @@
 				session.end(Date.parse(payload.new.end));
 			} else if (payload.eventType === 'UPDATE' && payload.new.id === $session.id) {
 				sessionInterruptions.update(payload.new.interruption_duration);
+			}
+		})
+		.subscribe();
+
+	$page.data.supabase
+		.channel('breaks-channel')
+		.on('postgres_changes', { event: '*', schema: 'public', table: 'breaks' }, (payload: any) => {
+			console.log(payload);
+			if (payload.eventType === 'INSERT') {
+				sessionBreak.start(payload.new.calculated_duration);
 			}
 		})
 		.subscribe();

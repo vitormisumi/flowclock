@@ -27,13 +27,10 @@
 	</p>
 	<p>id:{$session.id}</p>
 	<p>running:{$session.running}</p>
-	<p>interruptionId:{$sessionInterruptions.currentId}</p>
-	<p>duration:{$sessionInterruptions.duration}</p>
-	<p>start:{$sessionInterruptions.currentStart}</p>
-	<!-- <p>start:{$session.start}</p>
-	<p>end:{$session.end}</p> -->
+	<p>start:{$session.start}</p>
+	<p>end:{$session.end}</p>
 	<!-- <p>warning:{$session.warning}</p>
-	<p>pause:{$session.pause}</p> -->
-	<!-- <p>break:{$sessionBreak.running}</p>
-	<p>duration:{$sessionBreak.duration}</p> -->
+	<p>pause:{$session.pause}</p>
+	<p>break:{$sessionBreak.running}</p> -->
+	<p>duration:{$sessionBreak.duration}</p>
 </div>

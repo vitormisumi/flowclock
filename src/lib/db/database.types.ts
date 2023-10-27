@@ -11,24 +11,24 @@ export interface Database {
     Tables: {
       breaks: {
         Row: {
-          actual_length: number | null
-          calculated_length: number
+          actual_duration: number | null
+          calculated_duration: number
           created_at: string
           id: number
           session_id: number
           user_id: string
         }
         Insert: {
-          actual_length?: number | null
-          calculated_length: number
+          actual_duration?: number | null
+          calculated_duration: number
           created_at?: string
           id?: number
           session_id: number
           user_id: string
         }
         Update: {
-          actual_length?: number | null
-          calculated_length?: number
+          actual_duration?: number | null
+          calculated_duration?: number
           created_at?: string
           id?: number
           session_id?: number
