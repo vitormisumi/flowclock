@@ -2,7 +2,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { sessionInterruptions, session, sessionBreak } from './stores';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -39,31 +39,42 @@
 		};
 	};
 
-	$page.data.supabase
-		.channel('sessions-channel')
-		.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload: any) => {
-			if (payload.eventType === 'INSERT' && payload.new && !payload.new.end) {
-				session.start(payload.new.id, Date.parse(payload.new.start));
-			} else if (
-				payload.eventType === 'UPDATE' &&
-				payload.new.end &&
-				payload.new.id === $session.id
-			) {
-				session.end(Date.parse(payload.new.end));
-			} else if (payload.eventType === 'UPDATE' && payload.new.id === $session.id) {
-				sessionInterruptions.update(payload.new.interruption_duration);
-			}
-		})
-		.subscribe();
+	function realtime() {
+		const realtime = $page.data.supabase
+			.channel('sessions-channel')
+			.on(
+				'postgres_changes',
+				{ event: 'INSERT', schema: 'public', table: 'sessions' },
+				(payload: any) => {
+					if (!payload.new.end) {
+						session.start(payload.new.id, Date.parse(payload.new.start));
+					} else if (payload.new.end && payload.new.id === $session.id) {
+						session.end(Date.parse(payload.new.end));
+					}
+				}
+			)
+			.on(
+				'postgres_changes',
+				{ event: 'UPDATE', schema: 'public', table: 'sessions' },
+				(payload: any) => {
+					if (payload.new.id === $session.id) {
+						sessionInterruptions.update(payload.new.interruption_duration);
+					}
+				}
+			)
+			.on('postgres_changes', { event: '*', schema: 'public', table: 'breaks' }, (payload: any) => {
+				if (payload.eventType === 'INSERT') {
+					sessionBreak.start(payload.new.calculated_duration);
+				}
+			})
+			.subscribe();
 
-	$page.data.supabase
-		.channel('breaks-channel')
-		.on('postgres_changes', { event: '*', schema: 'public', table: 'breaks' }, (payload: any) => {
-			if (payload.eventType === 'INSERT') {
-				sessionBreak.start(payload.new.calculated_duration);
-			}
-		})
-		.subscribe();
+		return () => {
+			$page.data.supabase.removeSubscription(realtime);
+		};
+	}
+
+	onMount(() => realtime());
 </script>
 
 {#if !$session.running}
