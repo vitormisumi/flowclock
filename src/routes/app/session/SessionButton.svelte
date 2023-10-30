@@ -48,8 +48,6 @@
 				(payload: any) => {
 					if (!payload.new.end) {
 						session.start(payload.new.id, Date.parse(payload.new.start));
-					} else if (payload.new.end && payload.new.id === $session.id) {
-						session.end(Date.parse(payload.new.end));
 					}
 				}
 			)
@@ -60,17 +58,22 @@
 					if (payload.new.id === $session.id) {
 						sessionInterruptions.update(payload.new.interruption_duration);
 					}
+					if (payload.new.end && payload.new.id === $session.id) {
+						session.end(Date.parse(payload.new.end));
+					}
 				}
 			)
-			.on('postgres_changes', { event: '*', schema: 'public', table: 'breaks' }, (payload: any) => {
-				if (payload.eventType === 'INSERT') {
+			.on(
+				'postgres_changes',
+				{ event: 'INSERT', schema: 'public', table: 'breaks' },
+				(payload: any) => {
 					sessionBreak.start(payload.new.calculated_duration);
 				}
-			})
+			)
 			.subscribe();
 
 		return () => {
-			$page.data.supabase.removeSubscription(realtime);
+			$page.data.supabase.removeChannel(realtime);
 		};
 	});
 </script>
