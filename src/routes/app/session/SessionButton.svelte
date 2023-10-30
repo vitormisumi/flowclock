@@ -42,7 +42,6 @@
 	$page.data.supabase
 		.channel('sessions-channel')
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, (payload: any) => {
-			console.log(payload);
 			if (payload.eventType === 'INSERT' && payload.new && !payload.new.end) {
 				session.start(payload.new.id, Date.parse(payload.new.start));
 			} else if (
@@ -60,7 +59,6 @@
 	$page.data.supabase
 		.channel('breaks-channel')
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'breaks' }, (payload: any) => {
-			console.log(payload);
 			if (payload.eventType === 'INSERT') {
 				sessionBreak.start(payload.new.calculated_duration);
 			}
