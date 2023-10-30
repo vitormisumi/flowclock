@@ -39,7 +39,7 @@
 		};
 	};
 
-	function realtime() {
+	onMount(() => {
 		const realtime = $page.data.supabase
 			.channel('sessions-channel')
 			.on(
@@ -72,9 +72,7 @@
 		return () => {
 			$page.data.supabase.removeSubscription(realtime);
 		};
-	}
-
-	onMount(() => realtime());
+	});
 </script>
 
 {#if !$session.running}
