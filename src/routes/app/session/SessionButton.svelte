@@ -39,7 +39,7 @@
 		};
 	};
 
-	onMount(() => {
+	async function subscribeToRealtime() {
 		const realtime = $page.data.supabase
 			.channel('sessions-channel')
 			.on(
@@ -75,6 +75,10 @@
 		return () => {
 			$page.data.supabase.removeChannel(realtime);
 		};
+	}
+
+	onMount(() => {
+		subscribeToRealtime();
 	});
 </script>
 
