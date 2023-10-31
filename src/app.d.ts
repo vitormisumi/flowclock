@@ -13,9 +13,7 @@ declare global {
 	}
 	type Database = DB;
 	type UserSession = Database['public']['Tables']['sessions']['Row'];
-	type FilteredSession = UserSession & {
-		duration: number;
-	};
+	type FilteredSession = Omit<Database['public']['Tables']['sessions']['Row'], 'end'> & { end: string };
 	type Task = Database['public']['Tables']['tasks']['Row'];
 	type ToDo = Database['public']['Tables']['to_dos']['Row'];
 	type Intention = Database['public']['Tables']['intentions']['Row'];

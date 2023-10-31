@@ -15,7 +15,7 @@
 
 	onMount(() => {
 		if ($sessions[0].end === null) {
-			session.start(Date.parse($sessions[0].start));
+			session.start($sessions[0].id, Date.parse($sessions[0].start));
 		}
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {

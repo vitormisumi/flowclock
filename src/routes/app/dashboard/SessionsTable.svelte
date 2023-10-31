@@ -95,7 +95,7 @@
 							on:click={() => toggleRow(i)}
 							on:keydown={() => toggleRow(i)}
 						>
-							{millisecondsToClock(session.duration)}
+							{millisecondsToClock(Date.parse(session.end) - Date.parse(session.start))}
 						</div>
 						{#if edit === i}
 							<div class="absolute right-1 top-1" in:fade>

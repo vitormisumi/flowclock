@@ -12,15 +12,17 @@
 
 	export let form;
 
-	const sessions: Writable<FilteredSession[]> = getContext('sessions');
+	const sessions: Writable<UserSession[]> = getContext('sessions');
 	const interruptions: Writable<Interruption[]> = getContext('interruptions');
+
+	$filteredSessions = $sessions.filter((x) => x.end !== null).map(session => ({...session, end: session.end || ''}));
 
 	const today = new Date();
 	$: current = $filter.current ? 1 : 0;
 
 	$: switch ($filter.timeframe) {
 		case 'day':
-			$filteredSessions = $sessions.filter((x) => {
+			$filteredSessions = $filteredSessions.filter((x) => {
 				const date = new Date(x.start);
 				return (
 					date.getDate() + 1 === today.getDate() + current &&
@@ -39,7 +41,7 @@
 			break;
 		case 'week':
 			if (current) {
-				$filteredSessions = $sessions.filter((x) => {
+				$filteredSessions = $filteredSessions.filter((x) => {
 					const date = Date.parse(x.start);
 					const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
 					return date > beginningOfWeek;
@@ -50,7 +52,7 @@
 					return date > beginningOfWeek;
 				});
 			} else {
-				$filteredSessions = $sessions.filter((x) => {
+				$filteredSessions = $filteredSessions.filter((x) => {
 					const date = Date.parse(x.start);
 					const beginningOfLastWeek =
 						new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
@@ -69,7 +71,7 @@
 			}
 			break;
 		case 'month':
-			$filteredSessions = $sessions.filter((x) => {
+			$filteredSessions = $filteredSessions.filter((x) => {
 				const date = new Date(x.start);
 				return (
 					date.getMonth() + 1 === today.getMonth() + current &&
@@ -85,7 +87,7 @@
 			});
 			break;
 		case 'year':
-			$filteredSessions = $sessions.filter((x) => {
+			$filteredSessions = $filteredSessions.filter((x) => {
 				const date = new Date(x.start);
 				return date.getFullYear() + 1 === today.getFullYear() + current;
 			});
@@ -95,7 +97,7 @@
 			});
 			break;
 		default:
-			$filteredSessions = $sessions;
+			$filteredSessions = $filteredSessions;
 			$filteredInterruptions = $interruptions;
 	}
 </script>
@@ -105,8 +107,8 @@
 		? { duration: 500, delay: 500 }
 		: { duration: 0 }}
 >
-	{#if $sessions.length === 0}
-		<div class="flex items-center absolute inset-0 justify-center">
+	{#if $filteredSessions.length === 0}
+		<div class="absolute inset-0 flex items-center justify-center">
 			<p class="text-center text-lg text-secondary-100">
 				You have no sessions yet. <br />Complete your first session to start analysing your data.
 			</p>
