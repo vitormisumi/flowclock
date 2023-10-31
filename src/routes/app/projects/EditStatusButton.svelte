@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import { Button, Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
@@ -67,6 +67,7 @@
 				{status.status}
 			</h3>
 		</Button>
+		<Tooltip placement="right">Rename status</Tooltip>
 	{/if}
     {#if showDelete === status.id || (innerWidth <= 1024 && !edit)}
         <div in:fade>

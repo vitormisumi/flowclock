@@ -50,7 +50,7 @@
 						(distribution, item) => {
 							const startHour = new Date(item.start).getHours();
 							distribution[startHour] =
-								(distribution[startHour] || 0) + (Date.parse(item.end) - Date.parse(item.start));
+								(distribution[startHour] || 0) + item.duration;
 							return distribution;
 						},
 						{} as { [key: number]: number }
@@ -65,7 +65,7 @@
 						(distribution, item) => {
 							const startDay = new Date(item.start).getDate();
 							distribution[startDay] =
-								(distribution[startDay] || 0) + (Date.parse(item.end) - Date.parse(item.start));
+								(distribution[startDay] || 0) + item.duration;
 							return distribution;
 						},
 						{} as { [key: number]: number }
@@ -80,7 +80,7 @@
 						(distribution, item) => {
 							const startDay = new Date(item.start).getDay();
 							distribution[startDay] =
-								(distribution[startDay] || 0) + (Date.parse(item.end) - Date.parse(item.start));
+								(distribution[startDay] || 0) + item.duration;
 							return distribution;
 						},
 						{} as { [key: number]: number }
@@ -95,7 +95,7 @@
 						(distribution, item) => {
 							const startMonth = new Date(item.start).getMonth();
 							distribution[startMonth] =
-								(distribution[startMonth] || 0) + (Date.parse(item.end) - Date.parse(item.start));
+								(distribution[startMonth] || 0) + item.duration;
 							return distribution;
 						},
 						{} as { [key: number]: number }
@@ -110,7 +110,7 @@
 						(distribution, item) => {
 							const startYear = new Date(item.start).getFullYear();
 							distribution[startYear] =
-								(distribution[startYear] || 0) + (Date.parse(item.end) - Date.parse(item.start));
+								(distribution[startYear] || 0) + item.duration;
 							return distribution;
 						},
 						{} as { [key: number]: number }

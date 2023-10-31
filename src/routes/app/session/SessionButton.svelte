@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { sessionInterruptions, session, sessionBreak } from './stores';
+	import { sessionInterruptions, session, sessionBreak, sessionFocus } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext, onMount } from 'svelte';
 	import { page } from '$app/stores';
@@ -17,6 +17,8 @@
 		sessionBreak.end();
 		session.start(0, start);
 		formData.append('start', new Date(start).toISOString());
+		formData.append('focus_type', String($sessionFocus.type));
+		formData.append('focus_id', String($sessionFocus.id));
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -44,7 +46,12 @@
 			.channel('sessions-channel')
 			.on(
 				'postgres_changes',
-				{ event: 'INSERT', schema: 'public', table: 'sessions', filter: 'user_id=eq.' + $page.data.session?.user.id },
+				{
+					event: 'INSERT',
+					schema: 'public',
+					table: 'sessions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
 				(payload: any) => {
 					if (!payload.new.end) {
 						session.start(payload.new.id, Date.parse(payload.new.start));
@@ -53,7 +60,12 @@
 			)
 			.on(
 				'postgres_changes',
-				{ event: 'UPDATE', schema: 'public', table: 'sessions', filter: 'user_id=eq.' + $page.data.session?.user.id },
+				{
+					event: 'UPDATE',
+					schema: 'public',
+					table: 'sessions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
 				(payload: any) => {
 					if (payload.new.id === $session.id) {
 						sessionInterruptions.update(payload.new.interruption_duration);
@@ -65,7 +77,12 @@
 			)
 			.on(
 				'postgres_changes',
-				{ event: 'INSERT', schema: 'public', table: 'breaks', filter: 'user_id=eq.' + $page.data.session?.user.id },
+				{
+					event: 'INSERT',
+					schema: 'public',
+					table: 'breaks',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
 				(payload: any) => {
 					sessionBreak.start(payload.new.calculated_duration);
 				}

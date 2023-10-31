@@ -132,8 +132,10 @@
 		</form>
 	</div>
 {:else}
-	<Button size="xs" class="bg-transparent hover:bg-transparent text-secondary-400" on:click={() => (open = true)}
-		><i class="fa-solid fa-plus pr-2" />add task</Button
+	<Button
+		size="xs"
+		class="bg-transparent text-secondary-400 hover:bg-transparent hover:text-secondary-200"
+		on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />add task</Button
 	>
 {/if}
 

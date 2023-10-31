@@ -6,6 +6,7 @@
 	import { sessionInterruptions } from './stores';
 	import { page } from '$app/stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
 
 	let open = false;
 
@@ -52,18 +53,35 @@
 		};
 	};
 
-	$page.data.supabase
-		.channel('interruptions-channel')
-		.on(
-			'postgres_changes',
-			{ event: '*', schema: 'public', table: 'interruptions' },
-			(payload: any) => {
-				if (payload.eventType === 'INSERT' && payload.new && !payload.new.end) {
+	async function subscribeToRealtime() {
+		const realtime = $page.data.supabase
+			.channel('interruptions-channel')
+			.on(
+				'postgres_changes',
+				{
+					event: 'INSERT',
+					schema: 'public',
+					table: 'interruptions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
+				(payload: any) => {
 					sessionInterruptions.id(payload.new.id);
 				}
-			}
-		)
-		.subscribe();
+			)
+			.subscribe();
+
+		if (realtime.error) {
+			console.error('Realtime error:', realtime.error);
+		}
+
+		return () => {
+			$page.data.supabase.removeChannel(realtime);
+		};
+	}
+
+	onMount(() => {
+		subscribeToRealtime();
+	});
 </script>
 
 <div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>

@@ -33,4 +33,7 @@
 	<p>pause:{$session.pause}</p>
 	<p>break:{$sessionBreak.running}</p>
 	<p>duration:{$sessionBreak.duration}</p> -->
+	<!-- <p>duration:{$sessionInterruptions.duration}</p>
+	<p>id:{$sessionInterruptions.currentId}</p>
+	<p>start:{$sessionInterruptions.currentStart}</p> -->
 </div>

@@ -3,8 +3,14 @@
 	import SessionButton from './SessionButton.svelte';
 	import Interruptions from './Interruptions.svelte';
 	import Notification from '../../Notification.svelte';
+	import FocusSelect from './FocusSelect.svelte';
+	import { session } from './stores';
 
 	export let form;
+
+	// $: if (!form?.success) {
+	// 	session.reset()
+	// }
 </script>
 
 <div
@@ -12,6 +18,7 @@
 >
 	<div class="grid gap-2 md:gap-4 lg:gap-8">
 		<Message />
+		<FocusSelect />
 		<SessionButton />
 		<Interruptions />
 	</div>

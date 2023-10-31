@@ -97,6 +97,7 @@ export interface Database {
       }
       interruptions: {
         Row: {
+          duration: number | null
           end: string | null
           id: number
           reason: string | null
@@ -105,6 +106,7 @@ export interface Database {
           user_id: string
         }
         Insert: {
+          duration?: number | null
           end?: string | null
           id?: number
           reason?: string | null
@@ -113,6 +115,7 @@ export interface Database {
           user_id: string
         }
         Update: {
+          duration?: number | null
           end?: string | null
           id?: number
           reason?: string | null
@@ -275,6 +278,7 @@ export interface Database {
       }
       sessions: {
         Row: {
+          duration: number | null
           end: string | null
           id: number
           intention_id: number | null
@@ -285,6 +289,7 @@ export interface Database {
           user_id: string
         }
         Insert: {
+          duration?: number | null
           end?: string | null
           id?: number
           intention_id?: number | null
@@ -295,6 +300,7 @@ export interface Database {
           user_id: string
         }
         Update: {
+          duration?: number | null
           end?: string | null
           id?: number
           intention_id?: number | null

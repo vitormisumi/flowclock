@@ -43,7 +43,7 @@
 	{:else}
 		<Button
 			size="xs"
-			class="h-full w-full rounded-r-none bg-transparent text-secondary-400 transition-colors hover:bg-primary-900 hover:bg-opacity-50"
+			class="h-full w-full rounded-r-none bg-transparent text-secondary-400 transition-colors hover:bg-primary-900 hover:bg-opacity-50 hover:text-secondary-200"
 			on:click={() => (addStatus = true)}
 		>
 			<i class="fa-solid fa-plus pr-2" />add status

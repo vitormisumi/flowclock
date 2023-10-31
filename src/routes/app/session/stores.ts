@@ -12,7 +12,7 @@ function createSession() {
 		dismiss: false,
 		pause: false,
 	});
-
+	
 	return {
 		subscribe,
 		start: (id: number = 0, start: number = Date.now()) =>
@@ -24,7 +24,7 @@ function createSession() {
 				warning: false,
 				dismiss: false,
 				pause: false,
-			}),
+				}),
 		end: (end: number = Date.now()) =>
 			update((x) => {
 				return {
@@ -34,6 +34,16 @@ function createSession() {
 					warning: false
 				};
 			}),
+		reset: () =>
+			set({
+				id: 0,
+				running: false,
+				start: 0,
+				end: 0,
+				warning: false,
+				dismiss: false,
+				pause: false,
+				}),
 		warning: () =>
 			update((x) => {
 				return {
@@ -60,13 +70,6 @@ function createSession() {
 				return {
 					...x,
 					pause: false
-				}
-			}),
-		id: (id: number) =>
-			update((x) => {
-				return {
-					...x,
-					id: id
 				}
 			}),
 	};
@@ -153,3 +156,26 @@ function createInterruptions() {
 }
 
 export const sessionInterruptions = createInterruptions();
+
+function createFocus() {
+	const { subscribe, set, update } = writable({
+		type: '',
+		id: 0,
+	})
+
+	return {
+		subscribe,
+		set: (type: string, id: number) =>
+			set({
+				type: type,
+				id: id,
+			}),
+		reset: () =>
+			set({
+				type: '',
+				id: 0,
+			}),
+	}
+}
+
+export const sessionFocus = createFocus();

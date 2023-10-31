@@ -15,7 +15,7 @@
 	const sessions: Writable<UserSession[]> = getContext('sessions');
 	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
-	$filteredSessions = $sessions.filter((x) => x.end !== null).map(session => ({...session, end: session.end || ''}));
+	$filteredSessions = $sessions.filter((x): x is FilteredSession => x.duration !== null && x.end !== null);
 
 	const today = new Date();
 	$: current = $filter.current ? 1 : 0;

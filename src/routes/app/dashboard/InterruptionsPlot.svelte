@@ -10,7 +10,7 @@
 					Object.entries(
 						$filteredInterruptions.reduce(
 							(distribution, item) => {
-								const reason = item.reason;
+								const reason = item.reason ?? 'no reason';
 								distribution[reason] = (distribution[reason] || 0) + 1;
 								return distribution;
 							},
@@ -22,9 +22,8 @@
 					Object.entries(
 						$filteredInterruptions.reduce(
 							(distribution, item) => {
-								const reason = item.reason;
-								distribution[reason] =
-									(distribution[reason] || 0) + Date.parse(item.end) - Date.parse(item.start);
+								const reason = item.reason ?? 'no reason';
+								distribution[reason] = (distribution[reason] || 0) + (item.duration ?? 0);
 								return distribution;
 							},
 							{} as { [key: string]: number }
@@ -55,7 +54,7 @@
 				rx="1%"
 				class="fill-primary-700"
 			/>
-			<text x="52%" y={value * 50 + 30} class="fill-primary-50 capitalize text-sm"
+			<text x="52%" y={value * 50 + 30} class="fill-primary-50 text-sm capitalize"
 				>{group === 'frequency' ? reason[1] : millisecondsToClock(reason[1])}</text
 			>
 		{/if}
