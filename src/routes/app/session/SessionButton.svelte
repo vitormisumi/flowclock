@@ -44,7 +44,7 @@
 			.channel('sessions-channel')
 			.on(
 				'postgres_changes',
-				{ event: 'INSERT', schema: 'public', table: 'sessions' },
+				{ event: 'INSERT', schema: 'public', table: 'sessions', filter: 'user_id=eq.' + $page.data.session?.user.id },
 				(payload: any) => {
 					if (!payload.new.end) {
 						session.start(payload.new.id, Date.parse(payload.new.start));
@@ -53,7 +53,7 @@
 			)
 			.on(
 				'postgres_changes',
-				{ event: 'UPDATE', schema: 'public', table: 'sessions' },
+				{ event: 'UPDATE', schema: 'public', table: 'sessions', filter: 'user_id=eq.' + $page.data.session?.user.id },
 				(payload: any) => {
 					if (payload.new.id === $session.id) {
 						sessionInterruptions.update(payload.new.interruption_duration);
@@ -65,12 +65,16 @@
 			)
 			.on(
 				'postgres_changes',
-				{ event: 'INSERT', schema: 'public', table: 'breaks' },
+				{ event: 'INSERT', schema: 'public', table: 'breaks', filter: 'user_id=eq.' + $page.data.session?.user.id },
 				(payload: any) => {
 					sessionBreak.start(payload.new.calculated_duration);
 				}
 			)
 			.subscribe();
+
+		if (realtime.error) {
+			console.error('Realtime error:', realtime.error);
+		}
 
 		return () => {
 			$page.data.supabase.removeChannel(realtime);
