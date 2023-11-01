@@ -3,6 +3,7 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import { getContext } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { fade } from 'svelte/transition';
 	import AddTaskButton from './AddTaskButton.svelte';
 	import AddStatusButton from './AddStatusButton.svelte';
 	import EditStatusButton from './EditStatusButton.svelte';
@@ -11,11 +12,10 @@
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
-	import { fade } from 'svelte/transition';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
-	let hover = false;
+	let openEdit: number | null = null;
 
 	function handleConsiderColumns(event: CustomEvent<DndEvent<TaskStatuses>>) {
 		$status = event.detail.items;
@@ -85,14 +85,14 @@
 				{#each status.tasks as task (task.id)}
 					<div
 						class="flex h-10 w-full items-center justify-between rounded-lg bg-primary-800 p-2 text-primary-50"
-						on:mouseenter={() => (hover = true)}
-						on:mouseleave={() => (hover = false)}
+						on:mouseenter={() => (openEdit = task.id)}
+						on:mouseleave={() => (openEdit = null)}
 						animate:flip
 						role="cell"
 						tabindex="0"
 					>
 						<p>{task.name}</p>
-						{#if hover}
+						{#if openEdit === task.id}
 							<div class="flex p-0" in:fade>
 								<StartTaskButton {task}/>
 								<EditTaskButton {task} />

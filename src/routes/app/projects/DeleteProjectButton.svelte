@@ -25,7 +25,7 @@
 	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
-<Tooltip>Delete project</Tooltip>
+<Tooltip placement="left">Delete project</Tooltip>
 <Modal
 	bind:open
 	outsideclose

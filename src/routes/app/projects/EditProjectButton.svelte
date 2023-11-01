@@ -44,7 +44,7 @@
 	class="bg-transparent transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
 >
-<Tooltip>Edit project</Tooltip>
+<Tooltip placement="left">Edit project</Tooltip>
 <Modal
 	bind:open
 	outsideclose

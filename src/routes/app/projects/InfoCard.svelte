@@ -42,7 +42,7 @@
 				>
 					<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
 				</Button>
-				<Tooltip>{hidden ? 'Show card' : 'Hide card'}</Tooltip>
+				<Tooltip placement="left">{hidden ? 'Show card' : 'Hide card'}</Tooltip>
 				<EditProjectButton />
 				<DeleteProjectButton />
 			</div>

@@ -7,6 +7,8 @@
 	import EditGroupButton from './EditGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
+	import EditProjectButton from './EditProjectButton.svelte';
+	import DeleteProjectButton from './DeleteProjectButton.svelte';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
@@ -56,7 +58,7 @@
 			<div class="grid gap-2">
 				{#each $projects.filter((x) => x.group_id === group.id) as project}
 					<Button
-						class={project.id != $selectedProject.id ? 'bg-transparent' : 'bg-primary-800 '}
+						class={project.id != $selectedProject.id ? 'bg-transparent' : 'bg-primary-800'}
 						on:click={() => {
 							$selectedProjectId = project.id;
 							hidden = true;
@@ -64,7 +66,7 @@
 						>{project.name}
 					</Button>
 				{/each}
-				<AddProjectButton {group} />
+				<AddProjectButton {group} on:click={() => (hidden = true)} />
 			</div>
 			<hr class="w-full border-secondary-800" />
 		{/each}

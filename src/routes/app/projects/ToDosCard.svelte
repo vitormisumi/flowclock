@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Card, Button, Dropdown, DropdownItem, Popover } from 'flowbite-svelte';
-	import ToDosTable from './ToDosTable.svelte';
+	import ToDosList from './ToDosList.svelte';
 	import AddToDoButton from './AddToDoButton.svelte.svelte';
 
 	let show = false;
@@ -25,13 +25,20 @@
 			<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
 				<i class="fa-solid fa-ellipsis-vertical" />
 			</Button>
-			<Dropdown class="p-0">
-				<DropdownItem class="p-0 transition-colors hover:bg-transparent">
-					<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
+			<Dropdown class="p-1">
+				<DropdownItem on:click={() => (show = !show)}>
+					<i class="fa-solid {show ? 'fa-eye-slash' : 'fa-eye'} pr-2" />{show ? 'Hide' : 'Show'} completed
 				</DropdownItem>
+				<DropdownItem class="w-full">
+					<i class="fa-solid fa-sort pr-2" />Sort<i class="fa-solid fa-chevron-right pl-2" />
+				</DropdownItem>
+				<Dropdown placement="right" class="w-40">
+					<DropdownItem>Due Date</DropdownItem>
+					<DropdownItem>Priority</DropdownItem>
+				</Dropdown>
 			</Dropdown>
 		</div>
-		<ToDosTable {show} />
+		<ToDosList {show} />
 		<AddToDoButton />
 	</div>
 </Card>

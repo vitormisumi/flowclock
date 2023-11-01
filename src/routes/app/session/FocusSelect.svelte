@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Radio, Modal, Tabs, TabItem } from 'flowbite-svelte';
+	import { Button, Radio, Modal, Tabs, TabItem, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { session, sessionFocus } from './stores';
 	import type { Writable } from 'svelte/store';
@@ -26,6 +26,15 @@
 <Button disabled={$session.running} class="w-full transition-colors" on:click={() => (open = true)}>
 	{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
 </Button>
+{#if $session.running}
+	<Popover class="max-w-md bg-primary-900">
+		<p class="text-sm font-light text-primary-50">
+			FlowClock sessions are designed to help you stay focused on one task at a time. If you finish
+			your task and want to move on to a new one, simply complete the current session, select a new
+			task, and start a new session.
+		</p>
+	</Popover>
+{/if}
 <Modal
 	size="sm"
 	class="h-96 max-h-96 overflow-y-scroll bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
@@ -36,7 +45,9 @@
 	<Tabs style="pill" class="flex-nowrap overflow-x-scroll whitespace-nowrap" contentClass="">
 		{#each $projects as project, i}
 			<TabItem
-				open={$sessionFocus.projectId ? project.id === $sessionFocus.projectId : i === $sessionFocus.projectId}
+				open={$sessionFocus.projectId
+					? project.id === $sessionFocus.projectId
+					: i === $sessionFocus.projectId}
 				title={project.name}
 				activeClasses="bg-primary-700 rounded-lg h-full w-full p-3 text-primary-50"
 				inactiveClasses="bg-transparent hover:bg-primary-800 transition-colors rounded-lg h-full w-full p-3 text-secondary-200"

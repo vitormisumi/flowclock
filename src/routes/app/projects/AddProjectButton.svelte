@@ -91,7 +91,10 @@
 		<Button
 			type="submit"
 			class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
-			disabled={loading}><i class="fa-solid fa-plus pr-2" />New project</Button
+			disabled={loading}
+			on:click
 		>
+			<i class="fa-solid fa-plus pr-2" />New project
+		</Button>
 	</form>
 </Modal>

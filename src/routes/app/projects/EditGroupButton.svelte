@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import { Button, Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
@@ -70,6 +70,7 @@
 				{group.name}
 			</h3>
 		</Button>
+		<Tooltip placement="right">Rename group</Tooltip>
 	{/if}
 	{#if showDelete === group.id || innerWidth <= 1024}
 		<div in:fade>

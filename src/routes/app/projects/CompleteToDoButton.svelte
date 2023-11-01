@@ -20,15 +20,19 @@
 <form
 	method="POST"
 	action="?/completeToDo"
+	class="flex items-center"
 	use:enhance={({ formData }) => {
 		formData.append('id', String(toDo.id));
 		formData.append('done', String(toDo.done));
 	}}
 >
-	<Button
+	<button
 		type="submit"
-		class="h-5 w-5 rounded-full border border-[{border}] bg-transparent p-0 text-transparent transition-all duration-300 hover:text-primary-50 focus:bg-primary-50 focus:font-bold focus:text-primary-900 focus:ring-2 focus:ring-primary-50"
+		class="h-5 w-5 flex items-center justify-center rounded-full border border-[{border}] bg-transparent p-0 {toDo.done
+			? 'bg-primary-50 text-secondary-600 hover:bg-transparent hover:text-transparent focus:bg-transparent focus:text-transparent focus:ring-2 focus:ring-primary-700'
+			: 'text-transparent hover:bg-primary-700 hover:text-primary-50 focus:bg-primary-50 focus:text-primary-900 focus:ring-2 focus:ring-primary-50'} transition-all duration-300"
+		on:click|stopPropagation
 	>
 		<i class="fa-solid fa-check" />
-	</Button>
+	</button>
 </form>
