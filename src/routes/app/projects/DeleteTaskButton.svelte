@@ -22,7 +22,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700"
+	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-trash" />
@@ -43,7 +43,7 @@
 		use:enhance={handleClick}
 	>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
 			disabled={loading}>Delete</Button
 		>

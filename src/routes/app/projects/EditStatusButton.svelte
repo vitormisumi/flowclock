@@ -47,13 +47,18 @@
 				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
-			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600" disabled={loading}>
+			<Button
+				type="submit"
+				size="xs"
+				class="bg-accent-500 transition-colors hover:bg-accent-600"
+				disabled={loading}
+			>
 				Save
 			</Button>
 		</form>
 	{:else}
 		<Button
-			class="cursor-text bg-transparent p-1 hover:bg-transparent focus:ring-0"
+			class="cursor-text bg-transparent p-1 transition-colors hover:bg-transparent focus:ring-0"
 			on:click={() => {
 				edit = status.id;
 				showDelete = 0;
@@ -69,9 +74,9 @@
 		</Button>
 		<Tooltip placement="right">Rename status</Tooltip>
 	{/if}
-    {#if showDelete === status.id || (innerWidth <= 1024 && !edit)}
-        <div in:fade>
-            <DeleteStatusButton {status} />
-        </div>
-    {/if}
+	{#if showDelete === status.id || (innerWidth <= 1024 && !edit)}
+		<div in:fade>
+			<DeleteStatusButton {status} />
+		</div>
+	{/if}
 </div>

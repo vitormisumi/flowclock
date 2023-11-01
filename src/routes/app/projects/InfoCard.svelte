@@ -25,8 +25,8 @@
 	on:mouseenter={() => (show = true)}
 	on:mouseleave={() => (show = false)}
 >
-	<div class="flex justify-between h-8">
-		<div class="grid gap-2 md:flex h-fit">
+	<div class="flex h-8 justify-between">
+		<div class="grid h-fit gap-2 md:flex">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
 			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
 			<Badge class="bg-primary-50">
@@ -37,7 +37,7 @@
 			<div class="grid md:flex" in:fade>
 				<Button
 					size="xs"
-					class="bg-transparent hover:bg-primary-700"
+					class="bg-transparent transition-colors hover:bg-primary-700"
 					on:click={() => (hidden = !hidden)}
 				>
 					<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />

@@ -13,7 +13,7 @@
 		formData.append('id', String($selectedProject.id));
 		return async ({ update }) => {
 			loading = false;
-            open = false;
+			open = false;
 			$selectedProjectId = 0;
 			update();
 		};
@@ -22,7 +22,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700"
+	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
 <Tooltip>Delete project</Tooltip>
@@ -43,10 +43,10 @@
 		use:enhance={handleClick}
 	>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
 			disabled={loading}>Delete</Button
 		>
-		<Button disabled={loading} on:click={() => open = false}>Cancel</Button>
+		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

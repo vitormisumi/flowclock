@@ -70,7 +70,7 @@
 		{#each $filteredSessions as session, i}
 			{#if i >= $startRow && i <= $endRow}
 				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-primary-900 text-center hover:bg-primary-800"
+					class="cursor-pointer border-primary-800 bg-primary-900 text-center transition-colors hover:bg-primary-800"
 				>
 					<div
 						class="relative flex justify-around font-light text-primary-50"
@@ -147,7 +147,7 @@
 	<ButtonGroup>
 		<Button
 			disabled={$startRow === 0 ? true : false}
-			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+			class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
 			on:click={previous}
 		>
 			<i class="fa-solid fa-chevron-left" />
@@ -156,13 +156,13 @@
 			{#if p === $startRow / 10}
 				<Button
 					disabled
-					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+					class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
 				>
 					{p + 1}
 				</Button>
 			{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
 				<Button
-					class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+					class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
 					on:click={() => page(p)}
 				>
 					{p + 1}
@@ -171,7 +171,7 @@
 		{/each}
 		<Button
 			disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
-			class="border-primary-700 bg-primary-900 font-mono text-primary-100 hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+			class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
 			on:click={next}
 		>
 			<i class="fa-solid fa-chevron-right" />

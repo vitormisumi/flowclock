@@ -70,7 +70,7 @@
 			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Time Frame</h2>
 			<p class="text-center text-accent-500 md:text-xl">{dates}</p>
 		</div>
-		<Button size="xs" class="bg-primary-800 hover:bg-primary-700"
+		<Button size="xs" class="bg-primary-800 hover:bg-primary-700 transition-colors"
 			><i class="fa-solid fa-calendar" /></Button
 		>
 		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-3" bind:open>

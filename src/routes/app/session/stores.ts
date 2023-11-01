@@ -161,20 +161,23 @@ function createFocus() {
 	const { subscribe, set, update } = writable({
 		type: '',
 		id: 0,
+		projectId: 0,
 	})
-
+	
 	return {
 		subscribe,
-		set: (type: string, id: number) =>
+		set: (type: string, id: number, projectId: number) =>
 			set({
 				type: type,
 				id: id,
+				projectId: projectId,
 			}),
 		reset: () =>
 			set({
 				type: '',
 				id: 0,
-			}),
+				projectId: 0,
+				}),
 	}
 }
 

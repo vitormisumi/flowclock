@@ -6,7 +6,7 @@
 	<p class="text-secondary-100">Focusing on:</p>
 	<Badge class="bg-accent-400 text-accent-100">Project X</Badge>
 	<Button
-		class="h-10 w-48 bg-secondary-50 text-secondary-900 hover:bg-secondary-100 focus:bg-secondary-200 focus:ring-secondary-500"
+		class="h-10 w-48 bg-secondary-50 text-secondary-900 transition-colors hover:bg-secondary-100 focus:bg-secondary-200 focus:ring-secondary-500"
 	></Button>
 	<Dropdown>
 		<DropdownItem>Task 1</DropdownItem>

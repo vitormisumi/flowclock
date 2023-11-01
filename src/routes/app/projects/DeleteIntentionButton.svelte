@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-    export let intention: Intention;
+	export let intention: Intention;
 
 	let open = false;
 
@@ -14,7 +14,7 @@
 		formData.append('id', String(intention.id));
 		return async ({ update }) => {
 			loading = false;
-            open = false;
+			open = false;
 			update();
 		};
 	};
@@ -22,7 +22,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700"
+	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
 <Tooltip placement="left">Delete intention</Tooltip>
@@ -41,7 +41,7 @@
 		use:enhance={handleClick}
 	>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950"
+			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
 			disabled={loading}>Delete</Button
 		>

@@ -43,7 +43,7 @@
 		<Button
 			type="submit"
 			disabled={loading}
-			class="w-40 self-center bg-accent-500 hover:bg-accent-600">Reset password</Button
+			class="w-40 self-center bg-accent-500 hover:bg-accent-600 transition-colors">Reset password</Button
 		>
 	</form>
 </Modal>

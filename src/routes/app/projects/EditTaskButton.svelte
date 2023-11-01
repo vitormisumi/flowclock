@@ -35,13 +35,13 @@
 
 	let openDate = false;
 
-    let projectOptions: { name: string; value: number }[] = [];
+	let projectOptions: { name: string; value: number }[] = [];
 
-    $: projectOptions = $projects.map((x) => {
+	$: projectOptions = $projects.map((x) => {
 		return { name: x.name, value: x.id };
 	});
 
-    $: projectValue = projectOptions.find((x) => x.value === task.project_id)?.value;
+	$: projectValue = projectOptions.find((x) => x.value === task.project_id)?.value;
 
 	let priority: number = 0;
 
@@ -77,14 +77,16 @@
 		return async ({ update }) => {
 			open = false;
 			loading = false;
-			$selectedProjectId = Number(formData.get('project_id'))
+			$selectedProjectId = Number(formData.get('project_id'));
 			update();
 		};
 	};
 </script>
 
-<Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => (open = true)}
-	><i class="fa-solid fa-pen text-primary-50" /></Button
+<Button
+	size="xs"
+	class="bg-transparent transition-colors hover:bg-primary-700"
+	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
 >
 <Tooltip placement="left">Edit task</Tooltip>
 <Modal
@@ -112,7 +114,7 @@
 				items={projectOptions}
 				name="project_id"
 				placeholder="Project..."
-                value={projectValue}
+				value={projectValue}
 				class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 				required
 			/>
@@ -154,7 +156,10 @@
 			</div>
 			<div class="flex justify-center gap-1">
 				<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
-				<Button size="sm" type="submit" class="self-center bg-accent-500 hover:bg-accent-600"
+				<Button
+					size="sm"
+					type="submit"
+					class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
 					><i class="fa-solid fa-save pr-2" />Save</Button
 				>
 			</div>

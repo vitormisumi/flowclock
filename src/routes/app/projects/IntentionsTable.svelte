@@ -5,7 +5,7 @@
 	import { fade, slide } from 'svelte/transition';
 	import type { Writable } from 'svelte/store';
 	import EditIntentionButton from './EditIntentionButton.svelte';
-    import DeleteIntentionButton from './DeleteIntentionButton.svelte';
+	import DeleteIntentionButton from './DeleteIntentionButton.svelte';
 
 	const intentions: Writable<Intention[]> = getContext('intentions');
 
@@ -31,7 +31,7 @@
 		{#each $intentions as intention, i}
 			{#if intention.project_id === $selectedProject.id}
 				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-gradient-to-r from-primary-900 to-primary-800 hover:bg-primary-800 lg:text-base"
+					class="cursor-pointer border-primary-800 bg-gradient-to-r from-primary-900 to-primary-800 transition-colors hover:bg-primary-800 lg:text-base"
 				>
 					<TableBodyCell class="p-0 font-light text-primary-50">
 						<div

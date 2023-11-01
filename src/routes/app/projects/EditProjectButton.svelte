@@ -39,8 +39,10 @@
 	};
 </script>
 
-<Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => (open = true)}
-	><i class="fa-solid fa-pen text-primary-50" /></Button
+<Button
+	size="xs"
+	class="bg-transparent transition-colors hover:bg-primary-700"
+	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
 >
 <Tooltip>Edit project</Tooltip>
 <Modal
@@ -91,7 +93,7 @@
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 		/>
 		<input type="number" name="id" hidden value={$selectedProject.id} />
-		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600"
+		<Button type="submit" class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
 			><i class="fa-solid fa-save pr-2" />Save</Button
 		>
 	</form>

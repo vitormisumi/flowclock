@@ -62,6 +62,6 @@
 		>
 			<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
 		>
-		<Button type="submit" disabled={loading} class="w-40 self-center bg-accent-500 hover:bg-accent-600">Confirm change</Button>
+		<Button type="submit" disabled={loading} class="w-40 self-center bg-accent-500 hover:bg-accent-600 transition-colors">Confirm change</Button>
 	</form>
 </Modal>

@@ -40,7 +40,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-secondary-400 hover:bg-opacity-50 hover:text-secondary-200"
+	class="bg-transparent text-secondary-400 transition-colors hover:bg-opacity-50 hover:text-secondary-200"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-plus pr-2" />new project
@@ -88,8 +88,10 @@
 			value={group.id}
 			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
 		/>
-		<Button type="submit" class="self-center bg-accent-500 hover:bg-accent-600" disabled={loading}
-			><i class="fa-solid fa-plus pr-2" />New project</Button
+		<Button
+			type="submit"
+			class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
+			disabled={loading}><i class="fa-solid fa-plus pr-2" />New project</Button
 		>
 	</form>
 </Modal>

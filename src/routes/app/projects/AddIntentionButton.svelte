@@ -59,7 +59,7 @@
 					<Button
 						size="xs"
 						type="submit"
-						class="bg-accent-500 hover:bg-accent-600"
+						class="bg-accent-500 transition-colors hover:bg-accent-600"
 						disabled={loading}
 					>
 						Add Intention
@@ -71,7 +71,7 @@
 {:else}
 	<Button
 		size="xs"
-		class="bg-transparent text-secondary-400 hover:bg-transparent hover:text-secondary-200"
+		class="bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
 		on:click={() => (open = true)}
 	>
 		<i class="fa-solid fa-plus pr-2" />add intention

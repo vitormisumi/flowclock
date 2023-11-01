@@ -25,8 +25,8 @@
 	>
 		{message}
 	</p>
-	<!-- <p>id:{$session.id}</p>
-	<p>running:{$session.running}</p>
+	<!-- <p>id:{$session.id}</p> -->
+	<!-- <p>running:{$session.running}</p>
 	<p>start:{$session.start}</p>
 	<p>end:{$session.end}</p>
 	<p>warning:{$session.warning}</p>

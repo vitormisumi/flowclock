@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownDivider, Radio, DropdownItem } from 'flowbite-svelte';
+	import { Button, Radio, Modal, Tabs, TabItem } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { session, sessionFocus } from './stores';
 	import type { Writable } from 'svelte/store';
@@ -8,72 +8,85 @@
 	const tasks: Writable<Task[]> = getContext('tasks');
 	const intentions: Writable<Intention[]> = getContext('intentions');
 
+	let name: string | undefined;
+
+	$: switch ($sessionFocus.type) {
+		case 'task':
+			name = $tasks.find((task) => task.id === $sessionFocus.id)?.name;
+			break;
+		case 'intention':
+			name = $intentions.find((intention) => intention.id === $sessionFocus.id)?.name;
+	}
+
 	let group: string;
 
 	let open = false;
 </script>
 
-<Button disabled={$session.running}>
-	{group ? 'Focusing on: ' + $sessionFocus.type + $sessionFocus.id : 'Focus on...'}
+<Button disabled={$session.running} class="w-full transition-colors" on:click={() => (open = true)}>
+	{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
 </Button>
-<Dropdown placement="top" bind:open>
-	<div slot="header" class="px-4 py-2">
-		<h3 class="text-sm font-bold">Projects</h3>
-	</div>
-	{#each $projects as project}
-		<DropdownItem name="group1" value={project.id}>
-			{project.name}<i class="fa-solid fa-chevron-right pl-2" />
-		</DropdownItem>
-		<Dropdown placement="right-end">
-			{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
-				<div class="px-4 py-2">
+<Modal
+	size="sm"
+	class="h-96 max-h-96 overflow-y-scroll bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
+	outsideclose
+	bind:open
+>
+	<h2 class="text-md font-medium text-primary-50">Focus on:</h2>
+	<Tabs style="pill" class="flex-nowrap overflow-x-scroll whitespace-nowrap" contentClass="">
+		{#each $projects as project, i}
+			<TabItem
+				open={$sessionFocus.projectId ? project.id === $sessionFocus.projectId : i === $sessionFocus.projectId}
+				title={project.name}
+				activeClasses="bg-primary-700 rounded-lg h-full w-full p-3 text-primary-50"
+				inactiveClasses="bg-transparent hover:bg-primary-800 transition-colors rounded-lg h-full w-full p-3 text-secondary-200"
+			>
+				{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
 					<h3 class="text-sm font-bold">Tasks</h3>
-				</div>
-			{/if}
-			{#each $tasks as task}
-				{#if task.project_id === project.id}
-					<li>
-						<Radio
-							name="group2"
-							bind:group
-							value={task.id}
-							on:click={() => {
-								sessionFocus.set('task', task.id)
-								open = false;
-							}}
-							>{task.name}
-						</Radio>
-					</li>
 				{/if}
-			{/each}
-			{#if $intentions.filter((intention) => intention.project_id === project.id).length > 0}
-				<DropdownDivider />
-				<div class="px-4 py-2">
+				{#each $tasks as task}
+					{#if task.project_id === project.id}
+						<li class="list-none p-1">
+							<Radio
+								name="group2"
+								value={task.id}
+								color="orange"
+								class="cursor-pointer rounded-lg p-2 text-primary-50 transition-colors hover:bg-accent-500"
+								bind:group
+								on:click={() => {
+									sessionFocus.set('task', task.id, task.project_id);
+									open = false;
+								}}
+								>{task.name}
+							</Radio>
+						</li>
+					{/if}
+				{/each}
+				{#if $intentions.filter((intention) => intention.project_id === project.id).length > 0}
 					<h3 class="text-sm font-bold">Intentions</h3>
-				</div>
-				<DropdownDivider />
-			{/if}
-			{#each $intentions as intention}
-				{#if intention.project_id === project.id}
-					<li>
-						<Radio
-							name="group3"
-							bind:group
-							value={intention.id}
-							on:click={() => {
-								sessionFocus.set('intention', intention.id)
-								open = false;
-							}}
-							>{intention.name}
-						</Radio>
-					</li>
 				{/if}
-			{/each}
-			{#if $tasks.filter((task) => task.project_id === project.id).length === 0 && $intentions.filter((intention) => intention.project_id === project.id).length === 0}
-				<div class="px-4 py-2">
+				{#each $intentions as intention}
+					{#if intention.project_id === project.id}
+						<li class="list-none p-1">
+							<Radio
+								name="group3"
+								value={intention.id}
+								color="orange"
+								class="cursor-pointer rounded-lg p-2 text-primary-50 transition-colors hover:bg-accent-500"
+								bind:group
+								on:click={() => {
+									sessionFocus.set('intention', intention.id, intention.project_id);
+									open = false;
+								}}
+								>{intention.name}
+							</Radio>
+						</li>
+					{/if}
+				{/each}
+				{#if $tasks.filter((task) => task.project_id === project.id).length === 0 && $intentions.filter((intention) => intention.project_id === project.id).length === 0}
 					<h3 class="text-sm font-bold">This project has no tasks or intentions</h3>
-				</div>
-			{/if}
-		</Dropdown>
-	{/each}
-</Dropdown>
+				{/if}
+			</TabItem>
+		{/each}
+	</Tabs>
+</Modal>

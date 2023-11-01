@@ -47,13 +47,16 @@
 				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
-			<Button type="submit" size="xs" class="bg-accent-500 hover:bg-accent-600" disabled={loading}
-				>Save</Button
+			<Button
+				type="submit"
+				size="xs"
+				class="bg-accent-500 transition-colors hover:bg-accent-600"
+				disabled={loading}>Save</Button
 			>
 		</form>
 	{:else}
 		<Button
-			class="cursor-text bg-transparent pl-2 hover:bg-transparent focus:ring-0"
+			class="cursor-text bg-transparent pl-2 transition-colors hover:bg-transparent focus:ring-0"
 			on:click={() => {
 				edit = group.id;
 				showDelete = 0;

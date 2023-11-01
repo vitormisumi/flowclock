@@ -47,7 +47,7 @@
 		<form method="POST" action="/app/session" use:enhance={handleClick}>
 			<Button
 				size="sm"
-				class="w-28 bg-secondary-50 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200"
+				class="w-28 bg-secondary-50 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200 transition-colors"
 				type="submit"
 				disabled={loading}><i class="fa-solid fa-stop pr-2" />Break</Button
 			>

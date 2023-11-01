@@ -72,7 +72,7 @@
 			<Button
 				size="xs"
 				type="submit"
-				class="self-center bg-transparent text-secondary-400 hover:bg-secondary-800 hover:bg-opacity-50 hover:text-secondary-100 focus:ring-0"
+				class="self-center bg-transparent text-secondary-400 transition-colors hover:bg-secondary-800 hover:bg-opacity-50 hover:text-secondary-100 focus:ring-0"
 				on:click={() => (open = true)}
 			>
 				<i class="fa-solid fa-plus pr-2" />new group
@@ -90,7 +90,7 @@
 				<Button
 					size="xs"
 					type="submit"
-					class="bg-accent-500 hover:bg-accent-600"
+					class="bg-accent-500 transition-colors hover:bg-accent-600"
 					disabled={loading}
 				>
 					Save

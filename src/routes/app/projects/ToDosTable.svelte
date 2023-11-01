@@ -39,9 +39,9 @@
 <Table hoverable shadow>
 	<TableBody>
 		{#each $toDos as toDo, i}
-			{#if toDo.project_id === $selectedProject.id && (toDo.done ===false || show === true)}
+			{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
 				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-primary-900 hover:bg-primary-800 lg:text-base"
+					class="cursor-pointer border-primary-800 bg-primary-900 transition-colors hover:bg-primary-800 lg:text-base"
 				>
 					<TableBodyCell class="p-0 font-light text-primary-50">
 						<div

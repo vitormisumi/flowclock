@@ -22,11 +22,11 @@
 					</div>
 				</Popover>
 			</div>
-			<Button size="xs" class="bg-primary-800 hover:bg-primary-700">
+			<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
 				<i class="fa-solid fa-ellipsis-vertical" />
 			</Button>
 			<Dropdown class="p-0">
-				<DropdownItem class="p-0 hover:bg-transparent">
+				<DropdownItem class="p-0 transition-colors hover:bg-transparent">
 					<Button on:click={() => (show = !show)}>{show ? 'Hide' : 'Show'} completed</Button>
 				</DropdownItem>
 			</Dropdown>

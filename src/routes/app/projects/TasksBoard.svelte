@@ -94,7 +94,7 @@
 						<p>{task.name}</p>
 						{#if hover}
 							<div class="flex p-0" in:fade>
-								<StartTaskButton />
+								<StartTaskButton {task}/>
 								<EditTaskButton {task} />
 								<DeleteTaskButton {task} />
 							</div>

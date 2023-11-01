@@ -33,7 +33,11 @@
 	};
 </script>
 
-<Button size="xs" class="bg-transparent hover:bg-primary-700" on:click={() => (open = true)}>
+<Button
+	size="xs"
+	class="bg-transparent transition-colors hover:bg-primary-700"
+	on:click={() => (open = true)}
+>
 	<i class="fa-solid fa-pen text-primary-50" />
 </Button>
 <Tooltip placement="left">Edit intention</Tooltip>
@@ -76,7 +80,11 @@
 		<input type="number" name="id" hidden value={intention.id} />
 		<div class="flex justify-center gap-1">
 			<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
-			<Button size="sm" type="submit" class="self-center bg-accent-500 hover:bg-accent-600">
+			<Button
+				size="sm"
+				type="submit"
+				class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
+			>
 				<i class="fa-solid fa-save pr-2" />Save
 			</Button>
 		</div>
