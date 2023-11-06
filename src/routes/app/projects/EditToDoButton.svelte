@@ -62,12 +62,13 @@
 	};
 </script>
 
-<button
+<Button
+	size="xs"
 	class="rounded-lg bg-transparent px-3 py-1.5 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-pen text-primary-50" />
-</button>
+</Button>
 <Tooltip placement="left">Edit to-do</Tooltip>
 <Modal
 	bind:open

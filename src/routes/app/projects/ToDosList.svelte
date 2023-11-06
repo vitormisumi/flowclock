@@ -26,22 +26,26 @@
 <div class="grid gap-1">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
-			<button
-				class="grid w-full rounded-lg bg-primary-900 px-2 py-1 font-light text-primary-50 lg:text-base"
+			<div
+				class="grid w-full rounded-lg border border-primary-900 bg-primary-900"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
-				on:click={() => (openRow = openRow === i ? null : i)}
-				on:keydown={() => (openRow = openRow === i ? null : i)}
+				role="listitem"
 			>
-				<div class="flex h-8 w-full items-center justify-between">
-					<div class="flex">
-						<CompleteToDoButton {toDo}/>
-						<p class="{toDo.done === true ? 'line-through' : 'no-underline'} pl-2">
-							{toDo.name}
-						</p>
-					</div>
+				<div class="flex gap-2 overflow-hidden px-2">
+					<CompleteToDoButton {toDo} />
+					<button
+						class="h-10 grow overflow-hidden text-left font-light text-primary-50 {toDo.done ===
+						true
+							? 'line-through'
+							: 'no-underline'} truncate"
+						on:click={() => (openRow = openRow === i ? null : i)}
+						on:keydown={() => (openRow = openRow === i ? null : i)}
+					>
+						{toDo.name}
+					</button>
 					{#if openEdit === i}
-						<div in:fade class="flex">
+						<div in:fade class="flex py-1.5">
 							<EditToDoButton {toDo} />
 							<DeleteToDoButton {toDo} />
 						</div>
@@ -54,19 +58,25 @@
 								{toDo.description}
 							</p>
 						{/if}
-						{#if toDo.due_date}
-							<p class="text-primary-100">
-								<i class="fa-solid fa-calendar pr-2" />{toDo.due_date}
-							</p>
-						{/if}
-						{#if toDo.priority}
-							<p class="text-primary-100">
-								<i class="fa-solid fa-flag pr-2" />{priorityOptions[toDo.priority]}
-							</p>
-						{/if}
+						<div class="grid grid-cols-2 justify-items-center w-full">
+							{#if toDo.due_date}
+								<p class="text-primary-100">
+									<i class="fa-solid fa-calendar pr-2" />{toDo.due_date}
+								</p>
+							{:else}
+								<p class="text-primary-100">
+									<i class="fa-solid fa-calendar pr-2" />No due date
+								</p>
+							{/if}
+							{#if toDo.priority !== null}
+								<p class="text-primary-100">
+									<i class="fa-solid fa-flag pr-2" />{priorityOptions[toDo.priority]}
+								</p>
+							{/if}
+						</div>
 					</div>
 				{/if}
-			</button>
+			</div>
 		{/if}
 	{/each}
 </div>

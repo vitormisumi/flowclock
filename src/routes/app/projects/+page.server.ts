@@ -316,6 +316,28 @@ export const actions = {
       return { message: 'To-Do successfully completed', success: true };
     }
   },
+
+  sortToDos: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    const sort = formData.get('sort') as string;
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ to_dos_sorting: sort })
+      .eq('user_id', session.user.id)
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: 'Sorting successfully changed', success: true };
+  },
     
   addStatus: async ({ request, locals: { supabase, getSession } }) => {
     const session = await getSession();

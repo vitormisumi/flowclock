@@ -17,17 +17,21 @@
 <div class="grid gap-1">
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
-			<button
-				class="grid rounded-lg bg-gradient-to-r border border-primary-900 content-center h-10 box-border from-primary-800 to-primary-900 px-2 py-1 font-light text-primary-50 lg:text-base"
+			<div
+				class="grid w-full rounded-lg bg-gradient-to-r from-primary-800 border border-primary-900 to-primary-900"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
-				on:click={() => (openRow = openRow === i ? null : i)}
-				on:keydown={() => (openRow = openRow === i ? null : i)}
+				role="listitem"
 			>
-				<div class="flex h-8 w-full items-center justify-between">
-					<p>{intention.name}</p>
+				<div class="flex gap-2 overflow-hidden px-2">
+					<button
+						class="h-10 grow overflow-hidden text-left font-light text-primary-50"
+						on:click={() => (openRow = openRow === i ? null : i)}
+						on:keydown={() => (openRow = openRow === i ? null : i)}
+						>{intention.name}
+					</button>
 					{#if openEdit === i}
-						<div in:fade class="flex">
+						<div in:fade class="flex py-1.5">
 							<StartIntentionButton {intention} />
 							<EditIntentionButton {intention} />
 							<DeleteIntentionButton {intention} />
@@ -43,7 +47,7 @@
 						{/if}
 					</div>
 				{/if}
-			</button>
+			</div>
 		{/if}
 	{/each}
 </div>

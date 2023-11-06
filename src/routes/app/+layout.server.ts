@@ -49,7 +49,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.from('to_dos')
 		.select('*')
 		.eq('user_id', session.user.id)
-		.order('id')
+		.order(settings?.to_dos_sorting || 'id', { ascending: settings?.to_dos_sorting === 'priority' ? false : true })
 	
 	const { data: intentions } = await supabase
 		.from('intentions')

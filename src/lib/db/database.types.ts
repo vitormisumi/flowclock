@@ -38,12 +38,14 @@ export interface Database {
           {
             foreignKeyName: "breaks_session_id_fkey"
             columns: ["session_id"]
+            isOneToOne: false
             referencedRelation: "sessions"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "breaks_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -84,12 +86,14 @@ export interface Database {
           {
             foreignKeyName: "intentions_project_id_fkey"
             columns: ["project_id"]
+            isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "intentions_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -127,12 +131,14 @@ export interface Database {
           {
             foreignKeyName: "interruptions_session_id_fkey"
             columns: ["session_id"]
+            isOneToOne: false
             referencedRelation: "sessions"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "interruptions_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -164,12 +170,14 @@ export interface Database {
           {
             foreignKeyName: "process_tasks_process_id_fkey"
             columns: ["process_id"]
+            isOneToOne: false
             referencedRelation: "processes"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "process_tasks_task_id_fkey"
             columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           }
@@ -219,6 +227,7 @@ export interface Database {
           {
             foreignKeyName: "project_groups_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -265,12 +274,14 @@ export interface Database {
           {
             foreignKeyName: "projects_group_id_fkey"
             columns: ["group_id"]
+            isOneToOne: false
             referencedRelation: "project_groups"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "projects_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -314,18 +325,21 @@ export interface Database {
           {
             foreignKeyName: "sessions_intention_id_fkey"
             columns: ["intention_id"]
+            isOneToOne: false
             referencedRelation: "intentions"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "sessions_task_id_fkey"
             columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "sessions_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -338,6 +352,7 @@ export interface Database {
           date_format: string
           ratio: number
           separator: number
+          to_dos_sorting: string
           user_id: string
           warning: number
         }
@@ -347,6 +362,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
+          to_dos_sorting?: string
           user_id: string
           warning?: number
         }
@@ -356,6 +372,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
+          to_dos_sorting?: string
           user_id?: string
           warning?: number
         }
@@ -363,6 +380,7 @@ export interface Database {
           {
             foreignKeyName: "settings_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -391,6 +409,7 @@ export interface Database {
           {
             foreignKeyName: "tags_task_id_fkey"
             columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           }
@@ -425,12 +444,14 @@ export interface Database {
           {
             foreignKeyName: "task_statuses_project_id_fkey"
             columns: ["project_id"]
+            isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "task_statuses_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -477,18 +498,21 @@ export interface Database {
           {
             foreignKeyName: "tasks_project_id_fkey"
             columns: ["project_id"]
+            isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "tasks_status_id_fkey"
             columns: ["status_id"]
+            isOneToOne: false
             referencedRelation: "task_statuses"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "tasks_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -535,12 +559,14 @@ export interface Database {
           {
             foreignKeyName: "to_dos_project_id_fkey"
             columns: ["project_id"]
+            isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "to_dos_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }

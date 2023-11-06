@@ -4,6 +4,15 @@ export const separatorOptions: {[key: number]: string} = {
     2: '.'
 }
 
+export const dateFormat: { [key: string]: string } = {
+ddmmyyyy: 'dd-MM-yyyy',
+mmddyyyy: 'MM-dd-yyyy',
+yyyymmdd: 'yyyy-MM-dd',
+ddmmyy: 'dd-MM-yy',
+mmddyy: 'MM-dd-yy',
+yymmdd: 'yy-MM-dd'
+};
+
 export const priorityOptions = [
     {
         name: 'High',
@@ -28,14 +37,5 @@ export const priorityColors: { [key: number]: string } = {
     1: 'border-green-500',
     2: 'border-yellow-500',
     3: 'border-red-500'
-};
-    
-export const dateFormat: { [key: string]: string } = {
-    ddmmyyyy: 'dd-MM-yyyy',
-    mmddyyyy: 'MM-dd-yyyy',
-    yyyymmdd: 'yyyy-MM-dd',
-    ddmmyy: 'dd-MM-yy',
-    mmddyy: 'MM-dd-yy',
-    yymmdd: 'yy-MM-dd'
 };
     
