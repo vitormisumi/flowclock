@@ -52,7 +52,7 @@
 				value={$settings.ratio}
 			/>
 		</Label>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-1" />
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-1" />
 	</div>
 	<Popover triggeredBy="#hover-1" class="z-10 w-60 md:w-80" placement="bottom-start">
 		<div class="p-2 text-sm">
@@ -74,7 +74,7 @@
 			class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
 			disabled={!warning}
 		/>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-2" />
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-2" />
 		<Popover triggeredBy="#hover-2" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
 				<h3 class="font-semibold text-secondary-900">
@@ -97,7 +97,7 @@
 				class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
 			/>
 		</Label>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-primary-50" id="hover-3" />
+		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-3" />
 		<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
 				The message that appears while you are on a break. You can use this to remind you of how you

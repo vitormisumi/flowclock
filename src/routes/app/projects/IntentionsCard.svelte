@@ -7,7 +7,7 @@
 <Card class="h-full min-w-full border-0 bg-primary-800">
 	<div class="flex items-center h-7">
 		<h2 class="pr-1 font-bold text-primary-50">Intentions</h2>
-		<i class="fa-regular fa-circle-question text-primary-50" id="hover-3" />
+		<i class="fa-regular fa-circle-question text-secondary-500" id="hover-3" />
 	</div>
 	<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
 		<div class="p-2 text-sm">

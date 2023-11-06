@@ -13,6 +13,7 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
+	import { priorityOptions, dateFormat } from '$lib/constants/constants';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
@@ -23,15 +24,6 @@
 	export let task: Task;
 
 	let date: Date;
-
-	const dateFormat: { [key: string]: string } = {
-		ddmmyyyy: 'dd-MM-yyyy',
-		mmddyyyy: 'MM-dd-yyyy',
-		yyyymmdd: 'yyyy-MM-dd',
-		ddmmyy: 'dd-MM-yy',
-		mmddyy: 'MM-dd-yy',
-		yymmdd: 'yy-MM-dd'
-	};
 
 	let openDate = false;
 
@@ -44,25 +36,6 @@
 	$: projectValue = projectOptions.find((x) => x.value === task.project_id)?.value;
 
 	let priority: number = 0;
-
-	const priorityOptions = [
-		{
-			name: 'High',
-			value: 3
-		},
-		{
-			name: 'Medium',
-			value: 2
-		},
-		{
-			name: 'Low',
-			value: 1
-		},
-		{
-			name: 'None',
-			value: 0
-		}
-	];
 
 	let open = false;
 

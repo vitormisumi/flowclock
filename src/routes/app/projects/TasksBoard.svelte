@@ -84,17 +84,17 @@
 			>
 				{#each status.tasks as task (task.id)}
 					<div
-						class="flex h-10 w-full items-center justify-between rounded-lg bg-primary-800 p-2 text-primary-50"
+						class="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50"
 						on:mouseenter={() => (openEdit = task.id)}
 						on:mouseleave={() => (openEdit = null)}
 						animate:flip
 						role="cell"
 						tabindex="0"
 					>
-						<p>{task.name}</p>
+						<p class="truncate">{task.name}</p>
 						{#if openEdit === task.id}
 							<div class="flex p-0" in:fade>
-								<StartTaskButton {task}/>
+								<StartTaskButton {task} />
 								<EditTaskButton {task} />
 								<DeleteTaskButton {task} />
 							</div>

@@ -18,7 +18,7 @@
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
 			<button
-				class="grid rounded-lg border border-primary-900 bg-gradient-to-r from-primary-800 to-primary-900 px-2 py-1 font-light text-primary-50 lg:text-base"
+				class="grid rounded-lg bg-gradient-to-r border border-primary-900 content-center h-10 box-border from-primary-800 to-primary-900 px-2 py-1 font-light text-primary-50 lg:text-base"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
 				on:click={() => (openRow = openRow === i ? null : i)}

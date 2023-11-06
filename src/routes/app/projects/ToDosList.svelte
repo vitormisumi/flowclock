@@ -27,7 +27,7 @@
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
 			<button
-				class="grid w-full rounded-lg border border-primary-900 bg-primary-800 px-2 py-1 font-light text-primary-50 lg:text-base"
+				class="grid w-full rounded-lg bg-primary-900 px-2 py-1 font-light text-primary-50 lg:text-base"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
 				on:click={() => (openRow = openRow === i ? null : i)}

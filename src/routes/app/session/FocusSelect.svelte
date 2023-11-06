@@ -23,8 +23,16 @@
 	let open = false;
 </script>
 
-<Button disabled={$session.running} class="w-full transition-colors" on:click={() => (open = true)}>
-	{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
+<Button
+	disabled={$session.running}
+	class="w-full overflow-hidden border text-left {$session.running
+		? 'border-transparent hover:bg-transparent'
+		: 'border-accent-500 hover:bg-accent-800'} bg-transparent transition-colors"
+	on:click={() => (open = true)}
+>
+	<span class="truncate">
+		{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
+	</span>
 </Button>
 {#if $session.running}
 	<Popover class="max-w-md bg-primary-900">
@@ -37,7 +45,7 @@
 {/if}
 <Modal
 	size="sm"
-	class="h-96 max-h-96 overflow-y-scroll bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
+	class="h-96 max-h-96 bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 	outsideclose
 	bind:open
 >
@@ -62,7 +70,7 @@
 								name="group2"
 								value={task.id}
 								color="orange"
-								class="cursor-pointer rounded-lg p-2 text-primary-50 transition-colors hover:bg-accent-500"
+								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-50 transition-colors hover:border-accent-500"
 								bind:group
 								on:click={() => {
 									sessionFocus.set('task', task.id, task.project_id);
@@ -83,7 +91,7 @@
 								name="group3"
 								value={intention.id}
 								color="orange"
-								class="cursor-pointer rounded-lg p-2 text-primary-50 transition-colors hover:bg-accent-500"
+								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-50 transition-colors hover:border-accent-500"
 								bind:group
 								on:click={() => {
 									sessionFocus.set('intention', intention.id, intention.project_id);

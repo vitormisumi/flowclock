@@ -20,11 +20,12 @@
 	};
 </script>
 
-<Button
-	size="xs"
-	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
-	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
+<button
+	class="flex items-center rounded-lg bg-transparent px-3 py-1.5 transition-colors hover:bg-primary-700"
+	on:click|stopPropagation={() => (open = true)}
 >
+	<i class="fa-solid fa-trash text-xs text-red-700" />
+</button>
 <Tooltip placement="left">Delete to-do</Tooltip>
 <Modal
 	bind:open

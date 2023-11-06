@@ -11,7 +11,7 @@
 		<div class="flex justify-between">
 			<div class="flex items-center">
 				<h2 class="pr-1 font-bold text-primary-50">To-Dos</h2>
-				<i class="fa-regular fa-circle-question text-primary-50" id="hover-1" />
+				<i class="fa-regular fa-circle-question text-secondary-500" id="hover-1" />
 				<Popover triggeredBy="#hover-1" class="z-10 w-60 md:w-80" placement="bottom-start">
 					<div class="p-2 text-sm">
 						<h3 class="font-semibold text-secondary-900">Quick Duties</h3>

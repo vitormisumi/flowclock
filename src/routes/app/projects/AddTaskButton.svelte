@@ -4,6 +4,7 @@
 	import { enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
 	import { dateFromTimestamp } from '$lib/functions/functions';
+	import { priorityOptions, dateFormat } from '$lib/constants/constants';
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -15,35 +16,7 @@
 
 	let date: Date;
 
-	const dateFormat: { [key: string]: string } = {
-		ddmmyyyy: 'dd-MM-yyyy',
-		mmddyyyy: 'MM-dd-yyyy',
-		yyyymmdd: 'yyyy-MM-dd',
-		ddmmyy: 'dd-MM-yy',
-		mmddyy: 'MM-dd-yy',
-		yymmdd: 'yy-MM-dd'
-	};
-
 	let priority: number = 0;
-
-	const priorityOptions = [
-		{
-			name: 'High',
-			value: 3
-		},
-		{
-			name: 'Medium',
-			value: 2
-		},
-		{
-			name: 'Low',
-			value: 1
-		},
-		{
-			name: 'None',
-			value: 0
-		}
-	];
 
 	let open = false;
 

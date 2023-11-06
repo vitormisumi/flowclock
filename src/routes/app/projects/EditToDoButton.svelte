@@ -13,6 +13,7 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
+	import { priorityOptions, dateFormat, priorityColors } from '$lib/constants/constants';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
@@ -24,15 +25,6 @@
 
 	let date: Date;
 
-	const dateFormat: { [key: string]: string } = {
-		ddmmyyyy: 'dd-MM-yyyy',
-		mmddyyyy: 'MM-dd-yyyy',
-		yyyymmdd: 'yyyy-MM-dd',
-		ddmmyy: 'dd-MM-yy',
-		mmddyy: 'MM-dd-yy',
-		yymmdd: 'yy-MM-dd'
-	};
-
 	let openDate = false;
 
 	let projectOptions: { name: string; value: number }[] = [];
@@ -43,26 +35,13 @@
 
 	$: projectValue = projectOptions.find((x) => x.value === toDo.project_id)?.value;
 
-	let priority: number = 0;
+	let priority: number = toDo.priority || 0;
 
-	const priorityOptions = [
-		{
-			name: 'High',
-			value: 3
-		},
-		{
-			name: 'Medium',
-			value: 2
-		},
-		{
-			name: 'Low',
-			value: 1
-		},
-		{
-			name: 'None',
-			value: 0
-		}
-	];
+	let priorityOpen = false;
+
+	let priorityColor: string;
+
+	$: priorityColor = priorityColors[priority];
 
 	let open = false;
 
@@ -83,11 +62,12 @@
 	};
 </script>
 
-<Button
-	size="xs"
-	class="bg-transparent transition-colors hover:bg-primary-700"
-	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
+<button
+	class="rounded-lg bg-transparent px-3 py-1.5 transition-colors hover:bg-primary-700"
+	on:click={() => (open = true)}
 >
+	<i class="fa-solid fa-pen text-primary-50" />
+</button>
 <Tooltip placement="left">Edit to-do</Tooltip>
 <Modal
 	bind:open
@@ -108,8 +88,8 @@
 				placeholder="Task name"
 				value={toDo.name}
 				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
-				required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
-			>
+				required
+			></Input>
 			<Select
 				items={projectOptions}
 				name="project_id"
@@ -128,30 +108,38 @@
 		<input type="number" name="id" hidden value={toDo.id} />
 		<div class="flex justify-between">
 			<div>
-				<Button size="sm" disabled={loading}>Priority {priority}</Button>
-				<Dropdown>
+				<Button size="sm" class="border {priorityColor} bg-transparent" disabled={loading}>
+					Priority
+				</Button>
+				<Dropdown bind:open={priorityOpen}>
 					{#each priorityOptions as option}
 						<DropdownItem
 							class={priority === option.value ? 'bg-secondary-50' : 'bg-transparent'}
-							on:click={() => (priority = option.value)}>{option.name}</DropdownItem
+							on:click={() => {
+								priority = option.value;
+								priorityOpen = false;
+							}}
 						>
+							{option.name}
+						</DropdownItem>
 					{/each}
 				</Dropdown>
-				<Button size="sm" on:click={() => (openDate = true)}>
+				<Button size="sm" class="border bg-transparent" on:click={() => (openDate = !openDate)}>
 					Due {date && !openDate
 						? dateFromTimestamp(String(date), $settings.date_format, $settings.separator)
 						: ''}
 				</Button>
 				{#if openDate}
-					<DateInput
-						closeOnSelection
-						visible
-						format={dateFormat[$settings.date_format]}
-						min={new Date()}
-						max={new Date(String(new Date().getFullYear() + 10))}
-						bind:value={date}
-						on:select={() => (openDate = false)}
-					/>
+					<div class="top-50 right-50 fixed">
+						<DateInput
+							visible
+							format={dateFormat[$settings.date_format]}
+							min={new Date()}
+							max={new Date(String(new Date().getFullYear() + 10))}
+							bind:value={date}
+							on:select={() => (openDate = false)}
+						/>
+					</div>
 				{/if}
 			</div>
 			<div class="flex justify-center gap-1">
@@ -160,8 +148,9 @@
 					size="sm"
 					type="submit"
 					class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
-					><i class="fa-solid fa-save pr-2" />Save</Button
 				>
+					<i class="fa-solid fa-save pr-2" />Save
+				</Button>
 			</div>
 		</div>
 	</form>

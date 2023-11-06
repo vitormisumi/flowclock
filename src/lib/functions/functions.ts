@@ -1,3 +1,5 @@
+import { separatorOptions } from "$lib/constants/constants";
+
 export function millisecondsToClock(milliseconds: number): string {
 	let hours = Math.floor(milliseconds / 3600000);
 	let minutes = Math.floor((milliseconds / 60000) % 60);
@@ -13,13 +15,7 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 		return ''
 	}
 	let sep;
-	if (separator === 0) {
-		sep = '/'
-	} else if (separator === 1) {
-		sep = '-'
-	} else {
-		sep = '.'
-	}
+	sep = separatorOptions[separator];
 	let date = new Date(timestamp);
 	let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 	let month = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
