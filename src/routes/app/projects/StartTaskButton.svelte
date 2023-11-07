@@ -7,14 +7,14 @@
 
 	export let task: Task;
 
-	const handleClick: SubmitFunction = ({ formData }) => {
-		goto('/app/session');
+	const handleClick: SubmitFunction = async ({ formData }) => {
 		const start = Date.now();
 		sessionBreak.end();
 		session.start(0, start);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'task');
 		formData.append('focus_id', String(task.id));
+		await goto('/app/session');
 		return async ({ update }) => {
 			update();
 		};

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Radio, Modal, Tabs, TabItem, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
-	import { session, sessionFocus } from './stores';
+	import { session, sessionFocus, sessionBreak } from './stores';
 	import type { Writable } from 'svelte/store';
 
 	const projects: Writable<Project[]> = getContext('projects');
@@ -27,7 +27,9 @@
 	disabled={$session.running}
 	class="w-full overflow-hidden border text-left {$session.running
 		? 'border-transparent hover:bg-transparent'
-		: 'border-accent-500 hover:bg-accent-800'} bg-transparent transition-colors"
+		: 'border-accent-500 hover:bg-accent-800'} {$sessionBreak.running && !$sessionBreak.alarmPlayed
+		? 'border-none border-primary-700 bg-primary-900 text-primary-600 hover:border hover:bg-primary-800 focus:ring-primary-700'
+		: 'focus:ring-accent-300'} bg-transparent transition-colors"
 	on:click={() => (open = true)}
 >
 	<span class="truncate">

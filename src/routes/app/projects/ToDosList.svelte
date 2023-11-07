@@ -2,21 +2,35 @@
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
 	import { fade, slide } from 'svelte/transition';
+	import { sorting } from './stores';
 	import EditToDoButton from './EditToDoButton.svelte';
 	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
+	import ToDosDetails from './ToDosDetails.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
-	export let show: boolean;
-
-	const priorityOptions: { [key: number]: string } = {
-		3: 'High',
-		2: 'Medium',
-		1: 'Low',
-		0: 'None'
+	$: switch ($sorting.toDos) {
+		case 'due_date':
+			$toDos = $toDos.sort((a, b) => {
+				if (a.due_date === null && b.due_date === null) return 0;
+				if (a.due_date === null) return 1;
+				if (b.due_date === null) return -1;
+				const dateA = new Date(a.due_date);
+				const dateB = new Date(b.due_date);
+				return dateA.getTime() - dateB.getTime();
+			})
+			break;
+		case 'priority':
+			$toDos = $toDos.sort((a, b) => b.priority - a.priority);
+			break;
+		case 'name':
+			$toDos = $toDos.sort((a, b) => a.name.localeCompare(b.name));
+			break;
 	};
+
+	export let show: boolean;
 
 	let openRow: number | null = null;
 
@@ -53,27 +67,7 @@
 				</div>
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-						{#if toDo.description}
-							<p class="whitespace-normal text-primary-100">
-								{toDo.description}
-							</p>
-						{/if}
-						<div class="grid grid-cols-2 justify-items-center w-full">
-							{#if toDo.due_date}
-								<p class="text-primary-100">
-									<i class="fa-solid fa-calendar pr-2" />{toDo.due_date}
-								</p>
-							{:else}
-								<p class="text-primary-100">
-									<i class="fa-solid fa-calendar pr-2" />No due date
-								</p>
-							{/if}
-							{#if toDo.priority !== null}
-								<p class="text-primary-100">
-									<i class="fa-solid fa-flag pr-2" />{priorityOptions[toDo.priority]}
-								</p>
-							{/if}
-						</div>
+						<ToDosDetails {toDo} />
 					</div>
 				{/if}
 			</div>

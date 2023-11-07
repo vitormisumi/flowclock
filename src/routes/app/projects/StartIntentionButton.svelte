@@ -7,15 +7,15 @@
 
 	export let intention: Intention;
 
-	const handleClick: SubmitFunction = ({ formData }) => {
-		goto('/app/session');
+	const handleClick: SubmitFunction = async ({ formData }) => {
 		const start = Date.now();
 		sessionBreak.end();
 		session.start(0, start);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'intention');
 		formData.append('focus_id', String(intention.id));
-		return async ({ update }) => {
+		await goto('/app/session');
+		return ({ update }) => {
 			update();
 		};
 	};

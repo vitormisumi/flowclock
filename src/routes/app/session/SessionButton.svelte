@@ -45,9 +45,10 @@
 	<form method="POST" action="?/start" use:enhance={handleStart}>
 		<Button
 			size="xl"
-			class={$sessionBreak.running && !$sessionBreak.alarmPlayed
-				? 'w-full bg-primary-900 p-2 text-xl text-primary-600 transition-colors hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700 md:p-4 md:text-2xl'
-				: 'w-full bg-accent-500 p-2 text-xl transition-colors duration-1000 hover:bg-accent-600 focus:ring-accent-300 md:p-4 md:text-2xl'}
+			class="w-full p-2 text-xl transition-colors md:p-4 md:text-2xl {$sessionBreak.running &&
+			!$sessionBreak.alarmPlayed
+				? 'bg-primary-900 text-primary-600 hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700'
+				: 'bg-accent-500 duration-1000 hover:bg-accent-600 focus:ring-accent-300'}"
 			type="submit"
 			disabled={loading}
 		>

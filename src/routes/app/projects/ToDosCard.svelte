@@ -3,10 +3,16 @@
 	import { enhance } from '$app/forms';
 	import ToDosList from './ToDosList.svelte';
 	import AddToDoButton from './AddToDoButton.svelte.svelte';
+	import { sorting } from './stores';
 
 	let show = false;
 
 	let open = false;
+
+	function sort(sortBy: string) {
+		open = false;
+		sorting.sortToDos(sortBy);
+	}
 </script>
 
 <Card class="h-full min-w-full gap-8 border-0 bg-primary-800">
@@ -38,17 +44,17 @@
 				<Dropdown placement="right" class="w-40">
 					<form method="POST" action="?/sortToDos" use:enhance>
 						<DropdownItem>
-							<button type="submit" name="sort" value="name" on:click={() => (open = false)}>
+							<button type="submit" name="sort" value="name" on:click={() => sort('name')}>
 								Name
 							</button>
 						</DropdownItem>
 						<DropdownItem>
-							<button type="submit" name="sort" value="due_date" on:click={() => (open = false)}>
+							<button type="submit" name="sort" value="due_date" on:click={() => sort('due_date')}>
 								Due Date
 							</button>
 						</DropdownItem>
 						<DropdownItem>
-							<button type="submit" name="sort" value="priority" on:click={() => (open = false)}>
+							<button type="submit" name="sort" value="priority" on:click={() => sort('priority')}>
 								Priority
 							</button>
 						</DropdownItem>
