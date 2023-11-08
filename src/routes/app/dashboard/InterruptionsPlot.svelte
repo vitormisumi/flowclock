@@ -4,32 +4,19 @@
 
 	export let group: string;
 
-	$: distribution =
-		group === 'frequency'
-			? Object.fromEntries(
-					Object.entries(
-						$filteredInterruptions.reduce(
-							(distribution, item) => {
-								const reason = item.reason ?? 'no reason';
-								distribution[reason] = (distribution[reason] || 0) + 1;
-								return distribution;
-							},
-							{} as { [key: string]: number }
-						)
-					).sort((x, y) => y[1] - x[1])
-			  )
-			: Object.fromEntries(
-					Object.entries(
-						$filteredInterruptions.reduce(
-							(distribution, item) => {
-								const reason = item.reason ?? 'no reason';
-								distribution[reason] = (distribution[reason] || 0) + (item.duration ?? 0);
-								return distribution;
-							},
-							{} as { [key: string]: number }
-						)
-					).sort((x, y) => y[1] - x[1])
-			  );
+	$: distribution = Object.fromEntries(
+		Object.entries(
+			$filteredInterruptions.reduce(
+				(distribution, item) => {
+					const reason = item.reason ?? 'no reason';
+					distribution[reason] =
+						(distribution[reason] || 0) + (group === 'frequency' ? 1 : item.duration ?? 0);
+					return distribution;
+				},
+				{} as { [key: string]: number }
+			)
+		).sort((x, y) => y[1] - x[1])
+	);
 </script>
 
 <svg

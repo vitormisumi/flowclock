@@ -1,60 +1,19 @@
 <script lang="ts">
 	import { Button, Drawer, Tooltip } from 'flowbite-svelte';
-	import { filter, startRow, endRow, openRow } from './stores';
+	import { filter, startRow, endRow, openRow, filteredSessions, filteredInterruptions } from './stores';
+	import { periods } from '$lib/constants/constants';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 
-	let periods = [
-		{
-			name: 'Today',
-			timeframe: 'day',
-			current: true
-		},
-		{
-			name: 'Yesterday',
-			timeframe: 'day',
-			current: false
-		},
-		{
-			name: 'This week',
-			timeframe: 'week',
-			current: true
-		},
-		{
-			name: 'Last week',
-			timeframe: 'week',
-			current: false
-		},
-		{
-			name: 'This month',
-			timeframe: 'month',
-			current: true
-		},
-		{
-			name: 'Last month',
-			timeframe: 'month',
-			current: false
-		},
-		{
-			name: 'This year',
-			timeframe: 'year',
-			current: true
-		},
-		{
-			name: 'Last year',
-			timeframe: 'year',
-			current: false
-		},
-		{
-			name: 'All time',
-			timeframe: 'all',
-			current: true
-		}
-	];
+	const sessions: Writable<UserSession[]> = getContext('sessions');
+	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
 	$: selected = periods.filter(
 		(x) => x.timeframe === $filter.timeframe && x.current === $filter.current
 	);
 
 	let hidden = true;
+
 	function open() {
 		hidden = false;
 	}
@@ -66,6 +25,137 @@
 		$endRow = 9;
 		$openRow = null;
 	}
+
+	let finishedSessions: FilteredSession[];
+	$: finishedSessions = $sessions.filter(
+		(x): x is FilteredSession => x.duration !== null && x.end !== null
+	);
+
+	const today = new Date();
+	$: current = $filter.current ? 1 : 0;
+
+	function filterSessionsByDay(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+		return sessions.filter((x) => {
+			const date = new Date(x.start);
+			return (
+				date.getDate() + 1 === today.getDate() + current &&
+				date.getMonth() === today.getMonth() &&
+				date.getFullYear() === today.getFullYear()
+			);
+		});
+	}
+
+	function filterInterruptionsByDay(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+		return interruptions.filter((x) => {
+			const date = new Date(x.start);
+			return (
+				date.getDate() + 1 === today.getDate() + current &&
+				date.getMonth() === today.getMonth() &&
+				date.getFullYear() === today.getFullYear()
+			);
+		});
+	}
+
+	function filterSessionsByCurrentWeek(sessions: FilteredSession[], today: Date): FilteredSession[] {
+		return sessions.filter((x) => {
+			const date = Date.parse(x.start);
+			const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
+			return date > beginningOfWeek;
+		});
+	}
+
+	function filterInterruptionsByCurrentWeek(interruptions: Interruption[], today: Date): Interruption[] {
+		return interruptions.filter((x) => {
+			const date = Date.parse(x.start);
+			const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
+			return date > beginningOfWeek;
+		});
+	}
+
+	function filterSessionsByLastWeek(sessions: FilteredSession[], today: Date): FilteredSession[] {
+		return sessions.filter((x) => {
+			const date = Date.parse(x.start);
+			const beginningOfLastWeek =
+				new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
+			const endOfLastWeek =
+				new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
+			return date > beginningOfLastWeek && date < endOfLastWeek;
+		});
+	}
+
+	function filterInterruptionsByLastWeek(interruptions: Interruption[], today: Date): Interruption[] {
+		return interruptions.filter((x) => {
+			const date = Date.parse(x.start);
+			const beginningOfLastWeek =
+				new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
+			const endOfLastWeek =
+				new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
+			return date > beginningOfLastWeek && date < endOfLastWeek;
+		});
+	}
+
+	function filterSessionsByMonth(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+		return sessions.filter((x) => {
+			const date = new Date(x.start);
+			return (
+				date.getMonth() + 1 === today.getMonth() + current &&
+				date.getFullYear() === today.getFullYear()
+			);
+		});
+	}
+
+	function filterInterruptionsByMonth(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+		return interruptions.filter((x) => {
+			const date = new Date(x.start);
+			return (
+				date.getMonth() + 1 === today.getMonth() + current &&
+				date.getFullYear() === today.getFullYear()
+			);
+		});
+	}
+
+	function filterSessionsByYear(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+		return sessions.filter((x) => {
+			const date = new Date(x.start);
+			return date.getFullYear() + 1 === today.getFullYear() + current;
+		});
+	}
+
+	function filterInterruptionsByYear(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+		return interruptions.filter((x) => {
+			const date = new Date(x.start);
+			return date.getFullYear() + 1 === today.getFullYear() + current;
+		});
+	}
+
+	$: {
+		switch ($filter.timeframe) {
+			case 'day':
+				$filteredSessions = filterSessionsByDay(finishedSessions, today, current);
+				$filteredInterruptions = filterInterruptionsByDay($interruptions, today, current);
+				break;
+			case 'week':
+				if (current) {
+					$filteredSessions = filterSessionsByCurrentWeek(finishedSessions, today);
+					$filteredInterruptions = filterInterruptionsByCurrentWeek($interruptions, today);
+				} else {
+					$filteredSessions = filterSessionsByLastWeek(finishedSessions, today);
+					$filteredInterruptions = filterInterruptionsByLastWeek($interruptions, today);
+				}
+				break;
+			case 'month':
+				$filteredSessions = filterSessionsByMonth(finishedSessions, today, current);
+				$filteredInterruptions = filterInterruptionsByMonth($interruptions, today, current);
+				break;
+			case 'year':
+				$filteredSessions = filterSessionsByYear(finishedSessions, today, current);
+				$filteredInterruptions = filterInterruptionsByYear($interruptions, today, current);
+				break;
+			default:
+				$filteredSessions = finishedSessions;
+				$filteredInterruptions = $interruptions;
+		}
+	}
 </script>
 
 <div>
@@ -74,14 +164,22 @@
 	>
 	<Tooltip>Select time period</Tooltip>
 </div>
-<Drawer transitionType="fly" transitionParams={{x: 100}} placement="right" width="w-40" class="z-50 bg-primary-900" bind:hidden>
+<Drawer
+	transitionType="fly"
+	transitionParams={{ x: 100 }}
+	placement="right"
+	width="w-40"
+	class="z-50 bg-primary-900"
+	bind:hidden
+>
 	<div class="flex flex-wrap justify-center gap-2">
+		<h2 class="col-start-2 text-center font-bold text-primary-50">Filter period</h2>
 		{#each periods as period}
 			<Button
 				size="sm"
-				class={$filter.timeframe === period.timeframe && $filter.current === period.current
-					? 'w-28'
-					: 'w-28 border border-primary-700 bg-transparent'}
+				class="w-28 {$filter.timeframe === period.timeframe && $filter.current === period.current
+					? 'border border-primary-700 bg-transparent'
+					: ''}"
 				on:click={() => applyFilter(period)}>{period.name}</Button
 			>
 		{/each}

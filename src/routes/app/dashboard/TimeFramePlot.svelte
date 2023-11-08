@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
-	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
+	import { weekdayMap, monthMap } from '$lib/constants/constants';
+	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -15,104 +16,29 @@
 	};
 	export let group: keyof typeof periods;
 
-	const weekdayMap: { [key: number]: string } = {
-		0: 'sunday',
-		1: 'monday',
-		2: 'tuesday',
-		3: 'wednesday',
-		4: 'thursday',
-		5: 'friday',
-		6: 'saturday'
-	};
-
-	const monthMap: { [key: number]: string } = {
-		0: 'january',
-		1: 'february',
-		2: 'march',
-		3: 'april',
-		4: 'may',
-		5: 'june',
-		6: 'july',
-		7: 'august',
-		8: 'september',
-		9: 'october',
-		10: 'november',
-		11: 'december'
-	};
-
 	let distribution: { [key: number]: number };
 
-	$: switch (group) {
-		case 'hour':
-			distribution = Object.fromEntries(
-				Object.entries(
-					$filteredSessions.reduce(
-						(distribution, item) => {
-							const startHour = new Date(item.start).getHours();
-							distribution[startHour] = (distribution[startHour] || 0) + item.duration;
-							return distribution;
-						},
-						{} as { [key: number]: number }
-					)
+	$: {
+		const dateGetter = {
+			hour: (date: Date) => date.getHours(),
+			day: (date: Date) => date.getDate(),
+			weekday: (date: Date) => date.getDay(),
+			month: (date: Date) => date.getMonth(),
+			year: (date: Date) => date.getFullYear()
+		};
+
+		distribution = Object.fromEntries(
+			Object.entries(
+				$filteredSessions.reduce(
+					(distribution, item) => {
+						const startPeriod = dateGetter[group](new Date(item.start));
+						distribution[startPeriod] = (distribution[startPeriod] || 0) + item.duration;
+						return distribution;
+					},
+					{} as { [key: number]: number }
 				)
-			);
-			break;
-		case 'day':
-			distribution = Object.fromEntries(
-				Object.entries(
-					$filteredSessions.reduce(
-						(distribution, item) => {
-							const startDay = new Date(item.start).getDate();
-							distribution[startDay] = (distribution[startDay] || 0) + item.duration;
-							return distribution;
-						},
-						{} as { [key: number]: number }
-					)
-				)
-			);
-			break;
-		case 'weekday':
-			distribution = Object.fromEntries(
-				Object.entries(
-					$filteredSessions.reduce(
-						(distribution, item) => {
-							const startDay = new Date(item.start).getDay();
-							distribution[startDay] = (distribution[startDay] || 0) + item.duration;
-							return distribution;
-						},
-						{} as { [key: number]: number }
-					)
-				)
-			);
-			break;
-		case 'month':
-			distribution = Object.fromEntries(
-				Object.entries(
-					$filteredSessions.reduce(
-						(distribution, item) => {
-							const startMonth = new Date(item.start).getMonth();
-							distribution[startMonth] = (distribution[startMonth] || 0) + item.duration;
-							return distribution;
-						},
-						{} as { [key: number]: number }
-					)
-				)
-			);
-			break;
-		case 'year':
-			distribution = Object.fromEntries(
-				Object.entries(
-					$filteredSessions.reduce(
-						(distribution, item) => {
-							const startYear = new Date(item.start).getFullYear();
-							distribution[startYear] = (distribution[startYear] || 0) + item.duration;
-							return distribution;
-						},
-						{} as { [key: number]: number }
-					)
-				)
-			);
-			break;
+			)
+		);
 	}
 
 	function barHeight(period: number): number {
@@ -138,51 +64,52 @@
 	}
 
 	function hourFormat(period: number) {
-		if ($settings.clock_format) {
-			return period < 10 ? '0' + period + ':00' : period + ':00';
+		const is24HourFormat = $settings.clock_format;
+		const isMidnight = period === 0;
+		const isNoon = period === 12;
+		const isMorning = period < 12;
+
+		if (is24HourFormat) {
+			return period < 10 ? `0${period}:00` : `${period}:00`;
 		}
-		if (period === 0) {
+		if (isMidnight) {
 			return '12:00 AM';
-		} else if (period < 12) {
-			return period + ':00 AM';
-		} else if (period === 12) {
+		} else if (isMorning) {
+			return `${period}:00 AM`;
+		} else if (isNoon) {
 			return '12:00 PM';
 		} else {
-			return period - 12 + ':00 PM';
+			return `${period - 12}:00 PM`;
 		}
 	}
 </script>
 
 <svg width="100%" height="100%" class="rounded-xl bg-primary-900 p-2">
 	{#each periods[group] as period, index}
-		{#if group === 'hour'}
-			{#if index % 6 === 3}
-				<text
-					class="fill-primary-50"
-					y="85%"
-					x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
-					text-anchor="middle"
-					dominant-baseline="hanging">{hourFormat(period).split(' ')[0]}</text
-				>
-				<text
-					class="fill-primary-50"
-					y="90%"
-					x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
-					text-anchor="middle"
-					dominant-baseline="hanging"
-					>{hourFormat(period).split(' ')[1] ? hourFormat(period).split(' ')[1] : ''}</text
-				>
-			{/if}
-		{:else if group === 'day'}
-			{#if index % 5 === 0}
-				<text
-					class="fill-primary-50"
-					y="85%"
-					x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
-					text-anchor="middle"
-					dominant-baseline="hanging">{period}</text
-				>
-			{/if}
+		{#if group === 'hour' && index % 6 === 3}
+			<text
+				class="fill-primary-50"
+				y="85%"
+				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
+				text-anchor="middle"
+				dominant-baseline="hanging">{hourFormat(period).split(' ')[0]}</text
+			>
+			<text
+				class="fill-primary-50"
+				y="90%"
+				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
+				text-anchor="middle"
+				dominant-baseline="hanging"
+				>{hourFormat(period).split(' ')[1] ? hourFormat(period).split(' ')[1] : ''}</text
+			>
+		{:else if group === 'day' && index % 5 === 0}
+			<text
+				class="fill-primary-50"
+				y="85%"
+				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
+				text-anchor="middle"
+				dominant-baseline="hanging">{period}</text
+			>
 		{:else if group === 'weekday'}
 			<text
 				y="85%"
@@ -227,48 +154,24 @@
 		{/key}
 	{/each}
 	{#if tooltip}
-		{#if group === 'hour'}
-			<text
-				x="{x}%"
-				y="{y - 4}%"
-				text-anchor="middle"
-				class="fill-primary-50 text-sm font-extralight"
-				role="tooltip">{hourFormat(tooltipData.period)}</text
-			>
-		{:else if group === 'day'}
-			<text
-				x="{x}%"
-				y="{y - 4}%"
-				text-anchor="middle"
-				class="fill-primary-50 text-sm font-extralight"
-				role="tooltip"
-				>{tooltipData.period > 9 ? tooltipData.period : '0' + tooltipData.period}</text
-			>
-		{:else if group === 'weekday'}
-			<text
-				x="{x}%"
-				y="{y - 4}%"
-				text-anchor="middle"
-				class="fill-primary-50 text-sm font-extralight capitalize"
-				role="tooltip">{weekdayMap[tooltipData.period]}</text
-			>
-		{:else if group === 'month'}
-			<text
-				x="{x}%"
-				y="{y - 4}%"
-				text-anchor="middle"
-				class="fill-primary-50 text-sm font-extralight capitalize"
-				role="tooltip">{monthMap[tooltipData.period]}</text
-			>
-		{:else if group === 'year'}
-			<text
-				x="{x}%"
-				y="{y - 4}%"
-				text-anchor="middle"
-				class="fill-primary-50 text-sm font-extralight"
-				role="tooltip">{tooltipData.period}</text
-			>
-		{/if}
+		<text
+			x="{x}%"
+			y="{y - 4}%"
+			text-anchor="middle"
+			class="fill-primary-50 text-sm font-extralight capitalize"
+			role="tooltip"
+			>{group === 'hour'
+				? hourFormat(tooltipData.period)
+				: group === 'day'
+				? tooltipData.period > 9
+					? tooltipData.period
+					: '0' + tooltipData.period
+				: group === 'weekday'
+				? weekdayMap[tooltipData.period]
+				: group === 'month'
+				? monthMap[tooltipData.period]
+				: tooltipData.period}</text
+		>
 		<text x="{x}%" y="{y}%" text-anchor="middle" class="fill-primary-50 text-sm" role="tooltip"
 			>{millisecondsToClock(tooltipData.value)}</text
 		>

@@ -38,29 +38,23 @@
 
 	let group: keyof typeof periods = 'weekday';
 
-	$: if ($filteredSessions.length === 0) {
-		dates = '-';
-	} else if (
-		dateFromTimestamp(
-			$filteredSessions.slice(-1)[0].start,
-			$settings.date_format,
-			$settings.separator
-		) != dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator)
-	) {
-		dates =
-			dateFromTimestamp(
+	$: {
+		if ($filteredSessions.length === 0) {
+			dates = '-';
+		} else {
+			const startDate = dateFromTimestamp(
 				$filteredSessions.slice(-1)[0].start,
 				$settings.date_format,
 				$settings.separator
-			) +
-			' - ' +
-			dateFromTimestamp($filteredSessions[0].start, $settings.date_format, $settings.separator);
-	} else {
-		dates = dateFromTimestamp(
-			$filteredSessions[0].start,
-			$settings.date_format,
-			$settings.separator
-		);
+			);
+			const endDate = dateFromTimestamp(
+				$filteredSessions[0].start,
+				$settings.date_format,
+				$settings.separator
+			);
+
+			dates = startDate !== endDate ? `${startDate} - ${endDate}` : startDate;
+		}
 	}
 </script>
 

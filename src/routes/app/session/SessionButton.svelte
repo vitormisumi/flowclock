@@ -18,6 +18,7 @@
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', String($sessionFocus.type));
 		formData.append('focus_id', String($sessionFocus.id));
+		formData.append('project_id', String($sessionFocus.projectId));
 		return async ({ update }) => {
 			loading = false;
 			update();

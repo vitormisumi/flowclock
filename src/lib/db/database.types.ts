@@ -295,6 +295,7 @@ export interface Database {
           intention_id: number | null
           interruption_duration: number | null
           last_edited: string
+          project_id: number | null
           start: string
           task_id: number | null
           user_id: string
@@ -306,6 +307,7 @@ export interface Database {
           intention_id?: number | null
           interruption_duration?: number | null
           last_edited?: string
+          project_id?: number | null
           start?: string
           task_id?: number | null
           user_id: string
@@ -317,6 +319,7 @@ export interface Database {
           intention_id?: number | null
           interruption_duration?: number | null
           last_edited?: string
+          project_id?: number | null
           start?: string
           task_id?: number | null
           user_id?: string
@@ -327,6 +330,13 @@ export interface Database {
             columns: ["intention_id"]
             isOneToOne: false
             referencedRelation: "intentions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sessions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
           {

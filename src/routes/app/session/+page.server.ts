@@ -11,32 +11,23 @@ export const actions = {
 		const start = formData.get('start') as string;
 		const focusType = formData.get('focus_type') as string;
 		const focusId = formData.get('focus_id') as string;
+		const projectId = formData.get('project_id') as string;
 		
-		if (focusType === 'task') {
-			const { error } = await supabase
-				.from('sessions')
-				.insert({ user_id: session.user.id, start: start, task_id: Number(focusId) })
-	
-			if (error) {
-				console.log(error);
-				return fail(500, { message: 'Session could not be saved', success: false });
-			} 
-	
-			return { message: 'Session started', success: true };
-		}
-		
-		if (focusType === 'intention') {
-			const { error } = await supabase
-				.from('sessions')
-				.insert({ user_id: session.user.id, start: start, intention_id: Number(focusId) })
-	
-			if (error) {
-				console.log(error);
-				return fail(500, { message: 'Session could not be saved', success: false });
-			} 
-	
-			return { message: 'Session started', success: true };
-		}
+		const { error } = await supabase
+			.from('sessions')
+			.insert({ 
+				user_id: session.user.id, 
+				start: start, 
+				project_id: Number(projectId),
+				...(focusType === 'task' ? { task_id: Number(focusId) } : { intention_id: Number(focusId) })
+			});
+
+		if (error) {
+			console.log(error);
+			return fail(500, { message: 'Session could not be saved', success: false });
+		} 
+
+		return { message: 'Session started', success: true };
 	},
 
 	break: async ({ request, locals: { supabase, getSession } }) => {

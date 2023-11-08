@@ -38,4 +38,77 @@ export const priorityColors: { [key: number]: string } = {
     2: 'border-yellow-500',
     3: 'border-red-500'
 };
-    
+
+
+export const weekdayMap: { [key: number]: string } = {
+    0: 'sunday',
+    1: 'monday',
+    2: 'tuesday',
+    3: 'wednesday',
+    4: 'thursday',
+    5: 'friday',
+    6: 'saturday'
+};
+
+export const monthMap: { [key: number]: string } = {
+    0: 'january',
+    1: 'february',
+    2: 'march',
+    3: 'april',
+    4: 'may',
+    5: 'june',
+    6: 'july',
+    7: 'august',
+    8: 'september',
+    9: 'october',
+    10: 'november',
+    11: 'december'
+};
+
+export const periods = [
+    {
+        name: 'Today',
+        timeframe: 'day',
+        current: true
+    },
+    {
+        name: 'Yesterday',
+        timeframe: 'day',
+        current: false
+    },
+    {
+        name: 'This week',
+        timeframe: 'week',
+        current: true
+    },
+    {
+        name: 'Last week',
+        timeframe: 'week',
+        current: false
+    },
+    {
+        name: 'This month',
+        timeframe: 'month',
+        current: true
+    },
+    {
+        name: 'Last month',
+        timeframe: 'month',
+        current: false
+    },
+    {
+        name: 'This year',
+        timeframe: 'year',
+        current: true
+    },
+    {
+        name: 'Last year',
+        timeframe: 'year',
+        current: false
+    },
+    {
+        name: 'All time',
+        timeframe: 'all',
+        current: true
+    }
+];
