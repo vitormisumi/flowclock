@@ -1,10 +1,5 @@
 <script lang="ts">
-	import { millisecondsToClock } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
-
-	const projects: Writable<Project[]> = getContext('projects');
 
 	export let group: string;
 
@@ -22,42 +17,61 @@
 		).sort((x, y) => y[1] - x[1])
 	);
 
-	$: console.log(Object.keys(distribution).length);
+	let total = 0;
+	$: total = Object.values(distribution).reduce((sum, value) => sum + value, 0);
+
+	let percentages: number[] = [];
+	$: percentages = Object.values(distribution).map((value) => value / total);
+
+	const colors = ['red', 'blue', 'green'];
+
+	let tooltip = false;
+	let tooltipData: { project: string; percentage: number };
+	let x = 0;
+	let y = 0;
+
+	function handleTooltip(percentage: number, index: number) {
+		tooltip = true;
+		tooltipData = { project: Object.keys(distribution)[index], percentage: percentage };
+	}
+
+	function handlePointerMove(event: MouseEvent) {
+		x = event.clientX;
+		y = event.clientY;
+	}
 </script>
 
 <svg
-	width="100%"
-	height={(Object.keys(distribution).length + 1) * 50}
-	class="rounded-xl bg-primary-900 p-2"
+	viewBox="0 0 100 100"
+	class="aspect-square rounded-xl bg-primary-900 p-2"
+	on:pointermove={handlePointerMove}
 >
-	{#each Object.entries(distribution) as project, i}
-		<text x="48%" y={i * 50 + 30} text-anchor="end" class="fill-primary-50 capitalize">
-			{$projects.find((x) => x.id === Number(project[0]))?.name || project[0]}
-		</text>
-		<rect
-			x="50%"
-			y={i * 50 + 5}
-			height="40"
-			width="{(project[1] /
-				Object.values(distribution).reduce((accumulator, i) => {
-					return accumulator + i;
-				}, 0)) *
-				50}%"
-			rx="1%"
-			class="fill-primary-700"
+	<circle r="45" cx="50" cy="50" fill="white" />
+	{#each percentages as p, i}
+		<circle
+			r="22.5"
+			cx="50"
+			cy="50"
+			fill="transparent"
+			stroke={colors[i]}
+			stroke-width="45"
+			stroke-dasharray="{p * (2 * Math.PI * 22.5)} {2 * Math.PI * 22.5}"
+			stroke-dashoffset={-(percentages[i - 1] * (2 * Math.PI * 22.5))}
+			transform="rotate(-90) translate(-100)"
+			role="figure"
+			on:mouseover={() => handleTooltip(p, i)}
+			on:focus={() => handleTooltip(p, i)}
+			on:mouseout={() => (tooltip = false)}
+			on:blur={() => (tooltip = false)}
 		/>
-		<text x="52%" y={i * 50 + 30} class="fill-primary-50 text-sm capitalize">
-			{group === 'frequency' ? project[1] : millisecondsToClock(project[1])}
-		</text>
 	{/each}
-	<line
-		x1="50%"
-		y1="0"
-		x2="50%"
-		y2={Object.keys(distribution).length * 50}
-		class="stroke-primary-800"
-	/>
-	<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter">
-		{group} of sessions
-	</text>
 </svg>
+{#if tooltip}
+	<p
+		class="pointer-events-none fixed left-0 top-0 text-sm text-primary-50 transition-all duration-100"
+		role="tooltip"
+		style="transform: translate({x + 10}px, {y - 10}px);"
+	>
+		{tooltipData.project}<br />{(tooltipData.percentage * 100).toFixed(1)}%
+	</p>
+{/if}

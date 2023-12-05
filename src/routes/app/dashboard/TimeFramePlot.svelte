@@ -160,7 +160,8 @@
 			text-anchor="middle"
 			class="fill-primary-50 text-sm font-extralight capitalize"
 			role="tooltip"
-			>{group === 'hour'
+		>
+			{group === 'hour'
 				? hourFormat(tooltipData.period)
 				: group === 'day'
 				? tooltipData.period > 9
@@ -170,11 +171,11 @@
 				? weekdayMap[tooltipData.period]
 				: group === 'month'
 				? monthMap[tooltipData.period]
-				: tooltipData.period}</text
-		>
-		<text x="{x}%" y="{y}%" text-anchor="middle" class="fill-primary-50 text-sm" role="tooltip"
-			>{millisecondsToClock(tooltipData.value)}</text
-		>
+				: tooltipData.period}
+		</text>
+		<text x="{x}%" y="{y}%" text-anchor="middle" class="fill-primary-50 text-sm" role="tooltip">
+			{millisecondsToClock(tooltipData.value)}
+		</text>
 	{/if}
 	<line x1="0%" x2="100%" y1="83%" y2="83%" class="stroke-primary-800"></line>
 </svg>

@@ -30,6 +30,8 @@
 			break;
 	};
 
+	$: console.log($toDos);
+
 	export let show: boolean;
 
 	let openRow: number | null = null;
