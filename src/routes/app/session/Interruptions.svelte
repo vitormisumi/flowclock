@@ -5,8 +5,8 @@
 	import { enhance } from '$app/forms';
 	import { sessionInterruptions } from './stores';
 	import { page } from '$app/stores';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let open = false;
 

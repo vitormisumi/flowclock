@@ -28,7 +28,7 @@
 
 	let finishedSessions: FilteredSession[];
 	$: finishedSessions = $sessions.filter(
-		(x): x is FilteredSession => x.duration !== null && x.end !== null
+		(x): x is FilteredSession => x.focused_duration !== null && x.end !== null
 	);
 
 	const today = new Date();

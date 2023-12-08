@@ -57,6 +57,8 @@
 
 	let pages: number;
 	$: pages = Math.ceil($filteredSessions.length / 10);
+
+	$: console.log($filteredSessions)
 </script>
 
 <Table hoverable shadow>
@@ -95,7 +97,7 @@
 							on:click={() => toggleRow(i)}
 							on:keydown={() => toggleRow(i)}
 						>
-							{millisecondsToClock(session.duration)}
+							{millisecondsToClock(session.focused_duration)}
 						</div>
 						{#if edit === i}
 							<div class="absolute right-1 top-1" in:fade>

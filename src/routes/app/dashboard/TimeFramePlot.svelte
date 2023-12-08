@@ -32,7 +32,7 @@
 				$filteredSessions.reduce(
 					(distribution, item) => {
 						const startPeriod = dateGetter[group](new Date(item.start));
-						distribution[startPeriod] = (distribution[startPeriod] || 0) + item.duration;
+						distribution[startPeriod] = (distribution[startPeriod] || 0) + item.focused_duration;
 						return distribution;
 					},
 					{} as { [key: number]: number }

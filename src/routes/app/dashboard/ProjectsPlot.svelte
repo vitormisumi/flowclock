@@ -14,7 +14,7 @@
 				(distribution, item) => {
 					distribution[item.project_id || 'no project'] =
 						(distribution[item.project_id || 'no project'] || 0) +
-						(group === 'frequency' ? 1 : item.duration ?? 0);
+						(group === 'frequency' ? 1 : item.focused_duration ?? 0);
 					return distribution;
 				},
 				{} as { [key: string]: number }

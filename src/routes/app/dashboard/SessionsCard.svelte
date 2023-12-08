@@ -5,7 +5,7 @@
 	import SessionsTable from './SessionsTable.svelte';
 
 	$: duration = $filteredSessions.reduce((accumulator, object) => {
-		return accumulator + object.duration;
+		return accumulator + object.focused_duration;
 	}, 0);
 </script>
 

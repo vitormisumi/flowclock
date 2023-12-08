@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, Card, Dropdown, Radio, Tooltip } from 'flowbite-svelte';
-	import { filteredInterruptions, filteredSessions } from './stores';
+	import { Button, Card, Dropdown, Radio } from 'flowbite-svelte';
+	import { filteredSessions } from './stores';
 	import { getContext } from 'svelte';
 	import ProjectsPlot from './ProjectsPlot.svelte';
 	import type { Writable } from 'svelte/store';
@@ -16,7 +16,7 @@
 	let options: string[] = ['frequency', 'duration'];
 </script>
 
-<Card class="h-full min-w-full border-0 bg-primary-800">
+<Card class="min-h-full min-w-full border-0 bg-primary-800 lg:h-[max(70vh,_500px)]">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Projects</h2>
