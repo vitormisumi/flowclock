@@ -8,19 +8,19 @@
 	const sessions: Writable<UserSession[]> = getContext('sessions');
 	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
-	$: selected = periods.filter(
+	$: selectedPeriod = periods.filter(
 		(x) => x.timeframe === $filter.timeframe && x.current === $filter.current
 	);
 
-	let hidden = true;
-
-	function open() {
-		hidden = false;
+	let periodDrawerHidden = true;
+	
+	function openPeriodDrawer() {
+		periodDrawerHidden = false;
 	}
 
 	function applyFilter(period: Period) {
-		hidden = true;
-		$filter = { timeframe: period.timeframe, current: period.current };
+		periodDrawerHidden = true;
+		$filter = { timeframe: period.timeframe, current: period.current};
 		$startRow = 0;
 		$endRow = 9;
 		$openRow = null;
@@ -159,8 +159,8 @@
 </script>
 
 <div>
-	<Button size="sm" class="w-36" on:click={open}
-		>{selected[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
+	<Button size="sm" class="w-36" on:click={openPeriodDrawer}
+		>{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
 	>
 	<Tooltip>Select time period</Tooltip>
 </div>
@@ -170,7 +170,7 @@
 	placement="right"
 	width="w-40"
 	class="z-50 bg-primary-900"
-	bind:hidden
+	bind:hidden={periodDrawerHidden}
 >
 	<div class="flex flex-wrap justify-center gap-2">
 		<h2 class="col-start-2 text-center font-bold text-primary-50">Filter period</h2>

@@ -74,7 +74,7 @@
 					   A 1 1, 0, {p > 0.5 ? 1 : 0}, 1, {startX(i)} {startY(i)}
 					   Z"
 					fill={colors[i]}
-					class="opacity-80 hover:opacity-100 focus:opacity-100 focus:outline-none"
+					class="opacity-80 hover:opacity-100 focus:opacity-100 focus:outline-none transition-all"
 					role="figure"
 					on:mouseover={() => handleTooltip(i)}
 					on:focus={() => handleTooltip(i)}

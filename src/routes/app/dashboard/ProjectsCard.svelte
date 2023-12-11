@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Button, Card, Dropdown, Radio } from 'flowbite-svelte';
 	import { filteredSessions } from './stores';
-	import { getContext } from 'svelte';
 	import ProjectsPlot from './ProjectsPlot.svelte';
-	import type { Writable } from 'svelte/store';
 
-	const projects: Writable<Project[]> = getContext('projects');
+	$: filteredProjects = new Set($filteredSessions.map((x) => x.project_id)).size;
 
-	$: sessionsPerProject = ($filteredSessions.length / $projects.length).toFixed(1);
+	$: sessionsPerProject = isNaN($filteredSessions.length / filteredProjects)
+		? '-'
+		: ($filteredSessions.length / filteredProjects).toFixed(1);
 
 	let group: string = 'frequency';
 
@@ -16,12 +16,12 @@
 	let options: string[] = ['frequency', 'duration'];
 </script>
 
-<Card class="min-h-full min-w-full border-0 bg-primary-800 lg:h-[max(70vh,_500px)]">
+<Card class="min-h-full min-w-full border-0 bg-primary-800 lg:h-[max(50vh,_500px)]">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Projects</h2>
 			<p class="text-center text-accent-500 md:text-xl">
-				{$projects.length}
+				{filteredProjects}
 			</p>
 		</div>
 		<div>
