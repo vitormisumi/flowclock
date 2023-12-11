@@ -19,7 +19,7 @@
 				},
 				{} as { [key: string]: number }
 			)
-		).sort((x, y) => y[1] - x[1])
+		).sort((x, y) => x[1] - y[1])
 	);
 
 	let total = 0;
@@ -28,42 +28,63 @@
 	let percentages: number[] = [];
 	$: percentages = Object.values(distribution).map((value) => value / total);
 
+	function startX(i: number) {
+		return Math.cos(
+			2 *
+				Math.PI *
+				Object.values(percentages)
+					.slice(0, i + 1)
+					.reduce((a, b) => a + b, 0)
+		);
+	}
+
+	function startY(i: number) {
+		return Math.sin(
+			2 *
+				Math.PI *
+				Object.values(percentages)
+					.slice(0, i + 1)
+					.reduce((a, b) => a + b, 0)
+		);
+	}
+
 	const colors = ['#309FB6', '#E35402', '#885A89', '#F8FFF4', '#ECC30B'];
 
 	let tooltip = false;
 	let tooltipData: { project: string; total: number; percentage: number };
 
-	function handleTooltip(percentage: number, index: number) {
+	function handleTooltip(i: number) {
 		tooltip = true;
 		tooltipData = {
-			project: Object.keys(distribution)[index],
-			total: Object.values(distribution)[index],
-			percentage: percentage
+			project:
+				$projects.find((x) => x.id === Number(Object.keys(distribution)[i]))?.name || 'No project',
+			total: Object.values(distribution)[i],
+			percentage: percentages[i]
 		};
 	}
 </script>
 
 <svg height="100%" width="100%" class="aspect-square rounded-xl bg-primary-900 lg:aspect-auto">
-	<g class="-rotate-90" style:transform-origin="50% 50%">
-		{#each percentages as p, i}
-			<circle
-				r="18%"
-				cx="50%"
-				cy="50%"
-				fill="transparent"
-				stroke={colors[i]}
-				stroke-width="36%"
-				stroke-dasharray="{p * (2 * Math.PI * 18)}% {2 * Math.PI * 18}%"
-				stroke-dashoffset="{-(percentages[i - 1] * (2 * Math.PI * 18))}%"
-				role="figure"
-				class="opacity-90 hover:opacity-100 focus:opacity-100 focus:outline-none"
-				on:mouseover={() => handleTooltip(p, i)}
-				on:focus={() => handleTooltip(p, i)}
-				on:mouseout={() => (tooltip = false)}
-				on:blur={() => (tooltip = false)}
-			/>
-		{/each}
-	</g>
+	<svg height="80%" width="80%" x="10%" y="10%" viewBox="-1 -1 2 2">
+		<g class="-rotate-90">
+			{#each percentages as p, i}
+				<path
+					d="M 0 0
+					   L {startX(i - 1)} {startY(i - 1)}
+					   A 1 1, 0, {p > 0.5 ? 1 : 0}, 1, {startX(i)} {startY(i)}
+					   Z"
+					fill={colors[i]}
+					class="opacity-80 hover:opacity-100 focus:opacity-100 focus:outline-none"
+					role="figure"
+					on:mouseover={() => handleTooltip(i)}
+					on:focus={() => handleTooltip(i)}
+					on:mouseout={() => (tooltip = false)}
+					on:blur={() => (tooltip = false)}
+				>
+				</path>
+			{/each}
+		</g>
+	</svg>
 	<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter">
 		{group} of sessions
 	</text>
@@ -75,7 +96,7 @@
 			y="3%"
 			dominant-baseline="hanging"
 		>
-			{$projects.find((x) => x.id === Number(tooltipData.project))?.name || 'No project'}
+			{tooltipData.project}
 		</text>
 		<text class="fill-primary-50 text-sm" role="tooltip" x="3%" y="7%" dominant-baseline="hanging">
 			{group === 'frequency' ? tooltipData.total : millisecondsToClock(tooltipData.total)} ({(
@@ -84,3 +105,4 @@
 		</text>
 	{/if}
 </svg>
+

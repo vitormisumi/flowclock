@@ -12,14 +12,14 @@ export const actions = {
 		const focusType = formData.get('focus_type') as string;
 		const focusId = formData.get('focus_id') as string;
 		const projectId = formData.get('project_id') as string;
+		console.log(focusType, focusId, projectId);
 		
 		const { error } = await supabase
 			.from('sessions')
 			.insert({ 
 				user_id: session.user.id, 
 				start: start, 
-				project_id: Number(projectId),
-				...(focusType === 'task' ? { task_id: Number(focusId) } : { intention_id: Number(focusId) })
+				...(projectId !== '0' ? { project_id: Number(projectId), ...(focusType === 'task' ? { task_id: Number(focusId) } : { intention_id: Number(focusId) }) } : {project_id: null}),
 			});
 
 		if (error) {
