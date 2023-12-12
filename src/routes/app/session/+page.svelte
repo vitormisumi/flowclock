@@ -26,9 +26,9 @@
 						session.start(payload.new.id, Date.parse(payload.new.start));
 					}
 					if (payload.new.task_id) {
-						sessionFocus.set('task', payload.new.task_id, payload.new.id);
+						sessionFocus.set('task', payload.new.task_id, payload.new.project_id);
 					} else if (payload.new.intention_id) {
-						sessionFocus.set('intention', payload.new.intention_id, payload.new.id);
+						sessionFocus.set('intention', payload.new.intention_id, payload.new.project_id);
 					}
 				}
 			)
@@ -41,9 +41,6 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					if (payload.new.id === $session.id) {
-						sessionInterruptions.update(payload.new.interruption_duration);
-					}
 					if (payload.new.end && payload.new.id === $session.id) {
 						session.end(Date.parse(payload.new.end));
 					}
