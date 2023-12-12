@@ -77,7 +77,7 @@
 <div
 	class="grid h-full w-full content-end justify-items-center text-center font-light text-secondary-100 md:text-xl lg:text-2xl"
 >
-	<div class="grid w-full max-w-xs gap-2 md:gap-4 lg:gap-8">
+	<div class="grid w-full max-w-xs gap-1 md:gap-4 lg:gap-8 portrait:gap-2">
 		<Message />
 		<FocusSelect />
 		<SessionButton />
