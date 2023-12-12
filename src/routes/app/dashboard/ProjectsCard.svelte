@@ -16,7 +16,7 @@
 	let options: string[] = ['frequency', 'duration'];
 </script>
 
-<Card class="min-h-full min-w-full border-0 bg-primary-800 lg:h-[max(50vh,_500px)]">
+<Card class="min-h-full min-w-full border-0 bg-primary-800 lg:h-[max(50vh,_570px)]">
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Projects</h2>

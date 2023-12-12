@@ -14,14 +14,13 @@
 	let openEdit: number | null = null;
 </script>
 
-<div class="grid gap-1">
+<ul class="grid gap-1">
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
-			<div
+			<li
 				class="grid w-full rounded-lg bg-gradient-to-r from-primary-800 border border-primary-900 to-primary-900"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
-				role="listitem"
 			>
 				<div class="flex gap-2 overflow-hidden px-2">
 					<button
@@ -47,7 +46,7 @@
 						{/if}
 					</div>
 				{/if}
-			</div>
+			</li>
 		{/if}
 	{/each}
-</div>
+</ul>

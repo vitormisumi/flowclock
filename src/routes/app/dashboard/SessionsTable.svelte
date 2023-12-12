@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		Table,
-		TableHead,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		ButtonGroup,
-		Button
-	} from 'flowbite-svelte';
+	import { ButtonGroup, Button } from 'flowbite-svelte';
 	import { filteredSessions, startRow, endRow, filteredInterruptions, openRow } from './stores';
 	import {
 		dateFromTimestamp,
@@ -23,8 +15,14 @@
 
 	let edit: number | null = null;
 
-	function toggleRow(i: number) {
+	function rowClick(i: number) {
 		$openRow = $openRow === i ? null : i;
+	}
+
+	function rowPress(e: KeyboardEvent, i: number) {
+		if (e.key === 'Enter') {
+			$openRow = $openRow === i ? null : i;
+		}
 	}
 
 	function mouseEnter(i: number) {
@@ -57,126 +55,116 @@
 
 	let pages: number;
 	$: pages = Math.ceil($filteredSessions.length / 10);
-
-	$: console.log($filteredSessions)
 </script>
 
-<Table hoverable shadow>
-	<TableHead class="bg-primary-700 text-center text-primary-50">
-		<div class="flex justify-around p-2 font-bold">
-			<p>Date</p>
-			<p>Duration</p>
-		</div>
-	</TableHead>
-	<TableBody>
-		{#each $filteredSessions as session, i}
-			{#if i >= $startRow && i <= $endRow}
-				<TableBodyRow
-					class="cursor-pointer border-primary-800 bg-primary-900 text-center transition-colors hover:bg-primary-800"
-				>
-					<div
-						class="relative flex justify-around font-light text-primary-50"
-						role="row"
-						tabindex={i}
+<div class="flex h-full flex-col justify-between gap-2">
+	<table class="w-full table-fixed overflow-hidden rounded-xl">
+		<thead class="bg-primary-700 text-center font-bold text-primary-50">
+			<tr>
+				<th class="py-1">Date</th>
+				<th class="py-1">Duration</th>
+			</tr>
+		</thead>
+		<tbody class="text-sm font-light text-primary-50">
+			{#each $filteredSessions as session, i}
+				{#if i >= $startRow && i <= $endRow}
+					<tr
+						class="relative cursor-pointer border-t border-primary-800 bg-primary-900 text-center transition-colors hover:bg-primary-800"
+						tabindex="0"
+						on:click={() => rowClick(i)}
+						on:keydown={(e) => rowPress(e, i)}
 						on:mouseenter={() => mouseEnter(i)}
+						on:focus={() => mouseEnter(i)}
 						on:mouseleave={mouseLeave}
 					>
-						<div
-							class="w-full p-2"
-							role="cell"
-							tabindex="0"
-							on:click={() => toggleRow(i)}
-							on:keydown={() => toggleRow(i)}
-						>
+						<td class="p-2">
 							{dateFromTimestamp(session.start, $settings.date_format, $settings.separator)}
-						</div>
-						<div
-							class="w-full p-2"
-							role="cell"
-							tabindex="0"
-							on:click={() => toggleRow(i)}
-							on:keydown={() => toggleRow(i)}
-						>
+						</td>
+						<td class="p-2">
 							{millisecondsToClock(session.focused_duration)}
-						</div>
-						{#if edit === i}
-							<div class="absolute right-1 top-1" in:fade>
-								<DeleteSession {session} />
+							{#if edit === i}
+								<div class="absolute right-1 top-1 z-10" in:fade>
+									<DeleteSession {session} />
+								</div>
+							{/if}
+						</td>
+					</tr>
+				{/if}
+				{#if $openRow === i}
+					<tr class="border-b border-primary-800">
+						<td colspan="2" class="bg-primary-900 p-0">
+							<div
+								class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light"
+								transition:slide
+							>
+								<p class="col-start-1 text-primary-100">
+									<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
+										session.start,
+										$settings.clock_format
+									)}
+								</p>
+								<p class="col-start-2 text-primary-100">
+									<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(
+										session.end,
+										$settings.clock_format
+									)}
+								</p>
+								<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
+									{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
+										<div
+											class="flex items-center justify-center font-extralight text-secondary-100"
+										>
+											<i class="fa-solid fa-pause pr-1" />
+											<p>
+												{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp
+											</p>
+											<p>{timeFromTimestamp(interruption[1].end, $settings.clock_format)}</p>
+											{#if interruption[1].reason}
+												<p class="pl-1">({interruption[1].reason})</p>
+											{/if}
+										</div>
+									{/each}
+								</div>
 							</div>
-						{/if}
-					</div>
-				</TableBodyRow>
-			{/if}
-			{#if $openRow === i}
-				<TableBodyRow class="border-primary-800">
-					<TableBodyCell colspan="3" class="bg-primary-900 p-0">
-						<div
-							class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light"
-							transition:slide
-						>
-							<p class="col-start-1 text-primary-100">
-								<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
-									session.start,
-									$settings.clock_format
-								)}
-							</p>
-							<p class="col-start-2 text-primary-100">
-								<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(
-									session.end,
-									$settings.clock_format
-								)}
-							</p>
-							<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
-								{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
-									<div class="flex items-center justify-center font-extralight text-secondary-100">
-										<i class="fa-solid fa-pause pr-1" />
-										<p>{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp</p>
-										<p>{timeFromTimestamp(interruption[1].end, $settings.clock_format)}</p>
-										{#if interruption[1].reason}
-											<p class="pl-1">({interruption[1].reason})</p>
-										{/if}
-									</div>
-								{/each}
-							</div>
-						</div>
-					</TableBodyCell>
-				</TableBodyRow>
-			{/if}
-		{/each}
-	</TableBody>
-</Table>
-<div class="flex w-full justify-center pt-2">
-	<ButtonGroup>
-		<Button
-			disabled={$startRow === 0 ? true : false}
-			class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-			on:click={previous}
-		>
-			<i class="fa-solid fa-chevron-left" />
-		</Button>
-		{#each { length: pages } as _, p}
-			{#if p === $startRow / 10}
-				<Button
-					disabled
-					class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
-				>
-					{p + 1}
-				</Button>
-			{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
-				<Button
-					class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
-					on:click={() => page(p)}
-				>
-					{p + 1}
-				</Button>
-			{/if}
-		{/each}
-		<Button
-			disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
-			class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
-			on:click={next}
-		>
-			<i class="fa-solid fa-chevron-right" />
-		</Button>
-	</ButtonGroup>
+						</td>
+					</tr>
+				{/if}
+			{/each}
+		</tbody>
+	</table>
+	<div class="flex w-full justify-center">
+		<ButtonGroup>
+			<Button
+				disabled={$startRow === 0 ? true : false}
+				class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+				on:click={previous}
+			>
+				<i class="fa-solid fa-chevron-left" />
+			</Button>
+			{#each { length: pages } as _, p}
+				{#if p === $startRow / 10}
+					<Button
+						disabled
+						class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+					>
+						{p + 1}
+					</Button>
+				{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
+					<Button
+						class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+						on:click={() => page(p)}
+					>
+						{p + 1}
+					</Button>
+				{/if}
+			{/each}
+			<Button
+				disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
+				class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+				on:click={next}
+			>
+				<i class="fa-solid fa-chevron-right" />
+			</Button>
+		</ButtonGroup>
+	</div>
 </div>

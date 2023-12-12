@@ -20,7 +20,7 @@
 				const dateA = new Date(a.due_date);
 				const dateB = new Date(b.due_date);
 				return dateA.getTime() - dateB.getTime();
-			})
+			});
 			break;
 		case 'priority':
 			$toDos = $toDos.sort((a, b) => b.priority - a.priority);
@@ -28,7 +28,7 @@
 		case 'name':
 			$toDos = $toDos.sort((a, b) => a.name.localeCompare(b.name));
 			break;
-	};
+	}
 
 	$: console.log($toDos);
 
@@ -39,14 +39,13 @@
 	let openEdit: number | null = null;
 </script>
 
-<div class="grid gap-1">
+<ul class="grid gap-1">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
-			<div
+			<li
 				class="grid w-full rounded-lg border border-primary-900 bg-primary-900"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
-				role="listitem"
 			>
 				<div class="flex gap-2 overflow-hidden px-2">
 					<CompleteToDoButton {toDo} />
@@ -72,7 +71,7 @@
 						<ToDosDetails {toDo} />
 					</div>
 				{/if}
-			</div>
+			</li>
 		{/if}
 	{/each}
-</div>
+</ul>

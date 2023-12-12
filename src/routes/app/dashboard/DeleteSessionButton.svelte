@@ -29,16 +29,17 @@
 	};
 </script>
 
-<Button
-	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700 transition-colors"
-	on:click={() => {
+<button
+	class="flex items-center rounded-lg bg-transparent px-3 py-2 text-xs text-red-700 transition-colors hover:bg-primary-700"
+	tabindex="0"
+	on:click|stopPropagation={() => {
 		open = true;
 		sessionId = session.id;
 	}}
+	on:keydown|stopPropagation
 >
 	<i class="fa-solid fa-trash" />
-</Button>
+</button>
 <Tooltip placement="left">Delete session</Tooltip>
 <Modal
 	bind:open
@@ -58,19 +59,21 @@
 			$settings.clock_format
 		)}?
 	</p>
-	<form
-		class="flex w-full justify-center gap-4"
-		method="POST"
-		action="?/deleteSession"
-		use:enhance={handleClick}
-	>
-		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950 transition-colors"
-			type="submit"
+	<div class="flex w-full justify-center gap-4">
+		<form method="POST" action="?/deleteSession" use:enhance={handleClick}>
+			<button
+				class="rounded-lg border-2 border-red-900 bg-transparent px-5 py-2.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-950"
+				type="submit"
+				disabled={loading}
+				on:click|stopPropagation
+			>
+				Delete
+			</button>
+		</form>
+		<button
 			disabled={loading}
+			class="flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-primary-50 transition-colors hover:bg-primary-800"
+			on:click|stopPropagation={() => (open = false)}>Cancel</button
 		>
-			Delete
-		</Button>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
-	</form>
+	</div>
 </Modal>
