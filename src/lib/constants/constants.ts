@@ -33,10 +33,10 @@ export const priorityOptions = [
 ];
 
 export const priorityColors: { [key: number]: string } = {
-    0: 'border-white',
-    1: 'border-green-500',
-    2: 'border-yellow-500',
-    3: 'border-red-500'
+    3: 'red-500',
+    2: 'yellow-500',
+    1: 'green-500',
+    0: 'white',
 };
 
 

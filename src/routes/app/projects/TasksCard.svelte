@@ -3,7 +3,7 @@
 	import TasksBoard from './TasksBoard.svelte';
 </script>
 
-<Card class="h-full min-h-[60vh] md:min-h-full min-w-full gap-8 border-0 bg-primary-800">
+<Card class="h-full min-h-full min-w-full gap-8 border-0 bg-primary-800">
 	<div>
 		<div class="flex items-center">
 			<h2 class="pr-1 font-bold text-primary-50">Tasks</h2>

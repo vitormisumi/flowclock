@@ -35,13 +35,9 @@
 
 	$: projectValue = projectOptions.find((x) => x.value === toDo.project_id)?.value;
 
-	let priority: number = toDo.priority || 0;
+	let priority: number = toDo.priority;
 
 	let priorityOpen = false;
-
-	let priorityColor: string;
-
-	$: priorityColor = priorityColors[priority];
 
 	let open = false;
 
@@ -109,7 +105,11 @@
 		<input type="number" name="id" hidden value={toDo.id} />
 		<div class="flex justify-between">
 			<div>
-				<Button size="sm" class="border {priorityColor} bg-transparent" disabled={loading}>
+				<Button
+					size="sm"
+					disabled={loading}
+					class="border bg-transparent border-{priorityColors[priority]}"
+				>
 					Priority
 				</Button>
 				<Dropdown bind:open={priorityOpen}>

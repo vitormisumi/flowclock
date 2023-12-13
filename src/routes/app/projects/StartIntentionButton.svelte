@@ -14,6 +14,7 @@
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'intention');
 		formData.append('focus_id', String(intention.id));
+		formData.append('project_id', String(intention.project_id));
 		await goto('/app/session');
 		return ({ update }) => {
 			update();

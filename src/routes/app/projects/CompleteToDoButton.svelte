@@ -4,10 +4,7 @@
 
 	export let toDo: ToDo;
 
-	let borderColor: string;
-	$: if (toDo.priority !== null) {
-		borderColor = priorityColors[toDo.priority];
-	}
+	$: borderColor = 'border-' + priorityColors[toDo.priority];
 </script>
 
 <form

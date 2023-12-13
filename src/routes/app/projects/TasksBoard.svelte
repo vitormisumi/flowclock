@@ -12,6 +12,7 @@
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
+	import { priorityColors } from '$lib/constants/constants';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -84,13 +85,16 @@
 			>
 				{#each status.tasks as task (task.id)}
 					<div
-						class="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50"
+						class="relative flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50"
 						on:mouseenter={() => (openEdit = task.id)}
 						on:mouseleave={() => (openEdit = null)}
 						animate:flip
 						role="cell"
 						tabindex="0"
 					>
+						<div
+							class="absolute bg-{priorityColors[task.priority]} h-4 w-4 rotate-45 -top-2 -left-2"
+						></div>
 						<p class="truncate">{task.name}</p>
 						{#if openEdit === task.id}
 							<div class="flex p-0" in:fade>

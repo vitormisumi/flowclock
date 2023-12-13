@@ -478,7 +478,7 @@ export interface Database {
           id: number
           last_edited: string
           name: string
-          priority: number | null
+          priority: number
           project_id: number
           status_id: number
           user_id: string
@@ -490,7 +490,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name: string
-          priority?: number | null
+          priority: number
           project_id: number
           status_id: number
           user_id: string
@@ -502,7 +502,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name?: string
-          priority?: number | null
+          priority?: number
           project_id?: number
           status_id?: number
           user_id?: string

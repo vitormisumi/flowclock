@@ -13,7 +13,7 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
-	import { priorityOptions, dateFormat } from '$lib/constants/constants';
+	import { priorityOptions, dateFormat, priorityColors } from '$lib/constants/constants';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
@@ -35,11 +35,13 @@
 
 	$: projectValue = projectOptions.find((x) => x.value === task.project_id)?.value;
 
-	let priority: number = 0;
-
 	let open = false;
 
 	let loading = false;
+
+	let priority = task.priority;
+
+	let priorityOpen = false;
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
@@ -101,13 +103,22 @@
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
 			<div>
-				<Button size="sm" disabled={loading}>Priority {priority}</Button>
-				<Dropdown>
+				<Button
+					size="sm"
+					disabled={loading}
+					class="border bg-transparent border-{priorityColors[priority]}">Priority</Button
+				>
+				<Dropdown bind:open={priorityOpen}>
 					{#each priorityOptions as option}
 						<DropdownItem
 							class={priority === option.value ? 'bg-secondary-50' : 'bg-transparent'}
-							on:click={() => (priority = option.value)}>{option.name}</DropdownItem
+							on:click={() => {
+								priority = option.value;
+								priorityOpen = false;
+							}}
 						>
+							{option.name}
+						</DropdownItem>
 					{/each}
 				</Dropdown>
 				<Button size="sm" on:click={() => (openDate = true)}>

@@ -14,6 +14,7 @@
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'task');
 		formData.append('focus_id', String(task.id));
+		formData.append('project_id', String(task.project_id));
 		await goto('/app/session');
 		return async ({ update }) => {
 			update();
