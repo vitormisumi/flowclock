@@ -4,6 +4,8 @@
 	import { getContext } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { priorityColors } from '$lib/constants/constants';
+	import { dueDate } from '$lib/functions/functions';
 	import AddTaskButton from './AddTaskButton.svelte';
 	import AddStatusButton from './AddStatusButton.svelte';
 	import EditStatusButton from './EditStatusButton.svelte';
@@ -12,7 +14,7 @@
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
-	import { priorityColors } from '$lib/constants/constants';
+	import DueDate from './DueDate.svelte';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -93,7 +95,9 @@
 						tabindex="0"
 					>
 						<div
-							class="absolute bg-{priorityColors[task.priority]} h-4 w-4 rotate-45 -top-2 -left-2"
+							class="absolute bg-{priorityColors[
+								task.priority
+							]} -left-2 -top-2 h-4 w-4 rotate-45 transition-colors"
 						></div>
 						<p class="truncate">{task.name}</p>
 						{#if openEdit === task.id}
@@ -102,6 +106,8 @@
 								<EditTaskButton {task} />
 								<DeleteTaskButton {task} />
 							</div>
+						{:else if task.due_date}
+							<DueDate date={task.due_date} />
 						{/if}
 					</div>
 				{/each}

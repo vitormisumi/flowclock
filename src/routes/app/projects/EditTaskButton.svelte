@@ -121,21 +121,22 @@
 						</DropdownItem>
 					{/each}
 				</Dropdown>
-				<Button size="sm" on:click={() => (openDate = true)}>
+				<Button size="sm" class="border bg-transparent" on:click={() => (openDate = !openDate)}>
 					Due {date && !openDate
 						? dateFromTimestamp(String(date), $settings.date_format, $settings.separator)
 						: ''}
 				</Button>
 				{#if openDate}
-					<DateInput
-						closeOnSelection
-						visible
-						format={dateFormat[$settings.date_format]}
-						min={new Date()}
-						max={new Date(String(new Date().getFullYear() + 10))}
-						bind:value={date}
-						on:select={() => (openDate = false)}
-					/>
+					<div class="top-50 right-50 fixed">
+						<DateInput
+							visible
+							format={dateFormat[$settings.date_format]}
+							min={new Date()}
+							max={new Date(String(new Date().getFullYear() + 10))}
+							bind:value={date}
+							on:select={() => (openDate = false)}
+						/>
+					</div>
 				{/if}
 			</div>
 			<div class="flex justify-center gap-1">

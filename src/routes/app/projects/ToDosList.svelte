@@ -3,11 +3,13 @@
 	import { selectedProject } from './stores';
 	import { fade, slide } from 'svelte/transition';
 	import { sorting } from './stores';
+	import { dueDate } from '$lib/functions/functions';
 	import EditToDoButton from './EditToDoButton.svelte';
 	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import ToDosDetails from './ToDosDetails.svelte';
 	import type { Writable } from 'svelte/store';
+	import DueDate from './DueDate.svelte';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
@@ -30,8 +32,6 @@
 			break;
 	}
 
-	$: console.log($toDos);
-
 	export let show: boolean;
 
 	let openRow: number | null = null;
@@ -47,15 +47,14 @@
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
 			>
-				<div class="flex gap-2 overflow-hidden px-2">
+				<div class="flex items-center gap-2 overflow-hidden px-2">
 					<CompleteToDoButton {toDo} />
 					<button
-						class="h-10 grow overflow-hidden text-left font-light text-primary-50 {toDo.done ===
-						true
-							? 'line-through'
-							: 'no-underline'} truncate"
-						on:click={() => (openRow = openRow === i ? null : i)}
-						on:keydown={() => (openRow = openRow === i ? null : i)}
+						class="h-10 grow overflow-hidden truncate text-left font-light text-primary-50 {toDo.description
+							? 'cursor-pointer'
+							: 'cursor-auto'} {toDo.done === true ? 'line-through' : 'no-underline'}"
+						on:click={() => (openRow = toDo.description && openRow === null ? i : null)}
+						on:keydown={() => (openRow = toDo.description && openRow === null ? i : null)}
 					>
 						{toDo.name}
 					</button>
@@ -64,6 +63,8 @@
 							<EditToDoButton {toDo} />
 							<DeleteToDoButton {toDo} />
 						</div>
+					{:else if toDo.due_date}
+						<DueDate date={toDo.due_date} />
 					{/if}
 				</div>
 				{#if openRow === i}
