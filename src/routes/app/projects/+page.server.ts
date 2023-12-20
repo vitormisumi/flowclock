@@ -336,7 +336,29 @@ export const actions = {
       return fail(500, { message: error.message, success: false });
     }
 
-    return { message: 'Sorting successfully changed', success: true };
+    return { message: 'To-Dos sorted by ' + sort.replace('_', ' '), success: true };
+  },
+
+  sortTasks: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    const sort = formData.get('sort') as string;
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ tasks_sorting: sort })
+      .eq('user_id', session.user.id)
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: 'Tasks sorted by ' + sort.replace('_', ' '), success: true };
   },
     
   addStatus: async ({ request, locals: { supabase, getSession } }) => {

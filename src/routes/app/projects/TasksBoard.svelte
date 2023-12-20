@@ -5,16 +5,15 @@
 	import { invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { priorityColors } from '$lib/constants/constants';
-	import { dueDate } from '$lib/functions/functions';
 	import AddTaskButton from './AddTaskButton.svelte';
 	import AddStatusButton from './AddStatusButton.svelte';
 	import EditStatusButton from './EditStatusButton.svelte';
 	import StartTaskButton from './StartTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
+	import DueDate from './DueDate.svelte';
 	import type { DndEvent } from 'svelte-dnd-action';
 	import type { Writable } from 'svelte/store';
-	import DueDate from './DueDate.svelte';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 

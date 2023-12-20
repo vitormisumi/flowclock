@@ -3,7 +3,6 @@
 	import { selectedProject } from './stores';
 	import { fade, slide } from 'svelte/transition';
 	import { sorting } from './stores';
-	import { dueDate } from '$lib/functions/functions';
 	import EditToDoButton from './EditToDoButton.svelte';
 	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';

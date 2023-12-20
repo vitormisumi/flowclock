@@ -365,6 +365,7 @@ export interface Database {
           date_format: string
           ratio: number
           separator: number
+          tasks_sorting: string
           to_dos_sorting: string
           user_id: string
           warning: number
@@ -375,6 +376,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
+          tasks_sorting?: string
           to_dos_sorting?: string
           user_id: string
           warning?: number
@@ -385,6 +387,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
+          tasks_sorting?: string
           to_dos_sorting?: string
           user_id?: string
           warning?: number
@@ -478,6 +481,7 @@ export interface Database {
           id: number
           last_edited: string
           name: string
+          order: number
           priority: number
           project_id: number
           status_id: number
@@ -490,6 +494,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name: string
+          order?: number
           priority: number
           project_id: number
           status_id: number
@@ -502,6 +507,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name?: string
+          order?: number
           priority?: number
           project_id?: number
           status_id?: number

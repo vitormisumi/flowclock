@@ -8,11 +8,17 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 	
 	const { cardId, event } = await request.json();
 
+	const order = event.items.map((x: any, index: number) => {
+		const { ...rowData } = x;
+		rowData.order = index + 1;
+		rowData.status_id = cardId;
+		return rowData
+	});
+
 	if (event.info.trigger === 'droppedIntoZone') {
 		const { error } = await supabase
 			.from('tasks')
-			.update({ status_id: cardId })
-			.eq('id', event.info.id)
+			.upsert(order)
 		
 		if (error) {
 			console.log(error);

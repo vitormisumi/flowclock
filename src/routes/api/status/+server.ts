@@ -7,18 +7,19 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		}
 	
 	const event = await request.json();
+	
+	const order = event.event.map((x: any, index: number) => {
+		const { tasks, ...rowData } = x;
+		rowData.order = index + 1;
+		return rowData
+	});
 
-	const order = event.event.map((x: any, index: number) => ({ id: x.id, order: index + 1 }));
+	const { error } = await supabase
+		.from('task_statuses')
+		.upsert(order)
 
-	for (let i = 0; i < order.length; i++) {
-		const { error } = await supabase
-			.from('task_statuses')
-			.update({ order: order[i].order })
-			.eq('id', order[i].id)
-
-		if (error) {
-			console.log(error);
-		}
+	if (error) {
+		console.log(error);
 	}
 	
 	return new Response()

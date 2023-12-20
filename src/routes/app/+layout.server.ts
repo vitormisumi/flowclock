@@ -43,7 +43,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.from('tasks')
 		.select('*')
 		.eq('user_id', session.user.id)
-		.order('id')
+		.order('order')
 	
 	const { data: toDos } = await supabase
 		.from('to_dos')
