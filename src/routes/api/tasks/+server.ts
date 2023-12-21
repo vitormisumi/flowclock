@@ -10,7 +10,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 
 	const order = event.items.map((x: any, index: number) => {
 		const { ...rowData } = x;
-		rowData.order = index + 1;
+		rowData.order = event.items.length - index;
 		rowData.status_id = cardId;
 		return rowData
 	});
@@ -24,6 +24,17 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			console.log(error);
 		}
 	}
+
+	if (event.info.trigger === 'droppedIntoZone') {
+		const { error } = await supabase
+			.from('settings')
+			.update({ 'tasks_sorting': null })
+			.eq('user_id', session.user.id)
 	
+		if (error) {
+			console.log(error);
+		}
+	}
+
 	return new Response()
 };

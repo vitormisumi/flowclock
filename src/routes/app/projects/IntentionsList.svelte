@@ -18,15 +18,17 @@
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
 			<li
-				class="grid w-full rounded-lg bg-gradient-to-r from-primary-800 border border-primary-900 to-primary-900"
+				class="grid w-full rounded-lg border border-primary-900 bg-gradient-to-r from-primary-800 to-primary-900"
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
 			>
 				<div class="flex gap-2 overflow-hidden px-2">
 					<button
-						class="h-10 grow overflow-hidden text-left font-light text-primary-50"
-						on:click={() => (openRow = openRow === i ? null : i)}
-						on:keydown={() => (openRow = openRow === i ? null : i)}
+						class="h-10 grow overflow-hidden text-left font-light text-primary-50 {intention.description
+							? 'cursor-pointer'
+							: 'cursor-auto'}"
+						on:click={() => (openRow = intention.description && openRow === null ? i : null)}
+						on:keydown={() => (openRow = intention.description && openRow === null ? i : null)}
 						>{intention.name}
 					</button>
 					{#if openEdit === i}

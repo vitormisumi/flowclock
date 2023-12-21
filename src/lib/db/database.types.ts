@@ -365,7 +365,7 @@ export interface Database {
           date_format: string
           ratio: number
           separator: number
-          tasks_sorting: string
+          tasks_sorting: string | null
           to_dos_sorting: string
           user_id: string
           warning: number
@@ -376,7 +376,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
-          tasks_sorting?: string
+          tasks_sorting?: string | null
           to_dos_sorting?: string
           user_id: string
           warning?: number
@@ -387,7 +387,7 @@ export interface Database {
           date_format?: string
           ratio?: number
           separator?: number
-          tasks_sorting?: string
+          tasks_sorting?: string | null
           to_dos_sorting?: string
           user_id?: string
           warning?: number

@@ -6,7 +6,6 @@
 	import EditToDoButton from './EditToDoButton.svelte';
 	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
-	import ToDosDetails from './ToDosDetails.svelte';
 	import type { Writable } from 'svelte/store';
 	import DueDate from './DueDate.svelte';
 
@@ -68,7 +67,11 @@
 				</div>
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-						<ToDosDetails {toDo} />
+						{#if toDo.description}
+							<p class="whitespace-normal text-primary-100">
+								{toDo.description}
+							</p>
+						{/if}
 					</div>
 				{/if}
 			</li>

@@ -34,7 +34,11 @@
 	$: intentions.set(data.intentions);
 
 	const status = writable();
-	$: status.set(data.status?.filter((x) => x.project_id === $selectedProject.id));
+	$: {
+		let filteredTasks = data.status?.filter((x) => x.project_id === $selectedProject.id);
+		filteredTasks?.forEach((item) => {item.tasks.sort((a, b) => b.order - a.order)});
+		status.set(filteredTasks);
+	}
 
 	setContext('user', data.user);
 	setContext('sessions', sessions);

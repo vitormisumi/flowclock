@@ -1,14 +1,28 @@
 <script lang="ts">
 	import { Card, Popover, Button, Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import TasksBoard from './TasksBoard.svelte';
 	import { sorting } from './stores';
+	import { getContext } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+	import TasksBoard from './TasksBoard.svelte';
+	import type { Writable } from 'svelte/store';
+
+	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	let open = false;
 
-	function sort(sortBy: string) {
+	async function sort(sortBy: string) {
 		open = false;
 		sorting.sortTasks(sortBy);
+		let tasks: TaskStatuses[] = $status
+		const response = await fetch('/api/sort', {
+			method: 'POST',
+			body: JSON.stringify({ tasks, sorting: sortBy }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		invalidateAll();
 	}
 </script>
 

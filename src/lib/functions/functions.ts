@@ -66,18 +66,24 @@ export function dueDate(timestamp: string): {text: string, color: string} {
     const parts = timestamp.split('-');
     const dueDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
-	const next_week = new Date();
+    const next_week = new Date();
     next_week.setDate(today.getDate() + 7);
-    if (dueDate.toDateString() === today.toDateString()) {
-		return { text: 'Today', color: priorityColors[3] };
+    if (dueDate.toDateString() === yesterday.toDateString()) {
+        return { text: 'Yesterday', color: priorityColors[3] };
+    } else if (dueDate < yesterday) {
+        return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColors[3] };
+    } else if (dueDate.toDateString() === today.toDateString()) {
+        return { text: 'Today', color: priorityColors[2] };
     } else if (dueDate.toDateString() === tomorrow.toDateString()) {
-        return { text: 'Tomorrow', color: priorityColors[2] };
+        return { text: 'Tomorrow', color: priorityColors[1] };
     } else if (dueDate <= next_week) {
-        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'long' }), color: priorityColors[1] };
+        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'long' }), color: priorityColors[0] };
     } else {
         return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColors[0] };
     }
 }
-

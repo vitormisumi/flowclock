@@ -22,14 +22,15 @@
 	};
 </script>
 
-<form method="POST" action="/app/session?/start" use:enhance={handleClick}>
-	<Button
-		type="submit"
-		size="xs"
-		class="bg-transparent transition-colors hover:bg-primary-700"
-		on:click={() => session.start()}
-	>
-		<i class="fa-solid fa-clock text-primary-50" />
-	</Button>
-	<Tooltip placement="left">Start intention session</Tooltip>
-</form>
+{#if !$session.running}
+	<form method="POST" action="/app/session?/start" use:enhance={handleClick}>
+		<Button
+			type="submit"
+			size="xs"
+			class="bg-transparent transition-colors hover:bg-primary-700"
+		>
+			<i class="fa-solid fa-clock text-primary-50" />
+		</Button>
+		<Tooltip placement="left">Start intention session</Tooltip>
+	</form>
+{/if}

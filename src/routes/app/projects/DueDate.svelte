@@ -5,6 +5,6 @@
     export let date: string;
 </script>
 
-<p class="text-sm text-{dueDate(date).color}" in:fade>
+<p class="text-xs text-{dueDate(date).color}" in:fade>
 	<i class="fa-solid fa-calendar pr-2" />{dueDate(date).text}
 </p>
