@@ -1,31 +1,19 @@
 <script lang="ts">
-	import {
-		Button,
-		Tooltip,
-		Input,
-		Modal,
-		Dropdown,
-		DropdownItem,
-		Textarea,
-		Select
-	} from 'flowbite-svelte';
-	import { DateInput } from 'date-picker-svelte';
+	import { Button, Tooltip, Input, Modal, Textarea, Select } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import { dateFromTimestamp } from '$lib/functions/functions';
-	import { priorityOptions, dateFormat, priorityColors } from '$lib/constants/constants';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
+	import SetDueDate from './SetDueDate.svelte';
+	import SetPriority from './SetPriority.svelte';
 
-	const settings: Writable<Settings> = getContext('settings');
 	const projects: Writable<Project[]> = getContext('projects');
 
 	export let task: Task;
+	export let openEdit;
 
-	let date: Date;
-
-	let openDate = false;
+	let dueDate: Date | null;
 
 	let projectOptions: { name: string; value: number }[] = [];
 
@@ -41,13 +29,12 @@
 
 	let priority = task.priority;
 
-	let priorityOpen = false;
-
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
+		openEdit = null;
 		formData.append('priority', String(priority));
-		if (date) {
-			formData.append('due_date', date.toISOString());
+		if (dueDate) {
+			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
 			open = false;
@@ -83,8 +70,10 @@
 				placeholder="Task name"
 				value={task.name}
 				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
-				required><i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" /></Input
+				required
 			>
+				<i class="fa-solid fa-file-signature" aria-hidden="true" slot="left" />
+			</Input>
 			<Select
 				items={projectOptions}
 				name="project_id"
@@ -103,50 +92,24 @@
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
 			<div>
-				<Button
-					size="sm"
-					disabled={loading}
-					class="border bg-transparent border-{priorityColors[priority]}">Priority</Button
-				>
-				<Dropdown bind:open={priorityOpen}>
-					{#each priorityOptions as option}
-						<DropdownItem
-							class={priority === option.value ? 'bg-secondary-50' : 'bg-transparent'}
-							on:click={() => {
-								priority = option.value;
-								priorityOpen = false;
-							}}
-						>
-							{option.name}
-						</DropdownItem>
-					{/each}
-				</Dropdown>
-				<Button size="sm" class="border bg-transparent" on:click={() => (openDate = !openDate)}>
-					Due {date && !openDate
-						? dateFromTimestamp(String(date), $settings.date_format, $settings.separator)
-						: ''}
-				</Button>
-				{#if openDate}
-					<div class="top-50 right-50 fixed">
-						<DateInput
-							visible
-							format={dateFormat[$settings.date_format]}
-							min={new Date()}
-							max={new Date(String(new Date().getFullYear() + 10))}
-							bind:value={date}
-							on:select={() => (openDate = false)}
-						/>
-					</div>
-				{/if}
+				<SetPriority bind:priority />
+				<SetDueDate {task} bind:dueDate />
 			</div>
 			<div class="flex justify-center gap-1">
-				<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
+				<Button
+					size="sm"
+					on:click={() => {
+						open = false;
+						openEdit = null;
+					}}>Cancel</Button
+				>
 				<Button
 					size="sm"
 					type="submit"
 					class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
-					><i class="fa-solid fa-save pr-2" />Save</Button
 				>
+					<i class="fa-solid fa-save pr-2" />Save
+				</Button>
 			</div>
 		</div>
 	</form>

@@ -20,7 +20,7 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 	let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 	let month = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
 	let year = date.getFullYear();
-	let shortYear = String(date.getFullYear()).slice(2, 4);
+	let shortYear = String(year).slice(2, 4);
 	switch (format) {
 		case 'ddmmyyyy':
 			return day + sep + month + sep + year;
@@ -38,6 +38,34 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 			return '';
 	};
 }
+
+// export function formatDate(date: string | null, format: string, separator: number): string {
+// 	if (date === null) {
+// 		return ''
+// 	}
+// 	let sep;
+// 	sep = separatorOptions[separator];
+// 	let day = date.slice(8, 10)
+// 	let month = date.slice(5, 7)
+// 	let year = date.slice(0, 4)
+// 	let shortYear = date.slice(2, 4);
+// 	switch (format) {
+// 		case 'ddmmyyyy':
+// 			return day + sep + month + sep + year;
+// 		case 'mmddyyyy':
+// 			return month + sep + day + sep + year;
+// 		case 'yyyymmdd':
+// 			return year + sep + month + sep + day;
+// 		case 'ddmmyy':
+// 			return day + sep + month + sep + shortYear;
+// 		case 'mmddyy':
+// 			return month + sep + day + sep + shortYear;
+// 		case 'yymmdd':
+// 			return shortYear + sep + month + sep + day;
+// 		default:
+// 			return '';
+// 	};
+// }
 
 export function timeFromTimestamp(timestamp: string | null | undefined, format: boolean): string {
 	if (timestamp === undefined || timestamp === null) {
@@ -62,8 +90,8 @@ export function timeFromTimestamp(timestamp: string | null | undefined, format: 
 	}
 }
 
-export function dueDate(timestamp: string): {text: string, color: string} {
-    const parts = timestamp.split('-');
+export function dueDate(date: string): {text: string, color: string} {
+    const parts = date.split('-');
     const dueDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
     const today = new Date();
     today.setHours(0, 0, 0, 0);

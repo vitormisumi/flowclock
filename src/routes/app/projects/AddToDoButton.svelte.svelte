@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
-	import { DateInput } from 'date-picker-svelte';
+	import { DatePicker } from 'date-picker-svelte';
 	import { enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
 	import { dateFromTimestamp } from '$lib/functions/functions';
-	import { priorityOptions, dateFormat } from '$lib/constants/constants';
+	import { priorityOptions } from '$lib/constants/constants';
 	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -76,15 +76,14 @@
 							: ''}
 					</Button>
 					{#if openDate}
-						<DateInput
-							closeOnSelection
-							visible
-							format={dateFormat[$settings.date_format]}
-							min={new Date()}
-							max={new Date(String(new Date().getFullYear() + 10))}
-							bind:value={date}
-							on:select={() => (openDate = false)}
-						/>
+						<div class="fixed">
+							<DatePicker
+								min={new Date()}
+								max={new Date(String(new Date().getFullYear() + 10))}
+								bind:value={date}
+								on:select={() => (openDate = false)}
+							/>
+						</div>
 					{/if}
 				</div>
 				<div>
@@ -108,14 +107,3 @@
 		on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />add to-do</Button
 	>
 {/if}
-
-<style>
-	:root {
-		--date-picker-foreground: #ebf7fa;
-		--date-picker-background: #10353d;
-		--date-picker-highlight-border: transparent;
-		--date-picker-highlight-shadow: transparent;
-		--date-picker-selected-color: #ebf7fa;
-		--date-picker-selected-background: #e35403;
-	}
-</style>

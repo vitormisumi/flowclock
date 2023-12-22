@@ -102,7 +102,7 @@
 						{#if openEdit === task.id}
 							<div class="flex p-0" in:fade>
 								<StartTaskButton {task} />
-								<EditTaskButton {task} />
+								<EditTaskButton {task} bind:openEdit />
 								<DeleteTaskButton {task} />
 							</div>
 						{:else if task.due_date}

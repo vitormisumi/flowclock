@@ -58,7 +58,7 @@
 					</button>
 					{#if openEdit === i}
 						<div in:fade class="flex py-1.5">
-							<EditToDoButton {toDo} />
+							<EditToDoButton {toDo} bind:openEdit/>
 							<DeleteToDoButton {toDo} />
 						</div>
 					{:else if toDo.due_date}

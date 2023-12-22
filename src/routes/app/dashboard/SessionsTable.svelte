@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { ButtonGroup, Button } from 'flowbite-svelte';
-	import { filteredSessions, startRow, endRow, filteredInterruptions, openRow } from './stores';
-	import {
-		dateFromTimestamp,
-		millisecondsToClock,
-		timeFromTimestamp
-	} from '$lib/functions/functions';
-	import DeleteSession from './DeleteSessionButton.svelte';
-	import { fade, slide } from 'svelte/transition';
-	import type { Writable } from 'svelte/store';
+	import { filteredSessions, startRow, endRow, openRow } from './stores';
+	import { dateFromTimestamp, millisecondsToClock } from '$lib/functions/functions';
+	import { fade } from 'svelte/transition';
 	import { getContext } from 'svelte';
+	import DeleteSession from './DeleteSessionButton.svelte';
+	import SessionDetails from './SessionDetails.svelte';
+	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -91,43 +88,7 @@
 					</tr>
 				{/if}
 				{#if $openRow === i}
-					<tr class="border-b border-primary-800">
-						<td colspan="2" class="bg-primary-900 p-0">
-							<div
-								class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light"
-								transition:slide
-							>
-								<p class="col-start-1 text-primary-100">
-									<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
-										session.start,
-										$settings.clock_format
-									)}
-								</p>
-								<p class="col-start-2 text-primary-100">
-									<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(
-										session.end,
-										$settings.clock_format
-									)}
-								</p>
-								<div class="col-span-2 col-start-1 row-start-2 grid justify-items-start">
-									{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
-										<div
-											class="flex items-center justify-center font-extralight text-secondary-100"
-										>
-											<i class="fa-solid fa-pause pr-1" />
-											<p>
-												{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp
-											</p>
-											<p>{timeFromTimestamp(interruption[1].end, $settings.clock_format)}</p>
-											{#if interruption[1].reason}
-												<p class="pl-1">({interruption[1].reason})</p>
-											{/if}
-										</div>
-									{/each}
-								</div>
-							</div>
-						</td>
-					</tr>
+					<SessionDetails {session} />
 				{/if}
 			{/each}
 		</tbody>

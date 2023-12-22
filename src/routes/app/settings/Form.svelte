@@ -100,7 +100,7 @@
 		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-3" />
 		<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
-				The message that appears while you are on a break. You can use this to remind you of how you
+				The message that appears while you are on a break. You can use this to remind yourself of how you
 				want to spend your break time.
 			</div>
 		</Popover>

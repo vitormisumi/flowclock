@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
-	import { DateInput } from 'date-picker-svelte';
+	import { DatePicker } from 'date-picker-svelte';
 	import { enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
 	import { dateFromTimestamp } from '$lib/functions/functions';
@@ -79,10 +79,7 @@
 							: ''}
 					</Button>
 					{#if openDate}
-						<DateInput
-							closeOnSelection
-							visible
-							format={dateFormat[$settings.date_format]}
+						<DatePicker
 							min={new Date()}
 							max={new Date(String(new Date().getFullYear() + 10))}
 							bind:value={date}
