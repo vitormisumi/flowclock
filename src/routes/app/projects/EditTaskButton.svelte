@@ -91,11 +91,11 @@
 		></Textarea>
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
-			<div>
-				<SetPriority bind:priority />
-				<SetDueDate {task} bind:dueDate />
+			<div class="flex gap-1">
+				<SetPriority size="sm" bind:priority />
+				<SetDueDate {task} size="sm" bind:dueDate />
 			</div>
-			<div class="flex justify-center gap-1">
+			<div class="flex gap-1">
 				<Button
 					size="sm"
 					on:click={() => {

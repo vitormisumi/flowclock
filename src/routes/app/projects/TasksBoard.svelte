@@ -69,49 +69,48 @@
 >
 	{#each $status as status (status.id)}
 		<div
-			class="relative grid max-h-96 w-52 shrink-0 grow content-between overflow-y-scroll rounded-lg bg-primary-900 p-2 md:w-60"
+			class="grid max-h-96 w-52 shrink-0 grow content-start gap-1 rounded-lg bg-primary-900 p-2 md:w-60"
 			animate:flip
 		>
-			<div class="absolute flex h-12 w-full justify-between p-2">
-				<EditStatusButton {status} />
-			</div>
-			<div
-				class="grid w-full gap-2 rounded-lg pt-10"
-				use:dndzone={{
-					items: status.tasks,
-					dropTargetStyle: { outline: '#E35402 solid 1px' }
-				}}
-				on:consider={(event) => handleConsiderCards(status.id, event)}
-				on:finalize={(event) => handleFinalizeCards(status.id, event)}
-			>
-				{#each status.tasks as task (task.id)}
-					<div
-						class="relative flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50"
-						on:mouseenter={() => (openEdit = task.id)}
-						on:mouseleave={() => (openEdit = null)}
-						animate:flip
-						role="cell"
-						tabindex="0"
-					>
+			<EditStatusButton {status} />
+			<div class="grid h-full content-between gap-1 overflow-hidden">
+				<div
+					class="grid w-full gap-1 overflow-scroll rounded-lg"
+					use:dndzone={{
+						items: status.tasks,
+						dropTargetStyle: { outline: '#E35402 solid 1px' }
+					}}
+					on:consider={(event) => handleConsiderCards(status.id, event)}
+					on:finalize={(event) => handleFinalizeCards(status.id, event)}
+				>
+					{#each status.tasks as task (task.id)}
 						<div
-							class="absolute bg-{priorityColors[
-								task.priority
-							]} -left-2 -top-2 h-4 w-4 rotate-45 transition-colors"
-						></div>
-						<p class="truncate">{task.name}</p>
-						{#if openEdit === task.id}
-							<div class="flex p-0" in:fade>
-								<StartTaskButton {task} />
-								<EditTaskButton {task} bind:openEdit />
-								<DeleteTaskButton {task} />
-							</div>
-						{:else if task.due_date}
-							<DueDate date={task.due_date} />
-						{/if}
-					</div>
-				{/each}
+							class="relative flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50"
+							on:mouseenter={() => (openEdit = task.id)}
+							on:mouseleave={() => (openEdit = null)}
+							animate:flip
+							role="cell"
+							tabindex="0"
+						>
+							<div
+								class="absolute -left-2 -top-2 h-4 w-4 rotate-45 transition-colors
+									bg-{priorityColors[task.priority]}"
+							></div>
+							<p class="truncate text-sm font-light md:text-base">{task.name}</p>
+							{#if openEdit === task.id}
+								<div class="flex p-0" in:fade>
+									<StartTaskButton {task} />
+									<EditTaskButton {task} bind:openEdit />
+									<DeleteTaskButton {task} />
+								</div>
+							{:else if task.due_date}
+								<DueDate date={task.due_date} />
+							{/if}
+						</div>
+					{/each}
+				</div>
+				<AddTaskButton status={status.id} />
 			</div>
-			<AddTaskButton status={status.id} />
 		</div>
 	{/each}
 	<AddStatusButton />

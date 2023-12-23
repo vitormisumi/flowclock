@@ -34,7 +34,7 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<i class="fa-solid fa-warning text-xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">Delete status {status.status}?</p>
+	<p class="whitespace-normal text-secondary-200">Delete status {status.status}? <br />This will delete all tasks inside this status!</p>
 	<form
 		class="flex w-full justify-center gap-4"
 		method="POST"

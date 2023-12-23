@@ -22,9 +22,9 @@
 				on:mouseenter={() => (openEdit = i)}
 				on:mouseleave={() => (openEdit = null)}
 			>
-				<div class="flex gap-2 overflow-hidden px-2">
+				<div class="flex gap-1 overflow-hidden px-2">
 					<button
-						class="h-10 grow overflow-hidden text-left font-light text-primary-50 {intention.description
+						class="h-10 grow overflow-hidden text-left text-sm font-light text-primary-50 md:text-base {intention.description
 							? 'cursor-pointer'
 							: 'cursor-auto'}"
 						on:click={() => (openRow = intention.description && openRow === null ? i : null)}

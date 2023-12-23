@@ -48,7 +48,7 @@
 				<div class="flex items-center gap-2 overflow-hidden px-2">
 					<CompleteToDoButton {toDo} />
 					<button
-						class="h-10 grow overflow-hidden truncate text-left font-light text-primary-50 {toDo.description
+						class="h-10 grow overflow-hidden truncate text-left text-sm font-light text-primary-50 md:text-base {toDo.description
 							? 'cursor-pointer'
 							: 'cursor-auto'} {toDo.done === true ? 'line-through' : 'no-underline'}"
 						on:click={() => (openRow = toDo.description && openRow === null ? i : null)}
@@ -58,7 +58,7 @@
 					</button>
 					{#if openEdit === i}
 						<div in:fade class="flex py-1.5">
-							<EditToDoButton {toDo} bind:openEdit/>
+							<EditToDoButton {toDo} bind:openEdit />
 							<DeleteToDoButton {toDo} />
 						</div>
 					{:else if toDo.due_date}

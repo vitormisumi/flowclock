@@ -1,24 +1,17 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
-	import { DatePicker } from 'date-picker-svelte';
+	import { Button, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
-	import { dateFromTimestamp } from '$lib/functions/functions';
-	import { priorityOptions } from '$lib/constants/constants';
-	import { getContext } from 'svelte';
 	import { selectedProject } from './stores';
+	import SetDueDate from './SetDueDate.svelte';
+	import SetPriority from './SetPriority.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
 
-	const settings: Writable<Settings> = getContext('settings');
-
-	let date: Date;
+	let dueDate: Date;
 
 	let priority: number = 0;
 
 	let open = false;
-
-	let openDate = false;
 
 	let loading = false;
 
@@ -26,8 +19,8 @@
 		loading = true;
 		formData.append('project_id', String($selectedProject.id));
 		formData.append('priority', String(priority));
-		if (date) {
-			formData.append('due_date', date.toISOString());
+		if (dueDate) {
+			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
 			loading = false;
@@ -59,34 +52,12 @@
 				placeholder="Description"
 				class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
 			></Textarea>
-			<div class="flex justify-between gap-2">
-				<div>
-					<Button size="xs" disabled={loading}>Priority {priority}</Button>
-					<Dropdown>
-						{#each priorityOptions as option}
-							<DropdownItem
-								class={priority === option.value ? 'bg-secondary-50' : 'bg-transparent'}
-								on:click={() => (priority = option.value)}>{option.name}</DropdownItem
-							>
-						{/each}
-					</Dropdown>
-					<Button size="xs" on:click={() => (openDate = true)}>
-						Due {date && !openDate
-							? dateFromTimestamp(String(date), $settings.date_format, $settings.separator)
-							: ''}
-					</Button>
-					{#if openDate}
-						<div class="fixed">
-							<DatePicker
-								min={new Date()}
-								max={new Date(String(new Date().getFullYear() + 10))}
-								bind:value={date}
-								on:select={() => (openDate = false)}
-							/>
-						</div>
-					{/if}
+			<div class="flex justify-between">
+				<div class="flex gap-1">
+					<SetPriority size="xs" bind:priority />
+					<SetDueDate task={null} size="xs" bind:dueDate />
 				</div>
-				<div>
+				<div class="flex gap-1">
 					<Button size="xs" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 					<Button
 						size="xs"
