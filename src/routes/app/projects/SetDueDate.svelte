@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import { Button, Modal } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
-	import DatePicker from 'date-picker-svelte/DatePicker.svelte';
 	import type { Writable } from 'svelte/store';
+	import DatePicker from 'date-picker-svelte/DatePicker.svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -15,33 +15,36 @@
 		? new Date(new Date(task.due_date).getTime() + timezoneOffset)
 		: null;
 
-	let openDate = false;
+	let open = false;
 </script>
 
 <div>
-	<Button {size} class="border bg-transparent focus:ring-0" on:click={() => (openDate = !openDate)}>
+	<Button {size} class="border bg-transparent focus:ring-0" on:click={() => (open = !open)}>
 		Due {dueDate
 			? dateFromTimestamp(String(dueDate), $settings.date_format, $settings.separator)
 			: ''}
 	</Button>
-	{#if openDate}
-		<div class="absolute grid">
-            <DatePicker
-            bind:value={dueDate}
-            min={new Date()}
-            max={new Date(String(new Date().getFullYear() + 10))}
-            on:select={() => (openDate = false)}
+	<Modal
+		bind:open
+		class="w-fit bg-primary-900 text-center landscape:left-8 landscape:md:left-12"
+	>
+		<div class="grid justify-center pt-8">
+			<DatePicker
+				bind:value={dueDate}
+				min={new Date()}
+				max={new Date(String(new Date().getFullYear() + 10))}
+				on:select={() => (open = false)}
 			/>
-            <Button
-                size="xs"
-                class="rounded-sm border border-secondary-800 bg-secondary-900 hover:bg-[#141717] focus:ring-0"
-                on:click={() => {
-                    dueDate = null;
-                    openDate = false;
-                }}
-            >
-                No date
-            </Button>
+			<Button
+				size="xs"
+				class="rounded-sm border border-secondary-800 bg-secondary-900 hover:bg-[#141717] focus:ring-0"
+				on:click={() => {
+					dueDate = null;
+					open = false;
+				}}
+			>
+				No date
+			</Button>
 		</div>
-	{/if}
+	</Modal>
 </div>

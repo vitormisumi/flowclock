@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem, Input, Textarea } from 'flowbite-svelte';
+	import { Button, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { slide } from 'svelte/transition';
-	import { priorityOptions } from '$lib/constants/constants';
 	import { selectedProject } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import SetDueDate from './SetDueDate.svelte';
