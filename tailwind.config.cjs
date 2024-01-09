@@ -52,11 +52,6 @@ const config = {
        			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       		}
 		},
-		animation: {
-        'seconds-hand': 'spin 60s linear infinite',
-        'minutes-hand': 'spin 3600s linear infinite',
-        'hours-hand': 'spin 43200s linear infinite',
-      }
 	},
 
 	plugins: [require('flowbite/plugin')],

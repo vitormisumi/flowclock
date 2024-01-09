@@ -48,8 +48,9 @@
 <Button
 	size="xs"
 	class="bg-transparent transition-colors hover:bg-primary-700"
-	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
->
+	on:click={() => (open = true)}
+	><i class="fa-solid fa-pen text-primary-50" />
+</Button>
 <Tooltip placement="left">Edit task</Tooltip>
 <Modal
 	bind:open
