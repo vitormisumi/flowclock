@@ -102,7 +102,7 @@
 >
 	{#each $status as status (status.id)}
 		<div
-			class="grid max-h-96 w-52 shrink-0 grow content-start gap-1 rounded-lg bg-primary-900 p-2 md:w-60 hover:cursor-grab"
+			class="grid max-h-96 w-52 shrink-0 grow content-start gap-1 rounded-lg bg-primary-900 p-2 hover:cursor-grab md:w-60"
 			animate:flip
 			use:longpress
 			on:longpress={() => (dragDisabled = false)}
@@ -123,7 +123,7 @@
 				>
 					{#each status.tasks as task (task.id)}
 						<div
-							class="relative flex h-10 w-full items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50 hover:bg-primary-600 hover:cursor-grab"
+							class="relative flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-600"
 							animate:flip
 							use:longpress
 							on:longpress={() => (dragDisabled = false)}
