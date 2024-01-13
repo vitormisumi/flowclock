@@ -1,25 +1,25 @@
 <script lang="ts">
-    import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
-    import { getContext } from 'svelte';
+	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
+	import { getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 	import { drag } from './drag';
 	import { priorityColors } from '$lib/constants/constants';
-    import { invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import StartTaskButton from './StartTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import DueDate from './DueDate.svelte';
-    import type { Writable } from 'svelte/store';
+    import Notification from '../../Notification.svelte';
+	import type { Writable } from 'svelte/store';
 
-    const status: Writable<TaskStatuses[]> = getContext('status');
+	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	export let s: TaskStatuses;
 	export let dragDisabled: boolean;
 	export let considering;
 
 	let openEdit: number | null = null;
-
 
 	function handleConsider(cardId: number, e: CustomEvent<DndEvent<Task>>) {
 		const {
@@ -54,7 +54,6 @@
 				'content-type': 'application/json'
 			}
 		});
-		invalidateAll();
 	}
 </script>
 

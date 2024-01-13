@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
 	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
-	import { invalidateAll } from '$app/navigation';
 	import { drag } from './drag';
 	import { getContext, onMount, onDestroy } from 'svelte';
+	import { browser } from '$app/environment';
 	import AddTaskButton from './AddTaskButton.svelte';
 	import AddStatusButton from './AddStatusButton.svelte';
 	import EditStatusButton from './EditStatusButton.svelte';
@@ -14,8 +14,12 @@
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	let dragDisabled = true;
-
-	let considering = false; 
+	let considering = false;
+	let board: HTMLElement;
+	let pointerPosition = { x: 0, y: 0 };
+	let dndRefY = 0;
+	const pixelsFromEdge = 30;
+	const scrollSpeed = 2;
 
 	function handleConsider(e: CustomEvent<DndEvent<TaskStatuses>>) {
 		const {
@@ -46,42 +50,44 @@
 				'content-type': 'application/json'
 			}
 		});
-		invalidateAll();
 	}
 
-	let board: HTMLElement;
-	let mouseY = 0;
-	let mouseX = 0;
-	let dndRefY = 0; 
+	function isWithinBoard(x: number, y: number) {
+		return x >= 0 && x <= board.clientWidth && y >= 0 && y <= board.clientHeight;
+	}
 
-	$: if (board && considering && mouseX >= 0 && mouseX <= board.clientWidth && mouseY >= 0 && mouseY <= board.clientHeight) {
-		dndRefY 
-		if (mouseX < 30) {
-			board.scrollLeft -= 2;
-		} else if (mouseX > board.clientWidth - 30) {
-			board.scrollLeft += 2; 
+	function handlePointerMove(e: PointerEvent) {
+		const { top, left } = board.getBoundingClientRect();
+		pointerPosition.y = e.clientY - top;
+		pointerPosition.x = e.clientX - left;
+	}
+
+	function handleScroll() {
+		dndRefY = board.scrollLeft;
+	}
+
+	onMount(() => {
+		if (browser) {
+			window.addEventListener('pointermove', handlePointerMove);
+			board.addEventListener('scroll', handleScroll);
+		}
+	});
+
+	onDestroy(() => {
+		if (browser) {
+			window.removeEventListener('pointermove', handlePointerMove);
+			board.removeEventListener('scroll', handleScroll);
+		}
+	});
+
+	$: if (board && considering && isWithinBoard(pointerPosition.x, pointerPosition.y)) {
+		dndRefY;
+		if (pointerPosition.x < pixelsFromEdge) {
+			board.scrollLeft -= scrollSpeed;
+		} else if (pointerPosition.x > board.clientWidth - pixelsFromEdge) {
+			board.scrollLeft += scrollSpeed;
 		}
 	}
-
-	const handlePointerMove = (e: PointerEvent) => {
-		const {top, left} = board.getBoundingClientRect();
-		mouseY = e.clientY - top;
-		mouseX = e.clientX - left;
-	};
-	
-	const handleScroll = () => {
-		dndRefY = board.scrollLeft;
-	};
-	
-	onMount(() => {
-		window.addEventListener('pointermove', handlePointerMove);
-		board.addEventListener('scroll', handleScroll);
-	});
-	
-	onDestroy(() => {
-		window.removeEventListener('pointermove', handlePointerMove);
-		board.removeEventListener('scroll', handleScroll);
-	});
 </script>
 
 <section
@@ -104,7 +110,7 @@
 			on:dragging={() => (dragDisabled = false)}
 		>
 			<EditStatusButton {s} />
-			<TaskList {s} bind:dragDisabled bind:considering/>
+			<TaskList {s} bind:dragDisabled bind:considering />
 			<AddTaskButton status={s.id} />
 		</div>
 	{/each}
