@@ -3,14 +3,14 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-	export let status: TaskStatuses;
+	export let s: TaskStatuses;
 
 	let open = false;
 
 	let loading = false;
 
 	const handleClick: SubmitFunction = ({ formData }) => {
-		formData.append('id', String(status.id));
+		formData.append('id', String(s.id));
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -26,7 +26,7 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip placement="left">Delete status</Tooltip>
+<Tooltip placement="left">Delete s</Tooltip>
 <Modal
 	bind:open
 	outsideclose
@@ -34,7 +34,7 @@
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
 	<i class="fa-solid fa-warning text-xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">Delete status {status.status}? <br /><span class="font-bold">This will delete all tasks inside this status!</span></p>
+	<p class="whitespace-normal text-secondary-200">Delete status {s.status}? <br /><span class="font-bold">This will delete all tasks inside this status!</span></p>
 	<form
 		class="flex w-full justify-center gap-4"
 		method="POST"

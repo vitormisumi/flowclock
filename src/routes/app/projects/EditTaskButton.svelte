@@ -58,7 +58,7 @@
 	size="sm"
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
-	<p class="text-lg font-bold text-secondary-50">Edit task {task.name}</p>
+	<p class="text-lg font-bold text-secondary-50">Edit task</p>
 	<form
 		class="flex flex-col gap-2 text-left"
 		method="POST"

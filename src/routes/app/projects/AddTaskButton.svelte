@@ -9,7 +9,7 @@
 
 	export let status: number;
 
-	let dueDate: Date;
+	let dueDate: Date | null;
 
 	let priority: number = 0;
 
@@ -78,7 +78,10 @@
 	<Button
 		size="xs"
 		class="bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
-		on:click={() => (open = true)}><i class="fa-solid fa-plus pr-2" />add task</Button
+		on:click={() => {
+			open = true;
+			dueDate = null;
+		}}><i class="fa-solid fa-plus pr-2" />add task</Button
 	>
 {/if}
 
