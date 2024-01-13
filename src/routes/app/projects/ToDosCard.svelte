@@ -15,8 +15,7 @@
 	}
 </script>
 
-<Card class="h-full min-w-full gap-8 border-0 bg-primary-800">
-	<div class="grid gap-1">
+<Card class="h-full min-w-full border-0 bg-primary-800 grid gap-1">
 		<div class="flex justify-between">
 			<div class="flex items-center">
 				<h2 class="pr-1 font-bold text-primary-50">To-Dos</h2>
@@ -64,5 +63,4 @@
 		</div>
 		<ToDosList {show} />
 		<AddToDoButton />
-	</div>
 </Card>

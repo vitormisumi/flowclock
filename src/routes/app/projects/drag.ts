@@ -1,56 +1,53 @@
-export function longpress(node: HTMLElement, delay = 500) {
+export function drag(node: HTMLElement, delay = 500) {
     let timeout: number;
     let dragging = false;
 
     function handlePointerDown(e: PointerEvent) {
         if (e.pointerType === 'mouse') {
-            node.dispatchEvent(new CustomEvent('longpress'));
-        }
-    }
-
-    function handleTouchStart(e: TouchEvent) {
-        if (!dragging) {
-            window.addEventListener('touchmove', handleEndBeforeLong);
-            timeout = window.setTimeout(() => {
-                window.removeEventListener('touchmove', handleEndBeforeLong)
-                dragging = true;
-                node.dispatchEvent(new CustomEvent('longpress'));
-                window.setTimeout(() => node.dispatchEvent(e), 0);
-            }, delay);
+            dragging = true;
+            node.dispatchEvent(new CustomEvent('dragging'));
         }
         e.stopPropagation();
-    }
-    
-    function handleEndBeforeLong(e: TouchEvent) {
-        if (!dragging) {
-            dragging = false;
-            window.clearTimeout(timeout);
-            window.removeEventListener('touchmove', handleEndBeforeLong);
-        }
     }
     
     function handlePointerUp(e: PointerEvent) {
         if (e.pointerType === 'mouse') {
             dragging = false;
-            e.stopPropagation();
         }
     }
-
-    function handleTouchEnd(e: TouchEvent) {
+    
+    function handleTouchStart(e: TouchEvent) {
+        window.addEventListener('touchmove', handleEndBeforeLong);
+        timeout = window.setTimeout(() => {
+            window.removeEventListener('touchmove', handleEndBeforeLong)
+            dragging = true;
+            node.dispatchEvent(new CustomEvent('dragging'));
+            window.setTimeout(() => node.dispatchEvent(e), 0);
+        }, delay);
+        e.stopPropagation();
+    }
+    
+    function handleTouchEnd() {
         dragging = false;
         window.clearTimeout(timeout);
         window.removeEventListener('touchmove', handleEndBeforeLong);
-        e.stopPropagation();
     }
-
-    function handleContextMenu(e: MouseEvent) {
-        e.preventDefault();
+    
+    function handleEndBeforeLong() {
+        if (!dragging) {
+            window.clearTimeout(timeout);
+            window.removeEventListener('touchmove', handleEndBeforeLong);
+        }
     }
-
+    
     function handleTouchMove(e: TouchEvent) {
         if (dragging) {
             e.preventDefault();
         }
+    }
+    
+    function handleContextMenu(e: MouseEvent) {
+        e.preventDefault();
     }
 
     node.addEventListener('pointerdown', handlePointerDown);
@@ -58,7 +55,7 @@ export function longpress(node: HTMLElement, delay = 500) {
     node.addEventListener('touchstart', handleTouchStart);
     node.addEventListener('touchend', handleTouchEnd);
     node.addEventListener('touchmove', handleTouchMove);
-    node.addEventListener('contextmenu', handleContextMenu)
+    node.addEventListener('contextmenu', handleContextMenu);
 
     return {
         destroy() {
@@ -66,7 +63,7 @@ export function longpress(node: HTMLElement, delay = 500) {
             node.removeEventListener('pointerup', handlePointerUp);
             node.removeEventListener('touchstart', handleTouchStart);
             node.removeEventListener('touchend', handleTouchEnd);
-            node.removeEventListener('contextmenu', handleContextMenu)
+            node.removeEventListener('contextmenu', handleContextMenu);
         }
     };
 }
