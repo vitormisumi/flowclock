@@ -39,34 +39,6 @@ export function dateFromTimestamp(timestamp: string | undefined, format: string,
 	};
 }
 
-// export function formatDate(date: string | null, format: string, separator: number): string {
-// 	if (date === null) {
-// 		return ''
-// 	}
-// 	let sep;
-// 	sep = separatorOptions[separator];
-// 	let day = date.slice(8, 10)
-// 	let month = date.slice(5, 7)
-// 	let year = date.slice(0, 4)
-// 	let shortYear = date.slice(2, 4);
-// 	switch (format) {
-// 		case 'ddmmyyyy':
-// 			return day + sep + month + sep + year;
-// 		case 'mmddyyyy':
-// 			return month + sep + day + sep + year;
-// 		case 'yyyymmdd':
-// 			return year + sep + month + sep + day;
-// 		case 'ddmmyy':
-// 			return day + sep + month + sep + shortYear;
-// 		case 'mmddyy':
-// 			return month + sep + day + sep + shortYear;
-// 		case 'yymmdd':
-// 			return shortYear + sep + month + sep + day;
-// 		default:
-// 			return '';
-// 	};
-// }
-
 export function timeFromTimestamp(timestamp: string | null | undefined, format: boolean): string {
 	if (timestamp === undefined || timestamp === null) {
 		return ''
@@ -110,7 +82,7 @@ export function dueDate(date: string): {text: string, color: string} {
     } else if (dueDate.toDateString() === tomorrow.toDateString()) {
         return { text: 'Tomorrow', color: priorityColors[1] };
     } else if (dueDate <= next_week) {
-        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'long' }), color: priorityColors[0] };
+        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'short' }), color: priorityColors[0] };
     } else {
         return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColors[0] };
     }

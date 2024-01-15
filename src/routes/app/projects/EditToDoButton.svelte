@@ -11,7 +11,7 @@
 	const projects: Writable<Project[]> = getContext('projects');
 
 	export let toDo: ToDo;
-	export let openEdit;
+	export let showMenu;
 
 	let dueDate: Date | null;
 
@@ -31,7 +31,7 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
-		openEdit = null;
+		showMenu = null;
 		formData.append('priority', String(priority));
 		if (dueDate) {
 			formData.append('due_date', dueDate.toISOString());
@@ -92,15 +92,15 @@
 		<input type="number" name="id" hidden value={toDo.id} />
 		<div class="flex justify-between">
 			<div class="flex gap-1">
-				<SetPriority size="sm" bind:priority />
-				<SetDueDate task={toDo} size="sm" bind:dueDate />
+				<SetPriority bind:priority />
+				<SetDueDate task={toDo} bind:dueDate />
 			</div>
 			<div class="flex gap-1">
 				<Button
 					size="sm"
 					on:click={() => {
 						open = false;
-						openEdit = null;
+						showMenu = null;
 					}}>Cancel</Button
 				>
 				<Button

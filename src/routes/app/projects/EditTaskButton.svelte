@@ -3,15 +3,15 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { selectedProjectId } from './stores';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { Writable } from 'svelte/store';
 
 	const projects: Writable<Project[]> = getContext('projects');
 
 	export let task: Task;
-	export let openEdit;
+	export let showMenu: number | null;
 
 	let dueDate: Date | null;
 
@@ -25,20 +25,16 @@
 
 	let open = false;
 
-	let loading = false;
-
 	let priority = task.priority;
 
 	const handleClick: SubmitFunction = ({ formData }) => {
-		loading = true;
-		openEdit = null;
+		showMenu = null;
 		formData.append('priority', String(priority));
 		if (dueDate) {
 			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
 			open = false;
-			loading = false;
 			$selectedProjectId = Number(formData.get('project_id'));
 			update();
 		};
@@ -93,15 +89,15 @@
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
 			<div class="flex gap-1">
-				<SetPriority size="sm" bind:priority />
-				<SetDueDate {task} size="sm" bind:dueDate />
+				<SetPriority bind:priority />
+				<SetDueDate {task} bind:dueDate />
 			</div>
 			<div class="flex gap-1">
 				<Button
 					size="sm"
 					on:click={() => {
 						open = false;
-						openEdit = null;
+						showMenu = null;
 					}}>Cancel</Button
 				>
 				<Button

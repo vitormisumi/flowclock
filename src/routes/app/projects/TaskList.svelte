@@ -2,15 +2,10 @@
 	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
 	import { getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { fade } from 'svelte/transition';
 	import { drag } from './drag';
 	import { priorityColors } from '$lib/constants/constants';
-	import { invalidateAll } from '$app/navigation';
-	import StartTaskButton from './StartTaskButton.svelte';
-	import EditTaskButton from './EditTaskButton.svelte';
-	import DeleteTaskButton from './DeleteTaskButton.svelte';
 	import DueDate from './DueDate.svelte';
-    import Notification from '../../Notification.svelte';
+	import TaskMenu from './TaskMenu.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
@@ -19,7 +14,8 @@
 	export let dragDisabled: boolean;
 	export let considering;
 
-	let openEdit: number | null = null;
+	let showMenu: number | null = null;
+	let width: number;
 
 	function handleConsider(cardId: number, e: CustomEvent<DndEvent<Task>>) {
 		const {
@@ -57,6 +53,7 @@
 	}
 </script>
 
+<svelte:window bind:innerWidth={width} />
 <div
 	class="grid min-h-[40px] w-full gap-1 overflow-scroll rounded-lg"
 	use:dndzone={{
@@ -69,12 +66,12 @@
 >
 	{#each s.tasks as task (task.id)}
 		<div
-			class="relative flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-600"
+			class="relative flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-700"
 			animate:flip
 			use:drag
 			on:dragging={() => (dragDisabled = false)}
-			on:mouseenter={() => (openEdit = task.id)}
-			on:mouseleave={() => (openEdit = null)}
+			on:mouseenter={() => (showMenu = task.id)}
+			on:mouseleave={() => (showMenu = null)}
 			role="listitem"
 		>
 			<div
@@ -82,15 +79,14 @@
 				bg-{priorityColors[task.priority]}"
 			/>
 			<p class="truncate text-sm font-light md:text-base">{task.name}</p>
-			{#if openEdit === task.id}
-				<div class="flex p-0" in:fade>
-					<StartTaskButton {task} />
-					<EditTaskButton {task} bind:openEdit />
-					<DeleteTaskButton {task} />
-				</div>
-			{:else if task.due_date}
-				<DueDate date={task.due_date} />
-			{/if}
+			<div class="flex place-items-center justify-end">
+				{#if task.due_date}
+					<DueDate date={task.due_date} />
+				{/if}
+				{#if showMenu === task.id || width < 768}
+					<TaskMenu {task} bind:showMenu />
+				{/if}
+			</div>
 		</div>
 	{/each}
 </div>

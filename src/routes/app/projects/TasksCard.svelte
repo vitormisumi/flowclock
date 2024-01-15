@@ -68,7 +68,7 @@
 		<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
 			<i class="fa-solid fa-ellipsis-vertical" />
 		</Button>
-		<Dropdown class="p-1" bind:open>
+		<Dropdown class="p-1" bind:open placement="bottom-end">
 			<DropdownItem class="w-full">
 				<i class="fa-solid fa-sort pr-2" />Sort<i class="fa-solid fa-chevron-right pl-2" />
 			</DropdownItem>

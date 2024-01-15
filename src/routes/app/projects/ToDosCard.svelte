@@ -33,7 +33,7 @@
 			<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
 				<i class="fa-solid fa-ellipsis-vertical" />
 			</Button>
-			<Dropdown class="p-1" bind:open>
+			<Dropdown class="p-1" bind:open placement="bottom-end">
 				<DropdownItem on:click={() => (show = !show)}>
 					<i class="fa-solid {show ? 'fa-eye-slash' : 'fa-eye'} pr-2" />{show ? 'Hide' : 'Show'} completed
 				</DropdownItem>

@@ -26,7 +26,7 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip placement="left">Delete s</Tooltip>
+<Tooltip placement="left">Delete status</Tooltip>
 <Modal
 	bind:open
 	outsideclose

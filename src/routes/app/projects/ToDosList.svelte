@@ -8,6 +8,7 @@
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import type { Writable } from 'svelte/store';
 	import DueDate from './DueDate.svelte';
+	import ToDosMenu from './ToDosMenu.svelte';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
@@ -34,16 +35,18 @@
 
 	let openRow: number | null = null;
 
-	let openEdit: number | null = null;
+	let showMenu: number | null = null;
+	let width: number;
 </script>
 
+<svelte:window bind:innerWidth={width} />
 <ul class="grid gap-1">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
 			<li
 				class="grid w-full rounded-lg border border-primary-900 bg-primary-900"
-				on:mouseenter={() => (openEdit = i)}
-				on:mouseleave={() => (openEdit = null)}
+				on:mouseenter={() => (showMenu = toDo.id)}
+				on:mouseleave={() => (showMenu = null)}
 			>
 				<div class="flex items-center gap-2 overflow-hidden px-2">
 					<CompleteToDoButton {toDo} />
@@ -56,13 +59,11 @@
 					>
 						{toDo.name}
 					</button>
-					{#if openEdit === i}
-						<div in:fade class="flex py-1.5">
-							<EditToDoButton {toDo} bind:openEdit />
-							<DeleteToDoButton {toDo} />
-						</div>
-					{:else if toDo.due_date}
+					{#if toDo.due_date}
 						<DueDate date={toDo.due_date} />
+					{/if}
+					{#if showMenu === toDo.id || width < 768}
+						<ToDosMenu {toDo} bind:showMenu />
 					{/if}
 				</div>
 				{#if openRow === i}
