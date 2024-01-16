@@ -86,5 +86,5 @@
 			</div>
 		</div>
 	{/each}
-	<div class="sticky bottom-0 w-full bg-gradient-to-b from-transparent to-primary-900 h-8" />
+	<div class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-primary-900" />
 </div>

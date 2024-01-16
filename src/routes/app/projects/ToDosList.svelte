@@ -36,7 +36,7 @@
 	let showMenu: number | null = null;
 </script>
 
-<ul class="grid gap-1 w-full">
+<ul class="grid max-h-96 w-full gap-1 overflow-scroll">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
 			<li
@@ -74,4 +74,5 @@
 			</li>
 		{/if}
 	{/each}
+	<div class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-primary-800" />
 </ul>

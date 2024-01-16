@@ -91,7 +91,7 @@
 </script>
 
 <section
-	class="flex justify-stretch gap-2 overflow-auto"
+	class="flex justify-stretch gap-2 overflow-scroll"
 	use:dndzone={{
 		items: $status,
 		type: 'columns',
