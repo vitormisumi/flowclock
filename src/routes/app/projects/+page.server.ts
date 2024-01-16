@@ -175,7 +175,6 @@ export const actions = {
 
     const formData = await request.formData();
     const id = formData.get('id') as string;
-    const project_id = formData.get('project_id') as string;
     const name = formData.get('name') as string;
     const priority = formData.get('priority') as string;
     const due_date = formData.get('due_date') as string;
@@ -183,7 +182,7 @@ export const actions = {
 
     const { error } = await supabase
       .from('tasks')
-      .update({ user_id: session.user.id, project_id: Number(project_id), name: name, description: description, priority: Number(priority), due_date: due_date })
+      .update({ user_id: session.user.id, name: name, description: description, priority: Number(priority), due_date: due_date })
       .eq('id', id);
 
     if (error) {
@@ -249,7 +248,6 @@ export const actions = {
 
     const formData = await request.formData();
     const id = formData.get('id') as string;
-    const project_id = formData.get('project_id') as string;
     const name = formData.get('name') as string;
     const priority = formData.get('priority') as string;
     const due_date = formData.get('due_date') as string;
@@ -257,7 +255,7 @@ export const actions = {
 
     const { error } = await supabase
       .from('to_dos')
-      .update({ user_id: session.user.id, project_id: Number(project_id), name: name, description: description, priority: Number(priority), due_date: due_date })
+      .update({ user_id: session.user.id, name: name, description: description, priority: Number(priority), due_date: due_date })
       .eq('id', id);
 
     if (error) {
@@ -439,11 +437,11 @@ export const actions = {
     let projectId = formData.get('project_id') as string;
     let name = formData.get('name') as string;
     let description = formData.get('description') as string;
-    let goal = formData.get('goal') as string;
+    // let goal = formData.get('goal') as string;
         
     const { error } = await supabase
       .from('intentions')
-      .insert({ user_id: session.user.id, name: name, description: description, weekly_hours_goal: Number(goal), project_id: Number(projectId) })
+      .insert({ user_id: session.user.id, name: name, description: description, project_id: Number(projectId) })
 
     if (error) {
       console.log(error);
@@ -462,12 +460,11 @@ export const actions = {
     const formData = await request.formData();
     let name = formData.get('name') as string;
     let description = formData.get('description') as string;
-    let goal = formData.get('goal') as string;
     let id = formData.get('id') as string;
         
     const { error } = await supabase
       .from('intentions')
-      .update({ name: name, description: description, weekly_hours_goal: Number(goal) })
+      .update({ name: name, description: description })
       .eq('id', id)
 
     if (error) {

@@ -2,12 +2,11 @@
 	import { Button, Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
 	import { enhance } from '$app/forms';
+	import { windowWidth } from './stores';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
-
-	let innerWidth: number;
 
 	let edit: number;
 
@@ -27,7 +26,6 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth />
 <div
 	class="flex h-8 w-full justify-between"
 	on:mouseenter={() => {
@@ -72,7 +70,7 @@
 		</Button>
 		<Tooltip placement="right">Rename group</Tooltip>
 	{/if}
-	{#if showDelete === group.id || innerWidth <= 1024}
+	{#if showDelete === group.id || $windowWidth <= 1024}
 		<div in:fade>
 			<DeleteGroupButton {group} />
 		</div>

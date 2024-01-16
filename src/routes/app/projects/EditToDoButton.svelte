@@ -1,27 +1,14 @@
 <script lang="ts">
-	import { Button, Tooltip, Input, Modal, Textarea, Select } from 'flowbite-svelte';
+	import { Button, Tooltip, Input, Modal, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
-	import { selectedProjectId } from './stores';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
-
-	const projects: Writable<Project[]> = getContext('projects');
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let toDo: ToDo;
 	export let showMenu;
 
 	let dueDate: Date | null;
-
-	let projectOptions: { name: string; value: number }[] = [];
-
-	$: projectOptions = $projects.map((x) => {
-		return { name: x.name, value: x.id };
-	});
-
-	$: projectValue = projectOptions.find((x) => x.value === toDo.project_id)?.value;
 
 	let priority = toDo.priority;
 
@@ -39,7 +26,6 @@
 		return async ({ update }) => {
 			open = false;
 			loading = false;
-			$selectedProjectId = Number(formData.get('project_id'));
 			update();
 		};
 	};
@@ -74,14 +60,6 @@
 				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
 				required
 			></Input>
-			<Select
-				items={projectOptions}
-				name="project_id"
-				placeholder="Project..."
-				value={projectValue}
-				class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-				required
-			/>
 		</div>
 		<Textarea
 			name="description"

@@ -7,6 +7,7 @@
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
 	import type { Writable } from 'svelte/store';
+	import { windowWidth } from './stores';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -15,7 +16,6 @@
 	export let considering;
 
 	let showMenu: number | null = null;
-	let width: number;
 
 	function handleConsider(cardId: number, e: CustomEvent<DndEvent<Task>>) {
 		const {
@@ -53,7 +53,6 @@
 	}
 </script>
 
-<svelte:window bind:innerWidth={width} />
 <div
 	class="grid min-h-[40px] w-full gap-1 overflow-scroll rounded-lg"
 	use:dndzone={{
@@ -83,7 +82,7 @@
 				{#if task.due_date}
 					<DueDate date={task.due_date} />
 				{/if}
-				{#if showMenu === task.id || width < 768}
+				{#if showMenu === task.id || $windowWidth < 768}
 					<TaskMenu {task} bind:showMenu />
 				{/if}
 			</div>

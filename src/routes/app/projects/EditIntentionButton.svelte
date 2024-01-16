@@ -1,22 +1,11 @@
 <script lang="ts">
 	import { Button, Tooltip, Input, Modal, Textarea, Select } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
 	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
-
-	const projects: Writable<Project[]> = getContext('projects');
 
 	export let intention: Intention;
-
-	let projectOptions: { name: string; value: number }[] = [];
-
-	$: projectOptions = $projects.map((x) => {
-		return { name: x.name, value: x.id };
-	});
-
-	$: projectValue = projectOptions.find((x) => x.value === intention.project_id)?.value;
+	export let showMenu;
 
 	let open = false;
 
@@ -24,6 +13,7 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
+		showMenu = null;
 		return async ({ update }) => {
 			open = false;
 			loading = false;
@@ -62,14 +52,6 @@
 				class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
 				required
 			></Input>
-			<Select
-				items={projectOptions}
-				name="project_id"
-				placeholder="Project..."
-				value={projectValue}
-				class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
-				required
-			/>
 		</div>
 		<Textarea
 			name="description"
@@ -79,7 +61,13 @@
 		></Textarea>
 		<input type="number" name="id" hidden value={intention.id} />
 		<div class="flex justify-center gap-1">
-			<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
+			<Button
+				size="sm"
+				on:click={() => {
+					open = false;
+					showMenu = null;
+				}}>Cancel</Button
+			>
 			<Button
 				size="sm"
 				type="submit"

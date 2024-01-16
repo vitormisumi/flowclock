@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Card, Tooltip } from 'flowbite-svelte';
-	import { selectedProject } from './stores';
+	import { selectedProject, windowWidth } from './stores';
 	import { getContext } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
 	import DeleteProjectButton from './DeleteProjectButton.svelte';
@@ -8,6 +8,7 @@
 	import type { Writable } from 'svelte/store';
 
 	let show = false;
+	let hidden = false;
 
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
@@ -16,8 +17,6 @@
 	$: groupOptions = $projectGroups.map((x) => {
 		return { name: x.name, value: x.id };
 	});
-
-	let hidden = false;
 </script>
 
 <Card
@@ -25,16 +24,18 @@
 	on:mouseenter={() => (show = true)}
 	on:mouseleave={() => (show = false)}
 >
-	<div class="flex h-8 justify-between">
-		<div class="grid h-fit gap-2 md:flex">
+	<div class="flex justify-between md:h-7">
+		<div class="grid gap-1 md:flex md:gap-2 place-items-center justify-items-start">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
-			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
-			<Badge class="bg-primary-50">
-				#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
-			</Badge>
+			<div class="flex gap-2 h-fit">
+				<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
+				<Badge class="bg-primary-50">
+					#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
+				</Badge>
+			</div>
 		</div>
-		{#if show}
-			<div class="grid md:flex" in:fade>
+		{#if show || $windowWidth < 768}
+			<div class="flex h-fit" in:fade>
 				<Button
 					size="xs"
 					class="bg-transparent transition-colors hover:bg-primary-700"

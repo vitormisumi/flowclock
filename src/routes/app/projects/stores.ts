@@ -34,7 +34,7 @@ function createSelectedProject() {
 	};
 }
 
-export const selectedProject = createSelectedProject()
+export const selectedProject = createSelectedProject();
 
 export const selectedProjectId = writable(0);
 
@@ -71,4 +71,6 @@ function createSorting() {
     }
 }
 
-export const sorting = createSorting()
+export const sorting = createSorting();
+
+export const windowWidth = writable(0);

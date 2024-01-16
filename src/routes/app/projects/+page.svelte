@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import { fade } from 'svelte/transition';
-	import { selectedProject, selectedProjectId } from './stores';
+	import { selectedProject, selectedProjectId, windowWidth } from './stores';
 	import { getContext } from 'svelte';
 	import Notification from '../../Notification.svelte';
-	import InfoCard from './InfoCard.svelte';
+	import ProjectCard from './ProjectCard.svelte';
 	import TasksCard from './TasksCard.svelte';
 	import ToDosCard from './ToDosCard.svelte';
 	import IntentionsCard from './IntentionsCard.svelte';
@@ -33,6 +33,7 @@
 	}
 </script>
 
+<svelte:window bind:innerWidth={$windowWidth} />
 <div
 	in:fade={$navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
@@ -43,7 +44,7 @@
 	</div>
 	{#if $projects.length}
 		<div class="flex flex-wrap gap-4">
-			<InfoCard />
+			<ProjectCard />
 			<TasksCard />
 			<div class="grid md:grid-cols-2 w-full gap-4">
 				<ToDosCard />

@@ -37,7 +37,7 @@
 				class="border-0 bg-transparent text-lg text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
 				required
 			></Input>
-			<Label class="pl-2.5 font-normal text-secondary-500"
+			<!-- <Label class="pl-2.5 font-normal text-secondary-500"
 				>Weekly hours goal
 				<input
 					type="number"
@@ -47,7 +47,7 @@
 					max={100}
 					class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
 				/>
-			</Label>
+			</Label> -->
 			<Textarea
 				name="description"
 				placeholder="Description"

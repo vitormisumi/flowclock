@@ -2,12 +2,11 @@
 	import { Button, Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
+	import { windowWidth } from './stores';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let s: TaskStatuses;
-
-	let innerWidth: number;
 
 	let edit: number;
 
@@ -27,7 +26,6 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth />
 <div
 	class="flex w-full justify-between"
 	on:mouseenter={() => {
@@ -74,7 +72,7 @@
 		</Button>
 		<Tooltip placement="right">Rename s</Tooltip>
 	{/if}
-	{#if showDelete === s.id || (innerWidth <= 1024 && !edit)}
+	{#if showDelete === s.id || ($windowWidth <= 1024 && !edit)}
 		<div in:fade>
 			<DeleteStatusButton {s} />
 		</div>

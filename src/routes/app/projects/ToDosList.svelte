@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { selectedProject } from './stores';
-	import { fade, slide } from 'svelte/transition';
+	import { selectedProject, windowWidth } from './stores';
+	import { slide } from 'svelte/transition';
 	import { sorting } from './stores';
-	import EditToDoButton from './EditToDoButton.svelte';
-	import DeleteToDoButton from './DeleteToDoButton.svelte';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import type { Writable } from 'svelte/store';
 	import DueDate from './DueDate.svelte';
@@ -36,10 +34,8 @@
 	let openRow: number | null = null;
 
 	let showMenu: number | null = null;
-	let width: number;
 </script>
 
-<svelte:window bind:innerWidth={width} />
 <ul class="grid gap-1">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
@@ -62,7 +58,7 @@
 					{#if toDo.due_date}
 						<DueDate date={toDo.due_date} />
 					{/if}
-					{#if showMenu === toDo.id || width < 768}
+					{#if showMenu === toDo.id || $windowWidth < 768}
 						<ToDosMenu {toDo} bind:showMenu />
 					{/if}
 				</div>
