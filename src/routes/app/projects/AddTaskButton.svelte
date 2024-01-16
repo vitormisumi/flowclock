@@ -40,7 +40,7 @@
 {#if hidden || $windowWidth < 768}
 	<Button
 		size="xs"
-		class="w-fit bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
+		class="w-fit bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200 self-end"
 		on:click={() => {
 			hidden = false;
 			dueDate = null;

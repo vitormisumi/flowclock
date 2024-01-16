@@ -54,7 +54,7 @@
 </script>
 
 <div
-	class="grid min-h-[40px] w-full gap-1 overflow-scroll"
+	class="relative grid min-h-[40px] w-full gap-1 overflow-auto"
 	use:dndzone={{
 		items: s.tasks,
 		dragDisabled,
@@ -86,4 +86,5 @@
 			</div>
 		</div>
 	{/each}
+	<div class="sticky bottom-0 w-full bg-gradient-to-b from-transparent to-primary-900 h-8" />
 </div>
