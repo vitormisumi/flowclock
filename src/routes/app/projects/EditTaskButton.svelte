@@ -67,8 +67,8 @@
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
 			<div class="flex gap-1">
-				<SetPriority bind:priority />
-				<SetDueDate {task} bind:dueDate />
+				<SetPriority size="sm" bind:priority />
+				<SetDueDate {task} size="sm" bind:dueDate />
 			</div>
 			<div class="flex gap-1">
 				<Button

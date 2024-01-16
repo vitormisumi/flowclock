@@ -3,10 +3,11 @@
 	import { priorityColors, priorityOptions } from '$lib/constants/constants';
 
 	export let priority: number | null;
+	export let size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined;
 </script>
 
 <Button
-	size="sm"
+	{size}
 	class="border bg-transparent focus:ring-0 border-{priority ? priorityColors[priority] : 'white'}"
 >
 	Priority

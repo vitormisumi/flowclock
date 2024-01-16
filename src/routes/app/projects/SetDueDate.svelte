@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
+	import { Button, Dropdown } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
 	import DatePicker from 'date-picker-svelte/DatePicker.svelte';
@@ -8,6 +8,7 @@
 	const settings: Writable<Settings> = getContext('settings');
 
 	export let task: Task | ToDo | null;
+	export let size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined;
 
 	const timezoneOffset = new Date().getTimezoneOffset() * 60000;
 	export let dueDate = task?.due_date
@@ -15,7 +16,7 @@
 		: null;
 </script>
 
-<Button size="sm" class="border bg-transparent focus:ring-0">
+<Button {size} class="border bg-transparent focus:ring-0">
 	Due {dueDate
 		? dateFromTimestamp(String(dueDate), $settings.date_format, $settings.separator)
 		: ''}
