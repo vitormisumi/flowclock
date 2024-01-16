@@ -17,9 +17,16 @@
 </script>
 
 <Button {size} class="border bg-transparent focus:ring-0">
-	Due {dueDate
-		? dateFromTimestamp(String(dueDate), $settings.date_format, $settings.separator)
-		: ''}
+	<div class="flex h-3 place-items-center gap-2">
+		<i class="fa-solid fa-calendar" />
+		{#if dueDate}
+			<p>
+				{dueDate
+					? dateFromTimestamp(String(dueDate), $settings.date_format, $settings.separator)
+					: ''}
+			</p>
+		{/if}
+	</div>
 </Button>
 <Dropdown class="bg-primary-900" placement="top">
 	<div class="grid">
