@@ -104,7 +104,7 @@
 >
 	{#each $status as s (s.id)}
 		<div
-			class="grid max-h-96 w-52 shrink-0 grow content-start gap-1 overflow-hidden rounded-lg bg-primary-900 p-2 hover:cursor-grab md:w-80 landscape:w-80"
+			class="grid max-h-96 w-52 shrink-0 grow content-start justify-items-center gap-1 overflow-hidden rounded-lg bg-primary-900 p-2 hover:cursor-grab landscape:w-80"
 			animate:flip
 			use:drag
 			on:dragging={() => (dragDisabled = false)}

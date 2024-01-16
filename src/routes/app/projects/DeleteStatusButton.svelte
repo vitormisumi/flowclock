@@ -41,6 +41,7 @@
 		action="?/deleteStatus"
 		use:enhance={handleClick}
 	>
+	<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
@@ -48,6 +49,5 @@
 		>
 			Delete
 		</Button>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

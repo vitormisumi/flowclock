@@ -54,7 +54,7 @@
 </script>
 
 <div
-	class="grid min-h-[40px] w-full gap-1 overflow-scroll rounded-lg"
+	class="grid min-h-[40px] w-full gap-1 overflow-scroll"
 	use:dndzone={{
 		items: s.tasks,
 		dragDisabled,
@@ -65,7 +65,9 @@
 >
 	{#each s.tasks as task (task.id)}
 		<div
-			class="relative flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-700"
+			class="flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg border-l bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-700 border-{priorityColors[
+				task.priority
+			]} "
 			animate:flip
 			use:drag
 			on:dragging={() => (dragDisabled = false)}
@@ -73,10 +75,6 @@
 			on:mouseleave={() => (showMenu = null)}
 			role="listitem"
 		>
-			<div
-				class="absolute -left-2 -top-2 h-4 w-4 rotate-45 transition-colors
-				bg-{priorityColors[task.priority]}"
-			/>
 			<p class="truncate text-sm font-light md:text-base">{task.name}</p>
 			<div class="flex place-items-center justify-end">
 				{#if task.due_date}

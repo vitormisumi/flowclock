@@ -4,8 +4,8 @@
 	import AddIntentionButton from './AddIntentionButton.svelte';
 </script>
 
-<Card class="h-full min-w-full border-0 bg-primary-800 gap-1">
-	<div class="flex items-center h-7">
+<Card class="grid h-full min-h-full min-w-full place-items-center gap-1 border-0 bg-primary-800">
+	<div class="flex items-center h-7 w-full">
 		<h2 class="pr-1 font-bold text-primary-50">Intentions</h2>
 		<i class="fa-regular fa-circle-question text-secondary-500" id="hover-3" />
 	</div>

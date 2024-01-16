@@ -20,12 +20,13 @@
 	};
 </script>
 
-<button
-	class="flex items-center rounded-lg bg-transparent px-3 py-1.5 transition-colors hover:bg-primary-700"
-	on:click|stopPropagation={() => (open = true)}
+<Button
+	size="xs"
+	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
+	on:click={() => (open = true)}
 >
-	<i class="fa-solid fa-trash text-xs text-red-700" />
-</button>
+	<i class="fa-solid fa-trash" />
+</Button>
 <Tooltip placement="left">Delete to-do</Tooltip>
 <Modal
 	bind:open
@@ -41,11 +42,11 @@
 		action="?/deleteToDo"
 		use:enhance={handleClick}
 	>
+		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
 			disabled={loading}>Delete</Button
 		>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

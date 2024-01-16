@@ -59,21 +59,24 @@
 			$settings.clock_format
 		)}?
 	</p>
-	<div class="flex w-full justify-center gap-4">
-		<form method="POST" action="?/deleteSession" use:enhance={handleClick}>
-			<button
-				class="rounded-lg border-2 border-red-900 bg-transparent px-5 py-2.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-950"
-				type="submit"
-				disabled={loading}
-				on:click|stopPropagation
-			>
-				Delete
-			</button>
-		</form>
+	<form
+		method="POST"
+		action="?/deleteSession"
+		class="flex w-full justify-center gap-4"
+		use:enhance={handleClick}
+	>
 		<button
 			disabled={loading}
 			class="flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-primary-50 transition-colors hover:bg-primary-800"
 			on:click|stopPropagation={() => (open = false)}>Cancel</button
 		>
-	</div>
+		<button
+			class="rounded-lg border-2 border-red-900 bg-transparent px-5 py-2.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-950"
+			type="submit"
+			disabled={loading}
+			on:click|stopPropagation
+		>
+			Delete
+		</button>
+	</form>
 </Modal>

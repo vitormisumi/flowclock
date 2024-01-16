@@ -36,7 +36,7 @@
 	let showMenu: number | null = null;
 </script>
 
-<ul class="grid gap-1">
+<ul class="grid gap-1 w-full">
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
 			<li

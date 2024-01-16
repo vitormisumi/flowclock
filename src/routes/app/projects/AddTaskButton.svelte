@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Drawer, Input, Textarea } from 'flowbite-svelte';
+	import { Button, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject, windowWidth } from './stores';
 	import SetDueDate from './SetDueDate.svelte';
@@ -40,7 +40,7 @@
 {#if hidden || $windowWidth < 768}
 	<Button
 		size="xs"
-		class="bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
+		class="w-fit bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
 		on:click={() => {
 			hidden = false;
 			dueDate = null;
@@ -49,7 +49,7 @@
 		<i class="fa-solid fa-plus pr-2" />add task
 	</Button>
 {/if}
-<svelte:component this={component} bind:hidden>
+<svelte:component this={component} bgColor="bg-primary-800" bind:hidden>
 	<form
 		class="flex w-full flex-col gap-1 text-left"
 		method="POST"

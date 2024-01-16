@@ -24,7 +24,7 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 hover:bg-primary-700 transition-colors"
+	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-trash" />
@@ -46,11 +46,11 @@
 		action="?/deleteGroup"
 		use:enhance={handleClick}
 	>
+		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 hover:bg-red-950 transition-colors"
+			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
 			disabled={loading}>Delete</Button
 		>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 	</form>
 </Modal>

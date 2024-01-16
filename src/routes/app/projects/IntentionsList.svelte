@@ -12,7 +12,7 @@
 	let showMenu: number | null = null;
 </script>
 
-<ul class="grid gap-1">
+<ul class="grid gap-1 w-full">
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
 			<li

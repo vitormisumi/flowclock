@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Button, Tooltip, Input, Modal, Textarea, Select } from 'flowbite-svelte';
+	import { Button, Tooltip, Input, Modal, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { selectedProjectId } from './stores';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let intention: Intention;
@@ -9,15 +8,10 @@
 
 	let open = false;
 
-	let loading = false;
-
 	const handleClick: SubmitFunction = ({ formData }) => {
-		loading = true;
 		showMenu = null;
 		return async ({ update }) => {
 			open = false;
-			loading = false;
-			$selectedProjectId = Number(formData.get('project_id'));
 			update();
 		};
 	};
@@ -37,7 +31,7 @@
 	size="sm"
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
-	<p class="text-lg font-bold text-secondary-50">Edit intention {intention.name}</p>
+	<p class="text-lg font-bold text-secondary-50">Edit intention</p>
 	<form
 		class="flex flex-col gap-2 text-left"
 		method="POST"

@@ -6,7 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let toDo: ToDo;
-	export let showMenu;
+	export let showMenu: number | null;
 
 	let dueDate: Date | null;
 
@@ -14,10 +14,7 @@
 
 	let open = false;
 
-	let loading = false;
-
 	const handleClick: SubmitFunction = ({ formData }) => {
-		loading = true;
 		showMenu = null;
 		formData.append('priority', String(priority));
 		if (dueDate) {
@@ -25,7 +22,6 @@
 		}
 		return async ({ update }) => {
 			open = false;
-			loading = false;
 			update();
 		};
 	};
@@ -45,7 +41,7 @@
 	size="sm"
 	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
 >
-	<p class="text-lg font-bold text-secondary-50">Edit to-do {toDo.name}</p>
+	<p class="text-lg font-bold text-secondary-50">Edit to-do</p>
 	<form
 		class="flex flex-col gap-2 text-left"
 		method="POST"

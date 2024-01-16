@@ -10,9 +10,9 @@
 
 	let dueDate: Date | null;
 
-	let open = false;
-
 	let priority = task.priority;
+	
+	let open = false;
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		showMenu = null;
