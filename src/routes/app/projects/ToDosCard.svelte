@@ -15,8 +15,10 @@
 	}
 </script>
 
-<Card class="grid h-full min-h-full min-w-full place-items-center gap-1 border-0 bg-primary-800">
-	<div class="flex items-center justify-between w-full">
+<Card
+	class="grid h-full min-h-full min-w-full place-items-center content-start gap-1 border-0 bg-primary-800"
+>
+	<div class="flex w-full items-center justify-between">
 		<div class="flex items-center">
 			<h2 class="pr-1 font-bold text-primary-50">To-Dos</h2>
 			<i class="fa-regular fa-circle-question text-secondary-500" id="hover-1" />

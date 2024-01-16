@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Tooltip, Input, Modal, Textarea } from 'flowbite-svelte';
+	import { Button, Tooltip, Modal, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
@@ -29,12 +29,12 @@
 
 <Button
 	size="xs"
-	class="rounded-lg bg-transparent px-3 py-1.5 transition-colors hover:bg-primary-700"
+	class="rounded-lg bg-transparent transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left">Edit to-do</Tooltip>
+<Tooltip placement="left" triggeredBy="hover">Edit to-do</Tooltip>
 <Modal
 	bind:open
 	outsideclose

@@ -27,7 +27,7 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip placement="left">Delete task</Tooltip>
+<Tooltip placement="left" triggeredBy="hover">Delete task</Tooltip>
 <Modal
 	bind:open
 	outsideclose

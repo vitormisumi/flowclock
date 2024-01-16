@@ -4,16 +4,14 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let toDo: ToDo;
+	export let showMenu: number | null;
 
 	let open = false;
 
-	let loading = false;
-
 	const handleClick: SubmitFunction = ({ formData }) => {
-		loading = true;
+		showMenu = null;
 		formData.append('id', String(toDo.id));
 		return async ({ update }) => {
-			loading = false;
 			open = false;
 			update();
 		};
@@ -22,12 +20,12 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
+	class="rounded-lg bg-transparent transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}
 >
-	<i class="fa-solid fa-trash" />
+	<i class="fa-solid fa-trash text-red-700" />
 </Button>
-<Tooltip placement="left">Delete to-do</Tooltip>
+<Tooltip placement="left" triggeredBy="hover">Delete to-do</Tooltip>
 <Modal
 	bind:open
 	outsideclose
@@ -42,11 +40,17 @@
 		action="?/deleteToDo"
 		use:enhance={handleClick}
 	>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+		<Button
+			on:click={() => {
+				open = false;
+				showMenu = null;
+			}}>Cancel</Button
+		>
 		<Button
 			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
-			disabled={loading}>Delete</Button
 		>
+			Delete
+		</Button>
 	</form>
 </Modal>

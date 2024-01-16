@@ -14,6 +14,6 @@
 	</Button>
 	<Dropdown placement="left" class="flex justify-items-center rounded-lg bg-primary-800 p-1">
 		<EditToDoButton {toDo} bind:showMenu />
-		<DeleteToDoButton {toDo} />
+		<DeleteToDoButton {toDo} bind:showMenu />
 	</Dropdown>
 </div>

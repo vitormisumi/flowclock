@@ -33,7 +33,7 @@
 	on:click={() => (open = true)}
 	><i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left">Edit task</Tooltip>
+<Tooltip placement="left" triggeredBy="hover">Edit task</Tooltip>
 <Modal
 	bind:open
 	outsideclose

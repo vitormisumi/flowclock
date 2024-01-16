@@ -24,7 +24,7 @@
 >
 	<i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left">Edit intention</Tooltip>
+<Tooltip placement="left" triggeredBy="hover">Edit intention</Tooltip>
 <Modal
 	bind:open
 	outsideclose
