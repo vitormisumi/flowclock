@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Dropdown, DropdownDivider } from 'flowbite-svelte';
-	import HideToDosButton from './HideToDosButton.svelte';
-	import SortToDosButton from './SortToDosButton.svelte';
+	import HideTasksButton from './HideTasksButton.svelte';
+	import SortTasksButton from './SortTasksButton.svelte';
 
 	export let open: boolean;
 	export let hidden: boolean;
@@ -15,7 +15,7 @@
 	class="flex flex-col justify-items-center rounded-lg bg-primary-900 p-1"
 	bind:open
 >
-	<HideToDosButton bind:hidden bind:open />
+	<HideTasksButton bind:hidden bind:open />
 	<DropdownDivider class="bg-primary-800"/>
-	<SortToDosButton bind:open />
+	<SortTasksButton bind:open />
 </Dropdown>

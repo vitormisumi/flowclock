@@ -2,6 +2,7 @@
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let intention: Intention;
 
@@ -25,7 +26,9 @@
 	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
-<Tooltip placement="left" triggeredBy="hover">Delete intention</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Delete intention</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

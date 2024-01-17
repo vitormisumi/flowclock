@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Button, Modal, Tooltip } from 'flowbite-svelte';
+	import { Modal, Tooltip } from 'flowbite-svelte';
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
+	import { windowWidth } from '../projects/stores';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -40,7 +41,9 @@
 >
 	<i class="fa-solid fa-trash" />
 </button>
+{#if $windowWidth >= 768}
 <Tooltip placement="left">Delete session</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

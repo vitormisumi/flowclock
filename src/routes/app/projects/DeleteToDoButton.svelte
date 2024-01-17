@@ -2,6 +2,7 @@
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;
@@ -25,7 +26,9 @@
 >
 	<i class="fa-solid fa-trash text-red-700" />
 </Button>
-<Tooltip placement="left" triggeredBy="hover">Delete to-do</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Delete to-do</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

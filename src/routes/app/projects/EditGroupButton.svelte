@@ -68,7 +68,9 @@
 				{group.name}
 			</h3>
 		</Button>
-		<Tooltip placement="right">Rename group</Tooltip>
+		{#if $windowWidth >= 768}
+			<Tooltip placement="right">Rename group</Tooltip>
+		{/if}
 	{/if}
 	{#if showDelete === group.id || $windowWidth <= 1024}
 		<div in:fade>

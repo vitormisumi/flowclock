@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { session, sessionBreak, sessionFocus } from './stores';
 	import Message from './Message.svelte';
 	import SessionButton from './SessionButton.svelte';
 	import Interruptions from './Interruptions.svelte';
 	import Notification from '../../Notification.svelte';
 	import FocusSelect from './FocusSelect.svelte';
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-	import { session, sessionBreak, sessionFocus, sessionInterruptions } from './stores';
 
 	export let form;
 

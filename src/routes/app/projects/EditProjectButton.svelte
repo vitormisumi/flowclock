@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Tooltip, Input, Modal, Select, Textarea } from 'flowbite-svelte';
-	import { selectedProject } from './stores';
+	import { selectedProject, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
@@ -44,7 +44,9 @@
 	class="bg-transparent transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-pen text-primary-50" /></Button
 >
-<Tooltip placement="left">Edit project</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Edit project</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

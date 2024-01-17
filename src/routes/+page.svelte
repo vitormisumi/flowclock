@@ -6,12 +6,10 @@
 	import Navbar from './Navbar.svelte';
 </script>
 
-<div class="flex h-screen flex-col">
+<div class="flex flex-col">
 	<Navbar />
-	<div class="grid">
-		<Hero />
-		<Features />
-		<Faq />
-		<SignUp />
-	</div>
+	<Hero />
+	<Features />
+	<Faq />
+	<SignUp />
 </div>

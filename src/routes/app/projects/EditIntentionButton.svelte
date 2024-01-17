@@ -2,6 +2,7 @@
 	import { Button, Tooltip, Input, Modal, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let intention: Intention;
 	export let showMenu;
@@ -24,7 +25,9 @@
 >
 	<i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left" triggeredBy="hover">Edit intention</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Edit intention</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

@@ -1,23 +1,22 @@
 <script lang="ts">
-	import { Card, Button, Dropdown, DropdownItem, Popover } from 'flowbite-svelte';
-	import { enhance } from '$app/forms';
-	import ToDosList from './ToDosList.svelte';
+	import { Card, Popover } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import ToDoList from './ToDoList.svelte';
+	import ToDosMenu from './ToDosMenu.svelte';
 	import AddToDoButton from './AddToDoButton.svelte.svelte';
-	import { sorting } from './stores';
+	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
 
-	let show = false;
+	const settings: Writable<Settings> = getContext('settings');
 
 	let open = false;
 
-	function sort(sortBy: string) {
-		open = false;
-		sorting.sortToDos(sortBy);
-	}
+	let show = true;
+
+	let hidden = $settings.tasks_card_hidden;
 </script>
 
-<Card
-	class="grid h-full min-h-full min-w-full place-items-center content-start gap-1 border-0 bg-primary-800"
->
+<Card class="h-full min-h-full min-w-full gap-1 border-0 bg-primary-800">
 	<div class="flex w-full items-center justify-between">
 		<div class="flex items-center">
 			<h2 class="pr-1 font-bold text-primary-50">To-Dos</h2>
@@ -32,37 +31,14 @@
 				</div>
 			</Popover>
 		</div>
-		<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
-			<i class="fa-solid fa-ellipsis-vertical" />
-		</Button>
-		<Dropdown class="p-1" bind:open placement="bottom-end">
-			<DropdownItem on:click={() => (show = !show)}>
-				<i class="fa-solid {show ? 'fa-eye-slash' : 'fa-eye'} pr-2" />{show ? 'Hide' : 'Show'} completed
-			</DropdownItem>
-			<DropdownItem class="w-full">
-				<i class="fa-solid fa-sort pr-2" />Sort<i class="fa-solid fa-chevron-right pl-2" />
-			</DropdownItem>
-			<Dropdown placement="right" class="w-40">
-				<form method="POST" action="?/sortToDos" use:enhance>
-					<DropdownItem>
-						<button type="submit" name="sort" value="name" on:click={() => sort('name')}>
-							Name
-						</button>
-					</DropdownItem>
-					<DropdownItem>
-						<button type="submit" name="sort" value="due_date" on:click={() => sort('due_date')}>
-							Due Date
-						</button>
-					</DropdownItem>
-					<DropdownItem>
-						<button type="submit" name="sort" value="priority" on:click={() => sort('priority')}>
-							Priority
-						</button>
-					</DropdownItem>
-				</form>
-			</Dropdown>
-		</Dropdown>
+		<ToDosMenu bind:open bind:hidden />
 	</div>
-	<ToDosList {show} />
-	<AddToDoButton />
+	{#if !hidden}
+		<div class="w-full" transition:slide>
+			<div class="grid place-items-center">
+				<ToDoList {show} />
+				<AddToDoButton />
+			</div>
+		</div>
+	{/if}
 </Card>

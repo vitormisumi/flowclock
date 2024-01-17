@@ -363,9 +363,13 @@ export interface Database {
           break_message: string
           clock_format: boolean
           date_format: string
+          intentions_card_hidden: boolean
+          project_card_hidden: boolean
           ratio: number
           separator: number
+          tasks_card_hidden: boolean
           tasks_sorting: string | null
+          to_dos_card_hidden: boolean
           to_dos_sorting: string
           user_id: string
           warning: number
@@ -374,9 +378,13 @@ export interface Database {
           break_message?: string
           clock_format?: boolean
           date_format?: string
+          intentions_card_hidden?: boolean
+          project_card_hidden?: boolean
           ratio?: number
           separator?: number
+          tasks_card_hidden?: boolean
           tasks_sorting?: string | null
+          to_dos_card_hidden?: boolean
           to_dos_sorting?: string
           user_id: string
           warning?: number
@@ -385,9 +393,13 @@ export interface Database {
           break_message?: string
           clock_format?: boolean
           date_format?: string
+          intentions_card_hidden?: boolean
+          project_card_hidden?: boolean
           ratio?: number
           separator?: number
+          tasks_card_hidden?: boolean
           tasks_sorting?: string | null
+          to_dos_card_hidden?: boolean
           to_dos_sorting?: string
           user_id?: string
           warning?: number

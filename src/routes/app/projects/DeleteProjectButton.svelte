@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
-	import { selectedProject, selectedProjectId } from './stores';
+	import { selectedProject, selectedProjectId, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -25,7 +25,9 @@
 	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
 	on:click={() => (open = true)}><i class="fa-solid fa-trash" /></Button
 >
-<Tooltip placement="left">Delete project</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Delete project</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

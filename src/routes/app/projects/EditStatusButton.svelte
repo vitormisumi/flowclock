@@ -37,7 +37,12 @@
 	role="status"
 >
 	{#if edit === s.id}
-		<form class="flex h-8 gap-1 justify-between w-full" method="POST" action="?/editStatus" use:enhance={handleClick}>
+		<form
+			class="flex h-8 w-full justify-between gap-1"
+			method="POST"
+			action="?/editStatus"
+			use:enhance={handleClick}
+		>
 			<input
 				type="text"
 				name="s"
@@ -45,17 +50,16 @@
 				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<div class="flex gap-1">
-
 				<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
 				<Button
-				type="submit"
-				size="xs"
-				class="bg-accent-500 transition-colors hover:bg-accent-600"
-				disabled={loading}
+					type="submit"
+					size="xs"
+					class="bg-accent-500 transition-colors hover:bg-accent-600"
+					disabled={loading}
 				>
-				Save
-			</Button>
-		</div>
+					Save
+				</Button>
+			</div>
 		</form>
 	{:else}
 		<Button
@@ -69,11 +73,13 @@
 				showDelete = 0;
 			}}
 		>
-			<h3 class="whitespace-nowrap font-bold text-secondary-300 border-2 border-transparent">
+			<h3 class="whitespace-nowrap border-2 border-transparent font-bold text-secondary-300">
 				{s.status}
 			</h3>
 		</Button>
-		<Tooltip placement="right">Rename status</Tooltip>
+		{#if $windowWidth >= 768}
+			<Tooltip placement="right">Rename status</Tooltip>
+		{/if}
 	{/if}
 	{#if showDelete === s.id || ($windowWidth <= 1024 && !edit)}
 		<div in:fade>

@@ -4,6 +4,7 @@
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;
@@ -34,7 +35,9 @@
 >
 	<i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left" triggeredBy="hover">Edit to-do</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Edit to-do</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

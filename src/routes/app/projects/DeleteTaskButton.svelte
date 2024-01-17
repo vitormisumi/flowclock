@@ -2,6 +2,7 @@
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let task: Task;
 
@@ -23,11 +24,14 @@
 <Button
 	size="xs"
 	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
+	id="hover"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip placement="left" triggeredBy="hover">Delete task</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Delete task</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

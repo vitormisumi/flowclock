@@ -1,6 +1,14 @@
 <script lang="ts">
 	import { Button, Drawer, Tooltip } from 'flowbite-svelte';
-	import { filter, startRow, endRow, openRow, filteredSessions, filteredInterruptions } from './stores';
+	import {
+		filter,
+		startRow,
+		endRow,
+		openRow,
+		filteredSessions,
+		filteredInterruptions
+	} from './stores';
+	import { windowWidth } from '../projects/stores';
 	import { periods } from '$lib/constants/constants';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
@@ -13,14 +21,14 @@
 	);
 
 	let periodDrawerHidden = true;
-	
+
 	function openPeriodDrawer() {
 		periodDrawerHidden = false;
 	}
 
 	function applyFilter(period: Period) {
 		periodDrawerHidden = true;
-		$filter = { timeframe: period.timeframe, current: period.current};
+		$filter = { timeframe: period.timeframe, current: period.current };
 		$startRow = 0;
 		$endRow = 9;
 		$openRow = null;
@@ -34,7 +42,11 @@
 	const today = new Date();
 	$: current = $filter.current ? 1 : 0;
 
-	function filterSessionsByDay(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+	function filterSessionsByDay(
+		sessions: FilteredSession[],
+		today: Date,
+		current: number
+	): FilteredSession[] {
 		return sessions.filter((x) => {
 			const date = new Date(x.start);
 			return (
@@ -45,7 +57,11 @@
 		});
 	}
 
-	function filterInterruptionsByDay(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+	function filterInterruptionsByDay(
+		interruptions: Interruption[],
+		today: Date,
+		current: number
+	): Interruption[] {
 		return interruptions.filter((x) => {
 			const date = new Date(x.start);
 			return (
@@ -56,7 +72,10 @@
 		});
 	}
 
-	function filterSessionsByCurrentWeek(sessions: FilteredSession[], today: Date): FilteredSession[] {
+	function filterSessionsByCurrentWeek(
+		sessions: FilteredSession[],
+		today: Date
+	): FilteredSession[] {
 		return sessions.filter((x) => {
 			const date = Date.parse(x.start);
 			const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
@@ -64,7 +83,10 @@
 		});
 	}
 
-	function filterInterruptionsByCurrentWeek(interruptions: Interruption[], today: Date): Interruption[] {
+	function filterInterruptionsByCurrentWeek(
+		interruptions: Interruption[],
+		today: Date
+	): Interruption[] {
 		return interruptions.filter((x) => {
 			const date = Date.parse(x.start);
 			const beginningOfWeek = new Date().setHours(0, 0, 0, 0) - today.getDay() * 86400000;
@@ -77,24 +99,29 @@
 			const date = Date.parse(x.start);
 			const beginningOfLastWeek =
 				new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
-			const endOfLastWeek =
-				new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
+			const endOfLastWeek = new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
 			return date > beginningOfLastWeek && date < endOfLastWeek;
 		});
 	}
 
-	function filterInterruptionsByLastWeek(interruptions: Interruption[], today: Date): Interruption[] {
+	function filterInterruptionsByLastWeek(
+		interruptions: Interruption[],
+		today: Date
+	): Interruption[] {
 		return interruptions.filter((x) => {
 			const date = Date.parse(x.start);
 			const beginningOfLastWeek =
 				new Date().setHours(23, 59, 59, 999) - 604800000 - (1 + today.getDay()) * 86400000;
-			const endOfLastWeek =
-				new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
+			const endOfLastWeek = new Date().setHours(23, 59, 59, 999) - (1 + today.getDay()) * 86400000;
 			return date > beginningOfLastWeek && date < endOfLastWeek;
 		});
 	}
 
-	function filterSessionsByMonth(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+	function filterSessionsByMonth(
+		sessions: FilteredSession[],
+		today: Date,
+		current: number
+	): FilteredSession[] {
 		return sessions.filter((x) => {
 			const date = new Date(x.start);
 			return (
@@ -104,7 +131,11 @@
 		});
 	}
 
-	function filterInterruptionsByMonth(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+	function filterInterruptionsByMonth(
+		interruptions: Interruption[],
+		today: Date,
+		current: number
+	): Interruption[] {
 		return interruptions.filter((x) => {
 			const date = new Date(x.start);
 			return (
@@ -114,14 +145,22 @@
 		});
 	}
 
-	function filterSessionsByYear(sessions: FilteredSession[], today: Date, current: number): FilteredSession[] {
+	function filterSessionsByYear(
+		sessions: FilteredSession[],
+		today: Date,
+		current: number
+	): FilteredSession[] {
 		return sessions.filter((x) => {
 			const date = new Date(x.start);
 			return date.getFullYear() + 1 === today.getFullYear() + current;
 		});
 	}
 
-	function filterInterruptionsByYear(interruptions: Interruption[], today: Date, current: number): Interruption[] {
+	function filterInterruptionsByYear(
+		interruptions: Interruption[],
+		today: Date,
+		current: number
+	): Interruption[] {
 		return interruptions.filter((x) => {
 			const date = new Date(x.start);
 			return date.getFullYear() + 1 === today.getFullYear() + current;
@@ -159,10 +198,12 @@
 </script>
 
 <div>
-	<Button size="sm" class="w-36" on:click={openPeriodDrawer}
-		>{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2"></i></Button
-	>
-	<Tooltip>Select time period</Tooltip>
+	<Button size="sm" class="w-36" on:click={openPeriodDrawer}>
+		{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2"></i>
+	</Button>
+	{#if $windowWidth >= 768}
+		<Tooltip>Select time period</Tooltip>
+	{/if}
 </div>
 <Drawer
 	transitionType="fly"

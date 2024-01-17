@@ -1,16 +1,17 @@
 <script lang="ts">
-	import { Badge, Button, Card, Tooltip } from 'flowbite-svelte';
-	import { selectedProject, windowWidth } from './stores';
+	import { Badge, Card } from 'flowbite-svelte';
+	import { selectedProject } from './stores';
 	import { getContext } from 'svelte';
-	import { fade, slide } from 'svelte/transition';
-	import DeleteProjectButton from './DeleteProjectButton.svelte';
-	import EditProjectButton from './EditProjectButton.svelte';
+	import { slide } from 'svelte/transition';
 	import type { Writable } from 'svelte/store';
+	import ProjectMenu from './ProjectMenu.svelte';
 
-	let show = false;
-	let hidden = false;
-
+	const settings: Writable<Settings> = getContext('settings');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
+
+	export let open: boolean;
+
+	let hidden = $settings.project_card_hidden;
 
 	let groupOptions: { name: string; value: number }[] = [];
 
@@ -19,35 +20,16 @@
 	});
 </script>
 
-<Card
-	class="grid h-full min-w-full gap-4 border-0 bg-primary-800 text-primary-50"
-	on:mouseenter={() => (show = true)}
-	on:mouseleave={() => (show = false)}
->
-	<div class="flex justify-between md:h-7">
-		<div class="grid gap-1 md:flex md:gap-2 place-items-center justify-items-start">
+<Card class="grid min-w-full gap-4 border-0 bg-primary-800 text-primary-50">
+	<div class="flex justify-between md:h-7 place-items-center">
+		<div class="flex flex-wrap place-items-center justify-items-start gap-2">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
-			<div class="flex gap-2 h-fit">
-				<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
-				<Badge class="bg-primary-50">
-					#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
-				</Badge>
-			</div>
+			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
+			<Badge class="bg-primary-50">
+				#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
+			</Badge>
 		</div>
-		{#if show || $windowWidth < 768}
-			<div class="flex h-fit" in:fade>
-				<Button
-					size="xs"
-					class="bg-transparent transition-colors hover:bg-primary-700"
-					on:click={() => (hidden = !hidden)}
-				>
-					<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
-				</Button>
-				<Tooltip placement="left">{hidden ? 'Show card' : 'Hide card'}</Tooltip>
-				<EditProjectButton />
-				<DeleteProjectButton />
-			</div>
-		{/if}
+		<ProjectMenu bind:hidden bind:open />
 	</div>
 	{#if !hidden}
 		<div class="grid gap-4 text-secondary-50" transition:slide>

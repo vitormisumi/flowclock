@@ -6,7 +6,7 @@
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import type { Writable } from 'svelte/store';
 	import DueDate from './DueDate.svelte';
-	import ToDosMenu from './ToDosMenu.svelte';
+	import ToDoMenu from './ToDoMenu.svelte';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
@@ -59,7 +59,7 @@
 						<DueDate date={toDo.due_date} />
 					{/if}
 					{#if showMenu === toDo.id || $windowWidth < 768}
-						<ToDosMenu {toDo} bind:showMenu />
+						<ToDoMenu {toDo} bind:showMenu />
 					{/if}
 				</div>
 				{#if openRow === i}

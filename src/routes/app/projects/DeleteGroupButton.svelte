@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Tooltip, Modal } from 'flowbite-svelte';
-	import { selectedProjectId } from './stores';
+	import { selectedProjectId, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -29,7 +29,9 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-<Tooltip placement="left">Delete group</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Delete group</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

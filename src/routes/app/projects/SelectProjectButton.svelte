@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Tooltip, Drawer, Input } from 'flowbite-svelte';
-	import { selectedProject, selectedProjectId } from './stores';
+	import { selectedProject, selectedProjectId, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import AddProjectButton from './AddProjectButton.svelte';
@@ -33,7 +33,9 @@
 	{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}
 	<i class="fa-solid fa-chevron-down pl-2" />
 </Button>
-<Tooltip>Select project</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Select project</Tooltip>
+{/if}
 <Drawer
 	transitionType="fly"
 	transitionParams={{ x: 100 }}

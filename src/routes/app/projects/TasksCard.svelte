@@ -1,52 +1,16 @@
 <script lang="ts">
-	import { Card, Popover, Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { enhance } from '$app/forms';
-	import { sorting } from './stores';
+	import { Card, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import TasksBoard from './TasksBoard.svelte';
+	import TasksMenu from './TasksMenu.svelte';
 	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
 
-	const status: Writable<TaskStatuses[]> = getContext('status');
+	const settings: Writable<Settings> = getContext('settings');
 
-	let open = false;
+	export let open: boolean;
 
-	async function sort(sortBy: string) {
-		open = false;
-		sorting.sortTasks(sortBy);
-		let tasks: TaskStatuses[] = $status;
-		tasks.forEach((item: TaskStatuses) => {
-			if (item.tasks && item.tasks.length > 0) {
-				switch (sortBy) {
-					case 'priority':
-						item.tasks.sort((a, b) => b.priority - a.priority);
-						break;
-					case 'due_date':
-						item.tasks.sort((a, b) => {
-							if (a.due_date === null) return 1;
-							if (b.due_date === null) return -1;
-							if (a.due_date && b.due_date) {
-								return new Date(a.due_date).getTime() - new Date(b.due_date).getTime();
-							}
-							return 0;
-						});
-						break;
-					case 'name':
-						item.tasks.sort((a, b) => a.name.localeCompare(b.name));
-						break;
-					default:
-						item.tasks.sort((a, b) => b.order - a.order);
-				}
-			}
-		});
-		status.set(tasks);
-		const response = await fetch('/api/sort', {
-			method: 'POST',
-			body: JSON.stringify({ tasks }),
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-	}
+	let hidden = $settings.tasks_card_hidden;
 </script>
 
 <Card class="grid h-full min-h-full min-w-full gap-1 border-0 bg-primary-800">
@@ -65,33 +29,13 @@
 				</div>
 			</Popover>
 		</div>
-		<Button size="xs" class="bg-primary-800 transition-colors hover:bg-primary-700">
-			<i class="fa-solid fa-ellipsis-vertical" />
-		</Button>
-		<Dropdown class="p-1" bind:open placement="bottom-end">
-			<DropdownItem class="w-full">
-				<i class="fa-solid fa-sort pr-2" />Sort<i class="fa-solid fa-chevron-right pl-2" />
-			</DropdownItem>
-			<Dropdown placement="right" class="w-40">
-				<form method="POST" action="?/sortTasks" use:enhance>
-					<DropdownItem>
-						<button type="submit" name="sort" value="name" on:click={() => sort('name')}>
-							Name
-						</button>
-					</DropdownItem>
-					<DropdownItem>
-						<button type="submit" name="sort" value="due_date" on:click={() => sort('due_date')}>
-							Due Date
-						</button>
-					</DropdownItem>
-					<DropdownItem>
-						<button type="submit" name="sort" value="priority" on:click={() => sort('priority')}>
-							Priority
-						</button>
-					</DropdownItem>
-				</form>
-			</Dropdown>
-		</Dropdown>
+		<TasksMenu bind:open bind:hidden />
 	</div>
-	<TasksBoard />
+	{#if !hidden}
+		<div class="overflow-hidden" transition:slide>
+			<div>
+				<TasksBoard />
+			</div>
+		</div>
+	{/if}
 </Card>

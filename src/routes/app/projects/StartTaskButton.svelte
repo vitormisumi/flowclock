@@ -4,6 +4,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let task: Task;
 
@@ -24,13 +25,11 @@
 
 {#if !$session.running}
 	<form method="POST" action="/app/session?/start" use:enhance={handleClick}>
-		<Button
-			type="submit"
-			size="xs"
-			class="bg-transparent transition-colors hover:bg-primary-700"
-		>
+		<Button type="submit" size="xs" class="bg-transparent transition-colors hover:bg-primary-700">
 			<i class="fa-solid fa-clock text-primary-50" />
 		</Button>
-		<Tooltip placement="left">Start task session</Tooltip>
+		{#if $windowWidth >= 768}
+			<Tooltip placement="left">Start task session</Tooltip>
+		{/if}
 	</form>
 {/if}

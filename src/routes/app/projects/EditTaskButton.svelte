@@ -4,6 +4,7 @@
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from './stores';
 
 	export let task: Task;
 	export let showMenu: number | null;
@@ -11,7 +12,7 @@
 	let dueDate: Date | null;
 
 	let priority = task.priority;
-	
+
 	let open = false;
 
 	const handleClick: SubmitFunction = ({ formData }) => {
@@ -33,7 +34,9 @@
 	on:click={() => (open = true)}
 	><i class="fa-solid fa-pen text-primary-50" />
 </Button>
-<Tooltip placement="left" triggeredBy="hover">Edit task</Tooltip>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left">Edit task</Tooltip>
+{/if}
 <Modal
 	bind:open
 	outsideclose

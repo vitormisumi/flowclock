@@ -496,4 +496,96 @@ export const actions = {
 
     return { message: 'Intention successfully deleted', success: true };
   },
+    
+  hideProjectCard: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    let hiddenString = formData.get('hidden') as string;
+    let hidden = hiddenString.toLocaleLowerCase() === 'true';
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ project_card_hidden: hidden })
+      .eq('user_id', session.user.id);
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: hidden ? 'Project details hidden' : 'Project details expanded', success: true };
+  },
+    
+  hideTasksCard: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    let hiddenString = formData.get('hidden') as string;
+    let hidden = hiddenString.toLocaleLowerCase() === 'true';
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ tasks_card_hidden: hidden })
+      .eq('user_id', session.user.id);
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: hidden ? 'Tasks hidden' : 'Tasks expanded', success: true };
+  },
+    
+  hideToDosCard: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    let hiddenString = formData.get('hidden') as string;
+    let hidden = hiddenString.toLocaleLowerCase() === 'true';
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ to_dos_card_hidden: hidden })
+      .eq('user_id', session.user.id);
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: hidden ? 'To-dos hidden' : 'To-dos expanded', success: true };
+  },
+    
+  hideIntentionsCard: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
+      throw redirect(303, '/');
+    }
+
+    const formData = await request.formData();
+    let hiddenString = formData.get('hidden') as string;
+    let hidden = hiddenString.toLocaleLowerCase() === 'true';
+        
+    const { error } = await supabase
+      .from('settings')
+      .update({ intentions_card_hidden: hidden })
+      .eq('user_id', session.user.id);
+
+    if (error) {
+      console.log(error);
+      return fail(500, { message: error.message, success: false });
+    }
+
+    return { message: hidden ? 'Intentions hidden' : 'Intentions expanded', success: true };
+  },
 };
