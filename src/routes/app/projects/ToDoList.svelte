@@ -29,7 +29,7 @@
 			break;
 	}
 
-	export let show: boolean;
+	export let completedHidden: boolean;
 
 	let openRow: number | null = null;
 
@@ -38,7 +38,7 @@
 
 <ul class="grid max-h-96 w-full gap-1 overflow-scroll">
 	{#each $toDos as toDo, i}
-		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || show === true)}
+		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || completedHidden === false)}
 			<li
 				class="grid w-full rounded-lg border border-primary-900 bg-primary-900"
 				on:mouseenter={() => (showMenu = toDo.id)}

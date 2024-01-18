@@ -23,12 +23,9 @@
 	>
 		<i class="fa-solid {menuOpen ? 'fa-x' : 'fa-bars'}" />
 	</Button>
-	<NavUl
-		{hidden}
-		classUl="bg-primary-800 border-none shadow-lg md:shadow-none md:bg-transparent items-center"
-	>
+	<NavUl {hidden} classUl="bg-transparent border-none shadow-none items-center">
 		<NavLi>
-			<Button size="sm" href="/signin" class="bg-transparent text-primary-50 transition-colors">
+			<Button size="sm" href="/signin" class="bg-transparent text-primary-50 transition-colors hover:bg-transparent">
 				Sign In
 			</Button>
 		</NavLi>

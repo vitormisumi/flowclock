@@ -11,7 +11,7 @@
 
 	let open = false;
 
-	let show = true;
+	let completedHidden = true;
 
 	let hidden = $settings.tasks_card_hidden;
 </script>
@@ -31,12 +31,12 @@
 				</div>
 			</Popover>
 		</div>
-		<ToDosMenu bind:open bind:hidden />
+		<ToDosMenu bind:open bind:hidden bind:completedHidden/>
 	</div>
 	{#if !hidden}
 		<div class="w-full" transition:slide>
 			<div class="grid place-items-center">
-				<ToDoList {show} />
+				<ToDoList {completedHidden} />
 				<AddToDoButton />
 			</div>
 		</div>

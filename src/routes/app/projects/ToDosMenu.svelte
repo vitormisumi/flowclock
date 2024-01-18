@@ -2,9 +2,11 @@
 	import { Button, Dropdown, DropdownDivider } from 'flowbite-svelte';
 	import HideToDosButton from './HideToDosButton.svelte';
 	import SortToDosButton from './SortToDosButton.svelte';
+	import HideCompletedToDosButton from './HideCompletedToDosButton.svelte';
 
 	export let open: boolean;
 	export let hidden: boolean;
+	export let completedHidden: boolean;
 </script>
 
 <Button size="xs" class="bg-transparent transition-colors">
@@ -18,4 +20,5 @@
 	<HideToDosButton bind:hidden bind:open />
 	<DropdownDivider class="bg-primary-800"/>
 	<SortToDosButton bind:open />
+	<HideCompletedToDosButton bind:completedHidden bind:open />
 </Dropdown>

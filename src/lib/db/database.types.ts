@@ -362,6 +362,7 @@ export interface Database {
         Row: {
           break_message: string
           clock_format: boolean
+          completed_to_dos_hidden: boolean
           date_format: string
           intentions_card_hidden: boolean
           project_card_hidden: boolean
@@ -377,6 +378,7 @@ export interface Database {
         Insert: {
           break_message?: string
           clock_format?: boolean
+          completed_to_dos_hidden?: boolean
           date_format?: string
           intentions_card_hidden?: boolean
           project_card_hidden?: boolean
@@ -392,6 +394,7 @@ export interface Database {
         Update: {
           break_message?: string
           clock_format?: boolean
+          completed_to_dos_hidden?: boolean
           date_format?: string
           intentions_card_hidden?: boolean
           project_card_hidden?: boolean
