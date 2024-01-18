@@ -88,8 +88,6 @@
 
 		return () => clearInterval(interval);
 	});
-
-	$: console.log(isSubscribed)
 </script>
 
 <div
