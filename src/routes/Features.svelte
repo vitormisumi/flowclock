@@ -7,7 +7,7 @@
 	class="grid gap-4 bg-secondary-100 px-4 py-20 text-secondary-900 sm:gap-8 sm:px-8 md:grid-cols-2 md:gap-12 md:px-12 lg:gap-20 lg:px-20"
 >
 	<div class="overflow-hidden rounded-xl border border-primary-500 drop-shadow-xl">
-		<!-- <img src={features1} alt="FlowClock logo" class="w-full" /> -->
+		<img src={features1} alt="FlowClock logo" class="w-full" />
 	</div>
 	<div class="grid content-center gap-4">
 		<h2 class="text-3xl font-bold">Track all your sessions</h2>
