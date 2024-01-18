@@ -18,7 +18,7 @@
 		formData.append('project_id', String($selectedProject.id));
 		return async ({ update }) => {
 			loading = false;
-			hidden = false;
+			hidden = true;
 			update();
 		};
 	};
