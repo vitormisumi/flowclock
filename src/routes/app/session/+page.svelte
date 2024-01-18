@@ -10,6 +10,7 @@
 
 	export let form;
 
+	let isSubscribed: boolean;
 	async function subscribeToRealtime() {
 		const realtime = $page.data.supabase
 			.channel('sessions-channel')
@@ -58,7 +59,13 @@
 					sessionBreak.start(payload.new.calculated_duration);
 				}
 			)
-			.subscribe();
+			.subscribe((x: string) => {
+				if (x === 'SUBSCRIBED') {
+					isSubscribed = true;
+				} else {
+					isSubscribed = false;
+				}
+			});
 
 		if (realtime.error) {
 			console.error('Realtime error:', realtime.error);
@@ -66,12 +73,23 @@
 
 		return () => {
 			$page.data.supabase.removeChannel(realtime);
+			isSubscribed = false;
 		};
 	}
 
 	onMount(() => {
 		subscribeToRealtime();
+
+		const interval = setInterval(() => {
+			if (!isSubscribed) {
+				subscribeToRealtime();
+			}
+		}, 5000);
+
+		return () => clearInterval(interval);
 	});
+
+	$: console.log(isSubscribed)
 </script>
 
 <div

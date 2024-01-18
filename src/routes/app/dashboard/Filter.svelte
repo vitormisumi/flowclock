@@ -20,14 +20,14 @@
 		(x) => x.timeframe === $filter.timeframe && x.current === $filter.current
 	);
 
-	let periodDrawerHidden = true;
+	let hidden = true;
 
 	function openPeriodDrawer() {
-		periodDrawerHidden = false;
+		hidden = false;
 	}
 
 	function applyFilter(period: Period) {
-		periodDrawerHidden = true;
+		hidden = true;
 		$filter = { timeframe: period.timeframe, current: period.current };
 		$startRow = 0;
 		$endRow = 9;
@@ -202,23 +202,32 @@
 		{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2"></i>
 	</Button>
 	{#if $windowWidth >= 768}
-		<Tooltip>Select time period</Tooltip>
+		<Tooltip placement="left">Select time period</Tooltip>
 	{/if}
 </div>
 <Drawer
 	transitionType="fly"
 	transitionParams={{ x: 100 }}
 	placement="right"
-	width="w-40"
+	width="w-full md:w-80 lg:w-96"
 	class="z-50 bg-primary-900"
-	bind:hidden={periodDrawerHidden}
+	bind:hidden
 >
-	<div class="flex flex-wrap justify-center gap-2">
-		<h2 class="col-start-2 text-center font-bold text-primary-50">Filter period</h2>
+	<div class="grid justify-center gap-4 w-full">
+		<div class="grid grid-cols-3 place-items-center">
+			<h2 class="col-start-2 text-center font-bold text-primary-50">Filter period</h2>
+			<Button
+				size="xs"
+				on:click={() => (hidden = true)}
+				class="place-self-end bg-transparent md:invisible"
+			>
+				<i class="fa-solid fa-x" />
+			</Button>
+		</div>
 		{#each periods as period}
 			<Button
 				size="sm"
-				class="w-28 {$filter.timeframe === period.timeframe && $filter.current === period.current
+				class="w-full {$filter.timeframe === period.timeframe && $filter.current === period.current
 					? 'border border-primary-700 bg-transparent'
 					: ''}"
 				on:click={() => applyFilter(period)}>{period.name}</Button
