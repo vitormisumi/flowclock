@@ -54,7 +54,7 @@
 </script>
 
 <div
-	class="relative grid min-h-[40px] w-full gap-1 overflow-auto"
+	class="relative grid min-h-[40px] w-full gap-1 overflow-auto rounded-lg"
 	use:dndzone={{
 		items: s.tasks,
 		dragDisabled,

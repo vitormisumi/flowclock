@@ -25,14 +25,18 @@
 	];
 </script>
 
-<section class="bg-secondary-50 px-4 py-20 sm:grid-cols-2 sm:px-8 md:px-12 lg:px-20">
-	<h2 class="pb-8 text-center text-3xl font-bold">FAQ</h2>
-	<Accordion>
-		{#each questions as q}
-			<AccordionItem>
-				<span slot="header" class="font-semibold text-primary-900">{q.question}</span>
-				<p class="whitespace-pre-wrap text-primary-700">{q.answer}</p>
-			</AccordionItem>
-		{/each}
-	</Accordion>
+<section
+	class="flex justify-center w-full bg-secondary-100 px-4 py-20 sm:grid-cols-2 sm:px-8 md:px-12 lg:px-20"
+>
+	<div class="max-w-4xl w-full">
+		<h2 class="pb-8 text-center text-3xl font-bold">FAQ</h2>
+		<Accordion>
+			{#each questions as q}
+				<AccordionItem>
+					<span slot="header" class="font-semibold text-primary-900">{q.question}</span>
+					<p class="whitespace-pre-wrap text-primary-700">{q.answer}</p>
+				</AccordionItem>
+			{/each}
+		</Accordion>
+	</div>
 </section>
