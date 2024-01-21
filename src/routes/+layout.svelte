@@ -23,7 +23,7 @@
 
 	inject({ mode: dev ? 'development' : 'production' });
 
-	injectSpeedInsights;
+	injectSpeedInsights();
 </script>
 
 <slot />
