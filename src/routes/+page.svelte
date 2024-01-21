@@ -4,12 +4,18 @@
 	import Faq from './FAQ.svelte';
 	import SignUp from './SignUp.svelte';
 	import Navbar from './Navbar.svelte';
+
+	let innerWidth: number;
+
+	let features: HTMLElement;
+	let faq: HTMLElement;
 </script>
 
+<svelte:window bind:innerWidth />
 <div class="flex flex-col">
-	<Navbar />
+	<Navbar {innerWidth} {features} {faq} />
 	<Hero />
-	<Features />
-	<Faq />
+	<Features bind:features />
+	<Faq bind:faq />
 	<SignUp />
 </div>

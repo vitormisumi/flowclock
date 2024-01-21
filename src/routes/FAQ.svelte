@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Accordion, AccordionItem } from 'flowbite-svelte';
 
+	export let faq: HTMLElement;
+
 	const questions = [
 		{
 			question: 'What is the flowtime technique?',
@@ -26,9 +28,10 @@
 </script>
 
 <section
-	class="flex justify-center w-full bg-secondary-100 px-4 py-20 sm:grid-cols-2 sm:px-8 md:px-12 lg:px-20"
+	class="flex w-full justify-center bg-secondary-100 px-4 py-20 sm:grid-cols-2 sm:px-8 md:px-12 lg:px-20"
+	bind:this={faq}
 >
-	<div class="max-w-4xl w-full">
+	<div class="w-full max-w-4xl">
 		<h2 class="pb-8 text-center text-3xl font-bold">FAQ</h2>
 		<Accordion>
 			{#each questions as q}

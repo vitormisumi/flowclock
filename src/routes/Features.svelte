@@ -5,6 +5,8 @@
 	import features3 from '$lib/assets/features3.png';
 	import { onMount } from 'svelte';
 
+	export let features: HTMLElement;
+
 	const images = [
 		{
 			title: 'Track all your sessions',
@@ -71,7 +73,7 @@
 </script>
 
 <section
-	class="flex justify-center bg-secondary-50 px-4 py-20 text-secondary-900 sm:px-8 md:px-12 lg:px-20"
+	class="flex justify-center bg-secondary-50 px-4 py-20 text-secondary-900 sm:px-8 md:px-12 lg:px-20" bind:this={features}
 >
 	<div class="grid max-w-4xl gap-4 overflow-hidden">
 		<div class="flex gap-4 overflow-scroll" bind:this={container}>
@@ -98,7 +100,10 @@
 			{/each}
 		</div>
 		<img src={images[selected].src} alt={images[selected].alt} class="rounded-lg" />
-		<Button href="/signup" class="w-fit bg-accent-500 transition-colors hover:bg-accent-600 place-self-center">
+		<Button
+			href="/signup"
+			class="w-fit place-self-center bg-accent-500 transition-colors hover:bg-accent-600"
+		>
 			Get Started
 		</Button>
 	</div>
