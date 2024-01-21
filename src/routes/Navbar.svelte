@@ -67,11 +67,10 @@
 		</NavLi>
 		<div class="invisible h-6 border border-primary-900 md:visible" />
 		<div
-			class="absolute bottom-16 left-0 flex w-full justify-between gap-4 rounded-lg bg-primary-900 md:static md:bg-transparent"
+			class="fixed bottom-0 left-0 flex w-full justify-between gap-4 bg-primary-900 md:static md:bg-transparent"
 		>
 			<NavLi>
 				<Button
-					size="sm"
 					href="/signin"
 					class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
 				>
@@ -80,7 +79,6 @@
 			</NavLi>
 			<NavLi>
 				<Button
-					size="sm"
 					href="/signup"
 					outline
 					class="border-accent-500 text-accent-500 transition-colors hover:bg-accent-500"
