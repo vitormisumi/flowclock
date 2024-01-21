@@ -4,6 +4,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { inject } from '@vercel/analytics';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 	export let data;
 
@@ -21,6 +22,8 @@
 	});
 
 	inject({ mode: dev ? 'development' : 'production' });
+
+	injectSpeedInsights;
 </script>
 
 <slot />
