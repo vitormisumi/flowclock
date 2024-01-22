@@ -65,7 +65,7 @@
 				FAQ
 			</Button>
 		</NavLi>
-		<div class="invisible h-6 border border-primary-900 md:visible" />
+		<div class="invisible h-6 border border-secondary-700 md:visible" />
 		<div
 			class="fixed bottom-0 left-0 flex w-full justify-between gap-4 bg-primary-900 md:static md:bg-transparent"
 		>

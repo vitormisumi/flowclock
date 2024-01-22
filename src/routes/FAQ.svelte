@@ -17,7 +17,22 @@
 		{
 			question: 'Can I set a specific session to break ratio in FlowClock?',
 			answer:
-				'Yes! You can set a session to break ratio of anywhere between 1:1 and 10:1 in the settings page of the app.'
+				'Yes! You can set a session to break ratio of anywhere between 1:1 and 10:1.\n\n Just go to "Settings" and choose your desired ratio.'
+		},
+		{
+			question: 'Can I set a session limit in FlowClock?',
+			answer:
+				'Yes! You can set an alarm to go off after a specific amount of minutes to remind you to take a break.\n\nJust go to "Settings", toggle the option "Session length warning" and set the desired number of minutes. When your session reaches that length, you will receive a sound warning and a message on screen asking whether you want to continue your session or start a break.'
+		},
+		{
+			question: 'What happens if I sign out before finishing my session?',
+			answer:
+				"If you try to sign out before finishing your session, you will be prompted by a message asking if you want to save your session before signing out. On the other hand, if you just close the app's browser window your session will remain active until you open the app again and close it."
+		},
+		{
+			question: 'Is there a mobile version of FlowClock?',
+			answer:
+				'There is not currently an Android or iOS version of FlowClock. However, the app should be fully functional on any mobile browser.'
 		},
 		{
 			question: 'What if I find a bug in FlowClock?',
