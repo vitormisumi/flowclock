@@ -99,7 +99,7 @@
 					class="grid w-full min-w-[80%] content-start gap-2 rounded-lg border-2 p-4 text-left transition-colors sm:min-w-min {selected ===
 					i
 						? 'border-primary-100 bg-primary-50 text-primary-800'
-						: 'border-transparent bg-secondary-100 text-secondary-900'}"
+						: 'border-transparent bg-primary-100 text-secondary-900'}"
 					on:mouseover={() => {
 						selected = i;
 						clearInterval(interval);
