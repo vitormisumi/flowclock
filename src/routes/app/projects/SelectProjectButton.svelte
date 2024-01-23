@@ -7,8 +7,6 @@
 	import EditGroupButton from './EditGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { Writable } from 'svelte/store';
-	import EditProjectButton from './EditProjectButton.svelte';
-	import DeleteProjectButton from './DeleteProjectButton.svelte';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
