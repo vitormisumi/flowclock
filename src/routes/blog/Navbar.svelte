@@ -2,15 +2,7 @@
 	import { Navbar, NavBrand, NavLi, NavUl, Button } from 'flowbite-svelte';
 	import logo from '$lib/assets/logo.png';
 
-	export let innerWidth: number;
-	export let features: HTMLElement;
-	export let faq: HTMLElement;
-
 	let menuOpen = false;
-
-	function scrollTo(e: HTMLElement) {
-		e.scrollIntoView();
-	}
 </script>
 
 <Navbar
@@ -37,7 +29,7 @@
 	>
 		<NavLi>
 			<Button
-				href="/blog"
+				href="/"
 				size="sm"
 				class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
 				on:click={() => {
@@ -47,37 +39,7 @@
 					}
 				}}
 			>
-				Blog
-			</Button>
-		</NavLi>
-		<NavLi>
-			<Button
-				size="sm"
-				class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
-				on:click={() => {
-					scrollTo(features);
-					if (innerWidth < 768) {
-						toggle();
-						menuOpen = !menuOpen;
-					}
-				}}
-			>
-				Features
-			</Button>
-		</NavLi>
-		<NavLi>
-			<Button
-				size="sm"
-				class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
-				on:click={() => {
-					scrollTo(faq);
-					if (innerWidth < 768) {
-						toggle();
-						menuOpen = !menuOpen;
-					}
-				}}
-			>
-				FAQ
+				Home
 			</Button>
 		</NavLi>
 		<div class="invisible h-6 border border-secondary-700 md:visible" />

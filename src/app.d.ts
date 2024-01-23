@@ -34,4 +34,17 @@ declare global {
 		timeframe: string;
 		current: boolean;
 	}
+	type Post = {
+		author: { _ref: string; _type: string };
+		title: string;
+		body: InputValue;
+		_createdAt: string;
+		estimatedReadingTime: number;
+	}
+
+	type Author = {
+		name: string;
+		_id: string;
+		imageUrl: string;
+	}
 }
