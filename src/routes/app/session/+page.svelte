@@ -10,7 +10,14 @@
 
 	export let form;
 
+	$: if (form?.startData) {
+		session.start(form?.startData[0].id, Date.parse(form?.startData[0].start));
+	} else if (form?.breakData && form.breakData[0].end) {
+		session.end(Date.parse(form?.breakData[0].end));
+	}
+
 	let isSubscribed: boolean;
+	
 	async function subscribeToRealtime() {
 		const realtime = $page.data.supabase
 			.channel('sessions-channel')

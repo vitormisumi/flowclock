@@ -53,6 +53,8 @@
 		};
 	};
 
+	let isSubscribed: boolean;
+
 	async function subscribeToRealtime() {
 		const realtime = $page.data.supabase
 			.channel('interruptions-channel')
@@ -68,7 +70,13 @@
 					sessionInterruptions.id(payload.new.id);
 				}
 			)
-			.subscribe();
+			.subscribe((x: string) => {
+				if (x === 'SUBSCRIBED') {
+					isSubscribed = true;
+				} else {
+					isSubscribed = false;
+				}
+			});
 
 		if (realtime.error) {
 			console.error('Realtime error:', realtime.error);
@@ -76,15 +84,24 @@
 
 		return () => {
 			$page.data.supabase.removeChannel(realtime);
+			isSubscribed = false;
 		};
 	}
 
 	onMount(() => {
 		subscribeToRealtime();
+
+		const interval = setInterval(() => {
+			if (!isSubscribed) {
+				subscribeToRealtime();
+			}
+		}, 5000);
+
+		return () => clearInterval(interval);
 	});
 </script>
 
-<div style:visibility={$session.running && !open ? 'visible' : 'hidden'}>
+<div style:visibility={$session.running && $session.id && !open ? 'visible' : 'hidden'}>
 	<form method="POST" action="?/startInterruption" use:enhance={handleStart}>
 		<Button type="submit">
 			<i class="fa-solid fa-pause pr-3" />Interruption

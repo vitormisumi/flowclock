@@ -13,20 +13,21 @@ export const actions = {
 		const focusId = formData.get('focus_id') as string;
 		const projectId = formData.get('project_id') as string;
 		
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from('sessions')
 			.insert({ 
 				user_id: session.user.id, 
 				start: start, 
 				...(projectId !== '0' ? { project_id: Number(projectId), ...(focusType === 'task' ? { task_id: Number(focusId) } : { intention_id: Number(focusId) }) } : {project_id: null}),
-			});
+			})
+			.select();
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		} 
 
-		return { message: 'Session started', success: true };
+		return { startData: data, message: 'Session started', success: true };
 	},
 
 	break: async ({ request, locals: { supabase, getSession } }) => {
@@ -39,17 +40,18 @@ export const actions = {
 		const id = formData.get('id') as string;
 		const end = formData.get('end') as string;
 		
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from('sessions')
 			.update({ end: end })
-			.eq('id', id);
+			.eq('id', id)
+			.select();
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		}
 
-		return { message: 'Session ended', success: true };
+		return { breakData: data, message: 'Session ended', success: true };
 	},
 
 	startInterruption: async ({ request, locals: { supabase, getSession } }) => {
@@ -64,7 +66,7 @@ export const actions = {
 		
 		const { error } = await supabase
 			.from('interruptions')
-			.insert({ user_id: session.user.id, session_id: Number(sessionId), start: start})
+			.insert({ user_id: session.user.id, session_id: Number(sessionId), start: start });
 
 		if (error) {
 			console.log(error);
@@ -88,7 +90,7 @@ export const actions = {
 		const { error } = await supabase
 			.from('interruptions')
 			.update({ reason: reason, end: end })
-			.eq('id', id)
+			.eq('id', id);
 
 		if (error) {
 			console.log(error);
