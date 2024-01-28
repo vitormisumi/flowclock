@@ -363,6 +363,7 @@ export interface Database {
           break_message: string
           clock_format: boolean
           completed_to_dos_hidden: boolean
+          dark_mode: boolean
           date_format: string
           intentions_card_hidden: boolean
           project_card_hidden: boolean
@@ -379,6 +380,7 @@ export interface Database {
           break_message?: string
           clock_format?: boolean
           completed_to_dos_hidden?: boolean
+          dark_mode?: boolean
           date_format?: string
           intentions_card_hidden?: boolean
           project_card_hidden?: boolean
@@ -395,6 +397,7 @@ export interface Database {
           break_message?: string
           clock_format?: boolean
           completed_to_dos_hidden?: boolean
+          dark_mode?: boolean
           date_format?: string
           intentions_card_hidden?: boolean
           project_card_hidden?: boolean

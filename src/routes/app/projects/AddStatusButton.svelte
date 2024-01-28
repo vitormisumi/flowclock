@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject } from './stores';
 	import { afterUpdate, getContext } from 'svelte';
@@ -37,7 +37,7 @@
 <div>
 	{#if open}
 		<form
-			class="flex h-full items-start gap-1 rounded-l-lg bg-primary-900/80 p-2"
+			class="flex h-full items-start gap-1 rounded-l-lg bg-secondary-50 p-2 dark:bg-secondary-900/80"
 			action="?/addStatus"
 			method="POST"
 			use:enhance={handleClick}
@@ -48,14 +48,15 @@
 				name="status"
 				type="text"
 				placeholder="Status"
-				class="h-8 w-20 rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
+				class="h-8 w-20 rounded-md bg-transparent pl-1 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-secondary-700"
 			/>
 			<div class="flex justify-end gap-1">
 				<Button size="xs" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 				<Button
-					type="submit"
 					size="xs"
-					class="place-self-end self-end bg-accent-500 ring-0"
+					buttonStyle="accent"
+					type="submit"
+					class="place-self-end self-end"
 					disabled={loading}
 				>
 					Save
@@ -65,7 +66,8 @@
 	{:else}
 		<Button
 			size="xs"
-			class="h-full w-full rounded-r-none bg-transparent text-secondary-400 transition-colors hover:bg-primary-900/50 hover:text-secondary-200"
+			buttonStyle="add"
+			class="h-full w-full rounded-r-none"
 			on:click={() => (open = true)}
 		>
 			<i class="fa-solid fa-plus pr-2" />add status

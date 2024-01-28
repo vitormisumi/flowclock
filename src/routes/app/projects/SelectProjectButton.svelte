@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Button, Tooltip, Drawer, Input } from 'flowbite-svelte';
+	import { Tooltip, Drawer } from 'flowbite-svelte';
 	import { selectedProject, selectedProjectId, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
 	import AddProjectButton from './AddProjectButton.svelte';
 	import EditGroupButton from './EditGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -11,7 +12,7 @@
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
-	let hidden = true;
+	let hidden = false;
 
 	let open = false;
 
@@ -32,23 +33,25 @@
 	<i class="fa-solid fa-chevron-down pl-2" />
 </Button>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left">Select project</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Select project</Tooltip>
 {/if}
 <Drawer
 	transitionType="fly"
 	transitionParams={{ x: 100 }}
 	placement="right"
 	width="w-full md:w-80 lg:w-96"
-	class="z-50 bg-primary-900"
+	class="z-50 bg-secondary-50 dark:bg-secondary-900"
 	bind:hidden
 >
 	<div class="grid gap-4">
 		<div class="grid grid-cols-3 place-items-center">
-			<h2 class="col-start-2 text-center font-bold text-primary-50">Projects</h2>
+			<h2 class="col-start-2 text-center font-bold text-primary-900 dark:text-primary-50">
+				Projects
+			</h2>
 			<Button
 				size="xs"
 				on:click={() => (hidden = true)}
-				class="col-start-3 w-fit place-self-end bg-transparent md:invisible"
+				class="col-start-3 w-fit place-self-end bg-transparent text-secondary-900 dark:bg-transparent dark:text-secondary-50 md:invisible"
 			>
 				<i class="fa-solid fa-x" />
 			</Button>
@@ -58,7 +61,7 @@
 			<div class="grid gap-2">
 				{#each $projects.filter((x) => x.group_id === group.id) as project}
 					<Button
-						class={project.id != $selectedProject.id ? 'bg-transparent' : 'bg-primary-800'}
+						disabled={project.id === $selectedProject.id}
 						on:click={() => {
 							$selectedProjectId = project.id;
 							hidden = true;
@@ -68,13 +71,14 @@
 				{/each}
 				<AddProjectButton {group} on:click={() => (hidden = true)} />
 			</div>
-			<hr class="w-full border-secondary-800" />
+			<hr class="w-full dark:border-secondary-800" />
 		{/each}
 		{#if !open}
 			<Button
 				size="xs"
+				buttonStyle="add"
+				class="hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
 				type="submit"
-				class="self-center bg-transparent text-secondary-400 transition-colors hover:bg-secondary-800 hover:bg-opacity-50 hover:text-secondary-100 focus:ring-0"
 				on:click={() => (open = true)}
 			>
 				<i class="fa-solid fa-plus pr-2" />new group
@@ -86,13 +90,13 @@
 					type="text"
 					name="name"
 					placeholder="Group name"
-					class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
+					class="w-full rounded-md bg-transparent pl-1 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-primary-700"
 				/>
 				<Button size="xs" on:click={() => (open = false)}>Cancel</Button>
 				<Button
 					size="xs"
+					buttonStyle="accent"
 					type="submit"
-					class="bg-accent-500 transition-colors hover:bg-accent-600"
 					disabled={loading}
 				>
 					Save

@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button, Input, Textarea } from 'flowbite-svelte';
+	import { Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject, windowWidth } from './stores';
 	import { afterUpdate } from 'svelte';
-	import AddWindowDesktop from './AddWindowDesktop.svelte';
-	import AddWindowMobile from './AddWindowMobile.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import AddWindowDesktop from '$lib/components/AddWindowDesktop.svelte';
+	import AddWindowMobile from '$lib/components/AddWindowMobile.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	let hidden = true;
@@ -23,7 +24,6 @@
 		};
 	};
 
-
 	function scrollToForm() {
 		if (formElement) {
 			formElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'end' });
@@ -37,15 +37,11 @@
 </script>
 
 {#if hidden || $windowWidth < 768}
-	<Button
-		size="xs"
-		class="w-fit bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
-		on:click={() => (hidden = false)}
-	>
+	<Button size="xs" buttonStyle="add" class="w-full" on:click={() => (hidden = false)}>
 		<i class="fa-solid fa-plus pr-2" />add intention
 	</Button>
 {/if}
-<svelte:component this={component} bgColor="bg-primary-900" bind:hidden>
+<svelte:component this={component} bgColor="bg-secondary-50 dark:bg-secondary-900" bind:hidden>
 	<form
 		class="flex flex-col gap-1 text-left"
 		method="POST"
@@ -56,34 +52,18 @@
 		<Input
 			name="name"
 			placeholder="Intention"
-			class="border-0 bg-transparent text-lg text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
+			class="border-0 bg-transparent text-lg focus:ring-0 dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 			required
 		></Input>
-		<!-- <Label class="pl-2.5 font-normal text-secondary-500"
-				>Weekly hours goal
-				<input
-					type="number"
-					name="goal"
-					value="0"
-					min={0}
-					max={100}
-					class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
-				/>
-			</Label> -->
 		<Textarea
 			name="description"
 			placeholder="Description"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
+			class="border-0 bg-transparent focus:ring-0 dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 		></Textarea>
 		<div class="flex justify-end gap-2">
 			<div>
 				<Button size="xs" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
-				<Button
-					size="xs"
-					type="submit"
-					class="bg-accent-500 transition-colors hover:bg-accent-600"
-					disabled={loading}
-				>
+				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>
 					Add Intention
 				</Button>
 			</div>

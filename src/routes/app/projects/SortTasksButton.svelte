@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { Button, Dropdown } from 'flowbite-svelte';
+	import { Dropdown } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { sorting } from './stores';
 	import { getContext } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	export let open: boolean;
-	let openSort = false;
 
 	async function sort(sortBy: string) {
 		open = false;
@@ -49,18 +49,12 @@
 	}
 </script>
 
-<Button
-	size="xs"
-	class="bg-transparent transition-colors hover:bg-primary-700"
-	id="menu"
-	on:click={() => (openSort = true)}
->
-	<i class="fa-solid fa-sort" />
-</Button>
-<Dropdown placement="bottom" class="rounded-lg bg-primary-900 p-1" bind:open={openSort}>
+<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
+<Dropdown placement="bottom" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
 	<form method="POST" action="?/sortTasks" class="flex w-20 flex-col gap-1" use:enhance>
 		<Button
 			size="xs"
+			buttonStyle="menu"
 			class="w-full"
 			type="submit"
 			name="sort"
@@ -69,6 +63,7 @@
 		>
 		<Button
 			size="xs"
+			buttonStyle="menu"
 			class="w-full"
 			type="submit"
 			name="sort"
@@ -79,6 +74,7 @@
 		</Button>
 		<Button
 			size="xs"
+			buttonStyle="menu"
 			class="w-full"
 			type="submit"
 			name="sort"

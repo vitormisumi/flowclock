@@ -56,17 +56,19 @@
 
 <div class="flex h-full flex-col justify-between gap-2">
 	<table class="w-full table-fixed overflow-hidden rounded-xl">
-		<thead class="bg-primary-700 text-center font-bold text-primary-50">
+		<thead
+			class="bg-secondary-200 text-center font-bold text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
+		>
 			<tr>
 				<th class="py-1">Date</th>
 				<th class="py-1">Duration</th>
 			</tr>
 		</thead>
-		<tbody class="text-sm font-light text-primary-50">
+		<tbody class="text-sm font-light text-primary-900 dark:text-primary-50">
 			{#each $filteredSessions as session, i}
 				{#if i >= $startRow && i <= $endRow}
 					<tr
-						class="relative cursor-pointer border-t border-primary-800 bg-primary-900 text-center transition-colors hover:bg-primary-800"
+						class="relative cursor-pointer border-t bg-secondary-50 text-center border-secondary-100 transition-colors hover:bg-primary-100 dark:border-secondary-800 dark:bg-secondary-900 hover:dark:bg-primary-800"
 						tabindex="0"
 						on:click={() => rowClick(i)}
 						on:keydown={(e) => rowPress(e, i)}
@@ -97,7 +99,7 @@
 		<ButtonGroup>
 			<Button
 				disabled={$startRow === 0 ? true : false}
-				class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+				class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-100 hover:dark:bg-primary-800"
 				on:click={previous}
 			>
 				<i class="fa-solid fa-chevron-left" />
@@ -106,13 +108,13 @@
 				{#if p === $startRow / 10}
 					<Button
 						disabled
-						class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+						class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-100 hover:dark:bg-primary-800 max-[356px]:hidden"
 					>
 						{p + 1}
 					</Button>
 				{:else if (p < 5 && $startRow < 30) || (p > ($startRow - 30) / 10 && p < ($startRow + 30) / 10) || (p >= pages - 5 && ($startRow - 30) / 10 >= pages - 5)}
 					<Button
-						class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0 max-[356px]:hidden"
+						class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-100 hover:dark:bg-primary-800 max-[356px]:hidden"
 						on:click={() => page(p)}
 					>
 						{p + 1}
@@ -121,7 +123,7 @@
 			{/each}
 			<Button
 				disabled={$endRow >= $filteredSessions.length - 1 ? true : false}
-				class="border-primary-700 bg-primary-900 font-mono text-primary-100 transition-colors hover:bg-primary-800 hover:text-primary-500 focus:ring-0"
+				class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-primary-100 hover:dark:bg-primary-800"
 				on:click={next}
 			>
 				<i class="fa-solid fa-chevron-right" />

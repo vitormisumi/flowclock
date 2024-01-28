@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Modal, Tooltip } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
 	import { windowWidth } from '../projects/stores';
 	import { getContext } from 'svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -31,7 +32,7 @@
 </script>
 
 <button
-	class="flex items-center rounded-lg bg-transparent px-3 py-2 text-xs text-red-700 transition-colors hover:bg-primary-700"
+	class="flex items-center rounded-lg bg-transparent px-3 py-2 text-xs transition-colors hover:bg-primary-200 dark:bg-transparent dark:hover:bg-primary-700"
 	tabindex="0"
 	on:click|stopPropagation={() => {
 		open = true;
@@ -39,19 +40,14 @@
 	}}
 	on:keydown|stopPropagation
 >
-	<i class="fa-solid fa-trash" />
+	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </button>
 {#if $windowWidth >= 768}
-<Tooltip placement="left">Delete session</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete session</Tooltip>
 {/if}
-<Modal
-	bind:open
-	outsideclose
-	size="xs"
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
->
-	<i class="fa-solid fa-warning text-3xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">
+<Modal bind:open outsideclose size="xs">
+	<i class="fa-solid fa-warning text-3xl dark:text-red-700" />
+	<p class="whitespace-normal dark:text-secondary-200">
 		Delete session at {dateFromTimestamp(
 			sessionToDelete?.start,
 			$settings.date_format,
@@ -70,11 +66,13 @@
 	>
 		<button
 			disabled={loading}
-			class="flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-primary-50 transition-colors hover:bg-primary-800"
-			on:click|stopPropagation={() => (open = false)}>Cancel</button
+			class="flex items-center rounded-lg bg-primary-200 px-5 py-2.5 text-sm font-medium text-primary-900 transition-colors hover:bg-primary-100 dark:bg-primary-800 dark:text-primary-50"
+			on:click|stopPropagation={() => (open = false)}
 		>
+			Cancel
+		</button>
 		<button
-			class="rounded-lg border-2 border-red-900 bg-transparent px-5 py-2.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-950"
+			class="rounded-lg border-none bg-red-600 px-5 py-2.5 text-sm font-medium text-red-50 transition-colors hover:bg-red-700 focus:ring-0 dark:bg-red-600 dark:text-red-50 hover:dark:bg-red-700"
 			type="submit"
 			disabled={loading}
 			on:click|stopPropagation

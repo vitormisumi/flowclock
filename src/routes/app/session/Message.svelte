@@ -1,7 +1,13 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
-	import { milliseconds, session, sessionBreak, sessionInterruptions, sessionFocus } from './stores';
+	import {
+		milliseconds,
+		session,
+		sessionBreak,
+		sessionInterruptions,
+		sessionFocus
+	} from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -20,7 +26,7 @@
 
 <div class="grid w-full items-center justify-center">
 	<p
-		class="text-primary-50"
+		class="text-primary-900 dark:text-primary-50"
 		style:color={$sessionBreak.running && !$sessionBreak.alarmPlayed ? '#e35403' : '#ebf7fa'}
 	>
 		{message}

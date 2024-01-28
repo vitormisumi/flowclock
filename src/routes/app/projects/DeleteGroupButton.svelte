@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Button, Tooltip, Modal } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { selectedProjectId, windowWidth } from './stores';
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
@@ -24,22 +26,17 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-red-700 transition-colors hover:bg-primary-700"
+	buttonStyle="menu"
 	on:click={() => (open = true)}
 >
-	<i class="fa-solid fa-trash" />
+	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </Button>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left">Delete group</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete group</Tooltip>
 {/if}
-<Modal
-	bind:open
-	outsideclose
-	size="xs"
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
->
-	<i class="fa-solid fa-warning text-xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">
+<Modal bind:open outsideclose size="xs">
+	<i class="fa-solid fa-warning text-xl dark:text-red-700" />
+	<p class="whitespace-normal dark:text-secondary-200">
 		Delete group {group.name} and ALL of its projects?
 	</p>
 	<form
@@ -50,8 +47,8 @@
 	>
 		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
 			type="submit"
+			buttonStyle="red"
 			disabled={loading}>Delete</Button
 		>
 	</form>

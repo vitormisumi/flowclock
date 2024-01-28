@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Button, Radio, Modal, Tabs, TabItem, Popover } from 'flowbite-svelte';
+	import { Radio, Tabs, TabItem, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
-	import { session, sessionFocus, sessionBreak } from './stores';
+	import { session, sessionFocus } from './stores';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const projects: Writable<Project[]> = getContext('projects');
@@ -23,44 +25,31 @@
 	let open = false;
 </script>
 
-<Button
-	disabled={$session.running}
-	class="w-full overflow-hidden border text-left {$session.running
-		? 'border-transparent hover:bg-transparent'
-		: 'border-accent-500 hover:bg-accent-800'} {$sessionBreak.running && !$sessionBreak.alarmPlayed
-		? 'border-none border-primary-700 bg-primary-900 text-primary-600 hover:border hover:bg-primary-800 focus:ring-primary-700'
-		: 'focus:ring-accent-300'} bg-transparent transition-colors"
-	on:click={() => (open = true)}
->
+<Button disabled={$session.running} class="w-full overflow-hidden" on:click={() => (open = true)}>
 	<span class="truncate">
 		{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
 	</span>
 </Button>
 {#if $session.running}
-	<Popover class="max-w-md bg-primary-900">
-		<p class="text-sm font-light text-primary-50">
+	<Popover class="max-w-md bg-primary-50 dark:bg-primary-900">
+		<p class="text-sm font-light text-primary-900 dark:text-primary-50">
 			FlowClock sessions are designed to help you stay focused on one task at a time. If you finish
 			your task and want to move on to a new one, simply complete the current session, select a new
 			task, and start a new session.
 		</p>
 	</Popover>
 {/if}
-<Modal
-	size="sm"
-	class="h-96 max-h-96 bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
-	outsideclose
-	bind:open
->
-	<h2 class="text-md font-medium text-primary-50">Focus on:</h2>
-	<Tabs style="pill" class="flex-nowrap overflow-x-scroll whitespace-nowrap" contentClass="">
+<Modal size="sm" outsideclose class="h-96" bind:open>
+	<h2 class="text-md font-medium text-primary-900 dark:text-primary-50">Focus on:</h2>
+	<Tabs style="pill" class="flex-nowrap overflow-x-scroll whitespace-nowrap">
 		{#each $projects as project, i}
 			<TabItem
 				open={$sessionFocus.projectId
 					? project.id === $sessionFocus.projectId
 					: i === $sessionFocus.projectId}
 				title={project.name}
-				activeClasses="bg-primary-700 rounded-lg h-full w-full p-3 text-primary-50"
-				inactiveClasses="bg-transparent hover:bg-primary-800 transition-colors rounded-lg h-full w-full p-3 text-secondary-200"
+				activeClasses="bg-primary-200 dark:bg-primary-700 rounded-lg h-full w-full p-3 text-primary-900 dark:text-primary-50"
+				inactiveClasses="bg-transparent dark:bg-transparent hover:bg-primary-100 dark:bg-primary-800 transition-colors rounded-lg h-full w-full p-3 dark:text-secondary-200"
 			>
 				{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
 					<h3 class="text-sm font-bold">Tasks</h3>
@@ -72,7 +61,7 @@
 								name="group2"
 								value={task.id}
 								color="orange"
-								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-50 transition-colors hover:border-accent-500"
+								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:dark:border-accent-500"
 								bind:group
 								on:click={() => {
 									sessionFocus.set('task', task.id, task.project_id);
@@ -93,7 +82,7 @@
 								name="group3"
 								value={intention.id}
 								color="orange"
-								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-50 transition-colors hover:border-accent-500"
+								class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:dark:border-accent-500"
 								bind:group
 								on:click={() => {
 									sessionFocus.set('intention', intention.id, intention.project_id);

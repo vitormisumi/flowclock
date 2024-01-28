@@ -64,7 +64,11 @@
 	}
 </script>
 
-<svg height="100%" width="100%" class="aspect-square rounded-xl bg-primary-900 lg:aspect-auto">
+<svg
+	height="100%"
+	width="100%"
+	class="aspect-square rounded-xl bg-secondary-50 dark:bg-secondary-900 lg:aspect-auto"
+>
 	<svg height="80%" width="80%" x="10%" y="10%" viewBox="-1 -1 2 2">
 		<g class="-rotate-90">
 			{#each percentages as p, i}
@@ -74,7 +78,7 @@
 					   A 1 1, 0, {p > 0.5 ? 1 : 0}, 1, {startX(i)} {startY(i)}
 					   Z"
 					fill={colors[i]}
-					class="opacity-80 hover:opacity-100 focus:opacity-100 focus:outline-none transition-all"
+					class="opacity-100 transition-all hover:opacity-80 focus:opacity-80 focus:outline-none"
 					role="figure"
 					on:mouseover={() => handleTooltip(i)}
 					on:focus={() => handleTooltip(i)}
@@ -85,12 +89,12 @@
 			{/each}
 		</g>
 	</svg>
-	<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter">
+	<text x="50%" y="98%" text-anchor="middle" class="dark:fill-primary-50" font-weight="lighter">
 		{group} of sessions
 	</text>
 	{#if tooltip}
 		<text
-			class="fill-primary-50 text-sm font-extralight"
+			class="text-sm font-extralight dark:fill-primary-50"
 			role="tooltip"
 			x="3%"
 			y="3%"
@@ -98,11 +102,16 @@
 		>
 			{tooltipData.project}
 		</text>
-		<text class="fill-primary-50 text-sm" role="tooltip" x="3%" y="7%" dominant-baseline="hanging">
+		<text
+			class="text-sm dark:fill-primary-50"
+			role="tooltip"
+			x="3%"
+			y="7%"
+			dominant-baseline="hanging"
+		>
 			{group === 'frequency' ? tooltipData.total : millisecondsToClock(tooltipData.total)} ({(
 				tooltipData.percentage * 100
 			).toFixed(1)}%)
 		</text>
 	{/if}
 </svg>
-

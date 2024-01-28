@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Button, Modal, Input, Select, Textarea } from 'flowbite-svelte';
+	import { Input, Select, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
@@ -40,18 +42,14 @@
 
 <Button
 	size="xs"
-	class="bg-transparent text-secondary-400 transition-colors hover:bg-opacity-50 hover:text-secondary-200"
+	buttonStyle="add"
+	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-plus pr-2" />new project
 </Button>
-<Modal
-	bind:open
-	outsideclose
-	size="sm"
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
->
-	<h2 class="text-lg font-bold text-primary-50">New project</h2>
+<Modal bind:open outsideclose size="sm">
+	<h2 class="text-lg font-bold text-primary-900 dark:text-primary-50">New project</h2>
 	<form
 		class="flex flex-col gap-2 text-left"
 		method="POST"
@@ -61,24 +59,24 @@
 		<Input
 			name="name"
 			placeholder="Project name"
-			class="border-0 bg-transparent text-xl text-secondary-50 placeholder:text-secondary-500"
+			class="border-0 bg-transparent text-xl dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 			required
 		></Input>
 		<Input
 			name="goal"
 			placeholder="Project goal"
-			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
+			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 		></Input>
 		<Textarea
 			name="description"
 			placeholder="Description"
-			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
+			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 		></Textarea>
 		<Select
 			items={statusOptions}
 			name="status"
 			placeholder="Project status..."
-			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
+			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 			required
 		></Select>
 		<Select
@@ -86,15 +84,15 @@
 			name="group_id"
 			placeholder="Project group..."
 			value={group.id}
-			class="border-0 bg-transparent text-secondary-200 placeholder:text-secondary-500"
+			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 		/>
 		<Button
 			type="submit"
-			class="self-center bg-accent-500 transition-colors hover:bg-accent-600"
+			buttonStyle="accent"
 			disabled={loading}
 			on:click
 		>
-			<i class="fa-solid fa-plus pr-2" />New project
+			<i class="fa-solid fa-save pr-2" />Save new project
 		</Button>
 	</form>
 </Modal>

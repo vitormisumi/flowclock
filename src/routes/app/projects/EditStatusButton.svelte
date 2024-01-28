@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Button, Tooltip } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
 	import { windowWidth } from './stores';
+	import Button from '$lib/components/Button.svelte';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -51,19 +52,13 @@
 			/>
 			<div class="flex gap-1">
 				<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
-				<Button
-					type="submit"
-					size="xs"
-					class="bg-accent-500 transition-colors hover:bg-accent-600"
-					disabled={loading}
-				>
-					Save
-				</Button>
+				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Save</Button>
 			</div>
 		</form>
 	{:else}
 		<Button
-			class="cursor-text bg-transparent p-1 transition-colors hover:bg-transparent focus:ring-0"
+			buttonStyle="add"
+			class="cursor-text p-1"
 			on:click={() => {
 				edit = s.id;
 				showDelete = 0;
@@ -73,7 +68,9 @@
 				showDelete = 0;
 			}}
 		>
-			<h3 class="whitespace-nowrap border-2 border-transparent font-bold text-secondary-300">
+			<h3
+				class="whitespace-nowrap border-2 border-transparent font-bold text-primary-900 dark:text-secondary-300"
+			>
 				{s.status}
 			</h3>
 		</Button>

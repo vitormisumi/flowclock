@@ -22,7 +22,7 @@
 		class="pointer-events-none fixed left-0 top-0 z-50 flex w-full justify-center px-12 md:px-40 lg:left-12 landscape:left-8 landscape:md:left-12"
 		style:left={!$page.url.pathname.startsWith('/app') ? '0' : ''}
 	>
-		<Alert color={success ? 'green' : 'red'} class="rounded-t-none">
+		<Alert color="none" class="rounded-t-none bg-secondary-100 dark:bg-secondary-800 {success ? 'text-green-500' : 'text-red-500'}">
 			<i class={success ? 'fa-solid fa-check' : 'fa-solid fa-circle-exclamation'} slot="icon" />
 			{message}
 		</Alert>

@@ -46,14 +46,14 @@
 		<div class="flex flex-wrap gap-4">
 			<ProjectCard />
 			<TasksCard />
-			<div class="grid md:grid-cols-2 w-full gap-4">
+			<div class="grid w-full gap-4 md:grid-cols-2">
 				<ToDosCard />
 				<IntentionsCard />
 			</div>
 		</div>
 	{:else}
 		<div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-			<p class="text-center text-lg text-secondary-100">
+			<p class="text-center text-lg dark:text-secondary-100">
 				You have no projects yet. Click the button above to create one.
 			</p>
 		</div>

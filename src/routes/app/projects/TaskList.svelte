@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
+	import { priorityColor } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { drag } from './drag';
-	import { priorityColors } from '$lib/constants/constants';
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
 	import type { Writable } from 'svelte/store';
@@ -65,9 +65,10 @@
 >
 	{#each s.tasks as task (task.id)}
 		<div
-			class="flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg border-l bg-primary-800 p-2 text-primary-50 hover:cursor-grab hover:bg-primary-700 border-{priorityColors[
-				task.priority
-			]} "
+			class="flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg border-l bg-secondary-100 p-2 text-primary-900 hover:cursor-grab hover:bg-primary-200 dark:bg-secondary-800 dark:text-primary-50 hover:dark:bg-primary-800 {priorityColor(
+				task.priority,
+				'border'
+			)}"
 			animate:flip
 			use:drag
 			on:dragging={() => (dragDisabled = false)}
@@ -86,5 +87,7 @@
 			</div>
 		</div>
 	{/each}
-	<div class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-primary-900" />
+	<div
+		class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-secondary-50 dark:to-secondary-900"
+	/>
 </div>

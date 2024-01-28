@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button, Card, Dropdown, Radio, Tooltip } from 'flowbite-svelte';
+	import { Card, Dropdown, Radio, Tooltip } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { dateFromTimestamp } from '$lib/functions/functions';
 	import { filteredSessions } from './stores';
+	import { getContext } from 'svelte';
 	import TimeFramePlot from './TimeFramePlot.svelte';
 	import type { Writable } from 'svelte/store';
-	import { getContext } from 'svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -58,26 +59,28 @@
 	}
 </script>
 
-<Card class="h-[max(50vh,_400px)] min-h-full min-w-full border-0 bg-primary-800">
+<Card
+	class="h-[max(50vh,_400px)] min-h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800"
+>
 	<div class="flex flex-wrap items-center justify-around gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-sm font-semibold text-primary-50 md:text-lg">Time Frame</h2>
+			<h2 class="text-sm font-semibold text-primary-900 dark:text-primary-50 md:text-lg">
+				Time Frame
+			</h2>
 			<p class="text-center text-accent-500 md:text-xl">{dates}</p>
 		</div>
-		<Button size="xs" class="bg-primary-800 hover:bg-primary-700 transition-colors"
-			><i class="fa-solid fa-calendar" /></Button
-		>
-		<Dropdown class="grid gap-2 rounded-lg bg-primary-50 p-3" bind:open>
+		<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-calendar" /></Button>
+		<Dropdown class="grid gap-2 rounded-lg bg-secondary-200 p-3 dark:bg-secondary-700" bind:open>
 			{#each Object.keys(periods) as period}
-			<li>
-				<Radio
-				name="sort"
-				bind:group
-				value={period}
-				on:click={() => (open = false)}
-				class="text-primary-900">{period}</Radio
-				>
-			</li>
+				<li>
+					<Radio
+						name="sort"
+						bind:group
+						value={period}
+						on:click={() => (open = false)}
+						class="dark:text-secondary-50">{period}</Radio
+					>
+				</li>
 			{/each}
 		</Dropdown>
 	</div>

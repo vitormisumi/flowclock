@@ -22,12 +22,15 @@
 <svg
 	width="100%"
 	height={(Object.keys(distribution).length + 1) * 50}
-	class="rounded-xl bg-primary-900 p-2"
+	class="rounded-xl bg-secondary-50 p-2 dark:bg-secondary-900"
 >
 	{#each Object.entries(distribution) as reason, value}
 		{#if value < 10}
-			<text x="48%" y={value * 50 + 30} text-anchor="end" class="fill-primary-50 capitalize"
-				>{reason[0]}</text
+			<text
+				x="48%"
+				y={value * 50 + 30}
+				text-anchor="end"
+				class="fill-primary-900 capitalize dark:fill-primary-50">{reason[0]}</text
 			>
 			<rect
 				x="50%"
@@ -39,9 +42,12 @@
 					}, 0)) *
 					50}%"
 				rx="1%"
-				class="fill-primary-700"
+				class="fill-primary-500"
 			/>
-			<text x="52%" y={value * 50 + 30} class="fill-primary-50 text-sm capitalize"
+			<text
+				x="52%"
+				y={value * 50 + 30}
+				class="fill-primary-900 text-sm capitalize dark:fill-primary-50"
 				>{group === 'frequency' ? reason[1] : millisecondsToClock(reason[1])}</text
 			>
 		{/if}
@@ -51,9 +57,13 @@
 		y1="0"
 		x2="50%"
 		y2={Object.keys(distribution).length * 50}
-		class="stroke-primary-800"
+		class="stroke-secondary-100 dark:stroke-secondary-800"
 	/>
-	<text x="50%" y="98%" text-anchor="middle" class="fill-primary-50" font-weight="lighter"
-		>{group} of interruptions</text
+	<text
+		x="50%"
+		y="98%"
+		text-anchor="middle"
+		class="fill-primary-900 dark:fill-primary-50"
+		font-weight="lighter">{group} of interruptions</text
 	>
 </svg>

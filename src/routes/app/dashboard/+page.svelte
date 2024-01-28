@@ -22,7 +22,7 @@
 >
 	{#if $sessions.length === 0}
 		<div class="absolute inset-0 flex items-center justify-center">
-			<p class="text-center text-lg text-secondary-100">
+			<p class="text-center text-lg dark:text-secondary-100">
 				You have no sessions yet. <br />Complete your first session to start analysing your data.
 			</p>
 		</div>

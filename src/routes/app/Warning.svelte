@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Modal, Button } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import { session, sessionBreak } from './session/stores';
 	import { enhance } from '$app/forms';
-	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
@@ -34,27 +35,23 @@
 	};
 </script>
 
-<Modal
-	bind:open
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
-	size="xs"
->
-	<i class="fa-solid fa-warning text-3xl text-secondary-300" />
-	<p class="text-secondary-200">
+<Modal bind:open size="xs">
+	<i class="fa-solid fa-warning text-3xl dark:text-secondary-300" />
+	<p class="dark:text-secondary-200">
 		You have reached your session length warning.<br />How about taking a break?
 	</p>
 	<div class="flex justify-evenly">
 		<form method="POST" action="/app/session" use:enhance={handleClick}>
 			<Button
 				size="sm"
-				class="w-28 bg-secondary-50 text-secondary-900 hover:bg-secondary-300 focus:ring-secondary-200 transition-colors"
+				class="w-28 transition-colors focus:ring-secondary-200 dark:bg-secondary-50 dark:text-secondary-900 hover:dark:bg-secondary-300"
 				type="submit"
 				disabled={loading}><i class="fa-solid fa-stop pr-2" />Break</Button
 			>
 		</form>
 		<Button
 			size="sm"
-			class="w-28 border border-secondary-200 bg-transparent text-secondary-200"
+			class="w-28 border bg-transparent dark:border-secondary-200 dark:bg-transparent dark:text-secondary-200"
 			on:click={dismiss}><i class="fa-solid fa-x pr-2" />Dismiss</Button
 		>
 	</div>

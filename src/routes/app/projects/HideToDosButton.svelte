@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Button, Tooltip } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { windowWidth } from './stores';
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let hidden: boolean;
@@ -17,15 +18,12 @@
 </script>
 
 <form method="POST" action="?/hideToDosCard" use:enhance={handleClick}>
-	<Button
-		size="xs"
-		class="bg-transparent transition-colors hover:bg-primary-700"
-		type="submit"
-		on:click={() => (hidden = !hidden)}
-	>
+	<Button size="xs" buttonStyle="menu" type="submit" on:click={() => (hidden = !hidden)}>
 		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
 	</Button>
 </form>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left" trigger="hover">{hidden ? 'Show card' : 'Hide card'}</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800" trigger="hover">
+		{hidden ? 'Show card' : 'Hide card'}
+	</Tooltip>
 {/if}

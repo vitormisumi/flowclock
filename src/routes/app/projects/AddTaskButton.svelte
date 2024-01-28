@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { Button, Input, Textarea } from 'flowbite-svelte';
+	import { Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject, windowWidth } from './stores';
+	import Button from '$lib/components/Button.svelte';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
-	import AddWindowMobile from './AddWindowMobile.svelte';
-	import AddWindowDesktop from './AddWindowDesktop.svelte';
+	import AddWindowMobile from '$lib/components/AddWindowMobile.svelte';
+	import AddWindowDesktop from '$lib/components/AddWindowDesktop.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let status: number;
@@ -40,7 +41,8 @@
 {#if hidden || $windowWidth < 768}
 	<Button
 		size="xs"
-		class="w-fit self-end bg-transparent text-secondary-400 transition-colors hover:bg-transparent hover:text-secondary-200"
+		buttonStyle="add"
+		class="w-full hover:bg-secondary-100/50"
 		on:click={() => {
 			hidden = false;
 			dueDate = null;
@@ -49,7 +51,7 @@
 		<i class="fa-solid fa-plus pr-2" />add task
 	</Button>
 {/if}
-<svelte:component this={component} bgColor="bg-primary-800" bind:hidden>
+<svelte:component this={component} bgColor="bg-secondary-100 dark:bg-secondary-800" bind:hidden>
 	<form
 		class="flex w-full flex-col gap-1 text-left"
 		method="POST"
@@ -59,13 +61,13 @@
 		<Input
 			name="name"
 			placeholder="Task"
-			class="border-0 bg-transparent text-lg text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
+			class="border-0 bg-transparent text-lg focus:ring-0 dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 			required
 		></Input>
 		<Textarea
 			name="description"
 			placeholder="Description"
-			class="border-0 bg-transparent text-secondary-50 placeholder:text-secondary-500 focus:ring-0"
+			class="border-0 bg-transparent focus:ring-0 dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 		></Textarea>
 		<div class="flex justify-between gap-5">
 			<div class="flex gap-1">
@@ -74,14 +76,7 @@
 			</div>
 			<div class="flex gap-1">
 				<Button size="xs" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
-				<Button
-					size="xs"
-					type="submit"
-					class="bg-accent-500 hover:bg-accent-600"
-					disabled={loading}
-				>
-					Add Task
-				</Button>
+				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Add Task</Button>
 			</div>
 		</div>
 	</form>

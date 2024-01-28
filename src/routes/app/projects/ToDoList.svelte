@@ -40,14 +40,16 @@
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || completedHidden === false)}
 			<li
-				class="grid w-full rounded-lg border border-primary-900 bg-primary-900"
+				class="grid w-full rounded-lg border border-secondary-50 bg-secondary-50 dark:border-secondary-900 dark:bg-secondary-900 {toDo.description
+					? 'hover:border-primary-200 hover:bg-primary-200 hover:dark:border-primary-800 hover:dark:bg-primary-800'
+					: ''}"
 				on:mouseenter={() => (showMenu = toDo.id)}
 				on:mouseleave={() => (showMenu = null)}
 			>
 				<div class="flex items-center gap-2 overflow-hidden px-2">
 					<CompleteToDoButton {toDo} />
 					<button
-						class="h-10 grow overflow-hidden truncate text-left text-sm font-light text-primary-50 md:text-base {toDo.description
+						class="h-10 grow overflow-hidden truncate text-left text-sm font-light text-primary-900 dark:text-primary-50 md:text-base {toDo.description
 							? 'cursor-pointer'
 							: 'cursor-auto'} {toDo.done === true ? 'line-through' : 'no-underline'}"
 						on:click={() => (openRow = toDo.description && openRow === null ? i : null)}
@@ -65,7 +67,7 @@
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
 						{#if toDo.description}
-							<p class="whitespace-normal text-primary-100">
+							<p class="whitespace-normal text-primary-800 dark:text-primary-100">
 								{toDo.description}
 							</p>
 						{/if}
@@ -74,5 +76,7 @@
 			</li>
 		{/if}
 	{/each}
-	<div class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-primary-800" />
+	<div
+		class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-secondary-100 dark:to-secondary-800"
+	/>
 </ul>

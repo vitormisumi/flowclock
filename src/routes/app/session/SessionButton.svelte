@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { sessionInterruptions, session, sessionBreak, sessionFocus } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
@@ -46,10 +46,8 @@
 	<form method="POST" action="?/start" use:enhance={handleStart}>
 		<Button
 			size="xl"
-			class="w-full p-2 text-xl transition-colors md:p-4 md:text-2xl {$sessionBreak.running &&
-			!$sessionBreak.alarmPlayed
-				? 'bg-primary-900 text-primary-600 hover:bg-primary-800 hover:ring hover:ring-primary-700 focus:ring-primary-700'
-				: 'bg-accent-500 duration-1000 hover:bg-accent-600 focus:ring-accent-300'}"
+			buttonStyle={$sessionBreak.running && !$sessionBreak.alarmPlayed ? 'regular' : 'accent'}
+			class="text-3xl w-full duration-1000"
 			type="submit"
 			disabled={loading}
 		>
@@ -60,8 +58,8 @@
 	<form method="POST" action="?/break" use:enhance={handleBreak}>
 		<Button
 			size="xl"
-			class="w-full bg-secondary-50 text-xl text-secondary-900 transition-colors hover:bg-secondary-300 focus:ring-secondary-200 md:text-2xl"
 			type="submit"
+			class="text-3xl w-full duration-1000"
 			disabled={loading}
 		>
 			<i class="fa-solid fa-stop pr-4" />Break

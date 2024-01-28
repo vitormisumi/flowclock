@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 	import { selectedProject } from './projects/stores';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
@@ -50,6 +51,12 @@
 	setContext('toDos', toDos);
 	setContext('intentions', intentions);
 	setContext('status', status);
+
+	onMount(() => {
+		data.settings?.dark_mode
+			? document.documentElement.classList.add('dark')
+			: document.documentElement.classList.remove('dark');
+	});
 </script>
 
 <Screen>

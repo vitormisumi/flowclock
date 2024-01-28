@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Button, Modal, Tooltip } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { windowWidth } from './stores';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let s: TaskStatuses;
 
@@ -19,25 +21,15 @@
 	};
 </script>
 
-<Button
-	size="xs"
-	class="z-10 bg-transparent text-red-700 transition-colors hover:bg-primary-700"
-	disabled={loading}
-	on:click={() => (open = true)}
->
-	<i class="fa-solid fa-trash" />
+<Button size="xs" buttonStyle="menu" class="z-10" disabled={loading} on:click={() => (open = true)}>
+	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </Button>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left">Delete status</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete status</Tooltip>
 {/if}
-<Modal
-	bind:open
-	outsideclose
-	size="xs"
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
->
-	<i class="fa-solid fa-warning text-xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">
+<Modal bind:open outsideclose size="xs">
+	<i class="fa-solid fa-warning text-xl dark:text-red-700" />
+	<p class="whitespace-normal dark:text-secondary-200">
 		Delete status {s.status}? <br /><span class="font-bold"
 			>This will delete all tasks inside this status!</span
 		>
@@ -50,7 +42,7 @@
 	>
 		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
+			class="border-2 border-red-900 bg-transparent transition-colors hover:bg-red-950 dark:bg-transparent dark:text-red-700"
 			type="submit"
 			disabled={loading}
 		>

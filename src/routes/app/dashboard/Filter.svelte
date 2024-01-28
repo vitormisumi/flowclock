@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Drawer, Tooltip } from 'flowbite-svelte';
+	import { Drawer, Tooltip } from 'flowbite-svelte';
 	import {
 		filter,
 		startRow,
@@ -11,6 +11,7 @@
 	import { windowWidth } from '../projects/stores';
 	import { periods } from '$lib/constants/constants';
 	import { getContext } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const sessions: Writable<UserSession[]> = getContext('sessions');
@@ -198,11 +199,13 @@
 </script>
 
 <div>
-	<Button size="sm" class="w-36" on:click={openPeriodDrawer}>
-		{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2"></i>
+	<Button size="sm" on:click={openPeriodDrawer}>
+		{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2" />
 	</Button>
 	{#if $windowWidth >= 768}
-		<Tooltip placement="left">Select time period</Tooltip>
+		<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
+			Select time period
+		</Tooltip>
 	{/if}
 </div>
 <Drawer
@@ -210,16 +213,18 @@
 	transitionParams={{ x: 100 }}
 	placement="right"
 	width="w-full md:w-80 lg:w-96"
-	class="z-50 bg-primary-900"
+	class="z-50 bg-secondary-50 dark:bg-secondary-900"
 	bind:hidden
 >
-	<div class="grid justify-center gap-4 w-full">
+	<div class="grid w-full justify-center gap-4">
 		<div class="grid grid-cols-3 place-items-center">
-			<h2 class="col-start-2 text-center font-bold text-primary-50">Filter period</h2>
+			<h2 class="col-start-2 text-center font-bold text-primary-900 dark:text-primary-50">
+				Filter period
+			</h2>
 			<Button
 				size="xs"
 				on:click={() => (hidden = true)}
-				class="place-self-end bg-transparent md:invisible"
+				class="place-self-end bg-transparent dark:bg-transparent md:invisible"
 			>
 				<i class="fa-solid fa-x" />
 			</Button>
@@ -227,11 +232,11 @@
 		{#each periods as period}
 			<Button
 				size="sm"
-				class="w-full {$filter.timeframe === period.timeframe && $filter.current === period.current
-					? 'border border-primary-700 bg-transparent'
-					: ''}"
-				on:click={() => applyFilter(period)}>{period.name}</Button
+				disabled={$filter.timeframe === period.timeframe && $filter.current === period.current}
+				on:click={() => applyFilter(period)}
 			>
+				{period.name}
+			</Button>
 		{/each}
 	</div>
 </Drawer>

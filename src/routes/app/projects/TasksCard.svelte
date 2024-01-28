@@ -13,14 +13,14 @@
 	let hidden = $settings.tasks_card_hidden;
 </script>
 
-<Card class="grid h-full min-h-full min-w-full gap-1 border-0 bg-primary-800">
+<Card class="grid h-full min-h-full min-w-full gap-1 border-0 bg-secondary-100 dark:bg-secondary-800">
 	<div class="flex items-center justify-between">
 		<div class="flex items-center">
-			<h2 class="pr-1 font-bold text-primary-50">Tasks</h2>
-			<i class="fa-regular fa-circle-question right-0 top-0 text-secondary-500" id="hover-2" />
+			<h2 class="pr-1 font-bold text-primary-900 dark:text-primary-50">Tasks</h2>
+			<i class="fa-regular fa-circle-question right-0 top-0 dark:text-secondary-500" id="hover-2" />
 			<Popover triggeredBy="#hover-2" class="z-10 w-60 md:w-80" placement="bottom-start">
 				<div class="p-2 text-sm">
-					<h3 class="font-semibold text-secondary-900">Extended Assignments</h3>
+					<h3 class="font-semibold dark:text-secondary-900">Extended Assignments</h3>
 					Tasks are the ideal choice for assignments that require a substantial time commitment and might
 					involve multiple stages of completion. You can think of tasks as your go-to for managing projects
 					that span an extended period, like preparing a comprehensive research report or organizing

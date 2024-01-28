@@ -84,18 +84,18 @@
 	}
 </script>
 
-<svg width="100%" height="100%" class="rounded-xl bg-primary-900 p-2">
+<svg width="100%" height="100%" class="rounded-xl bg-secondary-50 p-2 dark:bg-secondary-900">
 	{#each periods[group] as period, index}
 		{#if group === 'hour' && index % 6 === 3}
 			<text
-				class="fill-primary-50"
+				class="dark:fill-primary-50"
 				y="85%"
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="middle"
 				dominant-baseline="hanging">{hourFormat(period).split(' ')[0]}</text
 			>
 			<text
-				class="fill-primary-50"
+				class="dark:fill-primary-50"
 				y="90%"
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="middle"
@@ -104,7 +104,7 @@
 			>
 		{:else if group === 'day' && index % 5 === 0}
 			<text
-				class="fill-primary-50"
+				class="dark:fill-primary-50"
 				y="85%"
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="middle"
@@ -116,7 +116,7 @@
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="start"
 				writing-mode="tb"
-				class="fill-primary-50 capitalize">{weekdayMap[period].slice(0, 3)}</text
+				class="capitalize dark:fill-primary-50">{weekdayMap[period].slice(0, 3)}</text
 			>
 		{:else if group === 'month'}
 			<text
@@ -124,11 +124,11 @@
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="start"
 				writing-mode="tb"
-				class="fill-primary-50 capitalize">{monthMap[period].slice(0, 3)}</text
+				class="capitalize dark:fill-primary-50">{monthMap[period].slice(0, 3)}</text
 			>
 		{:else if group === 'year'}
 			<text
-				class="fill-primary-50"
+				class="dark:fill-primary-50"
 				y="85%"
 				x="{(100 / (periods[group].length + 1)) * (index + 1)}%"
 				text-anchor="middle"
@@ -143,7 +143,7 @@
 					width="{100 / (periods[group].length + 1)}%"
 					height="{barHeight(period)}%"
 					rx="1%"
-					class="fill-primary-700 transition-colors hover:fill-primary-600 focus:fill-primary-600 focus:outline-none"
+					class="fill-primary-500 transition-colors hover:fill-primary-600 focus:fill-primary-600 focus:outline-none"
 					role="figure"
 					on:mouseover={() => handleTooltip(period, index)}
 					on:focus={() => handleTooltip(period, index)}
@@ -158,7 +158,7 @@
 			x="{x}%"
 			y="{y - 4}%"
 			text-anchor="middle"
-			class="fill-primary-50 text-sm font-extralight capitalize"
+			class="text-sm font-extralight capitalize dark:fill-primary-50"
 			role="tooltip"
 		>
 			{group === 'hour'
@@ -173,9 +173,15 @@
 				? monthMap[tooltipData.period]
 				: tooltipData.period}
 		</text>
-		<text x="{x}%" y="{y}%" text-anchor="middle" class="fill-primary-50 text-sm" role="tooltip">
+		<text
+			x="{x}%"
+			y="{y}%"
+			text-anchor="middle"
+			class="text-sm dark:fill-primary-50"
+			role="tooltip"
+		>
 			{millisecondsToClock(tooltipData.value)}
 		</text>
 	{/if}
-	<line x1="0%" x2="100%" y1="83%" y2="83%" class="stroke-primary-800"></line>
+	<line x1="0%" x2="100%" y1="83%" y2="83%" class="dark:stroke-secondary-800"></line>
 </svg>

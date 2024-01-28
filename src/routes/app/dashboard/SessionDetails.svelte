@@ -13,10 +13,10 @@
 	export let session: FilteredSession;
 </script>
 
-<tr class="border-b border-primary-800">
-	<td colspan="2" class="bg-primary-900 p-0">
+<tr class="border-b dark:border-secondary-800">
+	<td colspan="2" class="bg-secondary-50 p-0 dark:bg-secondary-900">
 		<div
-			class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light text-primary-200"
+			class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light text-secondary-700 dark:text-secondary-200"
 			transition:slide
 		>
 			<p class="col-span-2">
@@ -42,7 +42,7 @@
 			{/if}
 			<div class="col-span-2 col-start-1 row-start-3 grid justify-items-start">
 				{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
-					<div class="flex items-center justify-center font-extralight text-secondary-100">
+					<div class="flex items-center justify-center font-extralight dark:text-secondary-100">
 						<i class="fa-solid fa-pause pr-1" />
 						<p>
 							{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp

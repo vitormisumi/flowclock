@@ -5,12 +5,12 @@ export const separatorOptions: {[key: number]: string} = {
 }
 
 export const dateFormat: { [key: string]: string } = {
-ddmmyyyy: 'dd-MM-yyyy',
-mmddyyyy: 'MM-dd-yyyy',
-yyyymmdd: 'yyyy-MM-dd',
-ddmmyy: 'dd-MM-yy',
-mmddyy: 'MM-dd-yy',
-yymmdd: 'yy-MM-dd'
+    ddmmyyyy: 'dd-MM-yyyy',
+    mmddyyyy: 'MM-dd-yyyy',
+    yyyymmdd: 'yyyy-MM-dd',
+    ddmmyy: 'dd-MM-yy',
+    mmddyy: 'MM-dd-yy',
+    yymmdd: 'yy-MM-dd'
 };
 
 export const priorityOptions = [
@@ -32,13 +32,19 @@ export const priorityOptions = [
     }
 ];
 
-export const priorityColors: { [key: number]: string } = {
+export const lightPriorityColors: { [key: number]: string } = {
     3: 'red-500',
-    2: 'yellow-500',
+    2: 'yellow-400',
     1: 'green-500',
-    0: 'white',
+    0: 'secondary-900',
 };
 
+export const darkPriorityColors: { [key: number]: string } = {
+    3: 'red-500',
+    2: 'yellow-400',
+    1: 'green-500',
+    0: 'secondary-50',
+};
 
 export const weekdayMap: { [key: number]: string } = {
     0: 'sunday',

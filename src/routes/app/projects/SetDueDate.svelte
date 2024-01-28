@@ -16,7 +16,7 @@
 		: null;
 </script>
 
-<Button {size} class="border bg-transparent focus:ring-0">
+<Button {size} class="border bg-transparent focus:ring-0 dark:bg-transparent">
 	<div class="flex h-3 place-items-center gap-2">
 		<i class="fa-solid fa-calendar" />
 		{#if dueDate}
@@ -28,7 +28,7 @@
 		{/if}
 	</div>
 </Button>
-<Dropdown class="bg-primary-900" placement="top">
+<Dropdown class="bg-primary-50 dark:bg-primary-900" placement="top">
 	<div class="grid">
 		<DatePicker
 			bind:value={dueDate}
@@ -37,7 +37,7 @@
 		/>
 		<Button
 			size="xs"
-			class="rounded-sm border border-secondary-800 bg-secondary-900 hover:bg-[#141717] focus:ring-0"
+			class="rounded-sm border hover:bg-[#141717] focus:ring-0 dark:border-secondary-800 dark:bg-secondary-900"
 			on:click={() => {
 				dueDate = null;
 			}}

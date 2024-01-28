@@ -16,12 +16,12 @@
 			? { duration: 500, delay: 500 }
 			: { duration: 0 }}
 	>
-		<h1 class="text-center text-xl font-bold text-primary-600">Account</h1>
+		<h1 class="text-center text-xl font-bold text-secondary-900 dark:text-secondary-50">Account</h1>
 		<div class="grid gap-4 md:gap-8">
 			<UpdateEmail />
 			<ResetPassword />
 		</div>
-		<!-- <hr class="my-4 border-secondary-800" />
+		<!-- <hr class="my-4 dark:border-secondary-800" />
 		<DeleteAccount /> -->
 	</div>
 </div>

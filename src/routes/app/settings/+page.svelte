@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
 	import { navigating } from '$app/stores';
-	import Form from './Form.svelte';
+	import Settings from './Settings.svelte';
 
 	export let form;
 </script>
@@ -14,8 +14,8 @@
 			? { duration: 500, delay: 500 }
 			: { duration: 0 }}
 	>
-		<h1 class="text-center text-xl font-bold text-primary-600">Settings</h1>
-		<Form />
+		<h1 class="text-center text-xl font-bold text-secondary-900 dark:text-secondary-50">Settings</h1>
+		<Settings />
 	</div>
 </div>
 {#if form}

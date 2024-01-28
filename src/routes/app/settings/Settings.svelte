@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { Button, Label, Select, Popover, Toggle } from 'flowbite-svelte';
+	import { Label, Select, Popover, Toggle } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
+	import DarkMode from './DarkMode.svelte';
 	import type { Writable } from 'svelte/store';
 
 	let ratios = [
@@ -35,6 +37,8 @@
 
 	let warning: boolean = $settings.warning != 0 ? true : false;
 
+	let darkMode: boolean = $settings.dark_mode;
+
 	let clockFormat: boolean = $settings.clock_format;
 
 	let loading = false;
@@ -42,42 +46,52 @@
 
 <form class="grid gap-8 md:gap-12" method="POST">
 	<div class="relative">
-		<Label class="text-md w-full text-primary-50"
+		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
 			>Session duration : break duration
 			<Select
 				name="ratio"
-				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="text-base font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
 				underline
 				items={ratios}
 				value={$settings.ratio}
 			/>
 		</Label>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-1" />
+		<i
+			class="fa-regular fa-circle-question absolute right-0 top-0 dark:text-secondary-500"
+			id="hover-1"
+		/>
 	</div>
 	<Popover triggeredBy="#hover-1" class="z-10 w-60 md:w-80" placement="bottom-start">
 		<div class="p-2 text-sm">
-			<h3 class="font-semibold text-secondary-900">Ratio used to calculate break duration</h3>
+			<h3 class="font-semibold dark:text-secondary-900">Ratio used to calculate break duration</h3>
 			E.g. Your focused session lasts 60 minutes. If you choose a ratio of 2:1, your break duration will
 			be 30 minutes, if you choose 3:1, it'll be 20 minutes. We recommend a value between 2:1 and 5:1.
 		</div>
 	</Popover>
 	<div class="relative">
-		<Toggle size="small" bind:checked={warning} class="text-md text-primary-50"
-			>Session length warning (min)</Toggle
+		<Toggle
+			size="small"
+			bind:checked={warning}
+			class="text-md text-secondary-900 dark:text-secondary-50"
 		>
+			Session length warning (min)
+		</Toggle>
 		<input
 			type="number"
 			name="warning"
 			min="1"
 			max="720"
 			value={$settings.warning}
-			class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
+			class="peer w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent pl-0 font-thin focus:outline-none focus:ring-0 dark:border-gray-700 dark:bg-transparent dark:dark:text-secondary-50 dark:text-secondary-900 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
 			disabled={!warning}
 		/>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-2" />
+		<i
+			class="fa-regular fa-circle-question absolute right-0 top-0 dark:text-secondary-500"
+			id="hover-2"
+		/>
 		<Popover triggeredBy="#hover-2" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
-				<h3 class="font-semibold text-secondary-900">
+				<h3 class="font-semibold dark:text-secondary-900">
 					Sound warning after a specific session length
 				</h3>
 				Sitting down for long periods of time is not good for your body, so it is a good idea to set
@@ -88,51 +102,59 @@
 		</Popover>
 	</div>
 	<div class="relative">
-		<Label class="text-md w-full text-primary-50"
+		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
 			>Break message
 			<input
 				type="text"
 				name="break_message"
 				value={$settings.break_message}
-				class="w-full border-0 border-b-2 border-gray-300 bg-transparent pl-0 font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500 focus:ring-0 disabled:border-secondary-600 disabled:text-secondary-600"
+				class="peer w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent pl-0 font-thin focus:outline-none focus:ring-0 dark:border-gray-700 dark:bg-transparent dark:dark:text-secondary-50 dark:text-secondary-900 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
 			/>
 		</Label>
-		<i class="fa-regular fa-circle-question absolute right-0 top-0 text-secondary-500" id="hover-3" />
+		<i
+			class="fa-regular fa-circle-question absolute right-0 top-0 dark:text-secondary-500"
+			id="hover-3"
+		/>
 		<Popover triggeredBy="#hover-3" class="z-10 w-60 md:w-80" placement="bottom-start">
 			<div class="p-2 text-sm">
-				The message that appears while you are on a break. You can use this to remind yourself of how you
-				want to spend your break time.
+				The message that appears while you are on a break. You can use this to remind yourself of
+				how you want to spend your break time.
 			</div>
 		</Popover>
 	</div>
-	<hr class="my-4 border-secondary-800" />
+	<hr class="my-4 dark:border-secondary-100 dark:dark:border-secondary-800" />
+	<DarkMode bind:darkMode />
 	<div class="flex gap-4">
-		<Label class="text-md w-full text-primary-50"
+		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
 			>Date format
 			<Select
 				name="date_format"
-				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
 				underline
 				items={formats}
 				value={$settings.date_format}
 			/>
 		</Label>
-		<Label class="text-md text-primary-50"
+		<Label class="text-md text-secondary-900 dark:text-secondary-50"
 			>Separator
 			<Select
 				name="separator"
-				class="font-thin text-secondary-50 placeholder:text-secondary-500 focus:border-primary-500"
+				class="font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
 				underline
 				items={separators}
 				value={$settings.separator}
 			/>
 		</Label>
 	</div>
-	<Toggle size="small" bind:checked={clockFormat} class="text-md text-primary-50"
-		>24-hour clock</Toggle
+	<Toggle
+		size="small"
+		bind:checked={clockFormat}
+		class="text-md text-secondary-900 dark:text-secondary-50"
 	>
+		24-hour clock
+	</Toggle>
 	<input type="number" name="clock_format" value={clockFormat ? 1 : 0} hidden />
-	<Button type="submit" disabled={loading}
-		><i class="fa-solid fa-floppy-disk pr-2" />Save changes</Button
-	>
+	<Button buttonStyle="accent" type="submit" disabled={loading}>
+		<i class="fa-solid fa-floppy-disk pr-2" />Save changes
+	</Button>
 </form>

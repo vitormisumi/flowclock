@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, Dropdown } from 'flowbite-svelte';
+	import { Dropdown } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import StartTaskButton from './StartTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
@@ -10,10 +11,11 @@
 </script>
 
 <div transition:slide={{ axis: 'x' }}>
-	<Button size="xs" class="bg-transparent transition-colors">
-		<i class="fa-solid fa-ellipsis-vertical"></i>
-	</Button>
-	<Dropdown placement="left" class="flex justify-items-center rounded-lg bg-primary-800 p-1">
+	<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+	<Dropdown
+		placement="left"
+		class="flex justify-items-center rounded-lg bg-secondary-100 p-1 dark:bg-secondary-800"
+	>
 		<StartTaskButton {task} />
 		<EditTaskButton {task} bind:showMenu />
 		<DeleteTaskButton {task} />

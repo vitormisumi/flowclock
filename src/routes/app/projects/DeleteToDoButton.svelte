@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { Button, Tooltip, Modal } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import { windowWidth } from './stores';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;
@@ -19,24 +21,15 @@
 	};
 </script>
 
-<Button
-	size="xs"
-	class="rounded-lg bg-transparent transition-colors hover:bg-primary-700"
-	on:click={() => (open = true)}
->
-	<i class="fa-solid fa-trash text-red-700" />
+<Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
+	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </Button>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left">Delete to-do</Tooltip>
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete to-do</Tooltip>
 {/if}
-<Modal
-	bind:open
-	outsideclose
-	size="xs"
-	class="bg-secondary-900 text-center landscape:left-8 landscape:md:left-12"
->
-	<i class="fa-solid fa-warning text-xl text-red-700" />
-	<p class="whitespace-normal text-secondary-200">Delete to-do {toDo.name}?</p>
+<Modal bind:open outsideclose size="xs">
+	<i class="fa-solid fa-warning text-xl dark:text-red-700" />
+	<p class="whitespace-normal dark:text-secondary-200">Delete to-do {toDo.name}?</p>
 	<form
 		class="flex w-full justify-center gap-4"
 		method="POST"
@@ -47,13 +40,10 @@
 			on:click={() => {
 				open = false;
 				showMenu = null;
-			}}>Cancel</Button
+			}}
 		>
-		<Button
-			class="border-2 border-red-900 bg-transparent text-red-700 transition-colors hover:bg-red-950"
-			type="submit"
-		>
-			Delete
+			Cancel
 		</Button>
+		<Button buttonStyle="red" type="submit">Delete</Button>
 	</form>
 </Modal>

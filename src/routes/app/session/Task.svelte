@@ -3,10 +3,10 @@
 </script>
 
 <div class="grid justify-items-center gap-4">
-	<p class="text-secondary-100">Focusing on:</p>
-	<Badge class="bg-accent-400 text-accent-100">Project X</Badge>
+	<p class="dark:text-secondary-100">Focusing on:</p>
+	<Badge class="dark:bg-accent-400 dark:text-accent-100">Project X</Badge>
 	<Button
-		class="h-10 w-48 bg-secondary-50 text-secondary-900 transition-colors hover:bg-secondary-100 focus:bg-secondary-200 focus:ring-secondary-500"
+		class="h-10 w-48 transition-colors focus:ring-secondary-500 dark:bg-secondary-50 dark:text-secondary-900 hover:dark:bg-secondary-100 focus:dark:bg-secondary-200"
 	></Button>
 	<Dropdown>
 		<DropdownItem>Task 1</DropdownItem>

@@ -10,6 +10,7 @@ export const actions = {
 		const formData = await request.formData();
 		const ratio = formData.get('ratio') as string;
 		const warning = formData.get('warning') as string;
+		const darkMode = formData.get('dark_mode') as string;
 		const dateFormat = formData.get('date_format') as string;
 		const separator = formData.get('separator') as string;
 		const clockFormat = formData.get('clock_format') as string;
@@ -17,7 +18,7 @@ export const actions = {
 
 		const { error } = await supabase
 			.from('settings')
-			.update({ ratio: Number(ratio), warning: warning ? Number(warning) : 0, date_format: dateFormat, separator: Number(separator), clock_format: clockFormat === '1' ? true : false, break_message: breakMessage})
+			.update({ ratio: Number(ratio), warning: warning ? Number(warning) : 0, dark_mode: darkMode === '1' ? true : false, date_format: dateFormat, separator: Number(separator), clock_format: clockFormat === '1' ? true : false, break_message: breakMessage})
 			.eq('user_id', session.user.id);
 
 		if (error) {

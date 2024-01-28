@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Button, Tooltip } from 'flowbite-svelte';
+	import { Tooltip } from 'flowbite-svelte';
 	import { windowWidth } from './stores';
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let completedHidden: boolean;
@@ -19,7 +20,7 @@
 <form method="POST" action="?/hideCompletedToDos" use:enhance={handleClick}>
 	<Button
 		size="xs"
-		class="bg-transparent transition-colors hover:bg-primary-700"
+		buttonStyle="menu"
 		type="submit"
 		on:click={() => (completedHidden = !completedHidden)}
 	>
@@ -27,7 +28,7 @@
 	</Button>
 </form>
 {#if $windowWidth >= 768}
-	<Tooltip placement="left" trigger="hover"
+	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800" trigger="hover"
 		>{completedHidden ? 'Show completed' : 'Hide completed'}</Tooltip
 	>
 {/if}

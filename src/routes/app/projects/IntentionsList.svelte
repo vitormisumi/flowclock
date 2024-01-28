@@ -16,13 +16,13 @@
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
 			<li
-				class="grid w-full rounded-lg border border-primary-900 bg-gradient-to-r from-primary-800 to-primary-900"
+				class="grid w-full rounded-lg border border-primary-50 bg-gradient-to-r from-secondary-50 to-secondary-100 dark:border-secondary-900 dark:from-secondary-800 dark:to-secondary-900"
 				on:mouseenter={() => (showMenu = intention.id)}
 				on:mouseleave={() => (showMenu = null)}
 			>
 				<div class="flex items-center gap-1 overflow-hidden px-2">
 					<button
-						class="h-10 grow overflow-hidden text-left text-sm font-light text-primary-50 md:text-base {intention.description
+						class="h-10 grow overflow-hidden text-left text-sm font-light text-primary-900 dark:text-primary-50 md:text-base {intention.description
 							? 'cursor-pointer'
 							: 'cursor-auto'}"
 						on:click={() => (openRow = intention.description && openRow === null ? i : null)}
@@ -36,7 +36,7 @@
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
 						{#if intention.description}
-							<p class="whitespace-normal text-primary-100">
+							<p class="whitespace-normal text-primary-800 dark:text-primary-100">
 								{intention.description}
 							</p>
 						{/if}
@@ -45,5 +45,7 @@
 			</li>
 		{/if}
 	{/each}
-	<div class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-primary-800" />
+	<div
+		class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-secondary-100 dark:to-secondary-800"
+	/>
 </ul>

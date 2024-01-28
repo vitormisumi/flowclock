@@ -20,26 +20,32 @@
 	});
 </script>
 
-<Card class="grid min-w-full gap-4 border-0 bg-primary-800 text-primary-50">
-	<div class="flex justify-between md:h-7 place-items-center">
+<Card
+	class="grid min-w-full gap-4 border-0 bg-secondary-100 text-primary-900 dark:bg-secondary-800 dark:text-primary-50"
+>
+	<div class="flex place-items-center justify-between md:h-7">
 		<div class="flex flex-wrap place-items-center justify-items-start gap-2">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
-			<Badge class="bg-accent-500 text-accent-50">{$selectedProject.status}</Badge>
-			<Badge class="bg-primary-50">
+			<Badge class="bg-accent-500 text-accent-50 dark:bg-accent-500 dark:text-accent-50"
+				>{$selectedProject.status}</Badge
+			>
+			<Badge
+				class="bg-secondary-900 text-secondary-50 dark:bg-secondary-50 dark:text-secondary-900"
+			>
 				#{groupOptions.find((x) => x.value === $selectedProject.group_id)?.name}
 			</Badge>
 		</div>
 		<ProjectMenu bind:hidden bind:open />
 	</div>
 	{#if !hidden}
-		<div class="grid gap-4 text-secondary-50" transition:slide>
+		<div class="grid gap-4 dark:text-secondary-50" transition:slide>
 			<div>
 				<h3 class="font-medium">Goal</h3>
-				<p class="text-secondary-200">{$selectedProject.goal}</p>
+				<p class="dark:text-secondary-200">{$selectedProject.goal}</p>
 			</div>
 			<div>
 				<h3 class="font-medium">Description</h3>
-				<p class="text-secondary-200">{$selectedProject.description}</p>
+				<p class="dark:text-secondary-200">{$selectedProject.description}</p>
 			</div>
 		</div>
 	{/if}

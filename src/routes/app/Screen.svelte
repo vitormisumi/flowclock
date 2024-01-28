@@ -9,7 +9,7 @@
 	</div>
 </div>
 <div
-	class="fixed bottom-0 z-50 h-16 w-screen justify-center bg-gradient-to-b from-primary-700 to-secondary-900 md:h-24 landscape:h-screen landscape:w-16 landscape:pt-4 landscape:md:w-24"
+	class="fixed bottom-0 z-50 h-16 w-screen justify-center bg-gradient-to-b from-secondary-200 to-secondary-50 dark:from-secondary-700 dark:to-secondary-900 md:h-24 landscape:h-screen landscape:w-16 landscape:pt-4 landscape:md:w-24"
 >
 	<slot name="menu" />
 </div>
