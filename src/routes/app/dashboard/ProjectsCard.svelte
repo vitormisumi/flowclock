@@ -43,11 +43,12 @@
 				<li>
 					<Radio
 						name="sort"
-						bind:group
 						value={option}
-						on:click={() => (open = false)}
 						class="dark:text-secondary-50"
-						>{option}
+						on:change={() => (open = false)}
+						bind:group
+					>
+						{option}
 					</Radio>
 				</li>
 			{/each}

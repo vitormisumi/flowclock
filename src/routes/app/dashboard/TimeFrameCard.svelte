@@ -75,11 +75,13 @@
 				<li>
 					<Radio
 						name="sort"
-						bind:group
 						value={period}
-						on:click={() => (open = false)}
-						class="dark:text-secondary-50">{period}</Radio
+						class="dark:text-secondary-50"
+						on:change={() => (open = false)}
+						bind:group
 					>
+						{period}
+					</Radio>
 				</li>
 			{/each}
 		</Dropdown>
