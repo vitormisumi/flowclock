@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import { session, sessionBreak } from './session/stores';
+	import { session, sessionBreak, sessionInterruptions } from './session/stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
-	const sessions: Writable<UserSession[]> = getContext('sessions');
 
 	let open = false;
 	$: if ($session.warning && !$session.dismiss) {
@@ -24,11 +23,15 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
-		session.end();
-		sessionBreak.start((Date.now() - Date.parse($sessions[0].start)) / $settings.ratio);
-		formData.append('id', String($sessions[0].id));
-		formData.append('session_end', new Date().toISOString());
-		open = false;
+		const end = Date.now();
+		session.end(end);
+		sessionBreak.start(
+			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+		);
+		sessionInterruptions.reset();
+		formData.append('id', String($session.id));
+		formData.append('end', new Date(end).toISOString());
+		open = false
 		return async ({ update }) => {
 			loading = false;
 			update();

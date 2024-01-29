@@ -344,7 +344,7 @@ export const actions = {
     }
 
     const formData = await request.formData();
-    const sort = formData.get('sort') as string;
+    const sort = formData.get('sort') as 'name' | 'due_date' | 'priority';
         
     const { error } = await supabase
       .from('settings')
