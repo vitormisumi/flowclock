@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import { session, sessionBreak } from './session/stores';
 	import { enhance } from '$app/forms';
@@ -28,6 +28,7 @@
 		sessionBreak.start((Date.now() - Date.parse($sessions[0].start)) / $settings.ratio);
 		formData.append('id', String($sessions[0].id));
 		formData.append('session_end', new Date().toISOString());
+		open = false;
 		return async ({ update }) => {
 			loading = false;
 			update();
@@ -41,18 +42,11 @@
 		You have reached your session length warning.<br />How about taking a break?
 	</p>
 	<div class="flex justify-evenly">
-		<form method="POST" action="/app/session" use:enhance={handleClick}>
-			<Button
-				size="sm"
-				class="w-28 transition-colors focus:ring-secondary-200 dark:bg-secondary-50 dark:text-secondary-900 hover:dark:bg-secondary-300"
-				type="submit"
-				disabled={loading}><i class="fa-solid fa-stop pr-2" />Break</Button
-			>
+		<form method="POST" action="/app/session?/break" use:enhance={handleClick}>
+			<Button size="sm" buttonStyle="accent" type="submit" disabled={loading}>
+				<i class="fa-solid fa-stop pr-2" />Break
+			</Button>
 		</form>
-		<Button
-			size="sm"
-			class="w-28 border bg-transparent dark:border-secondary-200 dark:bg-transparent dark:text-secondary-200"
-			on:click={dismiss}><i class="fa-solid fa-x pr-2" />Dismiss</Button
-		>
+		<Button size="sm" on:click={dismiss}><i class="fa-solid fa-x pr-2" />Dismiss</Button>
 	</div>
 </Modal>

@@ -6,7 +6,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			throw redirect(303, '/');
 		}
 	
-	const { tasks } = await request.json();
+    const { tasks } = await request.json();
 
     for (let i = 0; i < tasks.length; i++) {
         const order = tasks[i].tasks.map((x: any, index: number) => {

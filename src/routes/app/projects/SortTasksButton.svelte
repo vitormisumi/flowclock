@@ -11,6 +11,7 @@
 	export let open: boolean;
 
 	async function sort(sortBy: string) {
+		console.log(sortBy)
 		open = false;
 		sorting.sortTasks(sortBy);
 		let tasks: TaskStatuses[] = $status;
@@ -59,8 +60,10 @@
 			type="submit"
 			name="sort"
 			value="name"
-			on:click={() => sort('name')}>Name</Button
+			on:click={() => sort('name')}
 		>
+			Name
+		</Button>
 		<Button
 			size="xs"
 			buttonStyle="menu"
