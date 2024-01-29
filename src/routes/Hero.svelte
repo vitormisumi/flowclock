@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import hero from '$lib/assets/hero.jpeg';
 	import { Image } from '@unpic/svelte';
 </script>
@@ -17,15 +17,13 @@
 	>
 		The best dedicated app for the flowtime technique, the evolution of the pomodoro.
 	</p>
-	<Button size="xl" href="/signup" class="z-10 bg-accent-500 transition-colors hover:bg-accent-600">
-		Sign Up For FREE
-	</Button>
+	<Button size="xl" href="/signup" buttonStyle="accent" class="z-10">Sign Up For FREE</Button>
 	<i class="fa-solid fa-chevron-down absolute bottom-1 z-10 animate-bounce text-xl text-white" />
 	<Image
 		src={hero}
 		layout="fullWidth"
 		breakpoints={[300, 600, 900, 1200, 1500, 1800]}
 		alt="Student in flow state"
-		class="absolute h-full object-cover object-top mix-blend-multiply w-full"
+		class="absolute h-full w-full object-cover object-top mix-blend-multiply"
 	/>
 </section>

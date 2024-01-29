@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Navbar, NavBrand, NavLi, NavUl, Button } from 'flowbite-svelte';
+	import { Navbar, NavBrand, NavLi, NavUl } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import logo from '$lib/assets/logo.png';
 
 	let menuOpen = false;
@@ -15,7 +16,8 @@
 	</NavBrand>
 	<Button
 		size="sm"
-		class="w-8 bg-transparent focus:bg-transparent focus:ring-0 md:hidden"
+		buttonStyle="transparent"
+		class="w-8 md:hidden"
 		on:click={() => {
 			toggle();
 			menuOpen = !menuOpen;
@@ -31,7 +33,7 @@
 			<Button
 				href="/"
 				size="sm"
-				class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
+				buttonStyle="transparent"
 				on:click={() => {
 					if (innerWidth < 768) {
 						toggle();
@@ -47,21 +49,10 @@
 			class="fixed bottom-0 left-0 flex w-full justify-between gap-4 bg-primary-900 md:static md:bg-transparent"
 		>
 			<NavLi>
-				<Button
-					href="/signin"
-					class="bg-transparent text-primary-50 transition-colors hover:bg-transparent"
-				>
-					Sign In
-				</Button>
+				<Button href="/signin" buttonStyle="transparent">Sign In</Button>
 			</NavLi>
 			<NavLi>
-				<Button
-					href="/signup"
-					outline
-					class="border-accent-500 text-accent-500 transition-colors hover:bg-accent-500"
-				>
-					Sign Up
-				</Button>
+				<Button href="/signup" buttonStyle="accent">Sign Up</Button>
 			</NavLi>
 		</div>
 	</NavUl>

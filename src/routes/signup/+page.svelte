@@ -1,11 +1,12 @@
 <!-- // src/routes/login/+page.svelte -->
 <script lang="ts">
-	import { Label, Input, Button } from 'flowbite-svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Label, Input } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
+	import logo from '$lib/assets/logo.png';
+	import Button from '$lib/components/Button.svelte';
 	import Providers from '../oauth/Providers.svelte';
 	import Notification from '../Notification.svelte';
-	import logo from '$lib/assets/logo.png';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let form;
 
@@ -25,7 +26,7 @@
 		<a href="/">
 			<img src={logo} alt="FlowClock logo" class="w-32 md:w-40 lg:w-48" />
 		</a>
-		<h1 class="text-center text-xl font-bold text-primary-600">Sign Up</h1>
+		<h1 class="text-center text-xl font-bold text-secondary-50">Sign Up</h1>
 		<form method="POST" class="grid w-full gap-4" use:enhance={handleSignUp}>
 			<div>
 				<Label for="email" class="mb-2 text-primary-50">Email</Label>
@@ -66,7 +67,7 @@
 					<i class="fa-solid fa-lock text-secondary-500" aria-hidden="true" slot="left" /></Input
 				>
 			</div>
-			<Button class="w-full" type="submit">Sign Up</Button>
+			<Button buttonStyle="accent" type="submit">Sign Up</Button>
 		</form>
 		<div class="flex w-full items-center justify-center gap-2">
 			<hr class="w-full border-secondary-800" />

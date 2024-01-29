@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
+	import Button from '$lib/components/Button.svelte';
 	import features1 from '$lib/assets/features1.png';
 	import features2 from '$lib/assets/features2.png';
 	import features3 from '$lib/assets/features3.png';
@@ -98,8 +98,8 @@
 				<button
 					class="grid w-full min-w-[80%] content-start gap-2 rounded-lg border-2 p-4 text-left transition-colors sm:min-w-min {selected ===
 					i
-						? 'border-primary-100 bg-primary-50 text-primary-800'
-						: 'border-transparent bg-primary-100 text-secondary-900'}"
+						? 'border-secondary-100 bg-secondary-50 text-secondary-800'
+						: 'border-transparent bg-secondary-100 text-secondary-900'}"
 					on:mouseover={() => {
 						selected = i;
 						clearInterval(interval);
@@ -116,23 +116,24 @@
 				</button>
 			{/each}
 		</div>
-		<Image src={images[selected].src} layout="fullWidth" breakpoints={[300, 600, 900, 1200, 1500, 1800]} alt={images[selected].alt} />
+		<Image
+			src={images[selected].src}
+			layout="fullWidth"
+			breakpoints={[300, 600, 900, 1200, 1500, 1800]}
+			alt={images[selected].alt}
+		/>
 	</div>
 	<ul
-		class="grid gap-4 rounded-lg border-2 border-primary-100 bg-primary-50 p-4 md:p-8 font-extralight text-primary-800 md:grid-cols-2 md:text-lg"
+		class="grid gap-4 rounded-lg border-2 border-secondary-100 bg-secondary-50 p-4 font-extralight text-secondary-900 md:grid-cols-2 md:p-8 md:text-lg"
 	>
 		{#each featureList as feature, i}
 			<li class="flex items-center gap-2">
 				<img src={checkmark} alt="list icon" class="h-4 w-4 md:h-6 md:w-6" />{feature}
 			</li>
 		{/each}
-		<p class="md:col-span-2 text-center font-bold">And much more!</p>
+		<p class="text-center font-bold text-secondary-900 md:col-span-2">And much more!</p>
 	</ul>
-	<Button
-		size="lg"
-		href="/signup"
-		class="w-fit place-self-center bg-accent-500 transition-colors hover:bg-accent-600"
-	>
+	<Button size="lg" href="/signup" buttonStyle="accent" class="w-fit place-self-center">
 		Get Started
 	</Button>
 </section>

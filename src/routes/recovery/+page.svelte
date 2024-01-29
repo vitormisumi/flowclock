@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Label, Input, Button } from 'flowbite-svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Label, Input } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import Notification from '../Notification.svelte';
 	import logo from '$lib/assets/logo.png';
+	import Button from '$lib/components/Button.svelte';
+	import Notification from '../Notification.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let form;
 
@@ -19,11 +20,11 @@
 </script>
 
 <div class="grid h-screen content-start justify-items-center md:content-center">
-	<div class="grid w-screen max-w-lg gap-8 p-4 justify-items-center">
+	<div class="grid w-screen max-w-lg justify-items-center gap-8 p-4">
 		<a href="/">
 			<img src={logo} alt="FlowClock logo" class="w-32 md:w-40 lg:w-48" />
 		</a>
-		<h1 class="text-center text-xl font-bold text-primary-600">Password Recovery</h1>
+		<h1 class="text-center text-xl font-bold text-secondary-50">Password Recovery</h1>
 		<form method="POST" class="grid gap-4" use:enhance={handleRecovery}>
 			<p class="text-center text-secondary-300">
 				Type your email below and we will send you a link to reset your password
@@ -39,9 +40,9 @@
 					<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
 				>
 			</div>
-			<Button class="w-full" type="submit" disabled={loading}>Recover password</Button>
+			<Button buttonStyle="accent" type="submit" disabled={loading}>Recover password</Button>
 		</form>
-		<p class="text-secondary-50 justify-self-start">
+		<p class="justify-self-start text-secondary-50">
 			Remembered your password? <a href="/signin" class="text-accent-500">Sign in here</a>.
 		</p>
 	</div>
