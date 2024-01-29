@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Label, Select, Popover, Toggle } from 'flowbite-svelte';
+	import { Label, Popover, Toggle } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
+	import Select from '$lib/components/Select.svelte';
 	import DarkMode from './DarkMode.svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -46,15 +47,9 @@
 
 <form class="grid gap-8 md:gap-12" method="POST">
 	<div class="relative">
-		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
-			>Session duration : break duration
-			<Select
-				name="ratio"
-				class="text-base font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
-				underline
-				items={ratios}
-				value={$settings.ratio}
-			/>
+		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50">
+			Session duration : break duration
+			<Select name="ratio" underline items={ratios} value={$settings.ratio} />
 		</Label>
 		<i
 			class="fa-regular fa-circle-question absolute right-0 top-0 dark:text-secondary-500"
@@ -82,7 +77,7 @@
 			min="1"
 			max="720"
 			value={$settings.warning}
-			class="peer w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent pl-0 font-thin focus:outline-none focus:ring-0 dark:border-gray-700 dark:bg-transparent dark:dark:text-secondary-50 dark:text-secondary-900 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
+			class="peer w-full appearance-none border-0 border-b-2 border-secondary-100 bg-transparent pl-0 font-thin focus:border-primary-500 focus:outline-none focus:ring-0 dark:border-secondary-700 dark:bg-transparent dark:text-secondary-50 focus:dark:border-primary-500"
 			disabled={!warning}
 		/>
 		<i
@@ -108,7 +103,7 @@
 				type="text"
 				name="break_message"
 				value={$settings.break_message}
-				class="peer w-full appearance-none border-0 border-b-2 border-gray-200 bg-transparent pl-0 font-thin focus:outline-none focus:ring-0 dark:border-gray-700 dark:bg-transparent dark:dark:text-secondary-50 dark:text-secondary-900 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
+				class="peer w-full appearance-none border-0 border-b-2 border-secondary-100 bg-transparent pl-0 font-thin focus:border-primary-500 focus:outline-none focus:ring-0 dark:border-secondary-700 dark:bg-transparent dark:text-secondary-50 focus:dark:border-primary-500"
 			/>
 		</Label>
 		<i
@@ -122,28 +117,16 @@
 			</div>
 		</Popover>
 	</div>
-	<hr class="my-4 dark:border-secondary-100 dark:dark:border-secondary-800" />
+	<hr class="my-2 dark:border-secondary-100 dark:dark:border-secondary-800" />
 	<DarkMode bind:darkMode />
 	<div class="flex gap-4">
 		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
 			>Date format
-			<Select
-				name="date_format"
-				class="font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
-				underline
-				items={formats}
-				value={$settings.date_format}
-			/>
+			<Select name="date_format" underline items={formats} value={$settings.date_format} />
 		</Label>
 		<Label class="text-md text-secondary-900 dark:text-secondary-50"
 			>Separator
-			<Select
-				name="separator"
-				class="font-thin dark:dark:text-secondary-50 dark:text-secondary-900 placeholder:dark:text-secondary-500 focus:dark:border-primary-500 focus:dark:dark:border-primary-500"
-				underline
-				items={separators}
-				value={$settings.separator}
-			/>
+			<Select name="separator" underline items={separators} value={$settings.separator} />
 		</Label>
 	</div>
 	<Toggle

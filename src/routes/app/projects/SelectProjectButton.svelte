@@ -12,7 +12,7 @@
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
-	let hidden = false;
+	let hidden = true;
 
 	let open = false;
 

@@ -66,7 +66,7 @@
 	>
 		<button
 			disabled={loading}
-			class="flex items-center rounded-lg bg-primary-200 px-5 py-2.5 text-sm font-medium text-primary-900 transition-colors hover:bg-primary-100 dark:bg-primary-800 dark:text-primary-50"
+			class="flex items-center rounded-lg bg-primary-500 px-5 py-2.5 text-sm font-medium text-primary-900 transition-colors hover:bg-primary-600 dark:bg-primary-600 dark:text-primary-50 hover:dark:bg-primary-700"
 			on:click|stopPropagation={() => (open = false)}
 		>
 			Cancel

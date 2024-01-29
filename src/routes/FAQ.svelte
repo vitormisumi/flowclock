@@ -51,8 +51,8 @@
 		<Accordion>
 			{#each questions as q}
 				<AccordionItem
-					class="bg-transparent dark:border dark:border-secondary-50 dark:hover:bg-transparent focus:ring-0"
-					borderSharedClass="dark:border-secondary-50"
+					class="bg-transparent hover:bg-transparent focus:ring-0"
+					borderSharedClass="border-secondary-50"
 				>
 					<span slot="header" class="font-semibold text-secondary-900">{q.question}</span>
 					<p class="whitespace-pre-wrap text-secondary-700">{q.answer}</p>

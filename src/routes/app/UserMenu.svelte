@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Avatar, Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
-	import Button from '$lib/components/Button.svelte';
-	import Modal from '$lib/components/Modal.svelte';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import { session } from './session/stores';
 	import { page } from '$app/stores';
 	import avatar from '$lib/assets/avatar.png';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 	import type { User } from '@supabase/supabase-js';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';

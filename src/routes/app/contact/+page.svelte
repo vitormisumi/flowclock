@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { navigating, page } from '$app/stores';
-	import { Label, Select, Textarea } from 'flowbite-svelte';
+	import { Label, Textarea } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import Select from '$lib/components/Select.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import type { User } from '@supabase/supabase-js';
 
@@ -45,7 +46,7 @@
 		>
 			<input type="email" name="email" value={user.email} required hidden />
 			<div>
-				<Label for="_subject" class="text-md mb-2 font-medium text-primary-900 dark:text-primary-50"
+				<Label for="_subject" class="text-md mb-2 font-medium text-prisecondarymary-900 dark:text-secondary-50"
 					>Subject</Label
 				>
 				<Select
@@ -54,22 +55,18 @@
 					underline
 					items={subjects}
 					bind:value={selectedSubject}
-					class="bg-transparent dark:bg-transparent focus:dark:border-primary-500 {selectedSubject ===
-					''
-						? 'dark:text-secondary-500'
-						: 'dark:text-secondary-50'}"
 					required
 				></Select>
 			</div>
 			<div>
-				<Label for="message" class="text-md mb-2 font-medium text-primary-900 dark:text-primary-50"
+				<Label for="message" class="text-md mb-2 font-medium text-secondary-900 dark:text-secondary-50"
 					>Message</Label
 				>
 				<Textarea
 					name="message"
 					placeholder="Type your message"
 					rows="4"
-					class="rounded-none border-0 border-b-2 bg-transparent focus:ring-0 dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
+					class="rounded-none border-0 border-b-2 border-secondary-100 bg-transparent font-thin text-secondary-900 focus:ring-0 dark:bg-transparent dark:text-secondary-50"
 					required
 				/>
 			</div>

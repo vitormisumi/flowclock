@@ -37,7 +37,9 @@
 	const status = writable();
 	$: {
 		let filteredTasks = data.status?.filter((x) => x.project_id === $selectedProject.id);
-		filteredTasks?.forEach((item) => {item.tasks.sort((a, b) => b.order - a.order)});
+		filteredTasks?.forEach((item) => {
+			item.tasks.sort((a, b) => b.order - a.order);
+		});
 		status.set(filteredTasks);
 	}
 

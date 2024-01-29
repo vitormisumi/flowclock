@@ -20,7 +20,7 @@
 	};
 </script>
 
-<div class="grid h-screen content-start justify-items-center md:content-center">
+<div class="grid h-screen content-start justify-items-center md:content-center bg-secondary-900">
 	<div class="grid w-screen max-w-lg justify-items-center gap-8 p-4">
 		<a href="/">
 			<img src={logo} alt="FlowClock logo" class="w-32 md:w-40 lg:w-48" />
