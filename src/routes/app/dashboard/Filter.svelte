@@ -199,7 +199,7 @@
 </script>
 
 <div>
-	<Button size="sm" on:click={openPeriodDrawer}>
+	<Button size="sm" buttonStyle="menu" on:click={openPeriodDrawer}>
 		{selectedPeriod[0].name} <i class="fa-solid fa-chevron-down pl-2" />
 	</Button>
 	{#if $windowWidth >= 768}

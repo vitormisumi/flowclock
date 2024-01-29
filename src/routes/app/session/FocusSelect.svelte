@@ -66,7 +66,7 @@
 									name="group2"
 									value={task.id}
 									color="orange"
-									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:dark:border-accent-500"
+									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:border-accent-500 hover:dark:border-accent-500"
 									bind:group
 									on:click={() => {
 										sessionFocus.set('task', task.id, task.project_id);

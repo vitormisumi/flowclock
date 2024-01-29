@@ -58,7 +58,7 @@
 	use:dndzone={{
 		items: s.tasks,
 		dragDisabled,
-		dropTargetStyle: { 'background-color': '#0b0e0e', outline: '#1b5865 solid 1px' }
+		dropTargetStyle: { outline: '#309FB6 solid 2px' }
 	}}
 	on:consider={(e) => handleConsider(s.id, e)}
 	on:finalize={(e) => handleFinalize(s.id, e)}

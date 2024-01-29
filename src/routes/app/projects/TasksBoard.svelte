@@ -96,7 +96,7 @@
 		items: $status,
 		type: 'columns',
 		dragDisabled,
-		dropTargetStyle: { outline: '#E35402 solid 1px' }
+		dropTargetStyle: { outline: '#309FB6 solid 2px' }
 	}}
 	on:consider={handleConsider}
 	on:finalize={handleFinalize}
