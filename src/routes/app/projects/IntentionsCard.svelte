@@ -11,7 +11,7 @@
 
 	let open = false;
 
-	let hidden = $settings.tasks_card_hidden;
+	let hidden = $settings.intentions_card_hidden;
 </script>
 
 <Card

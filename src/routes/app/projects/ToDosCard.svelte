@@ -13,7 +13,7 @@
 
 	let completedHidden = true;
 
-	let hidden = $settings.tasks_card_hidden;
+	let hidden = $settings.to_dos_card_hidden;
 </script>
 
 <Card class="h-full min-h-full min-w-full gap-1 border-0 bg-secondary-100 dark:bg-secondary-800">
