@@ -13,6 +13,10 @@
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
+	export let notifications: number;
+	export let success: boolean;
+	export let message: string;
+
 	let dragDisabled = true;
 	let considering = false;
 	let board: HTMLElement;
@@ -43,6 +47,7 @@
 			dragDisabled = true;
 		}
 		$status = newItems;
+
 		const response = await fetch('/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ event: newItems }),
@@ -50,6 +55,15 @@
 				'content-type': 'application/json'
 			}
 		});
+
+		if (response.ok) {
+			success = true;
+			message = 'Statuses order saved';
+			notifications += 1
+		} else {
+			success = false;
+			message = 'Statuses order could not be saved';
+		}
 	}
 
 	function isWithinBoard(x: number, y: number) {
@@ -110,7 +124,7 @@
 			on:dragging={() => (dragDisabled = false)}
 		>
 			<EditStatusButton {s} />
-			<TaskList {s} bind:dragDisabled bind:considering />
+			<TaskList {s} bind:dragDisabled bind:considering bind:notifications bind:success bind:message />
 			<AddTaskButton status={s.id} />
 		</div>
 	{/each}

@@ -322,7 +322,7 @@ export const actions = {
     }
 
     const formData = await request.formData();
-    const sort = formData.get('sort') as string;
+    const sort = formData.get('sort') as 'name' | 'due_date' | 'priority';
         
     const { error } = await supabase
       .from('settings')
@@ -338,6 +338,7 @@ export const actions = {
   },
 
   sortTasks: async ({ request, locals: { supabase, getSession } }) => {
+    console.log('test')
     const session = await getSession();
     if (!session) {
       throw redirect(303, '/');

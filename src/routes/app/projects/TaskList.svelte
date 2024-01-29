@@ -14,6 +14,9 @@
 	export let s: TaskStatuses;
 	export let dragDisabled: boolean;
 	export let considering;
+	export let notifications: number;
+	export let success: boolean | undefined;
+	export let message: string;
 
 	let showMenu: number | null = null;
 
@@ -50,6 +53,15 @@
 				'content-type': 'application/json'
 			}
 		});
+
+		if (response.ok) {
+			success = true;
+			message = 'Tasks order saved';
+			notifications += 1;
+		} else {
+			success = false;
+			message = 'Tasks order could not be saved';
+		}
 	}
 </script>
 

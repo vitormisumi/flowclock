@@ -9,7 +9,7 @@
 	const settings: Writable<Settings> = getContext('settings');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
-	export let open: boolean;
+	let open: boolean;
 
 	let hidden = $settings.project_card_hidden;
 

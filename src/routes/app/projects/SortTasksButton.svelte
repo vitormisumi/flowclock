@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { Dropdown } from 'flowbite-svelte';
-	import { enhance } from '$app/forms';
 	import { sorting } from './stores';
-	import { getContext } from 'svelte';
+	import { getContext, onDestroy } from 'svelte';
+	import { sortOptions } from '$lib/constants/constants';
 	import Button from '$lib/components/Button.svelte';
 	import type { Writable } from 'svelte/store';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	export let open: boolean;
+	export let success: boolean | undefined;
+	export let message: string;
 
 	async function sort(sortBy: string) {
-		console.log(sortBy)
 		open = false;
 		sorting.sortTasks(sortBy);
 		let tasks: TaskStatuses[] = $status;
@@ -40,51 +41,43 @@
 			}
 		});
 		status.set(tasks);
+
 		const response = await fetch('/api/sort', {
 			method: 'POST',
-			body: JSON.stringify({ tasks }),
+			body: JSON.stringify({ tasks, sortBy }),
 			headers: {
 				'content-type': 'application/json'
 			}
 		});
+
+		if (response.ok) {
+			success = true;
+			message = 'Tasks sorted';
+		} else {
+			success = false;
+			message = 'Tasks could not be sorted';
+		}
 	}
+
+	onDestroy(() => {
+		success = undefined
+	})
 </script>
 
 <Button size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
 <Dropdown placement="bottom" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
-	<form method="POST" action="?/sortTasks" class="flex w-20 flex-col gap-1" use:enhance>
-		<Button
-			size="xs"
-			buttonStyle="menu"
-			class="w-full"
-			type="submit"
-			name="sort"
-			value="name"
-			on:click={() => sort('name')}
-		>
-			Name
-		</Button>
-		<Button
-			size="xs"
-			buttonStyle="menu"
-			class="w-full"
-			type="submit"
-			name="sort"
-			value="due_date"
-			on:click={() => sort('due_date')}
-		>
-			Due Date
-		</Button>
-		<Button
-			size="xs"
-			buttonStyle="menu"
-			class="w-full"
-			type="submit"
-			name="sort"
-			value="priority"
-			on:click={() => sort('priority')}
-		>
-			Priority
-		</Button>
-	</form>
+	<div class="flex w-20 flex-col gap-1">
+		{#each sortOptions as option}
+			<Button
+				size="xs"
+				buttonStyle="menu"
+				type="submit"
+				name={option.name}
+				value={option.value}
+				on:click={() => sort(option.value)}
+			>
+				{option.name}
+			</Button>
+		{/each}
+	</div>
 </Dropdown>

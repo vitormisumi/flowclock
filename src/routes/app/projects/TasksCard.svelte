@@ -5,15 +5,24 @@
 	import TasksMenu from './TasksMenu.svelte';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
+	import Notification from '../../Notification.svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
 
-	export let open: boolean;
+	let notifications = 0;
+	export let success: boolean;
+	export let message: string;
+
+	let open: boolean;
 
 	let hidden = $settings.tasks_card_hidden;
+
+	$: console.log(notifications);
 </script>
 
-<Card class="grid h-full min-h-full min-w-full gap-1 border-0 bg-secondary-100 dark:bg-secondary-800">
+<Card
+	class="grid h-full min-h-full min-w-full gap-1 border-0 bg-secondary-100 dark:bg-secondary-800"
+>
 	<div class="flex items-center justify-between">
 		<div class="flex items-center">
 			<h2 class="pr-1 font-bold text-primary-900 dark:text-primary-50">Tasks</h2>
@@ -34,8 +43,13 @@
 	{#if !hidden}
 		<div class="overflow-hidden" transition:slide>
 			<div>
-				<TasksBoard />
+				<TasksBoard bind:notifications bind:success bind:message />
 			</div>
 		</div>
 	{/if}
 </Card>
+{#if notifications}
+	{#key notifications}
+		<Notification {success} {message} />
+	{/key}
+{/if}

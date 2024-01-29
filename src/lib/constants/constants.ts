@@ -118,3 +118,18 @@ export const periods = [
         current: true
     }
 ];
+
+export const sortOptions = [
+    {
+        name: 'Name',
+        value: 'name'
+    },
+    {
+        name: 'Due date',
+        value: 'due_date'
+    },
+    {
+        name: 'Priority',
+        value: 'priority'
+    }
+]

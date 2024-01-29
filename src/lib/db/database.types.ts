@@ -370,9 +370,9 @@ export interface Database {
           ratio: number
           separator: number
           tasks_card_hidden: boolean
-          tasks_sorting: Database["public"]["Enums"]["tasks_sorting"] | null
+          tasks_sorting: Database["public"]["Enums"]["sorting"] | null
           to_dos_card_hidden: boolean
-          to_dos_sorting: string
+          to_dos_sorting: Database["public"]["Enums"]["sorting"]
           user_id: string
           warning: number
         }
@@ -387,9 +387,9 @@ export interface Database {
           ratio?: number
           separator?: number
           tasks_card_hidden?: boolean
-          tasks_sorting?: Database["public"]["Enums"]["tasks_sorting"] | null
+          tasks_sorting?: Database["public"]["Enums"]["sorting"] | null
           to_dos_card_hidden?: boolean
-          to_dos_sorting?: string
+          to_dos_sorting?: Database["public"]["Enums"]["sorting"]
           user_id: string
           warning?: number
         }
@@ -404,9 +404,9 @@ export interface Database {
           ratio?: number
           separator?: number
           tasks_card_hidden?: boolean
-          tasks_sorting?: Database["public"]["Enums"]["tasks_sorting"] | null
+          tasks_sorting?: Database["public"]["Enums"]["sorting"] | null
           to_dos_card_hidden?: boolean
-          to_dos_sorting?: string
+          to_dos_sorting?: Database["public"]["Enums"]["sorting"]
           user_id?: string
           warning?: number
         }
@@ -617,7 +617,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      tasks_sorting: "name" | "due_date" | "priority"
+      sorting: "name" | "due_date" | "priority"
     }
     CompositeTypes: {
       [_ in never]: never
