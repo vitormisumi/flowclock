@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { sessionInterruptions, session, sessionBreak, sessionFocus } from './stores';
+	import { sessionInterruptions, session, sessionBreak, sessionFocus, endSession, startSession } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -14,8 +13,7 @@
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const start = Date.now();
-		sessionBreak.end();
-		session.start(0, start);
+		startSession(0, start);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', String($sessionFocus.type));
 		formData.append('focus_id', String($sessionFocus.id));
@@ -29,11 +27,10 @@
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const end = Date.now();
-		session.end(end);
-		sessionBreak.start(
+		endSession(
+			end,
 			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
 		);
-		sessionInterruptions.reset();
 		formData.append('id', String($session.id));
 		formData.append('end', new Date(end).toISOString());
 		return async ({ update }) => {
@@ -48,7 +45,7 @@
 		<Button
 			size="xl"
 			buttonStyle={$sessionBreak.running && !$sessionBreak.alarmPlayed ? 'regular' : 'accent'}
-			class="text-3xl w-full duration-1000"
+			class="w-full text-3xl duration-1000"
 			type="submit"
 			disabled={loading}
 		>
@@ -57,12 +54,7 @@
 	</form>
 {:else}
 	<form method="POST" action="?/break" use:enhance={handleBreak}>
-		<Button
-			size="xl"
-			type="submit"
-			class="text-3xl w-full duration-1000"
-			disabled={loading}
-		>
+		<Button size="xl" type="submit" class="w-full text-3xl duration-1000" disabled={loading}>
 			<i class="fa-solid fa-stop pr-4" />Break
 		</Button>
 	</form>

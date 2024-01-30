@@ -158,7 +158,7 @@ function createInterruptions() {
 export const sessionInterruptions = createInterruptions();
 
 function createFocus() {
-	const { subscribe, set, update } = writable({
+	const { subscribe, set } = writable({
 		type: '',
 		id: 0,
 		projectId: 0,
@@ -182,3 +182,24 @@ function createFocus() {
 }
 
 export const sessionFocus = createFocus();
+
+export function startSession(id: number, start: number) {
+	session.start(id, start);
+	sessionBreak.end();
+}
+
+export function endSession(end: number, duration: number) {
+	session.end(end);
+	sessionBreak.start(duration);
+	sessionInterruptions.reset();
+}
+
+export function startInterruption(start: number) {
+	sessionInterruptions.start(start);
+	session.pause();
+}
+
+export function endInterruption(end: number) {
+	sessionInterruptions.end(end);
+	session.unpause();
+}

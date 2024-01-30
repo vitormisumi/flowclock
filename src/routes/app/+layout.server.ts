@@ -8,12 +8,18 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	}
 
 	const { data: { user }} = await supabase.auth.getUser();
-
+	
 	const { data: sessions } = await supabase
-		.from('sessions')
+	.from('sessions')
+	.select('*')
+	.eq('user_id', session.user.id)
+	.order('start', { ascending: false });
+	
+	const { data: breaks } = await supabase
+		.from('breaks')
 		.select('*')
 		.eq('user_id', session.user.id)
-		.order('start', { ascending: false });
+		.order('id', { ascending: false });
 	
 	const { data: interruptions } = await supabase
 		.from('interruptions')
@@ -63,5 +69,5 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.eq('user_id', session.user.id)
 		.order('order')
 
-	return { session, sessions, interruptions, settings, projects, projectGroups, tasks, toDos, intentions, status, user };
+	return { session, sessions, breaks, interruptions, settings, projects, projectGroups, tasks, toDos, intentions, status, user };
 };

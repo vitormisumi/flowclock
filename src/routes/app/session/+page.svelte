@@ -1,19 +1,35 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import { page } from '$app/stores';
-	import { session, sessionBreak, sessionFocus, sessionInterruptions } from './stores';
+	import {
+		endSession,
+		session,
+		sessionBreak,
+		sessionFocus,
+		sessionInterruptions,
+		startSession,
+		startInterruption,
+		endInterruption
+	} from './stores';
 	import Message from './Message.svelte';
 	import SessionButton from './SessionButton.svelte';
 	import Interruptions from './Interruptions.svelte';
 	import Notification from '../../Notification.svelte';
 	import FocusSelect from './FocusSelect.svelte';
+	import type { Writable } from 'svelte/store';
+
+	const settings: Writable<Settings> = getContext('settings');
 
 	export let form;
 
 	$: if (form?.startData) {
-		session.start(form?.startData[0].id, Date.parse(form?.startData[0].start));
+		startSession(form?.startData[0].id, Date.parse(form?.startData[0].start));
 	} else if (form?.breakData && form.breakData[0].end) {
-		session.end(Date.parse(form?.breakData[0].end));
+		const end = Date.parse(form?.breakData[0].end);
+		endSession(
+			end,
+			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+		);
 	}
 
 	let isSubscribed: boolean;
@@ -31,8 +47,7 @@
 				},
 				(payload: any) => {
 					if (!payload.new.end) {
-						session.start(payload.new.id, Date.parse(payload.new.start));
-						sessionBreak.end();
+						startSession(payload.new.id, Date.parse(payload.new.start));
 					}
 					if (payload.new.task_id) {
 						sessionFocus.set('task', payload.new.task_id, payload.new.project_id);
@@ -51,8 +66,11 @@
 				},
 				(payload: any) => {
 					if (payload.new.end && payload.new.id === $session.id) {
-						session.end(Date.parse(payload.new.end));
-						sessionInterruptions.reset();
+						const end = Date.parse(payload.new.end);
+						endSession(
+							end,
+							Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+						);
 					}
 				}
 			)
@@ -66,6 +84,32 @@
 				},
 				(payload: any) => {
 					sessionBreak.start(payload.new.calculated_duration);
+				}
+			)
+			.on(
+				'postgres_changes',
+				{
+					event: 'INSERT',
+					schema: 'public',
+					table: 'interruptions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
+				(payload: any) => {
+					startInterruption(Date.parse(payload.new.start));
+				}
+			)
+			.on(
+				'postgres_changes',
+				{
+					event: 'UPDATE',
+					schema: 'public',
+					table: 'interruptions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
+				(payload: any) => {
+					if (payload.new.end) {
+						endInterruption(Date.parse(payload.new.end));
+					}
 				}
 			)
 			.subscribe((x: string) => {

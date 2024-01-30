@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import { session, sessionBreak, sessionInterruptions } from './session/stores';
+	import { endSession, session, sessionBreak, sessionInterruptions } from './session/stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
@@ -24,14 +24,13 @@
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const end = Date.now();
-		session.end(end);
-		sessionBreak.start(
+		endSession(
+			end,
 			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
 		);
-		sessionInterruptions.reset();
 		formData.append('id', String($session.id));
 		formData.append('end', new Date(end).toISOString());
-		open = false
+		open = false;
 		return async ({ update }) => {
 			loading = false;
 			update();

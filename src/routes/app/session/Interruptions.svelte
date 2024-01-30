@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { Select } from 'flowbite-svelte';
-	import { session, milliseconds } from './stores';
+	import { session, milliseconds, startInterruption, endInterruption } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { sessionInterruptions } from './stores';
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -30,8 +28,7 @@
 		loading = true;
 		open = true;
 		const start = Date.now();
-		session.pause();
-		sessionInterruptions.start(start);
+		startInterruption(start);
 		formData.append('session_id', String($session.id));
 		formData.append('start', new Date(start).toISOString());
 		return async ({ update }) => {
@@ -44,8 +41,7 @@
 		loading = true;
 		open = false;
 		const end = Date.now();
-		session.unpause();
-		sessionInterruptions.end(end);
+		endInterruption(end);
 		formData.append('id', String($sessionInterruptions.currentId));
 		formData.append('session_id', String($session.id));
 		formData.append('end', new Date(end).toISOString());
@@ -55,69 +51,6 @@
 			update();
 		};
 	};
-
-	let isSubscribed: boolean;
-
-	async function subscribeToRealtime() {
-		const realtime = $page.data.supabase
-			.channel('interruptions-channel')
-			.on(
-				'postgres_changes',
-				{
-					event: 'INSERT',
-					schema: 'public',
-					table: 'interruptions',
-					filter: 'user_id=eq.' + $page.data.session?.user.id
-				},
-				(payload: any) => {
-					session.pause();
-					sessionInterruptions.start(Date.parse(payload.new.start));
-				}
-			)
-			.on(
-				'postgres_changes',
-				{
-					event: 'UPDATE',
-					schema: 'public',
-					table: 'interruptions',
-					filter: 'user_id=eq.' + $page.data.session?.user.id
-				},
-				(payload: any) => {
-					if (payload.new.end) {
-						session.unpause();
-						sessionInterruptions.end(Date.parse(payload.new.end));
-					}
-				}
-			)
-			.subscribe((x: string) => {
-				if (x === 'SUBSCRIBED') {
-					isSubscribed = true;
-				} else {
-					isSubscribed = false;
-				}
-			});
-
-		if (realtime.error) {
-			console.error('Realtime error:', realtime.error);
-		}
-
-		return () => {
-			$page.data.supabase.removeChannel(realtime);
-			isSubscribed = false;
-		};
-	}
-
-	onMount(() => {
-		subscribeToRealtime();
-
-		const interval = setInterval(() => {
-			if (!isSubscribed) {
-				subscribeToRealtime();
-			}
-		}, 1000);
-
-		return () => clearInterval(interval);
-	});
 </script>
 
 <div class={$session.running && $session.id && !open ? 'visible' : 'invisible'}>

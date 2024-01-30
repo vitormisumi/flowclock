@@ -14,6 +14,9 @@
 	const sessions = writable();
 	$: sessions.set(data.sessions);
 
+	const breaks = writable();
+	$: breaks.set(data.breaks);
+
 	const interruptions = writable();
 	$: interruptions.set(data.interruptions);
 
@@ -46,6 +49,7 @@
 
 	setContext('user', data.user);
 	setContext('sessions', sessions);
+	setContext('breaks', breaks);
 	setContext('interruptions', interruptions);
 	setContext('settings', settings);
 	setContext('projects', projects);

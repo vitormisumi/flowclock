@@ -13,12 +13,12 @@ declare global {
 	}
 	type Database = DB;
 	type UserSession = Database['public']['Tables']['sessions']['Row'];
+	type Break = Database['public']['Tables']['breaks']['Row'];
 	type FilteredSession = Omit<Database['public']['Tables']['sessions']['Row'], 'end' | 'focused_duration'> & { end: string, focused_duration: number };
 	type Task = Database['public']['Tables']['tasks']['Row'];
 	type ToDo = Database['public']['Tables']['to_dos']['Row'];
 	type Intention = Database['public']['Tables']['intentions']['Row'];
 	type Interruption = Database['public']['Tables']['interruptions']['Row'];
-	type Project = Database['public']['Tables']['projects']['Row'];
 	type Project = Database['public']['Tables']['projects']['Row'];
 	type Settings = Database['public']['Tables']['settings']['Row'];
 	type ProjectGroup = Database['public']['Tables']['project_groups']['Row'];

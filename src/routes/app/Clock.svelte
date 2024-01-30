@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { onMount } from 'svelte';
-	import { session, sessionBreak, milliseconds, sessionInterruptions } from './session/stores';
+	import {
+		session,
+		sessionBreak,
+		milliseconds,
+		sessionInterruptions,
+		startSession,
+		endSession
+	} from './session/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
@@ -9,14 +16,22 @@
 
 	const settings: Writable<Settings> = getContext('settings');
 	const sessions: Writable<UserSession[]> = getContext('sessions');
+	const breaks: Writable<Break[]> = getContext('breaks');
 
 	let alarm: HTMLAudioElement;
 	let warning: HTMLAudioElement;
 
 	onMount(() => {
 		if ($sessions[0].end === null) {
-			session.start($sessions[0].id, Date.parse($sessions[0].start));
+			startSession($sessions[0].id, Date.parse($sessions[0].start));
+		} else if (
+			$sessions[0].id === $breaks[0].session_id &&
+			Date.parse($sessions[0].end) + $breaks[0].calculated_duration > Date.now()
+		) {
+			endSession(Date.parse($sessions[0].end), $breaks[0].calculated_duration);
+			$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 		}
+
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
 				$milliseconds = Date.now() - $session.start - $sessionInterruptions.duration;
@@ -54,7 +69,7 @@
 		? 'divide-primary-500 text-primary-500'
 		: 'divide-secondary-500 text-secondary-500'} 
 	{isSession
-		? 'top-1/4 landscape:top-8 scale-[3] md:top-1/3 landscape:lg:top-1/3'
+		? 'top-1/4 scale-[3] md:top-1/3 landscape:top-8 landscape:lg:top-1/3'
 		: 'top-4 md:top-5 landscape:top-3 landscape:md:top-4 landscape:lg:top-5'}"
 >
 	{#if !isSession}
