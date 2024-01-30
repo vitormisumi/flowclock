@@ -70,10 +70,29 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					sessionInterruptions.id(payload.new.id);
+					console.log(payload);
+					session.pause();
+					sessionInterruptions.start(Date.parse(payload.new.start));
+				}
+			)
+			.on(
+				'postgres_changes',
+				{
+					event: 'UPDATE',
+					schema: 'public',
+					table: 'interruptions',
+					filter: 'user_id=eq.' + $page.data.session?.user.id
+				},
+				(payload: any) => {
+					console.log(payload);
+					if (payload.new.end) {
+						session.unpause();
+						sessionInterruptions.end(Date.parse(payload.new.end));
+					}
 				}
 			)
 			.subscribe((x: string) => {
+				console.log(x);
 				if (x === 'SUBSCRIBED') {
 					isSubscribed = true;
 				} else {
@@ -98,7 +117,7 @@
 			if (!isSubscribed) {
 				subscribeToRealtime();
 			}
-		}, 5000);
+		}, 1000);
 
 		return () => clearInterval(interval);
 	});

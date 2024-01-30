@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { session, sessionBreak, sessionFocus } from './stores';
+	import { session, sessionBreak, sessionFocus, sessionInterruptions } from './stores';
 	import Message from './Message.svelte';
 	import SessionButton from './SessionButton.svelte';
 	import Interruptions from './Interruptions.svelte';
@@ -32,6 +32,7 @@
 				(payload: any) => {
 					if (!payload.new.end) {
 						session.start(payload.new.id, Date.parse(payload.new.start));
+						sessionBreak.end();
 					}
 					if (payload.new.task_id) {
 						sessionFocus.set('task', payload.new.task_id, payload.new.project_id);
@@ -51,6 +52,7 @@
 				(payload: any) => {
 					if (payload.new.end && payload.new.id === $session.id) {
 						session.end(Date.parse(payload.new.end));
+						sessionInterruptions.reset();
 					}
 				}
 			)
@@ -91,7 +93,7 @@
 			if (!isSubscribed) {
 				subscribeToRealtime();
 			}
-		}, 5000);
+		}, 1000);
 
 		return () => clearInterval(interval);
 	});
