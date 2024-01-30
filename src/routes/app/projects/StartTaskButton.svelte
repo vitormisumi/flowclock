@@ -3,7 +3,7 @@
 	import { session, sessionBreak } from '../session/stores';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { windowWidth } from './stores';
+	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 

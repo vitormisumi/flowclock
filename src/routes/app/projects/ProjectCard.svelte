@@ -3,8 +3,8 @@
 	import { selectedProject } from './stores';
 	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import type { Writable } from 'svelte/store';
 	import ProjectMenu from './ProjectMenu.svelte';
+	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');

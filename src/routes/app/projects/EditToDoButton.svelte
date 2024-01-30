@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Tooltip, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from './stores';
+	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import SetDueDate from './SetDueDate.svelte';

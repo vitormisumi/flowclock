@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Dropdown } from 'flowbite-svelte';
+	import { slide } from 'svelte/transition';
 	import Button from '$lib/components/Button.svelte';
 	import EditToDoButton from './EditToDoButton.svelte';
 	import DeleteToDoButton from './DeleteToDoButton.svelte';
-	import { slide } from 'svelte/transition';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;

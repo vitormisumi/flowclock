@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { selectedProject, windowWidth } from './stores';
+	import { selectedProject } from './stores';
+	import { windowWidth } from '../stores';
 	import { slide } from 'svelte/transition';
 	import IntentionMenu from './IntentionMenu.svelte';
 	import type { Writable } from 'svelte/store';

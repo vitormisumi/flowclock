@@ -4,7 +4,7 @@
 	import { timeFromTimestamp } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
 	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../projects/stores';
+	import { windowWidth } from '../stores';
 	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');

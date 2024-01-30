@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Card, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import { slide } from 'svelte/transition';
 	import ToDoList from './ToDoList.svelte';
 	import ToDosMenu from './ToDosMenu.svelte';
 	import AddToDoButton from './AddToDoButton.svelte.svelte';
 	import type { Writable } from 'svelte/store';
-	import { slide } from 'svelte/transition';
 
 	const settings: Writable<Settings> = getContext('settings');
 

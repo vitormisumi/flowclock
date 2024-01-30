@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Dropdown } from 'flowbite-svelte';
+	import { slide } from 'svelte/transition';
 	import Button from '$lib/components/Button.svelte';
 	import EditIntentionButton from './EditIntentionButton.svelte';
 	import DeleteIntentionButton from './DeleteIntentionButton.svelte';
-	import { slide } from 'svelte/transition';
 	import StartIntentionButton from './StartIntentionButton.svelte';
 
 	export let intention: Intention;

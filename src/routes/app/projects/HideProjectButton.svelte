@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from './stores';
+	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';

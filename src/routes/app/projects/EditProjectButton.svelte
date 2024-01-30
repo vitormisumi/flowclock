@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Tooltip, Input, Select, Textarea } from 'flowbite-svelte';
-	import { selectedProject, windowWidth } from './stores';
+	import { selectedProject } from './stores';
+	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';

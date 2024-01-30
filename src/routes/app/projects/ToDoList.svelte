@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { selectedProject, windowWidth } from './stores';
+	import { selectedProject } from './stores';
+	import { windowWidth } from '../stores';
 	import { slide } from 'svelte/transition';
 	import { sorting } from './stores';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
-	import type { Writable } from 'svelte/store';
 	import DueDate from './DueDate.svelte';
 	import ToDoMenu from './ToDoMenu.svelte';
+	import type { Writable } from 'svelte/store';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
