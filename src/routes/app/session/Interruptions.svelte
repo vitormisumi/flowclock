@@ -90,7 +90,6 @@
 				}
 			)
 			.subscribe((x: string) => {
-				console.log(x);
 				if (x === 'SUBSCRIBED') {
 					isSubscribed = true;
 				} else {
