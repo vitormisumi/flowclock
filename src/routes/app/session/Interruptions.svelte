@@ -70,7 +70,6 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					console.log(payload);
 					session.pause();
 					sessionInterruptions.start(Date.parse(payload.new.start));
 				}
@@ -84,7 +83,6 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					console.log(payload);
 					if (payload.new.end) {
 						session.unpause();
 						sessionInterruptions.end(Date.parse(payload.new.end));
