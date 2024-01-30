@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Dropdown } from 'flowbite-svelte';
+	import { slide } from 'svelte/transition';
 	import Button from '$lib/components/Button.svelte';
 	import StartTaskButton from './StartTaskButton.svelte';
 	import EditTaskButton from './EditTaskButton.svelte';
 	import DeleteTaskButton from './DeleteTaskButton.svelte';
-	import { slide } from 'svelte/transition';
 
 	export let task: Task;
 	export let showMenu: number | null;

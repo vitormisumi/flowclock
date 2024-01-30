@@ -1,23 +1,21 @@
 <script lang="ts">
 	import { Card, Popover } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import { slide } from 'svelte/transition';
 	import TasksBoard from './TasksBoard.svelte';
 	import TasksMenu from './TasksMenu.svelte';
-	import type { Writable } from 'svelte/store';
-	import { slide } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
+	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 
 	let notifications = 0;
-	export let success: boolean;
-	export let message: string;
+	let success: boolean;
+	let message: string;
 
 	let open: boolean;
 
 	let hidden = $settings.tasks_card_hidden;
-
-	$: console.log(notifications);
 </script>
 
 <Card

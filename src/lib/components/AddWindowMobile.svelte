@@ -3,6 +3,7 @@
 	import { sineIn } from 'svelte/easing';
 
 	export let hidden: boolean;
+	export let bgColor: string;
 
 	let transitionParams = {
 		y: 300,
@@ -17,7 +18,7 @@
 	bottomOffset="bottom-16 md:bottom-24 left-0 overflow-visible"
 	transitionType="fly"
 	{transitionParams}
-	class="rounded-t-lg bg-primary-100 dark:bg-primary-800"
+	class="rounded-t-lg {bgColor}"
 	bind:hidden
 >
 	<slot />

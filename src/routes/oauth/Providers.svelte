@@ -14,13 +14,13 @@
 	];
 </script>
 
-<div class="grid gap-4 w-full">
+<div class="grid w-full gap-4">
 	{#each providers as provider}
 		<form method="POST" action="/oauth" use:enhance>
 			<input type="hidden" name="provider" value={provider.name} />
-			<Button outline class="w-full bg-secondary-50 capitalize" type="submit"
-				><i class="fa-brands {provider.icon} pr-2" />{provider.name}</Button
-			>
+			<Button outline class="w-full capitalize" type="submit">
+				<i class="fa-brands {provider.icon} pr-2" />{provider.name}
+			</Button>
 		</form>
 	{/each}
 </div>
