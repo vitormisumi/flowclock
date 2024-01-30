@@ -3,6 +3,7 @@
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { selectedProject } from './projects/stores';
+	import { windowWidth } from './stores';
 	import Menu from './Menu.svelte';
 	import Clock from './Clock.svelte';
 	import Warning from './Warning.svelte';
@@ -61,6 +62,7 @@
 	});
 </script>
 
+<svelte:window bind:innerWidth={$windowWidth} />
 <Screen>
 	<span slot="main">
 		<slot />

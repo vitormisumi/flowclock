@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { Select } from 'flowbite-svelte';
-	import Button from '$lib/components/Button.svelte';
 	import { session, milliseconds } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { sessionInterruptions } from './stores';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { windowWidth } from '../stores';
+	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
@@ -105,7 +106,7 @@
 
 <div class={$session.running && $session.id && !open ? 'visible' : 'invisible'}>
 	<form method="POST" action="?/startInterruption" use:enhance={handleStart}>
-		<Button type="submit">
+		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full">
 			<i class="fa-solid fa-pause pr-3" />Interruption
 		</Button>
 	</form>
@@ -124,8 +125,8 @@
 			placeholder="Select a reason"
 			class="text-primary-900 dark:border-secondary-300 dark:dark:border-secondary-700 dark:text-primary-50 focus:dark:border-secondary-100"
 		/>
-		<Button size="sm" type="submit" disabled={loading}
-			><i class="fa-solid fa-play pr-2" />Resume</Button
-		>
+		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full" disabled={loading}>
+			<i class="fa-solid fa-play pr-2" />Resume
+		</Button>
 	</form>
 </Modal>

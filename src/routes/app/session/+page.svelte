@@ -102,9 +102,12 @@
 >
 	<div class="grid w-full max-w-xs gap-1 md:gap-4 lg:gap-8 portrait:gap-2">
 		<Message />
-		<FocusSelect />
+		{#if $session.running}
+			<Interruptions />
+		{:else}
+			<FocusSelect />
+		{/if}
 		<SessionButton />
-		<Interruptions />
 	</div>
 </div>
 {#if form}

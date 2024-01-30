@@ -2,7 +2,7 @@
 	import { Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { selectedProject } from './stores';
-	import { windowWidth } from './stores';
+	import { windowWidth } from '../stores';
 	import { afterUpdate } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import SetDueDate from './SetDueDate.svelte';

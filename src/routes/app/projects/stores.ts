@@ -72,5 +72,3 @@ function createSorting() {
 }
 
 export const sorting = createSorting();
-
-export const windowWidth = writable(0);

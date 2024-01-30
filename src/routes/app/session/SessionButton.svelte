@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
 	import { sessionInterruptions, session, sessionBreak, sessionFocus } from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
+	import { windowWidth } from '../stores';
+	import Button from '$lib/components/Button.svelte';
 	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
 

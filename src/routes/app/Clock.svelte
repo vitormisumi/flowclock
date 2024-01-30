@@ -54,7 +54,7 @@
 		? 'divide-primary-500 text-primary-500'
 		: 'divide-secondary-500 text-secondary-500'} 
 	{isSession
-		? 'top-1/4 scale-[3] md:top-1/3 landscape:md:top-1/4 landscape:lg:top-1/3'
+		? 'top-1/4 landscape:top-8 scale-[3] md:top-1/3 landscape:lg:top-1/3'
 		: 'top-4 md:top-5 landscape:top-3 landscape:md:top-4 landscape:lg:top-5'}"
 >
 	{#if !isSession}

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { selectedProject, windowWidth } from './stores';
+	import { selectedProject } from './stores';
+	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';

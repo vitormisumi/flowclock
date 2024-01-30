@@ -4,10 +4,10 @@
 	import { getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { drag } from './drag';
+	import { windowWidth } from '../stores';
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
 	import type { Writable } from 'svelte/store';
-	import { windowWidth } from './stores';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 

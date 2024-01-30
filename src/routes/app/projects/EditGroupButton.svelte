@@ -2,7 +2,7 @@
 	import { Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from './stores';
+	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';

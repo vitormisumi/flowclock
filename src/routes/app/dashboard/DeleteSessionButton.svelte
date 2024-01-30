@@ -3,7 +3,7 @@
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
 	import { filteredSessions } from './stores';
-	import { windowWidth } from '../projects/stores';
+	import { windowWidth } from '../stores';
 	import { getContext } from 'svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { Writable } from 'svelte/store';

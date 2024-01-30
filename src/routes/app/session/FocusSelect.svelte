@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Radio, Tabs, TabItem, Popover } from 'flowbite-svelte';
+	import { Radio, Tabs, TabItem } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import { session, sessionFocus } from './stores';
+	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { Writable } from 'svelte/store';
@@ -10,35 +11,34 @@
 	const tasks: Writable<Task[]> = getContext('tasks');
 	const intentions: Writable<Intention[]> = getContext('intentions');
 
-	let name: string | undefined;
-
-	$: switch ($sessionFocus.type) {
-		case 'task':
-			name = $tasks.find((task) => task.id === $sessionFocus.id)?.name;
-			break;
-		case 'intention':
-			name = $intentions.find((intention) => intention.id === $sessionFocus.id)?.name;
-	}
-
 	let group: string;
 
 	let open = false;
+
+	let focusName: string | undefined;
+
+	$: switch ($sessionFocus.type) {
+		case 'task':
+			focusName = $tasks.find((task) => task.id === $sessionFocus.id)?.name;
+			break;
+		case 'intention':
+			focusName = $intentions.find((intention) => intention.id === $sessionFocus.id)?.name;
+			break;
+		default:
+			focusName = undefined;
+	}
 </script>
 
-<Button disabled={$session.running} class="w-full overflow-hidden" on:click={() => (open = true)}>
+<Button
+	size={$windowWidth < 768 ? 'xs' : 'md'}
+	disabled={$session.running}
+	class="overflow-hidden"
+	on:click={() => (open = true)}
+>
 	<span class="truncate">
-		{$session.running || group ? 'Focus on: ' + name : 'Focus on...'}
+		{'Focus on: ' + focusName}
 	</span>
 </Button>
-{#if $session.running}
-	<Popover class="max-w-md bg-primary-50 dark:bg-primary-900">
-		<p class="text-sm font-light text-primary-900 dark:text-primary-50">
-			FlowClock sessions are designed to help you stay focused on one task at a time. If you finish
-			your task and want to move on to a new one, simply complete the current session, select a new
-			task, and start a new session.
-		</p>
-	</Popover>
-{/if}
 <Modal size="sm" outsideclose bind:open>
 	<h2 class="text-md font-medium text-secondary-900 dark:text-secondary-50">Focus on:</h2>
 	<Tabs
@@ -66,7 +66,7 @@
 									name="group2"
 									value={task.id}
 									color="orange"
-									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:border-accent-500 hover:dark:border-accent-500"
+									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors hover:border-accent-500 dark:text-primary-50 hover:dark:border-accent-500"
 									bind:group
 									on:click={() => {
 										sessionFocus.set('task', task.id, task.project_id);
@@ -89,7 +89,7 @@
 									name="group3"
 									value={intention.id}
 									color="orange"
-									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors dark:text-primary-50 hover:dark:border-accent-500"
+									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors hover:border-accent-500 dark:text-primary-50 hover:dark:border-accent-500"
 									bind:group
 									on:click={() => {
 										sessionFocus.set('intention', intention.id, intention.project_id);

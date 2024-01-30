@@ -8,7 +8,7 @@
 		filteredSessions,
 		filteredInterruptions
 	} from './stores';
-	import { windowWidth } from '../projects/stores';
+	import { windowWidth } from '../stores';
 	import { periods } from '$lib/constants/constants';
 	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';

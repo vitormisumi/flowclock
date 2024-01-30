@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Tooltip } from 'flowbite-svelte';
-	import { selectedProjectId, windowWidth } from './stores';
+	import { selectedProjectId } from './stores';
+	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import { fade } from 'svelte/transition';
-	import { selectedProject, selectedProjectId, windowWidth } from './stores';
+	import { selectedProject, selectedProjectId } from './stores';
 	import { getContext } from 'svelte';
 	import Notification from '../../Notification.svelte';
 	import ProjectCard from './ProjectCard.svelte';
@@ -33,7 +33,6 @@
 	}
 </script>
 
-<svelte:window bind:innerWidth={$windowWidth} />
 <div
 	in:fade={$navigating?.from?.url.pathname === '/app/session'
 		? { duration: 500, delay: 500 }
