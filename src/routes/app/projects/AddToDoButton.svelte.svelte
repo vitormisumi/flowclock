@@ -29,6 +29,7 @@
 			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
+			priority = 0;
 			loading = false;
 			hidden = true;
 			update();

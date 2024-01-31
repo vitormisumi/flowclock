@@ -28,6 +28,10 @@
 			update();
 		};
 	};
+
+	let size: 'xs' | 'sm';
+
+	$: size = $windowWidth < 768 ? 'xs' : 'sm';
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
@@ -64,12 +68,12 @@
 		<input type="number" name="id" hidden value={task.id} />
 		<div class="flex justify-between">
 			<div class="flex gap-1">
-				<SetPriority size="sm" bind:priority />
-				<SetDueDate {task} size="sm" bind:dueDate />
+				<SetPriority {size} bind:priority />
+				<SetDueDate {task} {size} bind:dueDate />
 			</div>
 			<div class="flex gap-1">
 				<Button
-					size="sm"
+					{size}
 					on:click={() => {
 						open = false;
 						showMenu = null;
@@ -77,7 +81,7 @@
 				>
 					Cancel
 				</Button>
-				<Button size="sm" buttonStyle="accent" type="submit" class="self-center">
+				<Button {size} buttonStyle="accent" type="submit" class="self-center">
 					<i class="fa-solid fa-save pr-2" />Save
 				</Button>
 			</div>

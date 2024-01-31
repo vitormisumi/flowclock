@@ -29,6 +29,7 @@
 			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
+			priority = 0;
 			loading = false;
 			hidden = true;
 			update();
@@ -76,20 +77,16 @@
 				<SetDueDate task={null} size="xs" bind:dueDate />
 			</div>
 			<div class="flex gap-1">
-				<Button size="xs" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
+				<Button
+					size="xs"
+					disabled={loading}
+					on:click={() => {
+						hidden = true;
+						priority = 0;
+					}}>Cancel</Button
+				>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Add Task</Button>
 			</div>
 		</div>
 	</form>
 </svelte:component>
-
-<style>
-	:root {
-		--date-picker-foreground: #ebf7fa;
-		--date-picker-background: #0b0e0e;
-		--date-picker-highlight-border: transparent;
-		--date-picker-highlight-shadow: transparent;
-		--date-picker-selected-color: #ebf7fa;
-		--date-picker-selected-background: #e35403;
-	}
-</style>

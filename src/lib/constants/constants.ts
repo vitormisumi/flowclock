@@ -32,20 +32,6 @@ export const priorityOptions = [
     }
 ];
 
-export const lightPriorityColors: { [key: number]: string } = {
-    3: 'red-500',
-    2: 'yellow-400',
-    1: 'green-500',
-    0: 'secondary-900',
-};
-
-export const darkPriorityColors: { [key: number]: string } = {
-    3: 'red-500',
-    2: 'yellow-400',
-    1: 'green-500',
-    0: 'secondary-50',
-};
-
 export const weekdayMap: { [key: number]: string } = {
     0: 'sunday',
     1: 'monday',

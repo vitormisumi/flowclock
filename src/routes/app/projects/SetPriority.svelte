@@ -1,37 +1,25 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-	import {
-		lightPriorityColors,
-		darkPriorityColors,
-		priorityOptions
-	} from '$lib/constants/constants';
+	import { Dropdown, DropdownItem } from 'flowbite-svelte';
+	import { priorityOptions } from '$lib/constants/constants';
+	import Button from '$lib/components/Button.svelte';
+	import { priorityColor } from '$lib/functions/functions';
 
 	export let priority: number | null;
 	export let size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined;
-
-	function borderColor(priority: number | null) {
-		if (priority) {
-			return (
-				'border-' + lightPriorityColors[priority] + 'dark:border-' + darkPriorityColors[priority]
-			);
-		} else {
-			return 'border-white';
-		}
-	}
 </script>
 
-<Button
-	{size}
-	class="border bg-transparent focus:ring-0 dark:bg-transparent {borderColor(priority)}"
->
-	<i class="fa-solid fa-flag"> </i></Button
->
-<Dropdown>
+<Button {size} buttonStyle="transparent" class="border {priorityColor(priority, 'border')}">
+	<i class="fa-solid fa-flag text-secondary-900 dark:text-secondary-50" />
+</Button>
+<Dropdown class="rounded-lg py-2 bg-secondary-100 dark:bg-secondary-800" placement="top">
 	{#each priorityOptions as option}
 		<DropdownItem
-			class={priority === option.value
-				? 'dark:bg-secondary-50'
-				: 'bg-transparent dark:bg-transparent'}
+			class="hover:bg-secondary-300 hover:dark:bg-secondary-600 {priorityColor(
+				option.value,
+				'text'
+			)} {priority === option.value
+				? 'bg-secondary-200 dark:bg-secondary-700'
+				: 'bg-transparent dark:bg-transparent'}"
 			on:click={() => {
 				priority = option.value;
 			}}
