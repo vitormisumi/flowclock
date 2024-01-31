@@ -184,8 +184,8 @@ function createFocus() {
 export const sessionFocus = createFocus();
 
 export function startSession(id: number, start: number) {
-	session.start(id, start);
 	sessionBreak.end();
+	session.start(id, start);
 }
 
 export function endSession(end: number, duration: number) {

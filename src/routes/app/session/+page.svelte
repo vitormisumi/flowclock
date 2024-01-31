@@ -2,14 +2,14 @@
 	import { onMount, getContext } from 'svelte';
 	import { page } from '$app/stores';
 	import {
-		endSession,
 		session,
 		sessionBreak,
 		sessionFocus,
 		sessionInterruptions,
-		startSession,
 		startInterruption,
-		endInterruption
+		endInterruption,
+		startSession,
+		endSession
 	} from './stores';
 	import Message from './Message.svelte';
 	import SessionButton from './SessionButton.svelte';
@@ -23,13 +23,11 @@
 	export let form;
 
 	$: if (form?.startData) {
-		startSession(form?.startData[0].id, Date.parse(form?.startData[0].start));
-	} else if (form?.breakData && form.breakData[0].end) {
-		const end = Date.parse(form?.breakData[0].end);
-		endSession(
-			end,
-			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
-		);
+		startSession(form.startData.id, Date.parse(form.startData.start));
+	}
+
+	$: if (form?.interruptionData) {
+		sessionInterruptions.id(form.interruptionData.id)
 	}
 
 	let isSubscribed: boolean;
@@ -46,7 +44,7 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					if (!payload.new.end) {
+					if (!payload.new.end && payload.new.id !== $session.id) {
 						startSession(payload.new.id, Date.parse(payload.new.start));
 					}
 					if (payload.new.task_id) {
@@ -95,7 +93,9 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					startInterruption(Date.parse(payload.new.start));
+					if (!$session.pause) {
+						startInterruption(Date.parse(payload.new.start));
+					}
 				}
 			)
 			.on(
@@ -107,7 +107,7 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					if (payload.new.end) {
+					if (payload.new.end && $session.pause) {
 						endInterruption(Date.parse(payload.new.end));
 					}
 				}

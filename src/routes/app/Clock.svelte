@@ -35,6 +35,10 @@
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
 				$milliseconds = Date.now() - $session.start - $sessionInterruptions.duration;
+				if ($milliseconds >= $settings.warning * 60000 && !$session.warning && !$session.dismiss) {
+					warning.play();
+					session.warning();
+				}
 			} else if ($sessionBreak.running) {
 				if ($milliseconds > 1000) {
 					$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
@@ -43,15 +47,6 @@
 					sessionBreak.alarm();
 					$milliseconds = 0;
 				}
-			}
-			if (
-				$milliseconds >= $settings.warning * 60000 &&
-				$session.running &&
-				!$session.warning &&
-				!$session.dismiss
-			) {
-				warning.play();
-				session.warning();
 			}
 		}, 1000);
 

@@ -20,7 +20,8 @@ export const actions = {
 				start: start, 
 				...(projectId !== '0' ? { project_id: Number(projectId), ...(focusType === 'task' ? { task_id: Number(focusId) } : { intention_id: Number(focusId) }) } : {project_id: null}),
 			})
-			.select();
+			.select()
+			.single();
 
 		if (error) {
 			console.log(error);
@@ -40,18 +41,17 @@ export const actions = {
 		const id = formData.get('id') as string;
 		const end = formData.get('end') as string;
 		
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from('sessions')
 			.update({ end: end })
-			.eq('id', id)
-			.select();
+			.eq('id', id);
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Session could not be saved', success: false });
 		}
 
-		return { breakData: data, message: 'Session ended', success: true };
+		return { message: 'Session ended', success: true };
 	},
 
 	startInterruption: async ({ request, locals: { supabase, getSession } }) => {
@@ -64,16 +64,18 @@ export const actions = {
 		const sessionId = formData.get('session_id') as string;
 		const start = formData.get('start') as string;
 		
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from('interruptions')
-			.insert({ user_id: session.user.id, session_id: Number(sessionId), start: start });
+			.insert({ user_id: session.user.id, session_id: Number(sessionId), start: start })
+			.select()
+			.single();
 
 		if (error) {
 			console.log(error);
 			return fail(500, { message: 'Interruption could not be saved', success: false });
 		} 
 
-		return { message: 'Interruption started', success: true };
+		return { interruptionData: data, message: 'Interruption started', success: true };
 	},
 
 	endInterruption: async ({ request, locals: { supabase, getSession } }) => {
