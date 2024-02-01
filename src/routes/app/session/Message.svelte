@@ -28,7 +28,7 @@
 <div class="grid w-full items-center justify-center text-secondary-900 dark:text-secondary-50">
 	{#if $session.running}
 		<p in:fade>Break time: {breakMinutes} min</p>
-		<p in:fade>Focusing on: {focusName}</p>
+		<p class="truncate" in:fade>Focusing on: {focusName}</p>
 		<Popover class="max-w-md bg-primary-50 dark:bg-primary-900">
 			<p class="text-sm font-light text-primary-900 dark:text-primary-50">
 				FlowClock sessions are designed to help you stay focused on one task at a time. If you

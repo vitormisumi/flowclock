@@ -16,6 +16,7 @@ export interface Database {
           created_at: string
           id: number
           session_id: number
+          start: string | null
           user_id: string
         }
         Insert: {
@@ -24,6 +25,7 @@ export interface Database {
           created_at?: string
           id?: number
           session_id: number
+          start?: string | null
           user_id: string
         }
         Update: {
@@ -32,6 +34,7 @@ export interface Database {
           created_at?: string
           id?: number
           session_id?: number
+          start?: string | null
           user_id?: string
         }
         Relationships: [

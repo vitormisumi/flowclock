@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { sessionInterruptions, session, sessionBreak, sessionFocus, endSession, startSession } from './stores';
+	import {
+		sessionInterruptions,
+		session,
+		sessionBreak,
+		sessionFocus,
+		endSession,
+		startSession
+	} from './stores';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
