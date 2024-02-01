@@ -216,7 +216,7 @@
 	class="z-50 bg-secondary-50 dark:bg-secondary-900"
 	bind:hidden
 >
-	<div class="grid w-full justify-center gap-4">
+	<div class="grid gap-4">
 		<div class="grid grid-cols-3 place-items-center">
 			<h2 class="col-start-2 text-center font-bold text-primary-900 dark:text-primary-50">
 				Filter period
@@ -224,7 +224,7 @@
 			<Button
 				size="xs"
 				on:click={() => (hidden = true)}
-				class="place-self-end bg-transparent dark:bg-transparent md:invisible"
+				class="col-start-3 w-fit place-self-end bg-transparent text-secondary-900 dark:bg-transparent dark:text-secondary-50 md:invisible"
 			>
 				<i class="fa-solid fa-x" />
 			</Button>
