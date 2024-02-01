@@ -35,7 +35,7 @@
 	</Button>
 	<NavUl
 		{hidden}
-		classUl="bg-transparent border-none shadow-none items-end h-screen md:h-auto relative md:items-center"
+		classUl="bg-transparent dark:bg-transparent border-none shadow-none items-end h-screen md:h-auto relative md:items-center"
 	>
 		<NavLi>
 			<Button
