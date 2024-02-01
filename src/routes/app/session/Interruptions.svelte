@@ -9,8 +9,6 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 
-	let open = false;
-
 	let reason: string;
 	let reasons = [
 		{ value: 'bathroom', name: 'bathroom' },
@@ -26,7 +24,6 @@
 
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
-		open = true;
 		const start = Date.now();
 		startInterruption(start);
 		formData.append('session_id', String($session.id));
@@ -39,7 +36,6 @@
 
 	const handleEnd: SubmitFunction = ({ formData }) => {
 		loading = true;
-		open = false;
 		const end = Date.now();
 		endInterruption(end);
 		formData.append('id', String($sessionInterruptions.currentId));
@@ -53,14 +49,14 @@
 	};
 </script>
 
-<div class={$session.running && $session.id && !open ? 'visible' : 'invisible'}>
+<div class={$session.running && $session.id ? 'visible' : 'invisible'}>
 	<form method="POST" action="?/startInterruption" use:enhance={handleStart}>
 		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full">
 			<i class="fa-solid fa-pause pr-3" />Interruption
 		</Button>
 	</form>
 </div>
-<Modal bind:open dismissable={false} size="sm">
+<Modal bind:open={$session.pause} dismissable={false} size="sm">
 	<i class="fa-solid fa-pause text-3xl dark:text-secondary-300" />
 	<p>{millisecondsToClock($milliseconds)}</p>
 	<p class="dark:text-secondary-200">

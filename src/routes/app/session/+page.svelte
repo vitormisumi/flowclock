@@ -27,7 +27,7 @@
 	}
 
 	$: if (form?.interruptionData) {
-		sessionInterruptions.id(form.interruptionData.id)
+		startInterruption(Date.parse(form.interruptionData.start));
 	}
 
 	let isSubscribed: boolean;

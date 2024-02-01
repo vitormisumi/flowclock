@@ -26,7 +26,7 @@
 			startSession($sessions[0].id, Date.parse($sessions[0].start));
 		} else if (
 			$sessions[0].id === $breaks[0].session_id &&
-			Date.parse($sessions[0].end) + $breaks[0].calculated_duration > Date.now()
+			Date.parse($breaks[0].start) + $breaks[0].calculated_duration > Date.now()
 		) {
 			endSession(Date.parse($sessions[0].end), $breaks[0].calculated_duration);
 			$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
