@@ -88,6 +88,7 @@ export const actions = {
 		const id = formData.get('id') as string;
 		const end = formData.get('end') as string;
 		const reason = formData.get('reason') as string;
+		console.log(id, end, reason)
 		
 		const { error } = await supabase
 			.from('interruptions')

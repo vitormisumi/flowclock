@@ -20,30 +20,23 @@
 		{ value: 'relative', name: 'relative' }
 	];
 
-	let loading = false;
-
 	const handleStart: SubmitFunction = ({ formData }) => {
-		loading = true;
 		const start = Date.now();
-		startInterruption(start);
+		startInterruption(0, start);
 		formData.append('session_id', String($session.id));
 		formData.append('start', new Date(start).toISOString());
 		return async ({ update }) => {
-			loading = false;
 			update();
 		};
 	};
 
 	const handleEnd: SubmitFunction = ({ formData }) => {
-		loading = true;
 		const end = Date.now();
-		endInterruption(end);
 		formData.append('id', String($sessionInterruptions.currentId));
-		formData.append('session_id', String($session.id));
 		formData.append('end', new Date(end).toISOString());
 		formData.append('reason', reason);
+		endInterruption(end);
 		return async ({ update }) => {
-			loading = false;
 			update();
 		};
 	};
@@ -70,7 +63,7 @@
 			placeholder="Select a reason"
 			class="text-primary-900 dark:border-secondary-300 dark:dark:border-secondary-700 dark:text-primary-50 focus:dark:border-secondary-100"
 		/>
-		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full" disabled={loading}>
+		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full" disabled={!$sessionInterruptions.currentId}>
 			<i class="fa-solid fa-play pr-2" />Resume
 		</Button>
 	</form>

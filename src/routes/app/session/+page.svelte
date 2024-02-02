@@ -27,7 +27,7 @@
 	}
 
 	$: if (form?.interruptionData) {
-		startInterruption(Date.parse(form.interruptionData.start));
+		startInterruption(form.interruptionData.id, Date.parse(form.interruptionData.start));
 	}
 
 	let isSubscribed: boolean;
@@ -93,8 +93,8 @@
 					filter: 'user_id=eq.' + $page.data.session?.user.id
 				},
 				(payload: any) => {
-					if (!$session.pause) {
-						startInterruption(Date.parse(payload.new.start));
+					if (!$session.pause && !payload.new.end) {
+						startInterruption(payload.new.id, Date.parse(payload.new.start));
 					}
 				}
 			)

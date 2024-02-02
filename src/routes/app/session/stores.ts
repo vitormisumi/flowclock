@@ -132,10 +132,11 @@ function createInterruptions() {
 					currentId: id
 				};
 			}),
-		start: (start: number) =>
+		start: (id: number, start: number) =>
 			update((x) => {
 				return {
 					...x,
+					currentId: id,
 					currentStart: start
 				};
 			}),
@@ -143,6 +144,7 @@ function createInterruptions() {
 			update((x) => {
 				return {
 					...x,
+					currentId: 0,
 					duration: x.duration + (end - x.currentStart)
 				};
 			}),
@@ -194,8 +196,8 @@ export function endSession(end: number, duration: number) {
 	sessionInterruptions.reset();
 }
 
-export function startInterruption(start: number) {
-	sessionInterruptions.start(start);
+export function startInterruption(id: number, start: number) {
+	sessionInterruptions.start(id, start);
 	session.pause();
 }
 
