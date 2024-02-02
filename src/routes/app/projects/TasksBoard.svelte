@@ -14,7 +14,7 @@
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
 	export let notifications: number;
-	export let success: boolean;
+	export let success: boolean | undefined;
 	export let message: string;
 
 	let dragDisabled = true;

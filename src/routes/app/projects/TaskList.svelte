@@ -3,6 +3,7 @@
 	import { priorityColor } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import { slide } from 'svelte/transition';
 	import { drag } from './drag';
 	import { windowWidth } from '../stores';
 	import DueDate from './DueDate.svelte';
@@ -13,10 +14,13 @@
 
 	export let s: TaskStatuses;
 	export let dragDisabled: boolean;
-	export let considering;
+	export let considering: boolean;
 	export let notifications: number;
 	export let success: boolean | undefined;
 	export let message: string;
+
+	let openRow: number | null = null;
+	let opening = false;
 
 	let showMenu: number | null = null;
 
@@ -69,9 +73,15 @@
 			message = 'Tasks order could not be saved';
 		}
 	}
+
+	function handleClick(task: Task) {
+		openRow = task.description && openRow === null ? task.id : null;
+		opening = true;
+		setTimeout(() => (opening = false), 400);
+	}
 </script>
 
-<div
+<ul
 	class="relative grid min-h-[40px] w-full gap-1 overflow-auto rounded-lg"
 	use:dndzone={{
 		items: s.tasks,
@@ -82,20 +92,29 @@
 	on:finalize={(e) => handleFinalize(s.id, e)}
 >
 	{#each s.tasks as task (task.id)}
-		<div
-			class="flex h-10 w-full select-none items-center justify-between overflow-hidden rounded-lg border-l bg-secondary-100 p-2 text-primary-900 hover:cursor-grab hover:bg-primary-200 dark:bg-secondary-800 dark:text-primary-50 hover:dark:bg-primary-800 {priorityColor(
+		<li
+			class="grid w-full rounded-lg border-l bg-secondary-100 px-2 text-primary-900 hover:bg-primary-200 dark:bg-secondary-800 dark:text-primary-50 hover:dark:bg-primary-800 {priorityColor(
 				task.priority,
 				'border'
 			)}"
-			animate:flip
+			animate:flip={{ duration: opening ? 0 : (d) => Math.sqrt(d) * 120 }}
 			use:drag
 			on:dragging={() => (dragDisabled = false)}
 			on:mouseenter={() => (showMenu = task.id)}
 			on:mouseleave={() => (showMenu = null)}
-			role="listitem"
 		>
-			<p class="truncate text-sm font-light md:text-base">{task.name}</p>
-			<div class="flex place-items-center justify-end">
+			<div class="flex items-center gap-2 overflow-hidden">
+				<div
+					class="flex h-10 w-full items-center truncate text-left text-sm font-light text-primary-900 dark:text-primary-50 md:text-base {task.description
+						? 'hover:cursor-pointer'
+						: 'hover:cursor-grab'}"
+					on:click={() => handleClick(task)}
+					on:keydown={() => handleClick(task)}
+					role="button"
+					tabindex="0"
+				>
+					{task.name}
+				</div>
 				{#if task.due_date}
 					<DueDate date={task.due_date} />
 				{/if}
@@ -103,9 +122,16 @@
 					<TaskMenu {task} bind:showMenu />
 				{/if}
 			</div>
-		</div>
+			{#if openRow === task.id}
+				<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
+					<p class="whitespace-normal text-primary-800 dark:text-primary-100">
+						{task.description}
+					</p>
+				</div>
+			{/if}
+		</li>
 	{/each}
 	<div
 		class="sticky bottom-0 h-8 w-full bg-gradient-to-b from-transparent to-secondary-50 dark:to-secondary-900"
 	/>
-</div>
+</ul>

@@ -41,13 +41,13 @@
 	{#each $toDos as toDo, i}
 		{#if toDo.project_id === $selectedProject.id && (toDo.done === false || completedHidden === false)}
 			<li
-				class="grid w-full rounded-lg border border-secondary-50 bg-secondary-50 dark:border-secondary-900 dark:bg-secondary-900 {toDo.description
+				class="grid w-full rounded-lg border border-secondary-50 bg-secondary-50 px-2 dark:border-secondary-900 dark:bg-secondary-900 {toDo.description
 					? 'hover:border-primary-200 hover:bg-primary-200 hover:dark:border-primary-800 hover:dark:bg-primary-800'
 					: ''}"
 				on:mouseenter={() => (showMenu = toDo.id)}
 				on:mouseleave={() => (showMenu = null)}
 			>
-				<div class="flex items-center gap-2 overflow-hidden px-2">
+				<div class="flex items-center gap-2 overflow-hidden">
 					<CompleteToDoButton {toDo} />
 					<button
 						class="h-10 grow overflow-hidden truncate text-left text-sm font-light text-primary-900 dark:text-primary-50 md:text-base {toDo.description
@@ -67,11 +67,9 @@
 				</div>
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-						{#if toDo.description}
-							<p class="whitespace-normal text-primary-800 dark:text-primary-100">
-								{toDo.description}
-							</p>
-						{/if}
+						<p class="whitespace-normal text-primary-800 dark:text-primary-100">
+							{toDo.description}
+						</p>
 					</div>
 				{/if}
 			</li>
