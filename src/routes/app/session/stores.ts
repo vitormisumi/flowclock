@@ -29,6 +29,7 @@ function createSession() {
 			update((x) => {
 				return {
 					...x,
+					id: 0,
 					running: false,
 					end: end,
 					warning: false

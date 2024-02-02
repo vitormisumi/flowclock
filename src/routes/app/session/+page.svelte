@@ -67,7 +67,7 @@
 						const end = Date.parse(payload.new.end);
 						endSession(
 							end,
-							Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+							Math.round((end - Date.parse(payload.new.start) - payload.new.interruption_duration) / $settings.ratio)
 						);
 					}
 				}

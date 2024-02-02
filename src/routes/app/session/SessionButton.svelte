@@ -34,17 +34,19 @@
 	const handleBreak: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const end = Date.now();
+		formData.append('id', String($session.id));
+		formData.append('end', new Date(end).toISOString());
 		endSession(
 			end,
 			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
 		);
-		formData.append('id', String($session.id));
-		formData.append('end', new Date(end).toISOString());
 		return async ({ update }) => {
 			loading = false;
 			update();
 		};
 	};
+
+	$: console.log($sessionBreak.running, $sessionBreak.duration, $sessionBreak.alarmPlayed)
 </script>
 
 {#if !$session.running}

@@ -42,13 +42,16 @@
 	};
 </script>
 
-<div class={$session.running && $session.id ? 'visible' : 'invisible'}>
-	<form method="POST" action="?/startInterruption" use:enhance={handleStart}>
-		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full">
-			<i class="fa-solid fa-pause pr-3" />Interruption
-		</Button>
-	</form>
-</div>
+<form method="POST" action="?/startInterruption" use:enhance={handleStart}>
+	<Button
+		size={$windowWidth < 768 ? 'xs' : 'md'}
+		type="submit"
+		class="w-full"
+		disabled={!$session.running || !$session.id}
+	>
+		<i class="fa-solid fa-pause pr-3" />Interruption
+	</Button>
+</form>
 <Modal bind:open={$session.pause} dismissable={false} size="sm">
 	<i class="fa-solid fa-pause text-3xl dark:text-secondary-300" />
 	<p>{millisecondsToClock($milliseconds)}</p>
@@ -63,7 +66,12 @@
 			placeholder="Select a reason"
 			class="text-primary-900 dark:border-secondary-300 dark:dark:border-secondary-700 dark:text-primary-50 focus:dark:border-secondary-100"
 		/>
-		<Button size={$windowWidth < 768 ? 'xs' : 'md'} type="submit" class="w-full" disabled={!$sessionInterruptions.currentId}>
+		<Button
+			size={$windowWidth < 768 ? 'xs' : 'md'}
+			type="submit"
+			class="w-full"
+			disabled={!$sessionInterruptions.currentId}
+		>
 			<i class="fa-solid fa-play pr-2" />Resume
 		</Button>
 	</form>
