@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Tooltip } from 'flowbite-svelte';
-	import { session, sessionBreak } from '../session/stores';
+	import { session, sessionFocus, startSession } from '../session/stores';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { windowWidth } from '../stores';
@@ -11,8 +11,8 @@
 
 	const handleClick: SubmitFunction = async ({ formData }) => {
 		const start = Date.now();
-		sessionBreak.end();
-		session.start(0, start);
+		startSession(0, start);
+		sessionFocus.set('task', task.id, task.project_id);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'task');
 		formData.append('focus_id', String(task.id));
