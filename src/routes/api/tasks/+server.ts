@@ -6,30 +6,21 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			throw redirect(303, '/');
 		}
 	
-	const { cardId, event } = await request.json();
-
-	const order = event.items.map((x: any, index: number) => {
-		const { ...rowData } = x;
-		rowData.order = event.items.length - index;
-		rowData.status_id = cardId;
-		return rowData
-	});
+	const { event, order } = await request.json();
 
 	if (event.info.trigger === 'droppedIntoZone') {
-		const { error } = await supabase
+		let { error } = await supabase
 			.from('tasks')
 			.upsert(order)
 		
 		if (error) {
 			console.log(error);
 		}
-	}
 
-	if (event.info.trigger === 'droppedIntoZone') {
-		const { error } = await supabase
+		({ error } = await supabase
 			.from('settings')
 			.update({ 'tasks_sorting': null })
-			.eq('user_id', session.user.id)
+			.eq('user_id', session.user.id))
 	
 		if (error) {
 			console.log(error);

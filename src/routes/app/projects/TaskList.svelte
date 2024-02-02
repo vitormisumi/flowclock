@@ -44,11 +44,17 @@
 			dragDisabled = true;
 		}
 		const colIdx = $status.findIndex((c) => c.id === cardId);
-		$status[colIdx].tasks = e.detail.items;
+		const order = e.detail.items.map((x: any, index: number) => {
+			const { ...rowData } = x;
+			rowData.order = e.detail.items.length - index;
+			rowData.status_id = cardId;
+			return rowData;
+		});
+		$status[colIdx].tasks = order;
 		$status = [...$status];
 		const response = await fetch('/api/tasks', {
 			method: 'POST',
-			body: JSON.stringify({ cardId, event: e.detail }),
+			body: JSON.stringify({ event: e.detail, order: order }),
 			headers: {
 				'content-type': 'application/json'
 			}

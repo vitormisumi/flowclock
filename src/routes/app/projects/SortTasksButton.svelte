@@ -15,15 +15,15 @@
 	async function sort(sortBy: string) {
 		open = false;
 		sorting.sortTasks(sortBy);
-		let tasks: TaskStatuses[] = $status;
-		tasks.forEach((item: TaskStatuses) => {
-			if (item.tasks && item.tasks.length > 0) {
+		let statuses: TaskStatuses[] = $status;
+		statuses.forEach((status: TaskStatuses) => {
+			if (status.tasks && status.tasks.length > 0) {
 				switch (sortBy) {
 					case 'priority':
-						item.tasks.sort((a, b) => b.priority - a.priority);
+						status.tasks.sort((a, b) => b.priority - a.priority);
 						break;
 					case 'due_date':
-						item.tasks.sort((a, b) => {
+						status.tasks.sort((a, b) => {
 							if (a.due_date === null) return 1;
 							if (b.due_date === null) return -1;
 							if (a.due_date && b.due_date) {
@@ -33,18 +33,21 @@
 						});
 						break;
 					case 'name':
-						item.tasks.sort((a, b) => a.name.localeCompare(b.name));
+						status.tasks.sort((a, b) => a.name.localeCompare(b.name));
 						break;
 					default:
-						item.tasks.sort((a, b) => b.order - a.order);
+						status.tasks.sort((a, b) => b.order - a.order);
 				}
 			}
+			status.tasks.forEach((task, index) => {
+				task.order = status.tasks.length - index;
+			});
 		});
-		status.set(tasks);
+		status.set(statuses);
 
 		const response = await fetch('/api/sort', {
 			method: 'POST',
-			body: JSON.stringify({ tasks, sortBy }),
+			body: JSON.stringify({ statuses, sortBy }),
 			headers: {
 				'content-type': 'application/json'
 			}
@@ -60,8 +63,8 @@
 	}
 
 	onDestroy(() => {
-		success = undefined
-	})
+		success = undefined;
+	});
 </script>
 
 <Button size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
