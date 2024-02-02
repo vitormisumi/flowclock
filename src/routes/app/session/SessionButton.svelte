@@ -45,8 +45,6 @@
 			update();
 		};
 	};
-
-	$: console.log($sessionBreak.running, $sessionBreak.duration, $sessionBreak.alarmPlayed)
 </script>
 
 {#if !$session.running}

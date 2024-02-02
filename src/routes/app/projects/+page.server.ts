@@ -338,7 +338,6 @@ export const actions = {
   },
 
   sortTasks: async ({ request, locals: { supabase, getSession } }) => {
-    console.log('test')
     const session = await getSession();
     if (!session) {
       throw redirect(303, '/');
