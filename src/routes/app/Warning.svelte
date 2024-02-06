@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import { endSession, session, sessionBreak, sessionInterruptions } from './session/stores';
-	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { endSession, session, sessionInterruptions } from './session/stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -24,12 +24,12 @@
 	const handleClick: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const end = Date.now();
+		formData.append('id', String($session.id));
+		formData.append('end', new Date(end).toISOString());
 		endSession(
 			end,
 			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
 		);
-		formData.append('id', String($session.id));
-		formData.append('end', new Date(end).toISOString());
 		open = false;
 		return async ({ update }) => {
 			loading = false;

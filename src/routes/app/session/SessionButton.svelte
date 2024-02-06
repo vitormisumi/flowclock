@@ -1,17 +1,17 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import {
-		sessionInterruptions,
+		endSession,
 		session,
 		sessionBreak,
 		sessionFocus,
-		endSession,
+		sessionInterruptions,
 		startSession
 	} from './stores';
-	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
-	import Button from '$lib/components/Button.svelte';
-	import type { Writable } from 'svelte/store';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
 
