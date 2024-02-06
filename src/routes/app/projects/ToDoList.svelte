@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { selectedProject } from './stores';
-	import { windowWidth } from '../stores';
+	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { sorting } from './stores';
+	import { windowWidth } from '../stores';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import DueDate from './DueDate.svelte';
 	import ToDoMenu from './ToDoMenu.svelte';
-	import type { Writable } from 'svelte/store';
+	import { selectedProject, sorting } from './stores';
 
 	const toDos: Writable<ToDo[]> = getContext('toDos');
 
@@ -67,7 +66,9 @@
 				</div>
 				{#if openRow === i}
 					<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-						<p class="whitespace-normal text-primary-800 dark:text-primary-100">
+						<p
+							class="whitespace-normal text-sm font-light text-primary-800 dark:text-primary-100 md:text-base"
+						>
 							{toDo.description}
 						</p>
 					</div>

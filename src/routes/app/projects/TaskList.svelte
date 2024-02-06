@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
 	import { priorityColor } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
+	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
+	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { drag } from './drag';
 	import { windowWidth } from '../stores';
+	import { drag } from './drag';
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
-	import type { Writable } from 'svelte/store';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -124,7 +124,9 @@
 			</div>
 			{#if openRow === task.id}
 				<div class="flex flex-wrap gap-4 p-2 font-light" transition:slide>
-					<p class="whitespace-normal text-primary-800 dark:text-primary-100">
+					<p
+						class="whitespace-normal text-sm font-light text-primary-800 dark:text-primary-100 md:text-base"
+					>
 						{task.description}
 					</p>
 				</div>

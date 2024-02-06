@@ -20,7 +20,7 @@
 			transition:slide
 		>
 			<p class="col-span-2">
-				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)?.name}
+				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)?.name ?? 'No focus'}
 			</p>
 			{#if $windowWidth >= 768}
 				<Tooltip>Session focus</Tooltip>
