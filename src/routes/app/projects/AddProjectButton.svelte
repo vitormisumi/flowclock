@@ -11,7 +11,7 @@
 
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
-	let open = true;
+	let open = false;
 
 	let statusOptions = [
 		{ name: 'idea', value: 'idea' },
