@@ -6,17 +6,14 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			throw redirect(303, '/');
 		}
 	
-	const event = await request.json();
-	
-	const order = event.event.map((x: any, index: number) => {
-		const { tasks, ...rowData } = x;
-		rowData.order = index + 1;
-		return rowData
-	});
+	const { statuses } = await request.json();
 
-	const { error } = await supabase
+	const { data, error } = await supabase
 		.from('task_statuses')
-		.upsert(order)
+		.upsert(statuses)
+		.select();
+	
+	console.log(data)
 
 	if (error) {
 		console.log(error);

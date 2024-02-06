@@ -35,7 +35,6 @@
 		}
 		const colIdx = $status.findIndex((c) => c.id === cardId);
 		$status[colIdx].tasks = newItems;
-		$status = [...$status];
 	}
 
 	async function handleFinalize(cardId: number, e: CustomEvent<DndEvent<Task>>) {
@@ -48,17 +47,18 @@
 			dragDisabled = true;
 		}
 		const colIdx = $status.findIndex((c) => c.id === cardId);
-		const order = e.detail.items.map((x: any, index: number) => {
-			const { ...rowData } = x;
-			rowData.order = e.detail.items.length - index;
-			rowData.status_id = cardId;
-			return rowData;
-		});
-		$status[colIdx].tasks = order;
-		$status = [...$status];
+
+		const orderedTasks = newItems.map((item, index) => ({
+			...item,
+			order: newItems.length - index,
+			status_id: cardId
+		}));
+
+		$status[colIdx].tasks = orderedTasks;
+
 		const response = await fetch('/api/tasks', {
 			method: 'POST',
-			body: JSON.stringify({ event: e.detail, order: order }),
+			body: JSON.stringify({ event: e.detail, tasks: orderedTasks }),
 			headers: {
 				'content-type': 'application/json'
 			}

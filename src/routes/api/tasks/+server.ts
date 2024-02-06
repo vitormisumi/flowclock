@@ -6,12 +6,12 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 			throw redirect(303, '/');
 		}
 	
-	const { event, order } = await request.json();
+	const { event, tasks } = await request.json();
 
 	if (event.info.trigger === 'droppedIntoZone') {
 		let { error } = await supabase
 			.from('tasks')
-			.upsert(order)
+			.upsert(tasks)
 		
 		if (error) {
 			console.log(error);

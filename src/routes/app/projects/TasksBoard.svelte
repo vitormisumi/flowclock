@@ -46,11 +46,18 @@
 		if (source === SOURCES.POINTER) {
 			dragDisabled = true;
 		}
-		$status = newItems;
+
+		const orderedStatusColumns = newItems.map(({ tasks, ...item }, index) => ({
+			...item,
+			order: index + 1
+		}));
+
+		const orderedStatus = newItems.map((item, index) => ({ ...item, order: index + 1 }));
+		$status = orderedStatus;
 
 		const response = await fetch('/api/status', {
 			method: 'POST',
-			body: JSON.stringify({ event: newItems }),
+			body: JSON.stringify({ statuses: orderedStatusColumns }),
 			headers: {
 				'content-type': 'application/json'
 			}
@@ -59,7 +66,7 @@
 		if (response.ok) {
 			success = true;
 			message = 'Statuses order saved';
-			notifications += 1
+			notifications += 1;
 		} else {
 			success = false;
 			message = 'Statuses order could not be saved';
@@ -124,7 +131,14 @@
 			on:dragging={() => (dragDisabled = false)}
 		>
 			<EditStatusButton {s} />
-			<TaskList {s} bind:dragDisabled bind:considering bind:notifications bind:success bind:message />
+			<TaskList
+				{s}
+				bind:dragDisabled
+				bind:considering
+				bind:notifications
+				bind:success
+				bind:message
+			/>
 			<AddTaskButton status={s.id} />
 		</div>
 	{/each}

@@ -10,10 +10,10 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	const { data: { user }} = await supabase.auth.getUser();
 	
 	const { data: sessions } = await supabase
-	.from('sessions')
-	.select('*')
-	.eq('user_id', session.user.id)
-	.order('start', { ascending: false });
+		.from('sessions')
+		.select('*')
+		.eq('user_id', session.user.id)
+		.order('start', { ascending: false });
 	
 	const { data: breaks } = await supabase
 		.from('breaks')

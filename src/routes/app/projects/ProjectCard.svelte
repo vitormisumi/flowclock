@@ -26,9 +26,9 @@
 	<div class="flex place-items-center justify-between md:h-7">
 		<div class="flex flex-wrap place-items-center justify-items-start gap-2">
 			<h2 class="font-bold">{$selectedProject.name}</h2>
-			<Badge class="bg-accent-500 text-accent-50 dark:bg-accent-500 dark:text-accent-50"
-				>{$selectedProject.status}</Badge
-			>
+			<Badge class="bg-accent-500 text-accent-50 dark:bg-accent-500 dark:text-accent-50">
+				{$selectedProject.status}
+			</Badge>
 			<Badge
 				class="bg-secondary-900 text-secondary-50 dark:bg-secondary-50 dark:text-secondary-900"
 			>

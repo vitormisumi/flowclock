@@ -15,10 +15,8 @@
 
 	export let form;
 
-	if ($projects.length) {
+	if ($projects.length && !$selectedProject.id) {
 		selectedProject.select($projects[0]);
-	} else {
-		selectedProject.reset();
 	}
 
 	$: if (form?.success) {
@@ -28,7 +26,8 @@
 			selectedProject.reset();
 		}
 	}
-	$: if ($selectedProjectId) {
+
+	$: if ($selectedProjectId && $selectedProjectId != $selectedProject.id) {
 		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
 	}
 </script>
