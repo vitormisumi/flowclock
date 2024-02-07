@@ -11,7 +11,7 @@ export const actions = {
     const name = formData.get('name') as string;
     const goal = formData.get('goal') as string;
     const description = formData.get('description') as string;
-    const status = formData.get('status') as string;
+    const status = formData.get('status') as 'idea' | 'planning' | 'on going' | 'completed' | 'suspended' | 'cancelled';
     const group_id = formData.get('group_id') as string;
 		
     const { error } = await supabase
@@ -36,7 +36,7 @@ export const actions = {
     const name = formData.get('name') as string;
     const goal = formData.get('goal') as string;
     const description = formData.get('description') as string;
-    const status = formData.get('status') as string;
+    const status = formData.get('status') as 'idea' | 'planning' | 'on going' | 'completed' | 'suspended' | 'cancelled';
     const id = formData.get('id') as string;
     const group_id = formData.get('group_id') as string;
 		
@@ -152,12 +152,12 @@ export const actions = {
     const name = formData.get('name') as string;
     const due_date = formData.get('due_date') as string;
     const statusId = formData.get('status_id') as string;
-    const priority = formData.get('priority') as string;
+    const priority = formData.get('priority') as '0' | '1' | '2' | '3';
     const description = formData.get('description') as string;
       
     const { error } = await supabase
       .from('tasks')
-      .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, status_id: Number(statusId), priority: Number(priority), description: description });
+      .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, status_id: Number(statusId), priority: priority, description: description });
 
     if (error) {
       console.log(error);
@@ -176,13 +176,13 @@ export const actions = {
     const formData = await request.formData();
     const id = formData.get('id') as string;
     const name = formData.get('name') as string;
-    const priority = formData.get('priority') as string;
+    const priority = formData.get('priority') as '0' | '1' | '2' | '3';
     const due_date = formData.get('due_date') as string;
     const description = formData.get('description') as string;
 
     const { error } = await supabase
       .from('tasks')
-      .update({ user_id: session.user.id, name: name, description: description, priority: Number(priority), due_date: due_date })
+      .update({ user_id: session.user.id, name: name, description: description, priority: priority, due_date: due_date })
       .eq('id', id);
 
     if (error) {
@@ -225,12 +225,12 @@ export const actions = {
     const project_id = formData.get('project_id') as string;
     const name = formData.get('name') as string;
     const due_date = formData.get('due_date') as string;
-    const priority = formData.get('priority') as string;
+    const priority = formData.get('priority') as '0' | '1' | '2' | '3';
     const description = formData.get('description') as string;
 
     const { error } = await supabase
       .from('to_dos')
-      .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, done: false, priority: Number(priority), description: description });
+      .insert({ user_id: session.user.id, project_id: Number(project_id), name: name, due_date: due_date, done: false, priority: priority, description: description });
 
     if (error) {
       console.log(error);
@@ -249,13 +249,13 @@ export const actions = {
     const formData = await request.formData();
     const id = formData.get('id') as string;
     const name = formData.get('name') as string;
-    const priority = formData.get('priority') as string;
+    const priority = formData.get('priority') as '0' | '1' | '2' | '3';
     const due_date = formData.get('due_date') as string;
     const description = formData.get('description') as string;
 
     const { error } = await supabase
       .from('to_dos')
-      .update({ user_id: session.user.id, name: name, description: description, priority: Number(priority), due_date: due_date })
+      .update({ user_id: session.user.id, name: name, description: description, priority: priority, due_date: due_date })
       .eq('id', id);
 
     if (error) {

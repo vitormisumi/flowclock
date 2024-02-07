@@ -74,26 +74,26 @@ export function dueDate(date: string): {text: string, color: string} {
     const next_week = new Date();
     next_week.setDate(today.getDate() + 7);
     if (dueDate.toDateString() === yesterday.toDateString()) {
-        return { text: 'Yesterday', color: priorityColor(3, 'text') };
+        return { text: 'Yesterday', color: priorityColor('3', 'text') };
     } else if (dueDate < yesterday) {
-        return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColor(3, 'text') };
+        return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColor('3', 'text') };
     } else if (dueDate.toDateString() === today.toDateString()) {
-        return { text: 'Today', color: priorityColor(2, 'text') };
+        return { text: 'Today', color: priorityColor('2', 'text') };
     } else if (dueDate.toDateString() === tomorrow.toDateString()) {
-        return { text: 'Tomorrow', color: priorityColor(1, 'text') };
+        return { text: 'Tomorrow', color: priorityColor('1', 'text') };
     } else if (dueDate <= next_week) {
-        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'short' }), color: priorityColor(0, 'text') };
+        return { text: dueDate.toLocaleDateString('en-US', { weekday: 'short' }), color: priorityColor('0', 'text') };
     } else {
-        return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColor(0, 'text') };
+        return { text: dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), color: priorityColor('0', 'text') };
     }
 }
 
-export function priorityColor(priority: number | null, element: string) {
-		if (priority === 3) {
+export function priorityColor(priority: '0' | '1' | '2' | '3', element: string) {
+		if (Number(priority) === 3) {
 			return element + '-red-500 dark:' + element + '-red-500'
-		} else if (priority === 2) {
+		} else if (Number(priority) === 2) {
 			return element + '-yellow-400 dark:' + element + '-yellow-400'
-		} else if (priority === 1) {
+		} else if (Number(priority) === 1) {
 			return element + '-green-500 dark:' + element + '-green-500'
 		} else {
 			return element + '-secondary-900 dark:' + element + '-secondary-50'

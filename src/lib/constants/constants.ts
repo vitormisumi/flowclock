@@ -13,22 +13,22 @@ export const dateFormat: { [key: string]: string } = {
     yymmdd: 'yy-MM-dd'
 };
 
-export const priorityOptions = [
+export const priorityOptions: { name: 'None' | 'Low' | 'Medium' | 'High', value: '0' | '1' | '2' | '3' }[] = [
     {
         name: 'High',
-        value: 3
+        value: '3'
     },
     {
         name: 'Medium',
-        value: 2
+        value: '2'
     },
     {
         name: 'Low',
-        value: 1
+        value: '1'
     },
     {
         name: 'None',
-        value: 0
+        value: '0'
     }
 ];
 

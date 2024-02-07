@@ -19,7 +19,7 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		showMenu = null;
-		formData.append('priority', String(priority));
+		formData.append('priority', priority);
 		if (dueDate) {
 			formData.append('due_date', dueDate.toISOString());
 		}

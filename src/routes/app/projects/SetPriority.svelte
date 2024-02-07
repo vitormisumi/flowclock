@@ -4,7 +4,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { priorityColor } from '$lib/functions/functions';
 
-	export let priority: number | null;
+	export let priority: '0' | '1' | '2' | '3';
 	export let size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined;
 </script>
 

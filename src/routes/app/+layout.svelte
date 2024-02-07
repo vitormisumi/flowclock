@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { onMount } from 'svelte';
+	import Clock from './Clock.svelte';
+	import Menu from './Menu.svelte';
+	import Screen from './Screen.svelte';
+	import Warning from './Warning.svelte';
 	import { selectedProject } from './projects/stores';
 	import { windowWidth } from './stores';
-	import Menu from './Menu.svelte';
-	import Clock from './Clock.svelte';
-	import Warning from './Warning.svelte';
-	import Screen from './Screen.svelte';
 
 	export let data;
 
@@ -33,7 +32,11 @@
 	$: tasks.set(data.tasks);
 
 	const toDos = writable();
-	$: toDos.set(data.toDos);
+	$: toDos.set(
+		data.toDos
+			?.filter((x) => x.project_id === $selectedProject.id)
+			.filter((x) => data.settings?.completed_to_dos_hidden ? !x.done : x)
+	);
 
 	const intentions = writable();
 	$: intentions.set(data.intentions);
@@ -64,6 +67,8 @@
 			? document.documentElement.classList.add('dark')
 			: document.documentElement.classList.remove('dark');
 	});
+
+	$: console.log(data.settings?.completed_to_dos_hidden);
 </script>
 
 <svelte:window bind:innerWidth={$windowWidth} />

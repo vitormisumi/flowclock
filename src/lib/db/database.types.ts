@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       breaks: {
@@ -246,7 +246,7 @@ export interface Database {
           id: number
           last_edited: string
           name: string
-          status: string
+          status: Database["public"]["Enums"]["project_status"]
           user_id: string
         }
         Insert: {
@@ -258,7 +258,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name?: string
-          status?: string
+          status?: Database["public"]["Enums"]["project_status"]
           user_id: string
         }
         Update: {
@@ -270,7 +270,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name?: string
-          status?: string
+          status?: Database["public"]["Enums"]["project_status"]
           user_id?: string
         }
         Relationships: [
@@ -503,7 +503,7 @@ export interface Database {
           last_edited: string
           name: string
           order: number
-          priority: number
+          priority: Database["public"]["Enums"]["priority"]
           project_id: number
           status_id: number
           user_id: string
@@ -516,7 +516,7 @@ export interface Database {
           last_edited?: string
           name: string
           order?: number
-          priority: number
+          priority?: Database["public"]["Enums"]["priority"]
           project_id: number
           status_id: number
           user_id: string
@@ -529,7 +529,7 @@ export interface Database {
           last_edited?: string
           name?: string
           order?: number
-          priority?: number
+          priority?: Database["public"]["Enums"]["priority"]
           project_id?: number
           status_id?: number
           user_id?: string
@@ -567,7 +567,7 @@ export interface Database {
           id: number
           last_edited: string
           name: string
-          priority: number
+          priority: Database["public"]["Enums"]["priority"]
           project_id: number
           user_id: string
         }
@@ -579,7 +579,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name: string
-          priority: number
+          priority?: Database["public"]["Enums"]["priority"]
           project_id: number
           user_id: string
         }
@@ -591,7 +591,7 @@ export interface Database {
           id?: number
           last_edited?: string
           name?: string
-          priority?: number
+          priority?: Database["public"]["Enums"]["priority"]
           project_id?: number
           user_id?: string
         }
@@ -620,6 +620,14 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
+      priority: "0" | "1" | "2" | "3"
+      project_status:
+        | "idea"
+        | "planning"
+        | "on going"
+        | "completed"
+        | "suspended"
+        | "cancelled"
       sorting: "name" | "due_date" | "priority"
     }
     CompositeTypes: {

@@ -13,7 +13,7 @@
 
 	let dueDate: Date;
 
-	let priority: number = 0;
+	let priority: '0' | '1' | '2' | '3' = '0';
 
 	let hidden = true;
 
@@ -29,7 +29,7 @@
 			formData.append('due_date', dueDate.toISOString());
 		}
 		return async ({ update }) => {
-			priority = 0;
+			priority = '0';
 			loading = false;
 			hidden = true;
 			update();
