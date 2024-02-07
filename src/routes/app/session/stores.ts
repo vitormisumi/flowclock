@@ -169,7 +169,7 @@ function createFocus() {
 	
 	return {
 		subscribe,
-		set: (type: 'task' | 'intention', id: number, projectId: number) =>
+		set: (type: 'task' | 'intention' | '', id: number, projectId: number) =>
 			set({
 				type: type,
 				id: id,

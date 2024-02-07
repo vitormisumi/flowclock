@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { millisecondsToClock } from '$lib/functions/functions';
+	import { getContext, onMount } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
 	import {
+		endSession,
+		milliseconds,
 		session,
 		sessionBreak,
-		milliseconds,
+		sessionFocus,
 		sessionInterruptions,
-		startSession,
-		endSession
+		startSession
 	} from './session/stores';
-	import { millisecondsToClock } from '$lib/functions/functions';
-	import { page } from '$app/stores';
-	import { slide } from 'svelte/transition';
-	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const sessions: Writable<UserSession[]> = getContext('sessions');
@@ -24,6 +24,11 @@
 	onMount(() => {
 		if ($sessions[0].end === null) {
 			startSession($sessions[0].id, Date.parse($sessions[0].start));
+			sessionFocus.set(
+				$sessions[0].task_id ? 'task' : $sessions[0].intention_id ? 'intention' : '',
+				$sessions[0].task_id ?? $sessions[0].intention_id ?? 0,
+				$sessions[0].project_id ?? 0
+			);
 		} else if (
 			$sessions[0].id === $breaks[0].session_id &&
 			Date.parse($breaks[0].start) + $breaks[0].calculated_duration > Date.now()

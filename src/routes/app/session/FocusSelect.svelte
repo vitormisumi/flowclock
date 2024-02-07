@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Radio, Tabs, TabItem } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import { session, sessionFocus } from './stores';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
-	import Modal from '$lib/components/Modal.svelte';
+	import Radio from '$lib/components/Radio.svelte';
+	import { Dropdown, DropdownDivider, DropdownItem } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { windowWidth } from '../stores';
+	import { session, sessionFocus } from './stores';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -29,82 +29,85 @@
 	}
 </script>
 
-<Button
-	size={$windowWidth < 768 ? 'xs' : 'md'}
-	disabled={$session.running}
-	class="overflow-hidden"
-	on:click={() => (open = true)}
->
+<Button size={$windowWidth < 768 ? 'xs' : 'md'} disabled={$session.running} class="overflow-hidden">
 	<span class="truncate">
-		{'Focus on: ' + focusName}
+		Focus on: {focusName ?? ''}
 	</span>
 </Button>
-<Modal size="sm" outsideclose bind:open>
-	<h2 class="text-md font-medium text-secondary-900 dark:text-secondary-50">Focus on:</h2>
-	<Tabs
-		style="pill"
-		class="flex-nowrap overflow-x-scroll whitespace-nowrap"
-		contentClass="bg-transparent dark:bg-transparent"
-	>
-		{#each $projects as project, i}
-			<TabItem
-				open={$sessionFocus.projectId
-					? project.id === $sessionFocus.projectId
-					: i === $sessionFocus.projectId}
-				title={project.name}
-				activeClasses="bg-primary-500 dark:bg-primary-500 rounded-lg h-full w-full p-3 text-secondary-900 dark:text-secondary-50"
-				inactiveClasses="bg-transparent dark:bg-transparent hover:bg-primary-200 hover:dark:bg-primary-700 dark:bg-primary-800 transition-colors rounded-lg h-full w-full p-3 dark:text-secondary-200"
-			>
-				{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
-					<h3 class="text-sm font-bold">Tasks</h3>
-				{/if}
-				<ul>
-					{#each $tasks as task}
-						{#if task.project_id === project.id}
-							<li class="list-none p-1">
-								<Radio
-									name="group2"
-									value={task.id}
-									color="orange"
-									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors hover:border-accent-500 dark:text-primary-50 hover:dark:border-accent-500"
-									bind:group
-									on:click={() => {
-										sessionFocus.set('task', task.id, task.project_id);
-										open = false;
-									}}
-									>{task.name}
-								</Radio>
-							</li>
-						{/if}
-					{/each}
-				</ul>
-				{#if $intentions.filter((intention) => intention.project_id === project.id).length > 0}
-					<h3 class="text-sm font-bold">Intentions</h3>
-				{/if}
-				<ul>
-					{#each $intentions as intention}
-						{#if intention.project_id === project.id}
-							<li class="list-none p-1">
-								<Radio
-									name="group3"
-									value={intention.id}
-									color="orange"
-									class="cursor-pointer rounded-lg border border-transparent p-2 text-primary-900 transition-colors hover:border-accent-500 dark:text-primary-50 hover:dark:border-accent-500"
-									bind:group
-									on:click={() => {
-										sessionFocus.set('intention', intention.id, intention.project_id);
-										open = false;
-									}}
-									>{intention.name}
-								</Radio>
-							</li>
-						{/if}
-					{/each}
-				</ul>
-				{#if $tasks.filter((task) => task.project_id === project.id).length === 0 && $intentions.filter((intention) => intention.project_id === project.id).length === 0}
-					<h3 class="text-sm font-bold">This project has no tasks or intentions</h3>
-				{/if}
-			</TabItem>
-		{/each}
-	</Tabs>
-</Modal>
+<Dropdown
+	placement="top"
+	class="max-h-60 w-60 max-w-xs overflow-y-scroll rounded-b-md bg-secondary-200 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
+	containerClass=""
+	headerClass="bg-secondary-200 dark:bg-secondary-700 rounded-t-md"
+	bind:open
+>
+	<div slot="header" class="px-4 py-2 text-sm font-bold text-secondary-900 dark:text-secondary-50">
+		<p>Projects</p>
+	</div>
+	{#each $projects as project, i}
+		<DropdownItem
+			class="flex place-items-center justify-center gap-2 hover:bg-secondary-100 hover:dark:bg-secondary-800"
+		>
+			{project.name}
+		</DropdownItem>
+		<Dropdown
+			placement="top"
+			class="max-h-60 w-60 max-w-xs overflow-x-clip overflow-y-scroll rounded-md bg-secondary-200 p-2 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50 md:w-96"
+		>
+			{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
+				<h3 class="px-4 py-2 text-sm font-bold">Tasks</h3>
+			{/if}
+			<ul>
+				{#each $tasks as task}
+					{#if task.project_id === project.id}
+						<li class="list-none">
+							<Radio
+								value={task.id}
+								bind:group
+								on:click={() => sessionFocus.set('task', task.id, task.project_id)}
+							>
+								{task.name}
+							</Radio>
+						</li>
+					{/if}
+				{/each}
+			</ul>
+			{#if $intentions.filter((intention) => intention.project_id === project.id).length > 0}
+				<DropdownDivider />
+				<h3 class="px-4 py-2 text-sm font-bold">Intentions</h3>
+			{/if}
+			<ul>
+				{#each $intentions as intention}
+					{#if intention.project_id === project.id}
+						<li class="list-none">
+							<Radio
+								value={intention.id}
+								bind:group
+								on:click={() => sessionFocus.set('intention', intention.id, intention.project_id)}
+							>
+								{intention.name}
+							</Radio>
+						</li>
+					{/if}
+				{/each}
+			</ul>
+			{#if $tasks.filter((task) => task.project_id === project.id).length === 0 && $intentions.filter((intention) => intention.project_id === project.id).length === 0}
+				<h3 class="px-4 py-2 text-sm font-bold">This project has no tasks or intentions</h3>
+			{/if}
+		</Dropdown>
+	{/each}
+	<DropdownDivider />
+	<div class="px-1">
+		<Button
+			size="sm"
+			buttonStyle="transparent"
+			class="w-full rounded-md text-secondary-900 hover:bg-secondary-100 focus:ring-0 dark:text-secondary-50 hover:dark:bg-secondary-800"
+			on:click={() => {
+				sessionFocus.reset();
+				open = false;
+			}}
+		>
+			No focus
+		</Button>
+	</div>
+</Dropdown>

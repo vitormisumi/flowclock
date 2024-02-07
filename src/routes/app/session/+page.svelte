@@ -1,22 +1,21 @@
 <script lang="ts">
-	import { onMount, getContext } from 'svelte';
 	import { page } from '$app/stores';
+	import { getContext, onMount } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import Notification from '../../Notification.svelte';
+	import FocusSelect from './FocusSelect.svelte';
+	import Interruptions from './Interruptions.svelte';
+	import Message from './Message.svelte';
+	import SessionButton from './SessionButton.svelte';
 	import {
+		endInterruption,
+		endSession,
 		session,
 		sessionBreak,
 		sessionFocus,
-		sessionInterruptions,
 		startInterruption,
-		endInterruption,
-		startSession,
-		endSession
+		startSession
 	} from './stores';
-	import Message from './Message.svelte';
-	import SessionButton from './SessionButton.svelte';
-	import Interruptions from './Interruptions.svelte';
-	import Notification from '../../Notification.svelte';
-	import FocusSelect from './FocusSelect.svelte';
-	import type { Writable } from 'svelte/store';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -67,7 +66,10 @@
 						const end = Date.parse(payload.new.end);
 						endSession(
 							end,
-							Math.round((end - Date.parse(payload.new.start) - payload.new.interruption_duration) / $settings.ratio)
+							Math.round(
+								(end - Date.parse(payload.new.start) - payload.new.interruption_duration) /
+									$settings.ratio
+							)
 						);
 					}
 				}

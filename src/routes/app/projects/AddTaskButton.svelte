@@ -44,7 +44,7 @@
 	<Button
 		size="xs"
 		buttonStyle="add"
-		class="w-full hover:bg-secondary-100/50"
+		class="w-full hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
 		on:click={() => {
 			hidden = false;
 			dueDate = null;

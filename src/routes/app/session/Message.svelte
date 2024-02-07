@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { milliseconds, session, sessionBreak, sessionFocus } from './stores';
 	import { Popover } from 'flowbite-svelte';
-	import { fade } from 'svelte/transition';
+	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { fade } from 'svelte/transition';
+	import { milliseconds, session, sessionBreak, sessionFocus } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -28,7 +28,9 @@
 <div class="grid w-full items-center justify-center text-secondary-900 dark:text-secondary-50">
 	{#if $session.running}
 		<p in:fade>Break time: {breakMinutes} min</p>
-		<p class="truncate" in:fade>Focusing on: {focusName}</p>
+		{#if focusName}
+			<p class="truncate" in:fade>Focusing on: {focusName}</p>
+		{/if}
 		<Popover class="max-w-md bg-primary-50 dark:bg-primary-900">
 			<p class="text-sm font-light text-primary-900 dark:text-primary-50">
 				FlowClock sessions are designed to help you stay focused on one task at a time. If you

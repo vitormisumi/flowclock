@@ -29,7 +29,7 @@
 		{/if}
 	</div>
 </Button>
-<Dropdown class="rounded-md bg-secondary-100 p-1 dark:bg-secondary-800" placement="top">
+<Dropdown class="rounded-md bg-secondary-200 p-1 dark:bg-secondary-700" placement="top">
 	<div class="grid gap-1">
 		<DatePicker
 			bind:value={dueDate}
@@ -38,7 +38,7 @@
 		/>
 		<Button
 			size="xs"
-			class="rounded-sm border bg-secondary-500 text-secondary-50 hover:bg-secondary-400 focus:ring-0 dark:bg-secondary-500 dark:text-secondary-50"
+			class="rounded-sm border bg-secondary-500 text-secondary-50 hover:bg-secondary-400 focus:ring-0 dark:bg-secondary-500 dark:text-secondary-50 hover:dark:bg-secondary-800"
 			on:click={() => {
 				dueDate = null;
 			}}
@@ -55,6 +55,6 @@
 		--date-picker-highlight-border: transparent;
 		--date-picker-highlight-shadow: transparent;
 		--date-picker-selected-color: #f1f3f4;
-		--date-picker-selected-background: #1B5865;
+		--date-picker-selected-background: #0B0E0E;
 	}
 </style>
