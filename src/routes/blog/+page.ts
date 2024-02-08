@@ -1,6 +1,6 @@
 import { posts } from "./data";
 
-export const load = async () => {
+export async function load() {
     return {
         summaries: posts.map((post: any) => ({
             slug: post.slug.current,
