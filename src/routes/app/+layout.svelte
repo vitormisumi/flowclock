@@ -67,8 +67,6 @@
 			? document.documentElement.classList.add('dark')
 			: document.documentElement.classList.remove('dark');
 	});
-
-	$: console.log(data.settings?.completed_to_dos_hidden);
 </script>
 
 <svelte:window bind:innerWidth={$windowWidth} />

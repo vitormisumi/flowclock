@@ -1,17 +1,36 @@
-<script lang="ts">
-	import Post from './Post.svelte';
-	import Navbar from './Navbar.svelte';
+<script>
+	import { Image } from '@unpic/svelte';
+	import { Badge } from 'flowbite-svelte';
 
 	export let data;
-
-	function findAuthor(post: Post) {
-		return data.author.find((x: Author) => x._id === post.author._ref);
-	}
 </script>
 
-<Navbar />
-<div class="grid justify-center bg-secondary-50 p-4 pt-20 md:p-8 md:pt-32 lg:p-12 lg:pt-40">
-	{#each data.posts as post}
-		<Post {post} author={findAuthor(post)} />
+<ul class="grid grid-cols-1 gap-8 md:grid-cols-3">
+	{#each data.summaries as { slug, title, date, image, categories }}
+		<li class="relative">
+			<a href="/blog/{slug}" class="font-bold">
+				<Image
+					layout="constrained"
+					breakpoints={[300, 600, 900, 1200, 1500, 1800]}
+					src={image}
+					alt={title}
+					aspectRatio={1.6}
+					width={1000}
+				/>
+				{title}
+			</a>
+			<p class="font-light tracking-wide">
+				{new Date(date).toLocaleDateString('en-US', {
+					day: 'numeric',
+					month: 'short',
+					year: 'numeric'
+				})}
+			</p>
+			<div class="absolute left-0 top-0 flex gap-2 p-2">
+				{#each categories as category}
+					<Badge class="bg-primary-50 text-secondary-900">{category.title}</Badge>
+				{/each}
+			</div>
+		</li>
 	{/each}
-</div>
+</ul>

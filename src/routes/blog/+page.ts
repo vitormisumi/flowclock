@@ -1,35 +1,14 @@
-import {createClient} from "@sanity/client";
-
-const client = createClient({
-  projectId: "6e39v93r",
-  dataset: "production",
-  apiVersion: "2022-03-07",
-  useCdn: false
-});
+import { posts } from "./data";
 
 export async function load() {
-  const posts = await client.fetch(`*[_type == "post"] {
-      author,
-      title,
-      body,
-      _createdAt,
-      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 )
-    }`);
-  const author = await client.fetch(`*[_type == "author"] {
-      name,
-      _id,
-      "imageUrl": image.asset->url,
-    }`);
-  
-  if (posts && author) {
     return {
-      posts: posts,
-      author: author
+        summaries: posts.map((post: any) => ({
+            slug: post.slug.current,
+            title: post.title,
+            author: post.author,
+            date: post._createdAt,
+            image: post.image,
+            categories: post.categories
+        }))
     };
-  }
-
-  return {
-    status: 500,
-    body: new Error("Internal Server Error")
-  };
 }
