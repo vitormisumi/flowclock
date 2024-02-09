@@ -61,7 +61,7 @@
 	</form>
 {:else}
 	<form method="POST" action="?/break" use:enhance={handleBreak}>
-		<Button size="xl" type="submit" class="w-full text-3xl duration-1000" disabled={loading}>
+		<Button size="xl" type="submit" class="w-full text-3xl duration-1000" disabled={loading || !$session.id}>
 			<i class="fa-solid fa-stop pr-4" />Break
 		</Button>
 	</form>

@@ -47,7 +47,7 @@
 		size={$windowWidth < 768 ? 'xs' : 'md'}
 		type="submit"
 		class="w-full"
-		disabled={!$session.running || !$session.id}
+		disabled={!$session.id}
 	>
 		<i class="fa-solid fa-pause pr-3" />Interruption
 	</Button>
