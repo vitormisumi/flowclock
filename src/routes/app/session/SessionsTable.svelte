@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { ButtonGroup, Button } from 'flowbite-svelte';
-	import { filteredSessions, startRow, endRow, openRow } from './stores';
 	import { dateFromTimestamp, millisecondsToClock } from '$lib/functions/functions';
-	import { fade } from 'svelte/transition';
+	import { Button, ButtonGroup } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
-	import DeleteSession from './DeleteSessionButton.svelte';
-	import SessionDetails from './SessionDetails.svelte';
 	import type { Writable } from 'svelte/store';
+	import { fade } from 'svelte/transition';
+	import DeleteSessionButton from './DeleteSessionButton.svelte';
+	import SessionDetails from './SessionDetails.svelte';
+	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -57,7 +57,7 @@
 <div class="flex h-full flex-col justify-between gap-2">
 	<table class="w-full table-fixed overflow-hidden rounded-xl">
 		<thead
-			class="bg-secondary-200 text-center font-bold text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
+			class="bg-secondary-200 text-center text-sm font-bold text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
 		>
 			<tr>
 				<th class="py-1">Date</th>
@@ -68,7 +68,7 @@
 			{#each $filteredSessions as session, i}
 				{#if i >= $startRow && i <= $endRow}
 					<tr
-						class="relative cursor-pointer border-t bg-secondary-50 text-center border-secondary-100 transition-colors hover:bg-primary-100 dark:border-secondary-800 dark:bg-secondary-900 hover:dark:bg-primary-800"
+						class="relative cursor-pointer border-t border-secondary-100 bg-secondary-50 text-center transition-colors hover:bg-primary-100 dark:border-secondary-800 dark:bg-secondary-900 hover:dark:bg-primary-800"
 						tabindex="0"
 						on:click={() => rowClick(i)}
 						on:keydown={(e) => rowPress(e, i)}
@@ -83,7 +83,7 @@
 							{millisecondsToClock(session.focused_duration)}
 							{#if edit === i}
 								<div class="absolute right-1 top-1 z-10" in:fade>
-									<DeleteSession {session} />
+									<DeleteSessionButton {session} />
 								</div>
 							{/if}
 						</td>

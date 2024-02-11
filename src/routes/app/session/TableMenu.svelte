@@ -1,9 +1,17 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import { periods } from '$lib/constants/constants';
-	import { Drawer, Tooltip } from 'flowbite-svelte';
+	import { Dropdown, DropdownDivider, Tooltip } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import {
+		endRow,
+		filter,
+		filteredInterruptions,
+		filteredSessions,
+		openRow,
+		startRow
+	} from '../dashboard/stores';
 	import { windowWidth } from '../stores';
 	import {
 		filterInterruptionsByCurrentWeek,
@@ -17,27 +25,11 @@
 		filterSessionsByMonth,
 		filterSessionsByYear
 	} from './filter';
-	import {
-		endRow,
-		filter,
-		filteredInterruptions,
-		filteredSessions,
-		openRow,
-		startRow,
-		selectedPeriod
-	} from './stores';
 
 	const sessions: Writable<UserSession[]> = getContext('sessions');
 	const interruptions: Writable<Interruption[]> = getContext('interruptions');
 
-	let hidden = true;
-
-	function openPeriodDrawer() {
-		hidden = false;
-	}
-
 	function applyFilter(period: Period) {
-		hidden = true;
 		$filter = { timeframe: period.timeframe, current: period.current };
 		$startRow = 0;
 		$endRow = 9;
@@ -80,47 +72,63 @@
 				$filteredInterruptions = $interruptions;
 		}
 	}
+
+	export let hidden: boolean;
+
+	let open = false;
+	let openPeriods = false;
 </script>
 
-<div>
-	<Button size="sm" buttonStyle="menu" on:click={openPeriodDrawer}>
-		{$selectedPeriod?.name} <i class="fa-solid fa-chevron-down pl-2" />
-	</Button>
-	{#if $windowWidth >= 768}
-		<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
-			Select time period
-		</Tooltip>
-	{/if}
-</div>
-<Drawer
-	transitionType="fly"
-	transitionParams={{ x: 100 }}
-	placement="right"
-	width="w-full md:w-80 lg:w-96"
-	class="z-50 bg-secondary-50 dark:bg-secondary-900"
-	bind:hidden
+<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+<Dropdown
+	class="flex flex-col justify-items-center rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700"
+	bind:open
 >
-	<div class="grid gap-4">
-		<div class="grid grid-cols-3 place-items-center">
-			<h2 class="col-start-2 text-center font-bold text-primary-900 dark:text-primary-50">
-				Filter period
-			</h2>
-			<Button
-				size="xs"
-				on:click={() => (hidden = true)}
-				class="col-start-3 w-fit place-self-end bg-transparent text-secondary-900 dark:bg-transparent dark:text-secondary-50 md:invisible"
-			>
-				<i class="fa-solid fa-x" />
-			</Button>
-		</div>
+	<Button id="calendar" size="xs" buttonStyle="menu" on:click={() => (openPeriods = !openPeriods)}>
+		<i class="fa-solid fa-calendar" />
+	</Button>
+	<Dropdown
+		placement="right-start"
+		class="flex w-full flex-col justify-center rounded-md bg-secondary-200 p-1 dark:bg-secondary-700"
+		bind:open={openPeriods}
+	>
 		{#each periods as period}
 			<Button
-				size="sm"
-				disabled={$filter.timeframe === period.timeframe && $filter.current === period.current}
-				on:click={() => applyFilter(period)}
+				size="xs"
+				buttonStyle="menu"
+				class="w-24"
+				on:click={() => {
+					applyFilter(period);
+					open = false;
+				}}
 			>
 				{period.name}
 			</Button>
 		{/each}
-	</div>
-</Drawer>
+	</Dropdown>
+	{#if $windowWidth >= 768}
+		<Tooltip
+			placement="left"
+			triggeredBy="#calendar"
+			class="bg-secondary-400 dark:bg-secondary-800"
+		>
+			Filter period
+		</Tooltip>
+	{/if}
+	<DropdownDivider class="bg-secondary-100 dark:bg-secondary-800" />
+	<Button
+		size="xs"
+		buttonStyle="menu"
+		on:click={() => {
+			hidden = !hidden;
+			open = false;
+		}}
+	>
+		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
+	</Button>
+	{#if $windowWidth >= 768}
+		<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
+			{hidden ? 'Show' : 'Hide'} table
+		</Tooltip>
+	{/if}
+</Dropdown>

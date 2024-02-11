@@ -2,7 +2,7 @@
 	import { Tooltip } from 'flowbite-svelte';
 	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
-	import { filteredSessions } from './stores';
+	import { filteredSessions } from '../dashboard/stores';
 	import { windowWidth } from '../stores';
 	import { getContext } from 'svelte';
 	import Modal from '$lib/components/Modal.svelte';

@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Dropdown } from 'flowbite-svelte';
-	import { sorting } from './stores';
-	import { getContext, onDestroy } from 'svelte';
-	import { sortOptions } from '$lib/constants/constants';
 	import Button from '$lib/components/Button.svelte';
+	import { sortOptions } from '$lib/constants/constants';
+	import { Dropdown, Tooltip } from 'flowbite-svelte';
+	import { getContext, onDestroy } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { windowWidth } from '../stores';
+	import { sorting } from './stores';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
 
@@ -20,7 +21,7 @@
 			if (status.tasks && status.tasks.length > 0) {
 				switch (sortBy) {
 					case 'priority':
-						status.tasks.sort((a, b) => b.priority - a.priority);
+						status.tasks.sort((a, b) => Number(b.priority) - Number(a.priority));
 						break;
 					case 'due_date':
 						status.tasks.sort((a, b) => {
@@ -67,8 +68,8 @@
 	});
 </script>
 
-<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
-<Dropdown placement="bottom" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
+<Button id="sort" size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
+<Dropdown placement="left-start" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
 	<div class="flex w-20 flex-col gap-1">
 		{#each sortOptions as option}
 			<Button
@@ -84,3 +85,8 @@
 		{/each}
 	</div>
 </Dropdown>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left" triggeredBy="#sort" class="bg-secondary-400 dark:bg-secondary-800">
+		Sort tasks
+	</Tooltip>
+{/if}

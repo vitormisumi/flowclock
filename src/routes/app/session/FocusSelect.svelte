@@ -29,7 +29,7 @@
 	}
 </script>
 
-<Button size={$windowWidth < 768 ? 'xs' : 'md'} disabled={$session.running} class="overflow-hidden">
+<Button size={$windowWidth < 768 ? 'xs' : 'md'} buttonStyle="menu" class="overflow-hidden border-transparent">
 	<span class="truncate">
 		Focus on: {focusName ?? ''}
 	</span>

@@ -8,9 +8,11 @@
 		Object.entries(
 			$filteredInterruptions.reduce(
 				(distribution, item) => {
-					const reason = item.reason ?? 'no reason';
-					distribution[reason] =
-						(distribution[reason] || 0) + (group === 'frequency' ? 1 : item.duration ?? 0);
+					const reason = item.reason != '' ? item.reason : 'no reason';
+					if (reason) {
+						distribution[reason] =
+							(distribution[reason] || 0) + (group === 'frequency' ? 1 : item.duration ?? 0);
+					}
 					return distribution;
 				},
 				{} as { [key: string]: number }
@@ -30,8 +32,12 @@
 				x="48%"
 				y={value * 50 + 30}
 				text-anchor="end"
-				class="fill-primary-900 capitalize dark:fill-primary-50">{reason[0]}</text
+				class="capitalize {reason[0] === 'no reason'
+					? 'fill-secondary-500 dark:fill-secondary-500'
+					: 'fill-secondary-900 dark:fill-secondary-50'}"
 			>
+				{reason[0]}
+			</text>
 			<rect
 				x="50%"
 				y={value * 50 + 5}

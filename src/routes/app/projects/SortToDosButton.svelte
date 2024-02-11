@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Dropdown } from 'flowbite-svelte';
+	import { Dropdown, Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import { sorting } from './stores';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { windowWidth } from '../stores';
 
 	export let open: boolean;
 
@@ -14,8 +15,8 @@
 	};
 </script>
 
-<Button size="xs" buttonStyle="menu" id="menu"><i class="fa-solid fa-sort" /></Button>
-<Dropdown placement="bottom" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
+<Button id="sort" size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
+<Dropdown placement="left-start" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
 	<form
 		method="POST"
 		action="?/sortToDos"
@@ -33,3 +34,8 @@
 		</Button>
 	</form>
 </Dropdown>
+{#if $windowWidth >= 768}
+	<Tooltip placement="left" triggeredBy="#sort" class="bg-secondary-400 dark:bg-secondary-800">
+		Sort to-dos
+	</Tooltip>
+{/if}

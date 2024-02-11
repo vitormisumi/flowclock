@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { filteredInterruptions } from './stores';
+	import { filteredInterruptions } from '../dashboard/stores';
 	import { slide } from 'svelte/transition';
 	import { timeFromTimestamp } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
@@ -23,7 +23,7 @@
 				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)?.name ?? 'No focus'}
 			</p>
 			{#if $windowWidth >= 768}
-				<Tooltip>Session focus</Tooltip>
+				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Session focus</Tooltip>
 			{/if}
 			<p class="col-start-1 row-start-2">
 				<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
@@ -32,13 +32,13 @@
 				)}
 			</p>
 			{#if $windowWidth >= 768}
-				<Tooltip>Start time</Tooltip>
+				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Start time</Tooltip>
 			{/if}
 			<p class="col-start-2 row-start-2">
 				<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
 			</p>
 			{#if $windowWidth >= 768}
-				<Tooltip>End time</Tooltip>
+				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">End time</Tooltip>
 			{/if}
 			<div class="col-span-2 col-start-1 row-start-3 grid justify-items-start">
 				{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
@@ -55,7 +55,7 @@
 				{/each}
 			</div>
 			{#if $windowWidth >= 768}
-				<Tooltip>Interruptions</Tooltip>
+				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Interruptions</Tooltip>
 			{/if}
 		</div>
 	</td>

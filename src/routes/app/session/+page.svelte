@@ -2,11 +2,10 @@
 	import { page } from '$app/stores';
 	import { getContext, onMount } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
-	import FocusSelect from './FocusSelect.svelte';
-	import Interruptions from './Interruptions.svelte';
-	import Message from './Message.svelte';
-	import SessionButton from './SessionButton.svelte';
+	import SessionCard from './SessionCard.svelte';
+	import TableCard from './TableCard.svelte';
 	import {
 		endInterruption,
 		endSession,
@@ -146,16 +145,15 @@
 </script>
 
 <div
-	class="grid h-full w-full content-end justify-items-center text-center font-light dark:text-secondary-100 md:text-xl lg:text-2xl"
+	class="flex flex-col w-full items-center h-full text-center font-light dark:text-secondary-100 md:text-xl lg:text-2xl"
 >
-	<div class="grid w-full max-w-xs gap-1 md:gap-4 lg:gap-8 portrait:gap-2">
-		<Message />
-		{#if $session.running}
-			<Interruptions />
-		{:else}
-			<FocusSelect />
+	<div class="grid w-full max-w-lg gap-1 md:gap-4 portrait:gap-2">
+		<SessionCard />
+		{#if !$session.running}
+			<div transition:slide={{ delay: 500 }}>
+				<TableCard />
+			</div>
 		{/if}
-		<SessionButton />
 	</div>
 </div>
 {#if form}

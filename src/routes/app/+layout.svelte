@@ -78,5 +78,4 @@
 		<Menu />
 	</span>
 </Screen>
-<Clock />
 <Warning />

@@ -52,7 +52,7 @@
 		<Button
 			size="xl"
 			buttonStyle={$sessionBreak.running && !$sessionBreak.alarmPlayed ? 'regular' : 'accent'}
-			class="w-full text-3xl duration-1000"
+			class="w-full text-2xl duration-1000"
 			type="submit"
 			disabled={loading}
 		>
@@ -61,7 +61,7 @@
 	</form>
 {:else}
 	<form method="POST" action="?/break" use:enhance={handleBreak}>
-		<Button size="xl" type="submit" class="w-full text-3xl duration-1000" disabled={loading || !$session.id}>
+		<Button size="xl" type="submit" class="w-full text-2xl duration-1000" disabled={loading || !$session.id}>
 			<i class="fa-solid fa-stop pr-4" />Break
 		</Button>
 	</form>

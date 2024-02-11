@@ -1,16 +1,24 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
-	import { filteredSessions } from './stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
+	import { Card } from 'flowbite-svelte';
+	import { slide } from 'svelte/transition';
+	import { filteredSessions, selectedPeriod } from '../dashboard/stores';
 	import SessionsTable from './SessionsTable.svelte';
+	import TableMenu from './TableMenu.svelte';
+
+	let hidden = true;
 
 	$: duration = $filteredSessions.reduce((accumulator, object) => {
 		return accumulator + object.focused_duration;
 	}, 0);
 </script>
 
-<Card class="h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800">
-	<div class="flex flex-wrap justify-around gap-2 p-2 text-center">
+<Card class="relative h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800">
+	<p>{$selectedPeriod?.name}</p>
+	<div class="absolute top-0 right-0 p-6">
+		<TableMenu bind:hidden />
+	</div>
+	<div class="flex flex-wrap items-center justify-between gap-2 p-2 text-center">
 		<div>
 			<h2 class="text-sm font-semibold text-primary-900 dark:text-primary-50 md:text-lg">
 				Sessions
@@ -34,5 +42,9 @@
 			</p>
 		</div>
 	</div>
-	<SessionsTable />
+	{#if !hidden}
+		<div transition:slide>
+			<SessionsTable />
+		</div>
+	{/if}
 </Card>

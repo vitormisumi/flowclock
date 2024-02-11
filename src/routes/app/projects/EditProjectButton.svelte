@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { Tooltip, Input, Select, Textarea } from 'flowbite-svelte';
-	import { selectedProject } from './stores';
-	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Select, Textarea, Tooltip } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { windowWidth } from '../stores';
+	import { selectedProject } from './stores';
 
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
@@ -63,18 +63,20 @@
 			class="border-0 bg-transparent text-xl dark:bg-transparent dark:text-secondary-50 placeholder:dark:text-secondary-500"
 			required
 		></Input>
-		<Input
-			name="goal"
-			placeholder="Project goal"
-			value={$selectedProject.goal}
-			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
-		></Input>
-		<Textarea
-			name="description"
-			placeholder="Description"
-			value={$selectedProject.description}
-			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
-		></Textarea>
+		<div class="flex place-items-start">
+			<Input
+				name="goal"
+				placeholder="Project goal"
+				value={$selectedProject.goal}
+				class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
+			></Input>
+			<Textarea
+				name="description"
+				placeholder="Description"
+				value={$selectedProject.description}
+				class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
+			></Textarea>
+		</div>
 		<Select
 			items={statusOptions}
 			name="status"

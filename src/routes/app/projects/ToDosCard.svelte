@@ -36,7 +36,7 @@
 	{#if !hidden}
 		<div class="w-full" transition:slide>
 			<div class="grid place-items-center">
-				<ToDoList {completedHidden} />
+				<ToDoList />
 				<AddToDoButton />
 			</div>
 		</div>
