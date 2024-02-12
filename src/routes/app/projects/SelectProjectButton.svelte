@@ -94,7 +94,7 @@
 					placeholder="Group name"
 					class="w-full rounded-md bg-transparent pl-1 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-primary-700"
 				/>
-				<Button size="xs" on:click={() => (open = false)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" on:click={() => (open = false)}>Cancel</Button>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Save</Button>
 			</form>
 		{/if}

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
 	import { windowWidth } from '../stores';
-	import Button from '$lib/components/Button.svelte';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let s: TaskStatuses;
 
@@ -51,7 +51,7 @@
 				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>
 			<div class="flex gap-1">
-				<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" on:click={() => (edit = 0)}>Cancel</Button>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Save</Button>
 			</div>
 		</form>

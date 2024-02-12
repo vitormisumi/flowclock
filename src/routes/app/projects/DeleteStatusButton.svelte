@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Tooltip } from 'flowbite-svelte';
+	import { windowWidth } from '../stores';
 
 	export let s: TaskStatuses;
 
@@ -40,7 +40,7 @@
 		action="?/deleteStatus"
 		use:enhance={handleClick}
 	>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+		<Button buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
 			class="border-2 border-red-900 bg-transparent transition-colors hover:bg-red-950 dark:bg-transparent dark:text-red-700"
 			type="submit"

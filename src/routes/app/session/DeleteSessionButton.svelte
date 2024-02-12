@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
-	import { timeFromTimestamp, dateFromTimestamp } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import { dateFromTimestamp, timeFromTimestamp } from '$lib/functions/functions';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Tooltip } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import { filteredSessions } from '../dashboard/stores';
 	import { windowWidth } from '../stores';
-	import { getContext } from 'svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import type { Writable } from 'svelte/store';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -64,20 +65,18 @@
 		class="flex w-full justify-center gap-4"
 		use:enhance={handleClick}
 	>
-		<button
+		<Button
 			disabled={loading}
-			class="flex items-center rounded-lg bg-primary-500 px-5 py-2.5 text-sm font-medium text-primary-900 transition-colors hover:bg-primary-600 dark:bg-primary-600 dark:text-primary-50 hover:dark:bg-primary-700"
-			on:click|stopPropagation={() => (open = false)}
+			buttonStyle="cancel"
+			on:click={(e) => {
+				e.stopPropagation();
+				open = false;
+			}}
 		>
 			Cancel
-		</button>
-		<button
-			class="rounded-lg border-none bg-red-600 px-5 py-2.5 text-sm font-medium text-red-50 transition-colors hover:bg-red-700 focus:ring-0 dark:bg-red-600 dark:text-red-50 hover:dark:bg-red-700"
-			type="submit"
-			disabled={loading}
-			on:click|stopPropagation
-		>
+		</Button>
+		<Button buttonStyle="red" type="submit" disabled={loading} on:click={(e) => e.stopPropagation}>
 			Delete
-		</button>
+		</Button>
 	</form>
 </Modal>

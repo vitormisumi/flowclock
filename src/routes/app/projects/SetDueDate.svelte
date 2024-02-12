@@ -17,7 +17,7 @@
 		: null;
 </script>
 
-<Button {size} buttonStyle="transparent" class="border-secondary-900 dark:border-secondary-50 {dueDate ? size === 'xs' ? 'w-28' : 'w-32' : 'w-auto'}">
+<Button {size} buttonStyle="menu" class="{dueDate ? size === 'xs' ? 'w-28' : 'w-32' : 'w-auto'}">
 	<div class="flex h-3 place-items-center gap-2 text-secondary-900 dark:text-secondary-50">
 		<i class="fa-solid fa-calendar" />
 		{#if dueDate}

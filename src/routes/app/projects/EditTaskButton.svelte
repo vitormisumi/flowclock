@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Tooltip, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Textarea, Tooltip } from 'flowbite-svelte';
+	import { windowWidth } from '../stores';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let task: Task;
 	export let showMenu: number | null;
@@ -74,6 +74,7 @@
 			<div class="flex gap-1">
 				<Button
 					{size}
+					buttonStyle="cancel"
 					on:click={() => {
 						open = false;
 						showMenu = null;

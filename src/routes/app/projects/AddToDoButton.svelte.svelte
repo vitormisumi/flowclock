@@ -78,7 +78,7 @@
 				<SetDueDate task={null} size="xs" bind:dueDate />
 			</div>
 			<div class="flex gap-1">
-				<Button size="xs" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Add To-Do</Button>
 			</div>
 		</div>

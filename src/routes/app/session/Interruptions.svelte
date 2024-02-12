@@ -46,7 +46,7 @@
 	<Button
 		size={$windowWidth < 768 ? 'xs' : 'md'}
 		type="submit"
-		class="w-full"
+		class="w-full bg-secondary-200 dark:bg-secondary-700"
 		buttonStyle="menu"
 		disabled={!$session.id}
 	>

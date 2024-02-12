@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
-	import { selectedProject, selectedProjectId } from './stores';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Tooltip } from 'flowbite-svelte';
+	import { windowWidth } from '../stores';
+	import { selectedProject, selectedProjectId } from './stores';
 
 	let open = false;
 
@@ -40,7 +40,7 @@
 		action="?/delete"
 		use:enhance={handleClick}
 	>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+		<Button buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button buttonStyle="red" type="submit" disabled={loading}>Delete</Button>
 	</form>
 </Modal>

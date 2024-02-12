@@ -51,7 +51,7 @@
 				class="h-8 w-20 rounded-md bg-transparent pl-1 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-secondary-700"
 			/>
 			<div class="flex justify-end gap-1">
-				<Button size="xs" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 				<Button
 					size="xs"
 					buttonStyle="accent"

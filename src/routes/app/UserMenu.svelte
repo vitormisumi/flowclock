@@ -80,10 +80,10 @@
 			<Button size="sm" type="submit" buttonStyle="red">Don't Save</Button>
 		</form>
 		<div class="flex gap-2">
+			<Button size="sm" buttonStyle="cancel" on:click={() => (open = false)}>Cancel</Button>
 			<form method="POST" action="/app?/saveAndSignOut" use:enhance={saveAndSignOut}>
 				<Button size="sm" type="submit" buttonStyle="accent" disabled={loading}>Save</Button>
 			</form>
-			<Button size="sm" on:click={() => (open = false)}>Cancel</Button>
 		</div>
 	</div>
 </Modal>

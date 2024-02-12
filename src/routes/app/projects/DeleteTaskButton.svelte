@@ -43,7 +43,7 @@
 		action="?/deleteTask"
 		use:enhance={handleClick}
 	>
-		<Button disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+		<Button buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button buttonStyle="red" type="submit" disabled={loading}>Delete</Button>
 	</form>
 </Modal>

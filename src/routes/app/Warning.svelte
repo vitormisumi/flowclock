@@ -43,12 +43,12 @@
 	<p class="dark:text-secondary-200">
 		You have reached your session length warning.<br />How about taking a break?
 	</p>
-	<div class="flex justify-evenly">
+	<div class="flex justify-around">
+		<Button size="sm" buttonStyle="cancel" on:click={dismiss}>Dismiss</Button>
 		<form method="POST" action="/app/session?/break" use:enhance={handleClick}>
 			<Button size="sm" buttonStyle="accent" type="submit" disabled={loading}>
 				<i class="fa-solid fa-stop pr-2" />Break
 			</Button>
 		</form>
-		<Button size="sm" on:click={dismiss}><i class="fa-solid fa-x pr-2" />Dismiss</Button>
 	</div>
 </Modal>

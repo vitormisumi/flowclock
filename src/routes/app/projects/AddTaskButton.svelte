@@ -79,6 +79,7 @@
 			<div class="flex gap-1">
 				<Button
 					size="xs"
+					buttonStyle="cancel"
 					disabled={loading}
 					on:click={() => {
 						hidden = true;

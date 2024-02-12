@@ -72,6 +72,7 @@
 			<div class="flex gap-1">
 				<Button
 					{size}
+					buttonStyle="cancel"
 					on:click={() => {
 						open = false;
 						showMenu = null;

@@ -49,7 +49,7 @@
 				>
 				<div class="flex justify-center gap-4">
 					<Button type="submit" buttonStyle="red" disabled={!confirmDelete}>Delete</Button>
-					<Button disabled={loading}>Cancel</Button>
+					<Button buttonStyle="cancel" disabled={loading}>Cancel</Button>
 				</div>
 			</form>
 		</Modal>

@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import Button from '$lib/components/Button.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
-	import { enhance } from '$app/forms';
 	import { windowWidth } from '../stores';
-	import Button from '$lib/components/Button.svelte';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let group: ProjectGroup;
 
@@ -50,12 +50,13 @@
 				placeholder={group.name}
 				class="w-full rounded-md bg-transparent pl-2 text-secondary-700 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-primary-700"
 			/>
-			<Button size="xs" on:click={() => (edit = 0)}>Cancel</Button>
+			<Button size="xs" buttonStyle="cancel" on:click={() => (edit = 0)}>Cancel</Button>
 			<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Save</Button>
 		</form>
 	{:else}
 		<Button
-			class="cursor-text bg-transparent pl-2 transition-colors hover:bg-transparent focus:ring-0 dark:bg-transparent"
+			buttonStyle="transparent"
+			class="cursor-text pl-2"
 			on:click={() => {
 				edit = group.id;
 				showDelete = 0;

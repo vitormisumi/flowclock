@@ -63,7 +63,7 @@
 		></Textarea>
 		<div class="flex justify-end gap-2">
 			<div>
-				<Button size="xs" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" disabled={loading} on:click={() => (hidden = true)}>Cancel</Button>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>
 					Add Intention
 				</Button>

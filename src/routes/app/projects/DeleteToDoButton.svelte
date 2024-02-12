@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Tooltip } from 'flowbite-svelte';
+	import { windowWidth } from '../stores';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;
@@ -37,6 +37,7 @@
 		use:enhance={handleClick}
 	>
 		<Button
+			buttonStyle="cancel"
 			on:click={() => {
 				open = false;
 				showMenu = null;
