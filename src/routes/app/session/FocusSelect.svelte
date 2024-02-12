@@ -5,7 +5,7 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { windowWidth } from '../stores';
-	import { session, sessionFocus } from './stores';
+	import { sessionFocus } from './stores';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -29,7 +29,11 @@
 	}
 </script>
 
-<Button size={$windowWidth < 768 ? 'xs' : 'md'} buttonStyle="menu" class="overflow-hidden border-transparent">
+<Button
+	size={$windowWidth < 768 ? 'xs' : 'md'}
+	buttonStyle="menu"
+	class="overflow-hidden border-transparent"
+>
 	<span class="truncate">
 		Focus on: {focusName ?? ''}
 	</span>

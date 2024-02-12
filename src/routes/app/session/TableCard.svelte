@@ -13,9 +13,10 @@
 	}, 0);
 </script>
 
-<Card class="relative h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800">
-	<p>{$selectedPeriod?.name}</p>
-	<div class="absolute top-0 right-0 p-6">
+<Card class="h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800">
+	<div class="flex items-center justify-between">
+		<div class="w-8" />
+		<p class="text-secondary-900 dark:text-secondary-50 font-thin text-base md:text-lg">{$selectedPeriod?.name}</p>
 		<TableMenu bind:hidden />
 	</div>
 	<div class="flex flex-wrap items-center justify-between gap-2 p-2 text-center">
