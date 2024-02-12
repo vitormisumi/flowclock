@@ -68,7 +68,7 @@
 		x1="50%"
 		y1="0"
 		x2="50%"
-		y2={Object.keys(distribution).length * 50}
+		y2={Object.keys(distribution).length >= 10 ? 500 : Object.keys(distribution).length * 50}
 		class="stroke-secondary-100 dark:stroke-secondary-800"
 	/>
 	<text
