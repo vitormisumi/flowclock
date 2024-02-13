@@ -32,7 +32,7 @@
 <Button
 	size={$windowWidth < 768 ? 'xs' : 'md'}
 	buttonStyle="menu"
-	class="overflow-hidden border-transparent"
+	class="w-full bg-secondary-200 dark:bg-secondary-700"
 >
 	<span class="truncate">
 		Focus on: {focusName ?? ''}

@@ -16,29 +16,39 @@
 <Card class="h-full min-w-full border-0 bg-secondary-100 dark:bg-secondary-800">
 	<div class="flex items-center justify-between">
 		<div class="w-8" />
-		<p class="text-secondary-900 dark:text-secondary-50 font-thin text-base md:text-lg">{$selectedPeriod?.name}</p>
+		<p class="text-base font-light text-secondary-900 dark:text-secondary-50 md:text-lg">
+			{$selectedPeriod?.name}
+		</p>
 		<TableMenu bind:hidden />
 	</div>
 	<div class="flex flex-wrap items-center justify-between gap-2 p-2 text-center">
 		<div>
-			<h2 class="text-sm font-semibold text-primary-900 dark:text-primary-50 md:text-lg">
+			<h2
+				class="text-sm font-thin text-secondary-900 dark:text-secondary-50 md:text-base landscape:text-sm landscape:lg:text-base"
+			>
 				Sessions
 			</h2>
-			<p class="text-accent-500 md:text-xl">
+			<p class="text-lg font-semibold text-accent-500 landscape:text-sm landscape:lg:text-2xl">
 				{$filteredSessions.length}
 			</p>
 		</div>
 		<div>
-			<h2 class="text-sm font-semibold text-primary-900 dark:text-primary-50 md:text-lg">Total</h2>
-			<p class="text-accent-500 md:text-xl">
+			<h2
+				class="text-sm font-thin text-secondary-900 dark:text-secondary-50 md:text-base landscape:text-sm landscape:lg:text-base"
+			>
+				Total
+			</h2>
+			<p class="text-lg font-semibold text-accent-500 landscape:text-sm landscape:lg:text-2xl">
 				{millisecondsToClock(duration)}
 			</p>
 		</div>
 		<div>
-			<h2 class="text-sm font-semibold text-primary-900 dark:text-primary-50 md:text-lg">
+			<h2
+				class="text-sm font-thin text-secondary-900 dark:text-secondary-50 md:text-base landscape:text-sm landscape:lg:text-base"
+			>
 				Average Session
 			</h2>
-			<p class="text-accent-500 md:text-xl">
+			<p class="text-lg font-semibold text-accent-500 landscape:text-sm landscape:lg:text-2xl">
 				{duration ? millisecondsToClock(duration / $filteredSessions.length) : '-'}
 			</p>
 		</div>

@@ -29,7 +29,7 @@
 					class="grid aspect-square w-12 cursor-pointer content-center rounded-xl text-center md:w-20 {activeUrl ===
 					'/app/' + item.title
 						? 'bg-primary-500 dark:bg-primary-700'
-						: 'transparent hover:bg-primary-500/30 hover:dark:bg-primary-700/30'}"
+						: 'transparent hover:bg-primary-500/50 hover:dark:bg-primary-700/50'}"
 					href="/app/{item.title}"
 				>
 					<i class="fa-solid {item.icon} text-2xl text-secondary-900 dark:text-secondary-50" />

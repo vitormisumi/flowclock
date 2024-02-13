@@ -45,10 +45,10 @@
 	<SelectProjectButton />
 </div>
 {#if $projects.length}
-	<div class="flex flex-wrap gap-4">
+	<div class="flex flex-wrap gap-2 md:gap-4">
 		<ProjectCard />
 		<TasksCard />
-		<div class="grid w-full gap-4 md:grid-cols-2">
+		<div class="grid w-full gap-2 md:gap-4 md:grid-cols-2">
 			<ToDosCard />
 			<IntentionsCard />
 		</div>

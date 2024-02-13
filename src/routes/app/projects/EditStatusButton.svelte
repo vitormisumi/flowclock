@@ -75,7 +75,7 @@
 			</h3>
 		</Button>
 		{#if $windowWidth >= 768}
-			<Tooltip placement="right">Rename status</Tooltip>
+			<Tooltip placement="right" class="bg-secondary-400 dark:bg-secondary-800">Rename status</Tooltip>
 		{/if}
 	{/if}
 	{#if showDelete === s.id || ($windowWidth <= 1024 && !edit)}

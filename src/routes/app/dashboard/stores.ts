@@ -17,3 +17,5 @@ export const selectedPeriod = derived(
   filter,
   (filter) => periods.find((x) => x.timeframe === filter.timeframe && x.current === filter.current)
 );
+
+export const selectedPlot = writable<'focus' | 'projects' | 'timeframe' | 'interruptions'>('focus')

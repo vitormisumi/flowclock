@@ -32,7 +32,7 @@
 
 <svg
 	width="100%"
-	height={Object.keys(distribution).length >= 10 ? 550 : (Object.keys(distribution).length + 1) * 50}
+	height="100%"
 	class="rounded-xl bg-secondary-50 p-2 dark:bg-secondary-900"
 >
 	{#each Object.entries(distribution) as focus, i}
