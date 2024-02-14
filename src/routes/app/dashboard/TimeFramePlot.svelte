@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { monthMap, weekdayMap } from '$lib/constants/constants';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { filteredSessions } from './stores';
 	import { getContext } from 'svelte';
-	import { weekdayMap, monthMap } from '$lib/constants/constants';
 	import type { Writable } from 'svelte/store';
+	import { filteredSessions } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -14,7 +14,7 @@
 		month: number[];
 		year: number[];
 	};
-	
+
 	export let timeFrameGroup: keyof typeof periods;
 
 	let distribution: { [key: number]: number };
@@ -89,52 +89,63 @@
 	{#each periods[timeFrameGroup] as period, index}
 		{#if timeFrameGroup === 'hour' && index % 6 === 3}
 			<text
-				class="dark:fill-primary-50"
+				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
 				y="85%"
-				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
-				text-anchor="middle"
-				dominant-baseline="hanging">{hourFormat(period).split(' ')[0]}</text
-			>
-			<text
-				class="dark:fill-primary-50"
-				y="90%"
-				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
 				text-anchor="middle"
 				dominant-baseline="hanging"
-				>{hourFormat(period).split(' ')[1] ? hourFormat(period).split(' ')[1] : ''}</text
+				class="text-sm font-thin dark:fill-primary-50 md:text-base"
 			>
+				{hourFormat(period).split(' ')[0]}
+			</text>
+			<text
+				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
+				y="90%"
+				text-anchor="middle"
+				dominant-baseline="hanging"
+				class="text-sm font-thin dark:fill-primary-50 md:text-base"
+			>
+				{hourFormat(period).split(' ')[1] ? hourFormat(period).split(' ')[1] : ''}
+			</text>
 		{:else if timeFrameGroup === 'day' && index % 5 === 0}
 			<text
-				class="dark:fill-primary-50"
-				y="85%"
 				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
+				y="85%"
 				text-anchor="middle"
-				dominant-baseline="hanging">{period}</text
+				dominant-baseline="hanging"
+				class="text-sm font-thin dark:fill-primary-50 md:text-base"
 			>
+				{period}
+			</text>
 		{:else if timeFrameGroup === 'weekday'}
 			<text
-				y="85%"
 				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
+				y="85%"
 				text-anchor="start"
 				writing-mode="tb"
-				class="capitalize dark:fill-primary-50">{weekdayMap[period].slice(0, 3)}</text
+				class="text-sm font-thin capitalize dark:fill-primary-50 md:text-base"
 			>
+				{weekdayMap[period].slice(0, 3)}
+			</text>
 		{:else if timeFrameGroup === 'month'}
 			<text
-				y="85%"
 				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
+				y="85%"
 				text-anchor="start"
 				writing-mode="tb"
-				class="capitalize dark:fill-primary-50">{monthMap[period].slice(0, 3)}</text
+				class="text-sm font-thin capitalize dark:fill-primary-50 md:text-base"
 			>
+				{monthMap[period].slice(0, 3)}
+			</text>
 		{:else if timeFrameGroup === 'year'}
 			<text
-				class="dark:fill-primary-50"
-				y="85%"
 				x="{(100 / (periods[timeFrameGroup].length + 1)) * (index + 1)}%"
+				y="85%"
 				text-anchor="middle"
-				dominant-baseline="hanging">{period}</text
+				dominant-baseline="hanging"
+				class="text-sm font-thin dark:fill-primary-50 md:text-base"
 			>
+				{period}
+			</text>
 		{/if}
 		{#key distribution}
 			{#if distribution[period]}
