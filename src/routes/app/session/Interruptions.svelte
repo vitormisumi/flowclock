@@ -1,13 +1,18 @@
 <script lang="ts">
-	import { Select } from 'flowbite-svelte';
-	import { session, milliseconds, startInterruption, endInterruption } from './stores';
-	import { millisecondsToClock } from '$lib/functions/functions';
 	import { enhance } from '$app/forms';
-	import { sessionInterruptions } from './stores';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import { millisecondsToClock } from '$lib/functions/functions';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Select } from 'flowbite-svelte';
+	import { isMobile } from '../stores';
+	import {
+		endInterruption,
+		milliseconds,
+		session,
+		sessionInterruptions,
+		startInterruption
+	} from './stores';
 
 	let reason: string;
 	let reasons = [
@@ -44,7 +49,7 @@
 
 <form method="POST" action="?/startInterruption" use:enhance={handleStart}>
 	<Button
-		size={$windowWidth < 768 ? 'xs' : 'md'}
+		size={$isMobile ? 'xs' : 'md'}
 		type="submit"
 		class="w-full bg-secondary-200 dark:bg-secondary-700"
 		buttonStyle="menu"
@@ -68,7 +73,7 @@
 			class="text-primary-900 dark:border-secondary-300 dark:dark:border-secondary-700 dark:text-primary-50 focus:dark:border-secondary-100"
 		/>
 		<Button
-			size={$windowWidth < 768 ? 'xs' : 'md'}
+			size={$isMobile ? 'xs' : 'md'}
 			type="submit"
 			class="w-full"
 			disabled={!$sessionInterruptions.currentId}

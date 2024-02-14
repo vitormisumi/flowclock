@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { selectedProject } from './stores';
-	import { windowWidth } from '../stores';
+	import AddWindowDesktop from '$lib/components/AddWindowDesktop.svelte';
+	import AddWindowMobile from '$lib/components/AddWindowMobile.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Textarea } from 'flowbite-svelte';
+	import { isMobile } from '../stores';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
-	import AddWindowMobile from '$lib/components/AddWindowMobile.svelte';
-	import AddWindowDesktop from '$lib/components/AddWindowDesktop.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import { selectedProject } from './stores';
 
 	export let status: number;
 
@@ -37,10 +37,10 @@
 	};
 
 	let component: typeof AddWindowMobile | typeof AddWindowDesktop;
-	$: component = $windowWidth < 768 ? AddWindowMobile : AddWindowDesktop;
+	$: component = $isMobile ? AddWindowMobile : AddWindowDesktop;
 </script>
 
-{#if hidden || $windowWidth < 768}
+{#if hidden || $isMobile}
 	<Button
 		size="xs"
 		buttonStyle="add"

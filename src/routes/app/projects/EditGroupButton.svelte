@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
-	import { windowWidth } from '../stores';
+	import { canHover, isMobile } from '../stores';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
 
 	export let group: ProjectGroup;
@@ -70,11 +70,11 @@
 				{group.name}
 			</h3>
 		</Button>
-		{#if $windowWidth >= 768}
+		{#if $canHover}
 			<Tooltip placement="right">Rename group</Tooltip>
 		{/if}
 	{/if}
-	{#if showDelete === group.id || $windowWidth <= 1024}
+	{#if showDelete === group.id || $isMobile}
 		<div in:fade>
 			<DeleteGroupButton {group} />
 		</div>

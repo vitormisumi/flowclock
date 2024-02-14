@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { selectedProject } from './stores';
-	import { windowWidth } from '../stores';
-	import { slide } from 'svelte/transition';
-	import IntentionMenu from './IntentionMenu.svelte';
 	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
+	import { isMobile } from '../stores';
+	import IntentionMenu from './IntentionMenu.svelte';
+	import { selectedProject } from './stores';
 
 	const intentions: Writable<Intention[]> = getContext('intentions');
 
@@ -30,7 +30,7 @@
 						on:keydown={() => (openRow = intention.description && openRow === null ? i : null)}
 						>{intention.name}
 					</button>
-					{#if showMenu === intention.id || $windowWidth < 768}
+					{#if showMenu === intention.id || $isMobile}
 						<IntentionMenu {intention} bind:showMenu />
 					{/if}
 				</div>

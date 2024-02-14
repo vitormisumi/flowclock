@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Dropdown, Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { sorting } from './stores';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { windowWidth } from '../stores';
+	import { Dropdown } from 'flowbite-svelte';
+	import { canHover } from '../stores';
+	import { sorting } from './stores';
 
 	export let open: boolean;
 
@@ -34,8 +35,6 @@
 		</Button>
 	</form>
 </Dropdown>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" triggeredBy="#sort" class="bg-secondary-400 dark:bg-secondary-800">
-		Sort to-dos
-	</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left" triggeredBy="#sort">Sort to-dos</Tooltip>
 {/if}

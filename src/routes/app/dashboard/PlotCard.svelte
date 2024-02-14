@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { Card, Dropdown, Radio, Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../stores';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import { Card, Dropdown, Radio } from 'flowbite-svelte';
+	import { canHover } from '../stores';
 	import FocusPlot from './FocusPlot.svelte';
 	import InterruptionsPlot from './InterruptionsPlot.svelte';
 	import ProjectsPlot from './ProjectsPlot.svelte';
@@ -75,10 +76,8 @@
 				{/each}
 			{/if}
 		</Dropdown>
-		{#if $windowWidth >= 768}
-			<Tooltip triggeredBy="#groupby" class="bg-secondary-400 dark:bg-secondary-800">
-				Group by
-			</Tooltip>
+		{#if $canHover}
+			<Tooltip triggeredBy="#groupby" placement="left">Group by</Tooltip>
 		{/if}
 	</div>
 	{#if $selectedPlot === 'focus'}

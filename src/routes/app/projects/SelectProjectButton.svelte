@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { Tooltip, Drawer } from 'flowbite-svelte';
-	import { selectedProject, selectedProjectId } from './stores';
-	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Drawer } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { canHover } from '../stores';
 	import AddProjectButton from './AddProjectButton.svelte';
 	import EditGroupButton from './EditGroupButton.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
+	import { selectedProject, selectedProjectId } from './stores';
 
 	const projects: Writable<Project[]> = getContext('projects');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
@@ -33,8 +34,8 @@
 	{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}
 	<i class="fa-solid fa-chevron-down pl-2" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Select project</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Select project</Tooltip>
 {/if}
 <Drawer
 	transitionType="fly"

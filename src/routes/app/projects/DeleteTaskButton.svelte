@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { canHover } from '../stores';
 
 	export let task: Task;
 
@@ -31,8 +31,8 @@
 >
 	<i class="fa-solid fa-trash" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete task</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Delete task</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
 	<i class="fa-solid fa-warning text-xl dark:text-red-700" />

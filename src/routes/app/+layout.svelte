@@ -1,12 +1,15 @@
+<script context="module">
+	import Device from 'svelte-device-info';
+</script>
+
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import Clock from './Clock.svelte';
 	import Menu from './Menu.svelte';
 	import Screen from './Screen.svelte';
 	import Warning from './Warning.svelte';
 	import { selectedProject } from './projects/stores';
-	import { windowWidth } from './stores';
+	import { canHover, isMobile } from './stores';
 
 	export let data;
 
@@ -35,7 +38,7 @@
 	$: toDos.set(
 		data.toDos
 			?.filter((x) => x.project_id === $selectedProject.id)
-			.filter((x) => data.settings?.completed_to_dos_hidden ? !x.done : x)
+			.filter((x) => (data.settings?.completed_to_dos_hidden ? !x.done : x))
 	);
 
 	const intentions = writable();
@@ -66,10 +69,11 @@
 		data.settings?.dark_mode
 			? document.documentElement.classList.add('dark')
 			: document.documentElement.classList.remove('dark');
+		$canHover = Device.canHover;
+		$isMobile = $isMobile;
 	});
 </script>
 
-<svelte:window bind:innerWidth={$windowWidth} />
 <Screen>
 	<span slot="main">
 		<slot />

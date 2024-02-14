@@ -3,7 +3,7 @@
 	import { flip } from 'svelte/animate';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { windowWidth } from '../stores';
+	import { isMobile } from '../stores';
 	import CompleteToDoButton from './CompleteToDoButton.svelte';
 	import DueDate from './DueDate.svelte';
 	import ToDoMenu from './ToDoMenu.svelte';
@@ -66,7 +66,7 @@
 				{#if toDo.due_date}
 					<DueDate date={toDo.due_date} />
 				{/if}
-				{#if showMenu === toDo.id || $windowWidth < 768}
+				{#if showMenu === toDo.id || $isMobile}
 					<ToDoMenu {toDo} bind:showMenu />
 				{/if}
 			</div>

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { periods } from '$lib/constants/constants';
-	import { Dropdown, DropdownDivider, Tooltip } from 'flowbite-svelte';
+	import { Dropdown, DropdownDivider } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import {
@@ -12,7 +13,7 @@
 		openRow,
 		startRow
 	} from '../dashboard/stores';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 	import {
 		filterInterruptionsByCurrentWeek,
 		filterInterruptionsByDay,
@@ -106,14 +107,8 @@
 			</Button>
 		{/each}
 	</Dropdown>
-	{#if $windowWidth >= 768}
-		<Tooltip
-			placement="left"
-			triggeredBy="#calendar"
-			class="bg-secondary-400 dark:bg-secondary-800"
-		>
-			Filter period
-		</Tooltip>
+	{#if $canHover}
+		<Tooltip placement="left" triggeredBy="#calendar">Filter period</Tooltip>
 	{/if}
 	<DropdownDivider class="bg-secondary-100 dark:bg-secondary-800" />
 	<Button
@@ -126,8 +121,8 @@
 	>
 		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
 	</Button>
-	{#if $windowWidth >= 768}
-		<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
+	{#if $canHover}
+		<Tooltip placement="left">
 			{hidden ? 'Show' : 'Hide'} table
 		</Tooltip>
 	{/if}

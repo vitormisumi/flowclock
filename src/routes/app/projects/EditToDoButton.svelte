@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { Tooltip, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Textarea } from 'flowbite-svelte';
+	import { canHover, isMobile } from '../stores';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let toDo: ToDo;
 	export let showMenu: number | null;
@@ -31,14 +32,14 @@
 
 	let size: 'xs' | 'sm';
 
-	$: size = $windowWidth < 768 ? 'xs' : 'sm';
+	$: size = $isMobile ? 'xs' : 'sm';
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
 	<i class="fa-solid fa-pen text-primary-900 dark:text-primary-50" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Edit to-do</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Edit to-do</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="sm">
 	<p class="text-lg font-bold dark:text-secondary-50">Edit to-do</p>

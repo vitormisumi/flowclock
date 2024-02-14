@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { periods } from '$lib/constants/constants';
-	import { Drawer, Tooltip } from 'flowbite-svelte';
+	import { Drawer } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 	import {
 		filterInterruptionsByCurrentWeek,
 		filterInterruptionsByDay,
@@ -23,8 +24,8 @@
 		filteredInterruptions,
 		filteredSessions,
 		openRow,
-		startRow,
-		selectedPeriod
+		selectedPeriod,
+		startRow
 	} from './stores';
 
 	const sessions: Writable<UserSession[]> = getContext('sessions');
@@ -86,10 +87,8 @@
 	<Button size="sm" buttonStyle="menu" on:click={openPeriodDrawer}>
 		{$selectedPeriod?.name} <i class="fa-solid fa-chevron-down pl-2" />
 	</Button>
-	{#if $windowWidth >= 768}
-		<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
-			Select time period
-		</Tooltip>
+	{#if $canHover}
+		<Tooltip placement="left">Select time period</Tooltip>
 	{/if}
 </div>
 <Drawer

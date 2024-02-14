@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 
 	export let completedHidden: boolean;
 	export let open: boolean;
@@ -28,8 +28,8 @@
 		<i class="fa-solid {completedHidden ? 'fa-check-circle' : 'fa-ban'}" />
 	</Button>
 </form>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800" trigger="hover">
+{#if $canHover}
+	<Tooltip placement="left">
 		{completedHidden ? 'Show completed' : 'Hide completed'}
 	</Tooltip>
 {/if}

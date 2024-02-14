@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../stores';
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { canHover } from '../stores';
 
 	export let hidden: boolean;
 	export let open: boolean;
@@ -22,8 +22,8 @@
 		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
 	</Button>
 </form>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800" trigger="hover">
+{#if $canHover}
+	<Tooltip placement="left">
 		{hidden ? 'Show card' : 'Hide card'}
 	</Tooltip>
 {/if}

@@ -2,11 +2,12 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Input, Select, Textarea, Tooltip } from 'flowbite-svelte';
+	import { Input, Select, Textarea } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 	import { selectedProject } from './stores';
 
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
@@ -45,8 +46,8 @@
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
 	<i class="fa-solid fa-pen text-primary-900 dark:text-primary-50" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Edit project</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Edit project</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="sm">
 	<p class="text-lg font-bold dark:text-secondary-50">Edit project {$selectedProject.name}</p>

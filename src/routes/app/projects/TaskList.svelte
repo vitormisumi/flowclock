@@ -5,7 +5,7 @@
 	import { flip } from 'svelte/animate';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { windowWidth } from '../stores';
+	import { isMobile } from '../stores';
 	import { drag } from './drag';
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
@@ -118,7 +118,7 @@
 				{#if task.due_date}
 					<DueDate date={task.due_date} />
 				{/if}
-				{#if showMenu === task.id || $windowWidth < 768}
+				{#if showMenu === task.id || $isMobile}
 					<TaskMenu {task} bind:showMenu />
 				{/if}
 			</div>

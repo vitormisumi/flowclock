@@ -2,9 +2,9 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 	import { selectedProjectId } from './stores';
 
 	export let group: ProjectGroup;
@@ -28,8 +28,8 @@
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
 	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete group</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Delete group</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
 	<i class="fa-solid fa-warning text-xl dark:text-red-700" />

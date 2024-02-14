@@ -1,3 +1,5 @@
 import { writable } from "svelte/store";
 
-export const windowWidth = writable(0);
+export const canHover = writable<boolean>();
+
+export const isMobile = writable<boolean>();

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Tooltip } from 'flowbite-svelte';
-	import { session, sessionFocus, startSession } from '../session/stores';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { session, sessionFocus, startSession } from '../session/stores';
+	import { canHover } from '../stores';
 
 	export let task: Task;
 
@@ -27,10 +27,8 @@
 {#if !$session.running}
 	<form method="POST" action="/app/session?/start" use:enhance={handleClick}>
 		<Button size="xs" buttonStyle="menu" type="submit"><i class="fa-solid fa-clock" /></Button>
-		{#if $windowWidth >= 768}
-			<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">
-				Start task session
-			</Tooltip>
+		{#if $canHover}
+			<Tooltip placement="left">Start task session</Tooltip>
 		{/if}
 	</form>
 {/if}

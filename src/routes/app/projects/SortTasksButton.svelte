@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { sortOptions } from '$lib/constants/constants';
-	import { Dropdown, Tooltip } from 'flowbite-svelte';
+	import { Dropdown } from 'flowbite-svelte';
 	import { getContext, onDestroy } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 	import { sorting } from './stores';
 
 	const status: Writable<TaskStatuses[]> = getContext('status');
@@ -85,8 +86,6 @@
 		{/each}
 	</div>
 </Dropdown>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" triggeredBy="#sort" class="bg-secondary-400 dark:bg-secondary-800">
-		Sort tasks
-	</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left" triggeredBy="#sort">Sort tasks</Tooltip>
 {/if}

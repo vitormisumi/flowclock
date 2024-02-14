@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Tooltip } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
-	import { windowWidth } from '../stores';
+	import { canHover, isMobile } from '../stores';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
 
 	export let s: TaskStatuses;
@@ -74,11 +74,11 @@
 				{s.status}
 			</h3>
 		</Button>
-		{#if $windowWidth >= 768}
-			<Tooltip placement="right" class="bg-secondary-400 dark:bg-secondary-800">Rename status</Tooltip>
+		{#if $canHover}
+			<Tooltip placement="right">Rename status</Tooltip>
 		{/if}
 	{/if}
-	{#if showDelete === s.id || ($windowWidth <= 1024 && !edit)}
+	{#if showDelete === s.id || ($isMobile && !edit)}
 		<div in:fade>
 			<DeleteStatusButton {s} />
 		</div>

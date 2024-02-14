@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Tooltip, Input, Textarea } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { windowWidth } from '../stores';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Textarea } from 'flowbite-svelte';
+	import { canHover } from '../stores';
 
 	export let intention: Intention;
 	export let showMenu;
@@ -23,8 +24,8 @@
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
 	<i class="fa-solid fa-pen" />
 </Button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Edit intention</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Edit intention</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="sm">
 	<p class="text-lg font-bold dark:text-secondary-50">Edit intention</p>

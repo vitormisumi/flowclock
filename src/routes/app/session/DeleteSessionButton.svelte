@@ -2,13 +2,13 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { dateFromTimestamp, timeFromTimestamp } from '$lib/functions/functions';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Tooltip } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { filteredSessions } from '../dashboard/stores';
-	import { windowWidth } from '../stores';
+	import { canHover } from '../stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -43,8 +43,8 @@
 >
 	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
 </button>
-{#if $windowWidth >= 768}
-	<Tooltip placement="left" class="bg-secondary-400 dark:bg-secondary-800">Delete session</Tooltip>
+{#if $canHover}
+	<Tooltip placement="left">Delete session</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
 	<i class="fa-solid fa-warning text-3xl dark:text-red-700" />

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { filteredInterruptions } from '../dashboard/stores';
-	import { slide } from 'svelte/transition';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { timeFromTimestamp } from '$lib/functions/functions';
 	import { getContext } from 'svelte';
-	import { Tooltip } from 'flowbite-svelte';
-	import { windowWidth } from '../stores';
 	import type { Writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
+	import { filteredInterruptions } from '../dashboard/stores';
+	import { canHover } from '../stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -20,10 +20,11 @@
 			transition:slide
 		>
 			<p class="col-span-2">
-				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)?.name ?? 'No focus'}
+				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)
+					?.name ?? 'No focus'}
 			</p>
-			{#if $windowWidth >= 768}
-				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Session focus</Tooltip>
+			{#if $canHover}
+				<Tooltip>Session focus</Tooltip>
 			{/if}
 			<p class="col-start-1 row-start-2">
 				<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
@@ -31,14 +32,14 @@
 					$settings.clock_format
 				)}
 			</p>
-			{#if $windowWidth >= 768}
-				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Start time</Tooltip>
+			{#if $canHover}
+				<Tooltip>Start time</Tooltip>
 			{/if}
 			<p class="col-start-2 row-start-2">
 				<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
 			</p>
-			{#if $windowWidth >= 768}
-				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">End time</Tooltip>
+			{#if $canHover}
+				<Tooltip>End time</Tooltip>
 			{/if}
 			<div class="col-span-2 col-start-1 row-start-3 grid justify-items-start">
 				{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
@@ -54,8 +55,8 @@
 					</div>
 				{/each}
 			</div>
-			{#if $windowWidth >= 768}
-				<Tooltip class="bg-secondary-400 dark:bg-secondary-800">Interruptions</Tooltip>
+			{#if $canHover}
+				<Tooltip>Interruptions</Tooltip>
 			{/if}
 		</div>
 	</td>
