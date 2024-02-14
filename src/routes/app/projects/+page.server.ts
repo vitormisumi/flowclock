@@ -42,7 +42,6 @@ export const actions = {
     const tasks = (formData.get('tasks') as string).toLocaleLowerCase() === 'true';
     const toDos = (formData.get('to_dos') as string).toLocaleLowerCase() === 'true';
     const intentions = (formData.get('intentions') as string).toLocaleLowerCase() === 'true';
-    console.log(tasks, toDos, intentions);
 		
     const { error } = await supabase
       .from('projects')

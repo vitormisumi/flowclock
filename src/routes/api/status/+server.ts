@@ -12,8 +12,6 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
 		.from('task_statuses')
 		.upsert(statuses)
 		.select();
-	
-	console.log(data)
 
 	if (error) {
 		console.log(error);
