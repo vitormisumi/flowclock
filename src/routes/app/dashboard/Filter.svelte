@@ -96,7 +96,9 @@
 	transitionParams={{ x: 100 }}
 	placement="right"
 	width="w-full md:w-80 lg:w-96"
-	class="z-50 bg-secondary-50 dark:bg-secondary-900"
+	class="z-50 bg-secondary-100 dark:bg-secondary-800"
+	bgColor="bg-secondary-900"
+	bgOpacity="bg-opacity-80"
 	bind:hidden
 >
 	<div class="grid gap-4">
@@ -115,6 +117,7 @@
 		{#each periods as period}
 			<Button
 				size="sm"
+				buttonStyle="drawer"
 				disabled={$filter.timeframe === period.timeframe && $filter.current === period.current}
 				on:click={() => applyFilter(period)}
 			>

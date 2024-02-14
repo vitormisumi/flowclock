@@ -4,7 +4,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Input, Select, Textarea } from 'flowbite-svelte';
+	import { Input, Select, Textarea, Toggle } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { canHover } from '../stores';
@@ -31,13 +31,16 @@
 
 	$: groupValue = groupOptions.find((x) => x.value === $selectedProject.group_id)?.value;
 
-	let loading = false;
+	let tasks = $selectedProject.tasks;
+	let toDos = $selectedProject.to_dos;
+	let intentions = $selectedProject.intentions;
 
-	const handleClick: SubmitFunction = () => {
-		loading = true;
+	const handleClick: SubmitFunction = ({ formData }) => {
+		formData.append('tasks', String(tasks));
+		formData.append('to_dos', String(toDos));
+		formData.append('intentions', String(intentions));
 		return async ({ update }) => {
 			open = false;
-			loading = false;
 			update();
 		};
 	};
@@ -78,6 +81,9 @@
 				class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 			></Textarea>
 		</div>
+		<Toggle size="small" bind:checked={tasks}>Tasks</Toggle>
+		<Toggle size="small" bind:checked={toDos}>To-Dos</Toggle>
+		<Toggle size="small" bind:checked={intentions}>Intentions</Toggle>
 		<Select
 			items={statusOptions}
 			name="status"
@@ -97,7 +103,8 @@
 		<Button
 			type="submit"
 			class="self-center transition-colors dark:bg-accent-500 hover:dark:bg-accent-600"
-			><i class="fa-solid fa-save pr-2" />Save</Button
 		>
+			<i class="fa-solid fa-save pr-2" />Save
+		</Button>
 	</form>
 </Modal>

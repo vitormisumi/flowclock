@@ -42,7 +42,9 @@
 	transitionParams={{ x: 100 }}
 	placement="right"
 	width="w-full md:w-80 lg:w-96"
-	class="z-50 bg-secondary-50 dark:bg-secondary-900"
+	class="z-50 bg-secondary-100 dark:bg-secondary-800"
+	bgColor="bg-secondary-900"
+	bgOpacity="bg-opacity-80"
 	bind:hidden
 >
 	<div class="grid gap-4">
@@ -63,6 +65,7 @@
 			<div class="grid gap-2">
 				{#each $projects.filter((x) => x.group_id === group.id) as project}
 					<Button
+						buttonStyle="drawer"
 						disabled={project.id === $selectedProject.id}
 						on:click={() => {
 							$selectedProjectId = project.id;
@@ -74,7 +77,7 @@
 				{/each}
 				<AddProjectButton {group} on:click={() => (hidden = true)} />
 			</div>
-			<hr class="w-full dark:border-secondary-800" />
+			<hr class="w-full dark:border-secondary-900" />
 		{/each}
 		{#if !open}
 			<Button

@@ -38,8 +38,8 @@
 		action="?/updatePassword"
 		use:enhance={handleClick}
 	>
-		<Button type="submit" disabled={loading} buttonStyle="accent" class="self-center"
-			>Reset password</Button
-		>
+		<Button type="submit" disabled={loading} buttonStyle="accent" class="self-center">
+			Reset password
+		</Button>
 	</form>
 </Modal>

@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Badge, Card } from 'flowbite-svelte';
-	import { selectedProject } from './stores';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Badge, Card, Toggle } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 	import ProjectMenu from './ProjectMenu.svelte';
-	import type { Writable } from 'svelte/store';
+	import { selectedProject } from './stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
@@ -47,6 +48,11 @@
 				<h3 class="font-medium">Description</h3>
 				<p class="dark:text-secondary-200">{$selectedProject.description}</p>
 			</div>
+		</div>
+		<div class="flex w-min flex-col gap-2">
+			<Toggle size="small" disabled checked={$selectedProject.tasks}>Tasks</Toggle>
+			<Toggle size="small" disabled checked={$selectedProject.to_dos}>To-Dos</Toggle>
+			<Toggle size="small" disabled checked={$selectedProject.intentions}>Intentions</Toggle>
 		</div>
 	{/if}
 </Card>

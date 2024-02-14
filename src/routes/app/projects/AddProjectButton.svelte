@@ -43,7 +43,7 @@
 <Button
 	size="xs"
 	buttonStyle="add"
-	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
+	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-700/50"
 	on:click={() => (open = true)}
 >
 	<i class="fa-solid fa-plus pr-2" />new project

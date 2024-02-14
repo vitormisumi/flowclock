@@ -41,7 +41,7 @@ export type Database = {
           {
             foreignKeyName: "breaks_session_id_fkey"
             columns: ["session_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "sessions"
             referencedColumns: ["id"]
           },
@@ -244,9 +244,12 @@ export type Database = {
           goal: string | null
           group_id: number | null
           id: number
+          intentions: boolean
           last_edited: string
           name: string
           status: Database["public"]["Enums"]["project_status"]
+          tasks: boolean
+          to_dos: boolean
           user_id: string
         }
         Insert: {
@@ -256,9 +259,12 @@ export type Database = {
           goal?: string | null
           group_id?: number | null
           id?: number
+          intentions?: boolean
           last_edited?: string
           name?: string
           status?: Database["public"]["Enums"]["project_status"]
+          tasks?: boolean
+          to_dos?: boolean
           user_id: string
         }
         Update: {
@@ -268,9 +274,12 @@ export type Database = {
           goal?: string | null
           group_id?: number | null
           id?: number
+          intentions?: boolean
           last_edited?: string
           name?: string
           status?: Database["public"]["Enums"]["project_status"]
+          tasks?: boolean
+          to_dos?: boolean
           user_id?: string
         }
         Relationships: [

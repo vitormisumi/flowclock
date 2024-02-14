@@ -2,7 +2,7 @@
 	import { navigating } from '$app/stores';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
 	import Clock from '../Clock.svelte';
 	import IntentionsCard from './IntentionsCard.svelte';
@@ -35,9 +35,7 @@
 
 <div
 	class="fixed top-0 w-screen scale-50 landscape:left-8 landscape:md:left-12"
-	in:fade={$navigating?.from?.url.pathname === '/app/session'
-		? { duration: 500 }
-		: { duration: 0 }}
+	in:fade={$navigating?.from?.url.pathname === '/app/session' ? { duration: 500 } : { duration: 0 }}
 >
 	<Clock />
 </div>
@@ -45,12 +43,24 @@
 	<SelectProjectButton />
 </div>
 {#if $projects.length}
-	<div class="flex flex-wrap gap-2 md:gap-4">
+	<div class="grid gap-2 md:gap-4">
 		<ProjectCard />
-		<TasksCard />
-		<div class="grid w-full gap-2 md:gap-4 md:grid-cols-2">
-			<ToDosCard />
-			<IntentionsCard />
+		{#if $selectedProject.tasks}
+			<div transition:slide>
+				<TasksCard />
+			</div>
+		{/if}
+		<div class="grid w-full gap-2 md:grid-cols-2 md:gap-4">
+			{#if $selectedProject.to_dos}
+				<div class={$selectedProject.intentions ? '' : 'md:col-span-2'} transition:slide>
+					<ToDosCard />
+				</div>
+			{/if}
+			{#if $selectedProject.intentions}
+				<div class={$selectedProject.to_dos ? '' : 'md:col-span-2'} transition:slide>
+					<IntentionsCard />
+				</div>
+			{/if}
 		</div>
 	</div>
 {:else}

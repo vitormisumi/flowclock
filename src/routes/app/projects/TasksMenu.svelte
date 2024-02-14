@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { Dropdown, DropdownDivider } from 'flowbite-svelte';
 	import Button from '$lib/components/Button.svelte';
-	import HideTasksButton from './HideTasksButton.svelte';
-	import SortTasksButton from './SortTasksButton.svelte';
+	import { Dropdown } from 'flowbite-svelte';
 	import Notification from '../../Notification.svelte';
+	import SortTasksButton from './SortTasksButton.svelte';
 
 	export let open: boolean;
-	export let hidden: boolean;
 
 	let success: boolean;
 	let message: string;
@@ -18,10 +16,8 @@
 	class="flex flex-col justify-items-center rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700"
 	bind:open
 >
-	<HideTasksButton bind:hidden bind:open />
-	<DropdownDivider class="bg-secondary-100 dark:bg-secondary-800" />
-	<SortTasksButton bind:open bind:success bind:message/>
+	<SortTasksButton bind:open bind:success bind:message />
 </Dropdown>
 {#if success}
-	<Notification {success} {message}/>
+	<Notification {success} {message} />
 {/if}

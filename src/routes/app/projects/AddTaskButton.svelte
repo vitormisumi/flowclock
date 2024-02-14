@@ -84,8 +84,10 @@
 					on:click={() => {
 						hidden = true;
 						priority = '0';
-					}}>Cancel</Button
+					}}
 				>
+					Cancel
+				</Button>
 				<Button size="xs" buttonStyle="accent" type="submit" disabled={loading}>Add Task</Button>
 			</div>
 		</div>

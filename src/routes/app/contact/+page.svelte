@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { navigating, page } from '$app/stores';
+	import Button from '$lib/components/Button.svelte';
+	import Select from '$lib/components/Select.svelte';
+	import type { User } from '@supabase/supabase-js';
 	import { Label, Textarea } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
-	import Select from '$lib/components/Select.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import type { User } from '@supabase/supabase-js';
+	import { fade } from 'svelte/transition';
 
 	const user: User = getContext('user');
 
@@ -46,9 +46,12 @@
 		>
 			<input type="email" name="email" value={user.email} required hidden />
 			<div>
-				<Label for="_subject" class="text-md mb-2 font-medium text-prisecondarymary-900 dark:text-secondary-50"
-					>Subject</Label
+				<Label
+					for="_subject"
+					class="text-md text-prisecondarymary-900 mb-2 font-medium dark:text-secondary-50"
 				>
+					Subject
+				</Label>
 				<Select
 					name="_subject"
 					placeholder="Select the subject of your message"
@@ -59,9 +62,12 @@
 				></Select>
 			</div>
 			<div>
-				<Label for="message" class="text-md mb-2 font-medium text-secondary-900 dark:text-secondary-50"
-					>Message</Label
+				<Label
+					for="message"
+					class="text-md mb-2 font-medium text-secondary-900 dark:text-secondary-50"
 				>
+					Message
+				</Label>
 				<Textarea
 					name="message"
 					placeholder="Type your message"

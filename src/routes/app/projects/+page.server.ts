@@ -39,10 +39,14 @@ export const actions = {
     const status = formData.get('status') as 'idea' | 'planning' | 'on going' | 'completed' | 'suspended' | 'cancelled';
     const id = formData.get('id') as string;
     const group_id = formData.get('group_id') as string;
+    const tasks = (formData.get('tasks') as string).toLocaleLowerCase() === 'true';
+    const toDos = (formData.get('to_dos') as string).toLocaleLowerCase() === 'true';
+    const intentions = (formData.get('intentions') as string).toLocaleLowerCase() === 'true';
+    console.log(tasks, toDos, intentions);
 		
     const { error } = await supabase
       .from('projects')
-      .update({ name: name, goal: goal, description: description, status: status, group_id: Number(group_id) })
+      .update({ name: name, goal: goal, description: description, status: status, group_id: Number(group_id), tasks: tasks, to_dos: toDos, intentions: intentions })
       .eq('id', id);
 
     if (error) {
@@ -518,75 +522,6 @@ export const actions = {
     }
 
     return { message: hidden ? 'Project details hidden' : 'Project details expanded', success: true };
-  },
-    
-  hideTasksCard: async ({ request, locals: { supabase, getSession } }) => {
-    const session = await getSession();
-    if (!session) {
-      throw redirect(303, '/');
-    }
-
-    const formData = await request.formData();
-    let hiddenString = formData.get('hidden') as string;
-    let hidden = hiddenString.toLocaleLowerCase() === 'true';
-        
-    const { error } = await supabase
-      .from('settings')
-      .update({ tasks_card_hidden: hidden })
-      .eq('user_id', session.user.id);
-
-    if (error) {
-      console.log(error);
-      return fail(500, { message: error.message, success: false });
-    }
-
-    return { message: hidden ? 'Tasks hidden' : 'Tasks expanded', success: true };
-  },
-    
-  hideToDosCard: async ({ request, locals: { supabase, getSession } }) => {
-    const session = await getSession();
-    if (!session) {
-      throw redirect(303, '/');
-    }
-
-    const formData = await request.formData();
-    let hiddenString = formData.get('hidden') as string;
-    let hidden = hiddenString.toLocaleLowerCase() === 'true';
-        
-    const { error } = await supabase
-      .from('settings')
-      .update({ to_dos_card_hidden: hidden })
-      .eq('user_id', session.user.id);
-
-    if (error) {
-      console.log(error);
-      return fail(500, { message: error.message, success: false });
-    }
-
-    return { message: hidden ? 'To-dos hidden' : 'To-dos expanded', success: true };
-  },
-    
-  hideIntentionsCard: async ({ request, locals: { supabase, getSession } }) => {
-    const session = await getSession();
-    if (!session) {
-      throw redirect(303, '/');
-    }
-
-    const formData = await request.formData();
-    let hiddenString = formData.get('hidden') as string;
-    let hidden = hiddenString.toLocaleLowerCase() === 'true';
-        
-    const { error } = await supabase
-      .from('settings')
-      .update({ intentions_card_hidden: hidden })
-      .eq('user_id', session.user.id);
-
-    if (error) {
-      console.log(error);
-      return fail(500, { message: error.message, success: false });
-    }
-
-    return { message: hidden ? 'Intentions hidden' : 'Intentions expanded', success: true };
   },
     
   hideCompletedToDos: async ({ request, locals: { supabase, getSession } }) => {

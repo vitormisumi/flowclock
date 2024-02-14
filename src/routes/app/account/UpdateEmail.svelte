@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import { Input } from 'flowbite-svelte';
-	import Button from '$lib/components/Button.svelte';
 	import { enhance } from '$app/forms';
-	import Modal from '../../../lib/components/Modal.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
+	import Button from '$lib/components/Button.svelte';
 	import type { User } from '@supabase/supabase-js';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import Modal from '../../../lib/components/Modal.svelte';
 
 	const user: User = getContext('user');
 
@@ -59,8 +59,8 @@
 		>
 			<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
 		>
-		<Button type="submit" disabled={loading} buttonStyle="accent" class="self-center"
-			>Confirm change</Button
-		>
+		<Button type="submit" disabled={loading} buttonStyle="accent" class="self-center">
+			Confirm change
+		</Button>
 	</form>
 </Modal>
