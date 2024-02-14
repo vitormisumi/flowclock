@@ -20,7 +20,7 @@
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const start = Date.now();
-		startSession(0, start);
+		startSession(0, start, true);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', String($sessionFocus.type));
 		formData.append('focus_id', String($sessionFocus.id));

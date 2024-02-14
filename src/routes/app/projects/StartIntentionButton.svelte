@@ -11,7 +11,7 @@
 
 	const handleClick: SubmitFunction = async ({ formData }) => {
 		const start = Date.now();
-		startSession(0, start);
+		startSession(0, start, true);
 		sessionFocus.set('intention', intention.id, intention.project_id);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', 'intention');

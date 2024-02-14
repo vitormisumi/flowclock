@@ -11,11 +11,12 @@ function createSession() {
 		warning: false,
 		dismiss: false,
 		pause: false,
+		local: false
 	});
 	
 	return {
 		subscribe,
-		start: (id: number = 0, start: number = Date.now()) =>
+		start: (id: number = 0, start: number = Date.now(), local: boolean) =>
 			set({
 				id: id,
 				running: true,
@@ -24,7 +25,8 @@ function createSession() {
 				warning: false,
 				dismiss: false,
 				pause: false,
-				}),
+				local: local
+			}),
 		end: (end: number = Date.now()) =>
 			update((x) => {
 				return {
@@ -32,7 +34,8 @@ function createSession() {
 					id: 0,
 					running: false,
 					end: end,
-					warning: false
+					warning: false,
+					local: false
 				};
 			}),
 		reset: () =>
@@ -44,7 +47,8 @@ function createSession() {
 				warning: false,
 				dismiss: false,
 				pause: false,
-				}),
+				local: false
+			}),
 		warning: () =>
 			update((x) => {
 				return {
@@ -186,9 +190,9 @@ function createFocus() {
 
 export const sessionFocus = createFocus();
 
-export function startSession(id: number, start: number) {
+export function startSession(id: number, start: number, local: boolean = false) {
 	sessionBreak.end();
-	session.start(id, start);
+	session.start(id, start, local);
 }
 
 export function endSession(end: number, duration: number) {

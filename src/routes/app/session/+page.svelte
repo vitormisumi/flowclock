@@ -21,7 +21,7 @@
 	export let form;
 
 	$: if (form?.startData) {
-		startSession(form.startData.id, Date.parse(form.startData.start));
+		startSession(form.startData.id, Date.parse(form.startData.start), true);
 	}
 
 	$: if (form?.interruptionData) {
