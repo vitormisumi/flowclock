@@ -4,6 +4,7 @@
 	import Faq from './FAQ.svelte';
 	import SignUp from './SignUp.svelte';
 	import Navbar from './Navbar.svelte';
+	import Footer from './Footer.svelte';
 
 	let innerWidth: number;
 
@@ -18,4 +19,5 @@
 	<Features bind:features />
 	<Faq bind:faq />
 	<SignUp />
+	<Footer {features} {faq}/>
 </div>

@@ -90,7 +90,7 @@
 				<Button href="/signin" buttonStyle="transparent">Sign In</Button>
 			</NavLi>
 			<NavLi>
-				<Button href="/signup" buttonStyle="accent">Sign Up</Button>
+				<Button href="/signup">Sign Up</Button>
 			</NavLi>
 		</div>
 	</NavUl>

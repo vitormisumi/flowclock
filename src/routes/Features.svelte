@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import checkmark from '$lib/assets/checkmark.png';
 	import features1 from '$lib/assets/features1.png';
 	import features2 from '$lib/assets/features2.png';
 	import features3 from '$lib/assets/features3.png';
-	import checkmark from '$lib/assets/checkmark.png';
-	import { onMount } from 'svelte';
+	import Button from '$lib/components/Button.svelte';
 	import { Image } from '@unpic/svelte';
+	import { onMount } from 'svelte';
 
 	export let features: HTMLElement;
 
@@ -78,9 +78,27 @@
 		}
 	}
 
+	let box: HTMLDivElement;
+	let isInView = false;
+
 	onMount(() => {
 		startInterval();
-		return () => clearInterval(interval);
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					isInView = true;
+					observer.unobserve(box);
+				}
+			},
+			{ threshold: 0.1 }
+		);
+
+		observer.observe(box);
+
+		return () => {
+			clearInterval(interval);
+			observer.disconnect;
+		};
 	});
 
 	$: if (typeof selected === 'number' && container) {
@@ -89,17 +107,17 @@
 </script>
 
 <section
-	class="grid justify-center gap-8 bg-secondary-50 px-4 py-20 text-secondary-900 sm:px-8 md:px-12 lg:px-20"
+	class="grid justify-center gap-8 bg-gradient-radial from-primary-800 via-secondary-900 via-70% to-secondary-900 px-4 py-20 text-secondary-50 sm:px-8 md:gap-16 md:px-12 lg:px-20"
 	bind:this={features}
 >
 	<div class="grid max-w-4xl gap-4 overflow-hidden">
 		<div class="flex gap-4 overflow-scroll" bind:this={container}>
 			{#each images as image, i}
 				<button
-					class="grid w-full min-w-[80%] content-start gap-2 rounded-lg border-2 p-4 text-left transition-colors sm:min-w-min {selected ===
+					class="grid w-full min-w-[80%] content-start gap-2 rounded-lg p-4 text-left transition-colors sm:min-w-min {selected ===
 					i
-						? 'border-secondary-100 bg-secondary-50 text-secondary-800'
-						: 'border-transparent bg-secondary-100 text-secondary-900'}"
+						? 'bg-primary-700'
+						: 'bg-secondary-800 opacity-80'}"
 					on:mouseover={() => {
 						selected = i;
 						clearInterval(interval);
@@ -116,24 +134,31 @@
 				</button>
 			{/each}
 		</div>
-		<Image
-			src={images[selected].src}
-			layout="fullWidth"
-			breakpoints={[300, 600, 900, 1200, 1500, 1800]}
-			alt={images[selected].alt}
-		/>
+		<div class="relative overflow-visible">
+			<Image
+				src={images[selected].src}
+				layout="fullWidth"
+				breakpoints={[300, 600, 900, 1200, 1500, 1800]}
+				alt={images[selected].alt}
+			/>
+		</div>
 	</div>
-	<ul
-		class="grid gap-4 rounded-lg border-2 border-secondary-100 bg-secondary-50 p-4 font-extralight text-secondary-900 md:grid-cols-2 md:p-8 md:text-lg"
+	<div
+		class="grid gap-8 transition-all duration-500 {isInView
+			? 'opacity-100'
+			: 'translate-y-48 opacity-0'}"
+		bind:this={box}
 	>
-		{#each featureList as feature, i}
-			<li class="flex items-center gap-2">
-				<img src={checkmark} alt="list icon" class="h-4 w-4 md:h-6 md:w-6" />{feature}
-			</li>
-		{/each}
-		<p class="text-center font-bold text-secondary-900 md:col-span-2">And much more!</p>
-	</ul>
-	<Button size="lg" href="/signup" buttonStyle="accent" class="w-fit place-self-center">
-		Get Started
-	</Button>
+		<ul class="grid gap-4 rounded-lg bg-secondary-800 p-4 font-extralight">
+			{#each featureList as feature, i}
+				<li class="flex items-center gap-2">
+					<img src={checkmark} alt="list icon" class="h-3 w-3" />{feature}
+				</li>
+			{/each}
+			<p class="pt-8 text-center font-bold md:col-span-2">And much more!</p>
+		</ul>
+		<Button size="lg" href="/signup" buttonStyle="accent" class="w-fit place-self-center">
+			Get Started
+		</Button>
+	</div>
 </section>

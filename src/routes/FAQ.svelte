@@ -17,7 +17,7 @@
 		{
 			question: 'Can I set a specific session to break ratio in FlowClock?',
 			answer:
-				'Yes! You can set a session to break ratio of anywhere between 1:1 and 10:1.\n\n Just go to "Settings" and choose your desired ratio.'
+				'Yes! You can set a session to break ratio of anywhere between 1:1 and 10:1.\n\nJust go to "Settings" and choose your desired ratio.'
 		},
 		{
 			question: 'Can I set a session limit in FlowClock?',
@@ -32,7 +32,7 @@
 		{
 			question: 'Is there a mobile version of FlowClock?',
 			answer:
-				'There is not currently an Android or iOS version of FlowClock. However, the app should be fully functional on any mobile browser.'
+				'There is not currently an Android or iOS version of FlowClock. However, the app should be fully functional on mobile browsers.'
 		},
 		{
 			question: 'What if I find a bug in FlowClock?',
@@ -43,21 +43,21 @@
 </script>
 
 <section
-	class="flex w-full justify-center bg-secondary-100 px-4 py-20 sm:grid-cols-2 sm:px-8 md:px-12 lg:px-20"
+	class="bg-secondary-900 flex w-full justify-center px-4 py-20 text-secondary-50 sm:px-8 md:px-12 lg:px-20"
 	bind:this={faq}
 >
 	<div class="w-full max-w-4xl">
 		<h2 class="pb-8 text-center text-3xl font-bold">FAQ</h2>
-		<Accordion>
+		<Accordion class="bg-secondary-700 rounded-t-2xl">
 			{#each questions as q}
 				<AccordionItem
-					class="bg-transparent hover:bg-transparent focus:ring-0 dark:bg-transparent"
-					activeClass="bg-transparent dark:bg-transparent"
-					inactiveClass="bg-transparent dark:bg-transparent"
-					borderSharedClass="border-secondary-50 dark:border-secondary-50"
+					class="bg-secondary-800 hover:bg-primary-700 dark:bg-primary-700 hover:dark:bg-secondary-800"
+					borderSharedClass="border-secondary-900 dark:border-secondary-900"
 				>
-					<span slot="header" class="font-semibold text-secondary-900">{q.question}</span>
-					<p class="whitespace-pre-wrap text-secondary-700">{q.answer}</p>
+					<div slot="arrowdown"><i class="fa-solid fa-chevron-down text-secondary-50" /></div>
+					<div slot="arrowup"><i class="fa-solid fa-chevron-up text-secondary-50" /></div>
+					<span slot="header" class="font-semibold text-secondary-50">{q.question}</span>
+					<p class="whitespace-pre-wrap text-secondary-100">{q.answer}</p>
 				</AccordionItem>
 			{/each}
 		</Accordion>
