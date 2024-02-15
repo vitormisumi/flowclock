@@ -13,10 +13,13 @@ export const actions = {
     const description = formData.get('description') as string;
     const status = formData.get('status') as 'idea' | 'planning' | 'on going' | 'completed' | 'suspended' | 'cancelled';
     const group_id = formData.get('group_id') as string;
+    const tasks = (formData.get('tasks') as string).toLocaleLowerCase() === 'true';
+    const toDos = (formData.get('to_dos') as string).toLocaleLowerCase() === 'true';
+    const intentions = (formData.get('intentions') as string).toLocaleLowerCase() === 'true';
 		
     const { error } = await supabase
       .from('projects')
-      .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status, group_id: Number(group_id) });
+      .insert({ user_id: session.user.id, name: name, goal: goal, description: description, status: status, group_id: Number(group_id), tasks: tasks, to_dos: toDos, intentions: intentions });
 
     if (error) {
       console.log(error);
