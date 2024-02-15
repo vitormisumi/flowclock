@@ -6,7 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Input, Textarea } from 'flowbite-svelte';
 	import { afterUpdate } from 'svelte';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import { selectedProject } from './stores';
 
 	let hidden = true;
@@ -34,10 +34,10 @@
 	afterUpdate(scrollToForm);
 
 	let component: typeof AddWindowMobile | typeof AddWindowDesktop;
-	$: component = $isMobile ? AddWindowMobile : AddWindowDesktop;
+	$: component = $canHover ? AddWindowDesktop : AddWindowMobile;
 </script>
 
-{#if hidden || $isMobile}
+{#if hidden || !$canHover}
 	<Button size="xs" buttonStyle="add" class="w-full" on:click={() => (hidden = false)}>
 		<i class="fa-solid fa-plus pr-2" />add intention
 	</Button>

@@ -4,7 +4,7 @@
 	import { Dropdown, DropdownDivider, DropdownItem } from 'flowbite-svelte';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import { sessionFocus } from './stores';
 
 	const projects: Writable<Project[]> = getContext('projects');
@@ -30,7 +30,7 @@
 </script>
 
 <Button
-	size={$isMobile ? 'xs' : 'md'}
+	size={!$canHover ? 'xs' : 'md'}
 	buttonStyle="menu"
 	class="w-full bg-secondary-200 dark:bg-secondary-700"
 >

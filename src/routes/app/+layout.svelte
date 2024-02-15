@@ -9,7 +9,7 @@
 	import Screen from './Screen.svelte';
 	import Warning from './Warning.svelte';
 	import { selectedProject } from './projects/stores';
-	import { canHover, isMobile } from './stores';
+	import { canHover } from './stores';
 
 	export let data;
 
@@ -70,7 +70,6 @@
 			? document.documentElement.classList.add('dark')
 			: document.documentElement.classList.remove('dark');
 		$canHover = Device.canHover;
-		$isMobile = $isMobile;
 	});
 </script>
 

@@ -2,7 +2,7 @@
 	import { slide } from "svelte/transition";
 
 	export let hidden: boolean;
-	export let bgColor: string;
+	export let bgColor: 'bg-secondary-50 dark:bg-secondary-900' | 'bg-secondary-100 dark:bg-secondary-800';
 </script>
 
 {#if !hidden}

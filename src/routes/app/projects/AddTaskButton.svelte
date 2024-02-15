@@ -5,7 +5,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Input, Textarea } from 'flowbite-svelte';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
 	import { selectedProject } from './stores';
@@ -37,10 +37,10 @@
 	};
 
 	let component: typeof AddWindowMobile | typeof AddWindowDesktop;
-	$: component = $isMobile ? AddWindowMobile : AddWindowDesktop;
+	$: component = $canHover ? AddWindowDesktop : AddWindowMobile;
 </script>
 
-{#if hidden || $isMobile}
+{#if hidden || !$canHover}
 	<Button
 		size="xs"
 		buttonStyle="add"

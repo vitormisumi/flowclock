@@ -4,7 +4,7 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
-	import { canHover, isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import DeleteGroupButton from './DeleteGroupButton.svelte';
 
 	export let group: ProjectGroup;
@@ -74,7 +74,7 @@
 			<Tooltip placement="right">Rename group</Tooltip>
 		{/if}
 	{/if}
-	{#if showDelete === group.id || $isMobile}
+	{#if showDelete === group.id || !$canHover}
 		<div in:fade>
 			<DeleteGroupButton {group} />
 		</div>

@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import IntentionMenu from './IntentionMenu.svelte';
 	import { selectedProject } from './stores';
 
@@ -30,7 +30,7 @@
 						on:keydown={() => (openRow = intention.description && openRow === null ? i : null)}
 						>{intention.name}
 					</button>
-					{#if showMenu === intention.id || $isMobile}
+					{#if showMenu === intention.id || !$canHover}
 						<IntentionMenu {intention} bind:showMenu />
 					{/if}
 				</div>

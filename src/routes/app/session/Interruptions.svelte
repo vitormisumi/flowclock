@@ -5,7 +5,7 @@
 	import { millisecondsToClock } from '$lib/functions/functions';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Select } from 'flowbite-svelte';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import {
 		endInterruption,
 		milliseconds,
@@ -49,7 +49,7 @@
 
 <form method="POST" action="?/startInterruption" use:enhance={handleStart}>
 	<Button
-		size={$isMobile ? 'xs' : 'md'}
+		size={!$canHover ? 'xs' : 'md'}
 		type="submit"
 		class="w-full bg-secondary-200 dark:bg-secondary-700"
 		buttonStyle="menu"
@@ -73,7 +73,7 @@
 			class="text-primary-900 dark:border-secondary-300 dark:dark:border-secondary-700 dark:text-primary-50 focus:dark:border-secondary-100"
 		/>
 		<Button
-			size={$isMobile ? 'xs' : 'md'}
+			size={!$canHover ? 'xs' : 'md'}
 			type="submit"
 			class="w-full"
 			disabled={!$sessionInterruptions.currentId}

@@ -5,7 +5,7 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Input, Textarea } from 'flowbite-svelte';
-	import { canHover, isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import SetDueDate from './SetDueDate.svelte';
 	import SetPriority from './SetPriority.svelte';
 
@@ -32,7 +32,7 @@
 
 	let size: 'xs' | 'sm';
 
-	$: size = $isMobile ? 'xs' : 'sm';
+	$: size = !$canHover ? 'xs' : 'sm';
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>

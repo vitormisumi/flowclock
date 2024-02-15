@@ -4,7 +4,7 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
-	import { canHover, isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import DeleteStatusButton from './DeleteStatusButton.svelte';
 
 	export let s: TaskStatuses;
@@ -78,7 +78,7 @@
 			<Tooltip placement="right">Rename status</Tooltip>
 		{/if}
 	{/if}
-	{#if showDelete === s.id || ($isMobile && !edit)}
+	{#if showDelete === s.id || (!$canHover && !edit)}
 		<div in:fade>
 			<DeleteStatusButton {s} />
 		</div>

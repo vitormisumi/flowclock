@@ -5,7 +5,7 @@
 	import { flip } from 'svelte/animate';
 	import type { Writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
-	import { isMobile } from '../stores';
+	import { canHover } from '../stores';
 	import { drag } from './drag';
 	import DueDate from './DueDate.svelte';
 	import TaskMenu from './TaskMenu.svelte';
@@ -118,7 +118,7 @@
 				{#if task.due_date}
 					<DueDate date={task.due_date} />
 				{/if}
-				{#if showMenu === task.id || $isMobile}
+				{#if showMenu === task.id || !$canHover}
 					<TaskMenu {task} bind:showMenu />
 				{/if}
 			</div>
