@@ -4,9 +4,9 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
+	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 	import DeleteSessionButton from './DeleteSessionButton.svelte';
 	import SessionDetails from './SessionDetails.svelte';
-	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 

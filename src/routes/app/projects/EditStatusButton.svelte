@@ -46,7 +46,7 @@
 		>
 			<input
 				type="text"
-				name="s"
+				name="start"
 				placeholder={s.status}
 				class="w-full rounded-md bg-transparent pl-1 text-secondary-300 focus:border-primary-700 focus:ring-0"
 			/>

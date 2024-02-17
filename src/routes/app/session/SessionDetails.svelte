@@ -6,6 +6,8 @@
 	import { slide } from 'svelte/transition';
 	import { filteredInterruptions } from '../dashboard/stores';
 	import { canHover } from '../stores';
+	import EditSessionEnd from './EditSessionEnd.svelte';
+	import EditSessionStart from './EditSessionStart.svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -26,21 +28,8 @@
 			{#if $canHover}
 				<Tooltip>Session focus</Tooltip>
 			{/if}
-			<p class="col-start-1 row-start-2">
-				<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
-					session.start,
-					$settings.clock_format
-				)}
-			</p>
-			{#if $canHover}
-				<Tooltip>Start time</Tooltip>
-			{/if}
-			<p class="col-start-2 row-start-2">
-				<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
-			</p>
-			{#if $canHover}
-				<Tooltip>End time</Tooltip>
-			{/if}
+			<EditSessionStart {session} />
+			<EditSessionEnd {session} />
 			<div class="col-span-2 col-start-1 row-start-3 grid justify-items-start">
 				{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
 					<div class="flex items-center justify-center font-extralight dark:text-secondary-100">
