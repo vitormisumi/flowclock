@@ -9,7 +9,7 @@
 		},
 		{
 			title: 'projects',
-			icon: 'fa-square-check'
+			icon: 'fa-circle-check'
 		},
 		{
 			title: 'dashboard',
