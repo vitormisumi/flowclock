@@ -34,8 +34,10 @@
 						type="password"
 						name="new_password"
 						placeholder="Type your new password"
-						required><i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
+						required
 					>
+						<iconify-icon icon="ion:lock-closed" aria-hidden="true" slot="left" />
+					</Input>
 				</div>
 				<div>
 					<Label for="new_password2" class="mb-2 text-primary-50">Confirm new password</Label>
@@ -44,8 +46,10 @@
 						type="password"
 						name="new_password2"
 						placeholder="Confirm your new password"
-						required><i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
+						required
 					>
+						<iconify-icon icon="ion:lock-closed" aria-hidden="true" slot="left" />
+					</Input>
 				</div>
 				<Button type="submit" disabled={loading}>Reset password</Button>
 			</form>

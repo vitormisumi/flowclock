@@ -19,7 +19,7 @@
 
 <Button {size} buttonStyle="menu" class="{dueDate ? size === 'xs' ? 'w-28' : 'w-32' : 'w-auto'}">
 	<div class="flex h-3 place-items-center gap-2 text-secondary-900 dark:text-secondary-50">
-		<i class="fa-solid fa-calendar" />
+		<iconify-icon icon="ion:calendar" />
 		{#if dueDate}
 			<p>
 				{dueDate

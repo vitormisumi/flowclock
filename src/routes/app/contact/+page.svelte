@@ -79,8 +79,9 @@
 			<input type="hidden" name="_captcha" value="false" />
 			<input type="text" name="_honey" style="display:none" />
 			<input type="hidden" name="_next" value={$page.url + '/thanks'} />
-			<Button buttonStyle="accent" type="submit"><i class="fa-solid fa-envelope pr-2" />Send</Button
-			>
+			<Button buttonStyle="accent" type="submit" class="flex items-center gap-2">
+				<iconify-icon icon="ion:mail" />Send
+			</Button>
 		</form>
 	</div>
 </div>

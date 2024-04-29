@@ -26,7 +26,9 @@
 
 {#if !$session.running}
 	<form method="POST" action="/app/session?/start" use:enhance={handleClick}>
-		<Button size="xs" buttonStyle="menu" type="submit"><i class="fa-solid fa-clock" /></Button>
+		<Button size="xs" buttonStyle="menu" type="submit">
+			<iconify-icon icon="ion:time" />
+		</Button>
 		{#if $canHover}
 			<Tooltip placement="left">Start task session</Tooltip>
 		{/if}

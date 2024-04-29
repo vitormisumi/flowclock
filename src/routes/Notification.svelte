@@ -23,7 +23,7 @@
 		style:left={!$page.url.pathname.startsWith('/app') ? '0' : ''}
 	>
 		<Alert color="none" class="rounded-t-none bg-secondary-100 dark:bg-secondary-800 {success ? 'text-green-500' : 'text-red-500'}">
-			<i class={success ? 'fa-solid fa-check' : 'fa-solid fa-circle-exclamation'} slot="icon" />
+			<iconify-icon icon="{success ? 'ion:checkmark-circle' : 'ion:alert-circle'}" slot="icon" />
 			{message}
 		</Alert>
 	</div>

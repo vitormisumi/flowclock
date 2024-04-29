@@ -28,16 +28,11 @@
 	</div>
 </div>
 <Modal bind:open outsideclose size="xs">
-	<i class="fa-solid fa-lock w-full text-3xl dark:text-secondary-300" />
-	<p class="dark:text-secondary-200">
-		By clicking the button below you will receive an email with a link to reset your password.
-	</p>
-	<form
-		class="flex flex-col gap-4"
-		method="POST"
-		action="?/updatePassword"
-		use:enhance={handleClick}
-	>
+	<form class="grid gap-4 place-items-center" method="POST" action="?/updatePassword" use:enhance={handleClick}>
+		<iconify-icon icon="ion:lock-closed" class="text-3xl dark:text-secondary-300" />
+		<p class="dark:text-secondary-200">
+			By clicking the button below you will receive an email with a link to reset your password.
+		</p>
 		<Button type="submit" disabled={loading} buttonStyle="accent" class="self-center">
 			Reset password
 		</Button>

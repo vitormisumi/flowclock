@@ -17,7 +17,7 @@
 		bind:checked={darkMode}
 		on:change={handleChange}
 	>
-		<i class="fa-solid w-3 {darkMode ? 'fa-moon' : 'fa-sun'} transition-colors w-2" />
+		<iconify-icon icon="{darkMode ? 'ion:moon' : 'ion:sunny'}" class="transition-colors"/>
 		<p class="pl-2">{darkMode ? 'Dark mode' : 'Light mode'}</p>
 	</Toggle>
 	<input type="number" name="dark_mode" value={darkMode ? 1 : 0} hidden />

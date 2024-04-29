@@ -6,7 +6,7 @@
 	import SessionsTable from './SessionsTable.svelte';
 	import TableMenu from './TableMenu.svelte';
 
-	let hidden = true;
+	let hidden = false;
 
 	$: duration = $filteredSessions.reduce((accumulator, object) => {
 		return accumulator + object.focused_duration;

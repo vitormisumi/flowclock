@@ -46,10 +46,10 @@
 <Button
 	size="xs"
 	buttonStyle="add"
-	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-700/50"
+	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-700/50 flex items-center gap-2"
 	on:click={() => (open = true)}
 >
-	<i class="fa-solid fa-plus pr-2" />new project
+	<iconify-icon icon="ion:add" />new project
 </Button>
 <Modal bind:open outsideclose size="sm">
 	<h2 class="text-lg font-bold text-primary-900 dark:text-primary-50">New project</h2>
@@ -79,7 +79,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={tasks}>Tasks</Toggle>
-			<i class="fa-solid fa-question-circle" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -96,7 +96,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={toDos}>To-Dos</Toggle>
-			<i class="fa-solid fa-circle-question" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -112,7 +112,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={intentions}>Intentions</Toggle>
-			<i class="fa-solid fa-circle-question" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -140,8 +140,8 @@
 			value={group.id}
 			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 		/>
-		<Button type="submit" buttonStyle="accent" class="w-fit self-center">
-			<i class="fa-solid fa-save pr-2" />Save new project
+		<Button type="submit" buttonStyle="accent" class="w-fit self-center flex items-center gap-2">
+			<iconify-icon icon="ion:save" />Save new project
 		</Button>
 	</form>
 </Modal>

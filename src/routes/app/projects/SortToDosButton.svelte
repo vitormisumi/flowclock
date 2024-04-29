@@ -16,7 +16,9 @@
 	};
 </script>
 
-<Button id="sort" size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
+<Button id="sort" size="xs" buttonStyle="menu">
+	<iconify-icon icon="ion:filter" />
+</Button>
 <Dropdown placement="left-start" class="rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700">
 	<form
 		method="POST"

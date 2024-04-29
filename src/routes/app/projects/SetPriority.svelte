@@ -9,7 +9,7 @@
 </script>
 
 <Button {size} buttonStyle="menu" class={priorityColor(priority, 'text')}>
-	<i class="fa-solid fa-flag" />
+	<iconify-icon icon="ion:flag" />
 </Button>
 <Dropdown class="rounded-md bg-secondary-200 py-2 dark:bg-secondary-700" placement="top">
 	{#each priorityOptions as option}

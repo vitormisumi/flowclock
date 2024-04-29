@@ -44,13 +44,13 @@
 	<Button
 		size="xs"
 		buttonStyle="add"
-		class="w-full hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
+		class="flex w-full items-center gap-2 hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
 		on:click={() => {
 			hidden = false;
 			dueDate = null;
 		}}
 	>
-		<i class="fa-solid fa-plus pr-2" />add task
+		<iconify-icon icon="ion:add" />add task
 	</Button>
 {/if}
 <svelte:component this={component} bgColor="bg-secondary-100 dark:bg-secondary-800" bind:hidden>

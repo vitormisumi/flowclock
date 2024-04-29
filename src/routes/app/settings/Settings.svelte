@@ -137,7 +137,7 @@
 		24-hour clock
 	</Toggle>
 	<input type="number" name="clock_format" value={clockFormat ? 1 : 0} hidden />
-	<Button buttonStyle="accent" type="submit" disabled={loading}>
-		<i class="fa-solid fa-floppy-disk pr-2" />Save changes
+	<Button buttonStyle="accent" type="submit" class="flex items-center gap-2" disabled={loading}>
+		<iconify-icon icon="ion:save" />Save changes
 	</Button>
 </form>

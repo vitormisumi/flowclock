@@ -4,9 +4,9 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
+	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 	import DeleteSessionButton from './DeleteSessionButton.svelte';
 	import SessionDetails from './SessionDetails.svelte';
-	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 
 	const settings: Writable<Settings> = getContext('settings');
 
@@ -102,7 +102,7 @@
 				class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-100 hover:dark:bg-primary-800"
 				on:click={previous}
 			>
-				<i class="fa-solid fa-chevron-left" />
+				<iconify-icon icon="ion:chevron-left" />
 			</Button>
 			{#each { length: pages } as _, p}
 				{#if p === $startRow / 10}
@@ -126,7 +126,7 @@
 				class="bg-secondary-50 font-mono text-secondary-800 transition-colors hover:bg-primary-100 hover:text-secondary-900 focus:ring-0 dark:border-secondary-700 dark:bg-secondary-900 dark:text-primary-100 hover:dark:bg-primary-800"
 				on:click={next}
 			>
-				<i class="fa-solid fa-chevron-right" />
+				<iconify-icon icon="ion:chevron-right" />
 			</Button>
 		</ButtonGroup>
 	</div>

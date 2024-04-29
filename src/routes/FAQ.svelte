@@ -54,8 +54,8 @@
 					class="bg-secondary-800 hover:bg-primary-700 dark:bg-primary-700 hover:dark:bg-secondary-800"
 					borderSharedClass="border-secondary-900 dark:border-secondary-900"
 				>
-					<div slot="arrowdown"><i class="fa-solid fa-chevron-down text-secondary-50" /></div>
-					<div slot="arrowup"><i class="fa-solid fa-chevron-up text-secondary-50" /></div>
+					<div slot="arrowdown"><iconify-icon icon="ion:chevron-down"></iconify-icon></div>
+					<div slot="arrowup"><iconify-icon icon="ion:chevron-up"></iconify-icon></div>
 					<span slot="header" class="font-semibold text-secondary-50">{q.question}</span>
 					<p class="whitespace-pre-wrap text-secondary-100">{q.answer}</p>
 				</AccordionItem>

@@ -6,5 +6,22 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll": "explicit",
 		"source.organizeImports": "explicit"
-	}
+	},
+	"workbench.colorCustomizations": {
+			"list.activeSelectionForeground": "#ff7300",
+			"list.activeSelectionBackground": "#00000000",
+			"list.focusAndSelectionOutline": "#00000000",
+			"list.hoverForeground": "#ff7300",
+			"list.hoverBackground": "#00000000",
+			"list.inactiveSelectionForeground": "#ff7300",
+			"list.inactiveSelectionBackground": "#00000000",
+			"sideBar.background": "#181818",
+			"sideBar.foreground": "#606060",
+			"editor.background": "#121212",
+			"symbolIcon.keywordForeground": "#000000"
+	},
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": ".prettier*, .npmrc, .gitignore, .env, package*, *config.js, *config.ts, *config.cjs, README*, tsconfig.json, components.json, .eslint*"
+  }
 }

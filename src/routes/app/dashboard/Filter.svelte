@@ -84,8 +84,8 @@
 </script>
 
 <div>
-	<Button size="sm" buttonStyle="menu" on:click={openPeriodDrawer}>
-		{$selectedPeriod?.name} <i class="fa-solid fa-chevron-down pl-2" />
+	<Button size="sm" buttonStyle="menu" on:click={openPeriodDrawer} class="flex items-center gap-2">
+		{$selectedPeriod?.name} <iconify-icon icon="ion:chevron-down" />
 	</Button>
 	{#if $canHover}
 		<Tooltip placement="left">Select time period</Tooltip>
@@ -111,7 +111,7 @@
 				on:click={() => (hidden = true)}
 				class="col-start-3 w-fit place-self-end bg-transparent text-secondary-900 dark:bg-transparent dark:text-secondary-50 md:invisible"
 			>
-				<i class="fa-solid fa-x" />
+				<iconify-icon icon="ion:close" />
 			</Button>
 		</div>
 		{#each periods as period}

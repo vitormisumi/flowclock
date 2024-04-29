@@ -10,7 +10,9 @@
 </script>
 
 <div transition:slide={{ axis: 'x' }}>
-	<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+	<Button size="xs" buttonStyle="menu">
+		<iconify-icon icon="ion:ellipsis-vertical" />
+	</Button>
 	<Dropdown
 		placement="left"
 		class="flex justify-items-center rounded-lg bg-secondary-100 p-1 dark:bg-secondary-800"

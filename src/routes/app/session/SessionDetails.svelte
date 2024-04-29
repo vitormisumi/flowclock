@@ -6,6 +6,8 @@
 	import { slide } from 'svelte/transition';
 	import { filteredInterruptions } from '../dashboard/stores';
 	import { canHover } from '../stores';
+	import EditSessionEnd from './EditSessionEnd.svelte';
+	import EditSessionStart from './EditSessionStart.svelte';
 
 	const settings: Writable<Settings> = getContext('settings');
 	const tasks: Writable<Task[]> = getContext('tasks');
@@ -19,32 +21,19 @@
 			class="grid grid-cols-2 place-items-center justify-evenly p-2 font-light text-secondary-700 dark:text-secondary-200"
 			transition:slide
 		>
-			<p class="col-span-2">
-				<i class="fa-solid fa-bullseye pr-1" />{$tasks.find((x) => x.id === session.task_id)
+			<p class="col-span-2 flex items-center gap-1">
+				<iconify-icon icon="material-symbols:target" />{$tasks.find((x) => x.id === session.task_id)
 					?.name ?? 'No focus'}
 			</p>
 			{#if $canHover}
 				<Tooltip>Session focus</Tooltip>
 			{/if}
-			<p class="col-start-1 row-start-2">
-				<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(
-					session.start,
-					$settings.clock_format
-				)}
-			</p>
-			{#if $canHover}
-				<Tooltip>Start time</Tooltip>
-			{/if}
-			<p class="col-start-2 row-start-2">
-				<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
-			</p>
-			{#if $canHover}
-				<Tooltip>End time</Tooltip>
-			{/if}
+			<EditSessionStart {session} />
+			<EditSessionEnd {session} />
 			<div class="col-span-2 col-start-1 row-start-3 grid justify-items-start">
 				{#each Object.entries($filteredInterruptions.filter((x) => x.session_id === session.id)) as interruption}
-					<div class="flex items-center justify-center font-extralight dark:text-secondary-100">
-						<i class="fa-solid fa-pause pr-1" />
+					<div class="flex items-center justify-center font-extralight dark:text-secondary-100 gap-1">
+						<iconify-icon icon="ion:pause" />
 						<p>
 							{timeFromTimestamp(interruption[1].start, $settings.clock_format)} -&nbsp
 						</p>

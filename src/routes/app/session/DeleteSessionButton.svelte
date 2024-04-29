@@ -32,22 +32,24 @@
 	};
 </script>
 
-<button
-	class="flex items-center rounded-lg bg-transparent px-3 py-2 text-xs transition-colors hover:bg-primary-200 dark:bg-transparent dark:hover:bg-primary-700"
+<Button
+	size="xs"
+	buttonStyle="menu"
 	tabindex="0"
-	on:click|stopPropagation={() => {
+	on:click={(e) => {
 		open = true;
 		sessionId = session.id;
+		e.stopPropagation();
 	}}
-	on:keydown|stopPropagation
+	on:keydown={(e) => e.stopPropagation()}
 >
-	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
-</button>
+	<iconify-icon icon="ion:trash" class="text-red-700 dark:text-red-700" />
+</Button>
 {#if $canHover}
 	<Tooltip placement="left">Delete session</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
-	<i class="fa-solid fa-warning text-3xl dark:text-red-700" />
+	<iconify-icon icon="ion:warning" class="text-3xl text-red-700 dark:text-red-700" />
 	<p class="whitespace-normal dark:text-secondary-200">
 		Delete session at {dateFromTimestamp(
 			sessionToDelete?.start,

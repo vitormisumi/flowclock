@@ -25,7 +25,7 @@
 		class="w-full"
 		on:click={() => (completedHidden = !completedHidden)}
 	>
-		<i class="fa-solid {completedHidden ? 'fa-check-circle' : 'fa-ban'}" />
+		<iconify-icon icon="{completedHidden ? 'ion:checkmark-circle' : 'ion:ban'}" />
 	</Button>
 </form>
 {#if $canHover}

@@ -19,7 +19,7 @@
 
 <form method="POST" action="?/hideToDosCard" use:enhance={handleClick}>
 	<Button size="xs" buttonStyle="menu" type="submit" on:click={() => (hidden = !hidden)}>
-		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
+		<iconify-icon icon="{hidden ? 'ion:eye' : 'ion:eye-off'}" />
 	</Button>
 </form>
 {#if $canHover}

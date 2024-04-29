@@ -15,7 +15,7 @@
 	<div class="flex items-end justify-between">
 		<p class="font-thin text-sm">Developed by Vitor Misumi</p>
 		<div class="grid gap-8 justify-items-end">
-			<a href="mailto:flowclock@flowclock.app"><i class="fa-solid fa-envelope text-secondary-50"></i></a>
+			<a href="mailto:flowclock@flowclock.app"><iconify-icon icon="ion:mail"></iconify-icon></a>
 			<ul class="grid gap-4 place-items-end bg-transparent dark:bg-transparent">
 				<li>
 					<Button href="/blog" size="sm" buttonStyle="transparent" class="text-secondary-50 p-0">Blog</Button>

@@ -36,7 +36,7 @@
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
-	<i class="fa-solid fa-pen text-primary-900 dark:text-primary-50" />
+	<iconify-icon icon="ion:pencil" class="text-primary-900 dark:text-primary-50"/>
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Edit to-do</Tooltip>
@@ -79,8 +79,8 @@
 						showMenu = null;
 					}}>Cancel</Button
 				>
-				<Button {size} buttonStyle="accent" type="submit" class="self-center">
-					<i class="fa-solid fa-save pr-2" />Save
+				<Button {size} buttonStyle="accent" type="submit" class="self-center flex items-center gap-2">
+					<iconify-icon icon="ion:save" />Save
 				</Button>
 			</div>
 		</div>

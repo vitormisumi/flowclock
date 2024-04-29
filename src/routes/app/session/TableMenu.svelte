@@ -80,13 +80,15 @@
 	let openPeriods = false;
 </script>
 
-<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+<Button size="xs" buttonStyle="menu">
+	<iconify-icon icon="ion:ellipsis-vertical" />
+</Button>
 <Dropdown
 	class="flex flex-col justify-items-center rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700"
 	bind:open
 >
 	<Button id="calendar" size="xs" buttonStyle="menu" on:click={() => (openPeriods = !openPeriods)}>
-		<i class="fa-solid fa-calendar" />
+		<iconify-icon icon="ion:calendar" />
 	</Button>
 	<Dropdown
 		placement="right-start"
@@ -119,7 +121,7 @@
 			open = false;
 		}}
 	>
-		<i class="fa-solid {hidden ? 'fa-eye' : 'fa-eye-slash'}" />
+		<iconify-icon icon="{hidden ? 'ion:eye' : 'ion:eye-off'}" />
 	</Button>
 	{#if $canHover}
 		<Tooltip placement="left">
