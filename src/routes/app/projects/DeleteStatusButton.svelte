@@ -22,17 +22,17 @@
 </script>
 
 <Button size="xs" buttonStyle="menu" class="z-10" disabled={loading} on:click={() => (open = true)}>
-	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
+	<iconify-icon icon="ion:trash" class="text-red-700 dark:text-red-700" />
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Delete status</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
-	<i class="fa-solid fa-warning text-xl dark:text-red-700" />
+	<iconify-icon icon="ion:warning" class="text-3xl text-red-700 dark:text-red-700" />
 	<p class="whitespace-normal dark:text-secondary-200">
-		Delete status {s.status}? <br /><span class="font-bold"
-			>This will delete all tasks inside this status!</span
-		>
+		Delete status {s.status}? <br /><span class="font-bold">
+			This will delete all tasks inside this status!
+		</span>
 	</p>
 	<form
 		class="flex w-full justify-center gap-4"
@@ -42,7 +42,7 @@
 	>
 		<Button buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
 		<Button
-			class="border-2 border-red-900 bg-transparent transition-colors hover:bg-red-950 dark:bg-transparent dark:text-red-700"
+			buttonStyle="red"
 			type="submit"
 			disabled={loading}
 		>

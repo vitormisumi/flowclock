@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
 	import hero from '$lib/assets/hero.jpeg';
+	import Button from '$lib/components/Button.svelte';
 	import { Image } from '@unpic/svelte';
 </script>
 
@@ -18,7 +18,10 @@
 		The best dedicated app for the flowtime technique, the evolution of the pomodoro.
 	</p>
 	<Button size="xl" href="/signup" buttonStyle="accent" class="z-10">Sign Up For FREE</Button>
-	<i class="fa-solid fa-chevron-down absolute bottom-1 z-10 animate-bounce text-xl text-white" />
+	<iconify-icon
+		icon="ion:chevron-down"
+		class="absolute bottom-1 z-10 animate-bounce text-xl text-white"
+	></iconify-icon>
 	<Image
 		src={hero}
 		layout="fullWidth"

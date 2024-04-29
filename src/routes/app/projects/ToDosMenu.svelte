@@ -8,7 +8,9 @@
 	export let completedHidden: boolean;
 </script>
 
-<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+<Button size="xs" buttonStyle="menu">
+	<iconify-icon icon="ion:ellipsis-vertical" />
+</Button>
 <Dropdown
 	placement="bottom"
 	class="flex flex-col justify-items-center rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700"

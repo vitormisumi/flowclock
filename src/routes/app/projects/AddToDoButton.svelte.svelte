@@ -49,8 +49,8 @@
 </script>
 
 {#if hidden || !$canHover}
-	<Button size="xs" buttonStyle="add" class="w-full" on:click={() => (hidden = false)}>
-		<i class="fa-solid fa-plus pr-2" />add to-do
+	<Button size="xs" buttonStyle="add" class="w-full flex items-center gap-2" on:click={() => (hidden = false)}>
+		<iconify-icon icon="ion:add" />add to-do
 	</Button>
 {/if}
 <svelte:component this={component} bgColor="bg-secondary-50 dark:bg-secondary-900" bind:hidden>

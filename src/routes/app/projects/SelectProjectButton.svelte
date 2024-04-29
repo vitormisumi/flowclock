@@ -30,9 +30,14 @@
 	};
 </script>
 
-<Button size="sm" buttonStyle="menu" on:click={() => (hidden = false)}>
+<Button
+	size="sm"
+	buttonStyle="menu"
+	class="flex items-center gap-2"
+	on:click={() => (hidden = false)}
+>
 	{$selectedProject.name === '' ? 'Projects' : $selectedProject.name}
-	<i class="fa-solid fa-chevron-down pl-2" />
+	<iconify-icon icon="ion:chevron-down" />
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Select project</Tooltip>
@@ -57,7 +62,7 @@
 				on:click={() => (hidden = true)}
 				class="col-start-3 w-fit place-self-end bg-transparent text-secondary-900 dark:bg-transparent dark:text-secondary-50 md:invisible"
 			>
-				<i class="fa-solid fa-x" />
+				<iconify-icon icon="ion:close" />
 			</Button>
 		</div>
 		{#each $projectGroups as group}
@@ -83,11 +88,11 @@
 			<Button
 				size="xs"
 				buttonStyle="add"
-				class="hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
+				class="flex items-center gap-2 hover:bg-secondary-100/50 hover:dark:bg-secondary-800/50"
 				type="submit"
 				on:click={() => (open = true)}
 			>
-				<i class="fa-solid fa-plus pr-2" />new group
+				<iconify-icon icon="ion:add" />new group
 			</Button>
 		{/if}
 		{#if open}

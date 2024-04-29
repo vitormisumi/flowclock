@@ -5,11 +5,11 @@
 	const providers = [
 		{
 			name: 'github',
-			icon: 'fa-github'
+			icon: 'ion:logo-github'
 		},
 		{
 			name: 'google',
-			icon: 'fa-google'
+			icon: 'ion:logo-google'
 		}
 	];
 </script>
@@ -18,8 +18,8 @@
 	{#each providers as provider}
 		<form method="POST" action="/oauth" use:enhance>
 			<input type="hidden" name="provider" value={provider.name} />
-			<Button outline class="w-full capitalize" type="submit">
-				<i class="fa-brands {provider.icon} pr-2" />{provider.name}
+			<Button outline class="w-full capitalize flex items-center gap-2" type="submit">
+				<iconify-icon icon={provider.icon} />{provider.name}
 			</Button>
 		</form>
 	{/each}

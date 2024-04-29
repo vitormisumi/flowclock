@@ -22,13 +22,13 @@
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
-	<i class="fa-solid fa-trash text-red-700 dark:text-red-700" />
+	<iconify-icon icon="ion:trash" class="text-red-700 dark:text-red-700" />
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Delete to-do</Tooltip>
 {/if}
 <Modal bind:open outsideclose size="xs">
-	<i class="fa-solid fa-warning text-xl dark:text-red-700" />
+	<iconify-icon icon="ion:warning" class="text-3xl text-red-700 dark:text-red-700" />
 	<p class="whitespace-normal dark:text-secondary-200">Delete to-do {toDo.name}?</p>
 	<form
 		class="flex w-full justify-center gap-4"

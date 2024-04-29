@@ -67,10 +67,10 @@
 		<Button
 			size="xs"
 			buttonStyle="add"
-			class="h-full w-full rounded-r-none"
+			class="h-full w-full rounded-r-none flex items-center gap-2"
 			on:click={() => (open = true)}
 		>
-			<i class="fa-solid fa-plus pr-2" />add status
+			<iconify-icon icon="ion:add" />add status
 		</Button>
 	{/if}
 </div>

@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { Dropdown, DropdownDivider } from 'flowbite-svelte';
 	import Button from '$lib/components/Button.svelte';
-	import HideProjectButton from './HideProjectButton.svelte';
-	import EditProjectButton from './EditProjectButton.svelte';
+	import { Dropdown, DropdownDivider } from 'flowbite-svelte';
 	import DeleteProjectButton from './DeleteProjectButton.svelte';
+	import EditProjectButton from './EditProjectButton.svelte';
+	import HideProjectButton from './HideProjectButton.svelte';
 
 	export let hidden: boolean;
 
 	export let open: boolean;
 </script>
 
-<Button size="xs" buttonStyle="menu"><i class="fa-solid fa-ellipsis-vertical" /></Button>
+<Button size="xs" buttonStyle="menu">
+	<iconify-icon icon="ion:ellipsis-vertical" />
+</Button>
 <Dropdown
 	placement="bottom"
 	class="flex flex-col justify-items-center rounded-lg bg-secondary-200 p-1 dark:bg-secondary-700"

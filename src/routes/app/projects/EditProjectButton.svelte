@@ -47,7 +47,7 @@
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
-	<i class="fa-solid fa-pen text-primary-900 dark:text-primary-50" />
+	<iconify-icon icon="ion:pencil" class="text-primary-900 dark:text-primary-50"/>
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Edit project</Tooltip>
@@ -83,7 +83,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={tasks}>Tasks</Toggle>
-			<i class="fa-solid fa-question-circle" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -100,7 +100,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={toDos}>To-Dos</Toggle>
-			<i class="fa-solid fa-circle-question" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -116,7 +116,7 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<Toggle size="small" bind:checked={intentions}>Intentions</Toggle>
-			<i class="fa-solid fa-circle-question" />
+			<iconify-icon icon="ion:help-circle" />
 			<Popover
 				class="z-10 w-60 border-none bg-secondary-200 dark:bg-secondary-700 md:w-80"
 				placement="right"
@@ -148,9 +148,9 @@
 		<input type="number" name="id" hidden value={$selectedProject.id} />
 		<Button
 			type="submit"
-			class="self-center transition-colors dark:bg-accent-500 hover:dark:bg-accent-600"
+			class="self-center transition-colors dark:bg-accent-500 hover:dark:bg-accent-600 flex items-center gap-2"
 		>
-			<i class="fa-solid fa-save pr-2" />Save
+			<iconify-icon icon="ion:save" />Save
 		</Button>
 	</form>
 </Modal>

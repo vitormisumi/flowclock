@@ -46,6 +46,7 @@
 		"date-picker-svelte": "^2.8.0",
 		"flowbite": "^1.7.0",
 		"flowbite-svelte": "^0.44.15",
+		"iconify-icon": "^2.1.0",
 		"svelte-device-info": "^1.0.4",
 		"tailwind-merge": "^1.13.2"
 	}

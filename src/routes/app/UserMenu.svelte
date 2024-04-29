@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { Avatar, Dropdown, DropdownHeader, DropdownItem, DropdownDivider } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
-	import { session } from './session/stores';
 	import { page } from '$app/stores';
 	import avatar from '$lib/assets/avatar.png';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { User } from '@supabase/supabase-js';
-	import type { Writable } from 'svelte/store';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { session } from './session/stores';
 
 	$: activeUrl = $page.url.pathname;
 
@@ -59,18 +59,24 @@
 			>{user.email}</span
 		>
 	</DropdownHeader>
-	<DropdownItem href="/app/account"><i class="fa-solid fa-user pr-2" />Account</DropdownItem>
-	<DropdownItem href="/app/settings"><i class="fa-solid fa-gear pr-2" />Settings</DropdownItem>
-	<DropdownItem href="/app/contact"><i class="fa-solid fa-envelope pr-2" />Contact</DropdownItem>
+	<DropdownItem href="/app/account" class="flex items-center gap-2">
+		<iconify-icon icon="ion:person" />Account
+	</DropdownItem>
+	<DropdownItem href="/app/settings" class="flex items-center gap-2">
+		<iconify-icon icon="ion:settings" />Settings
+	</DropdownItem>
+	<DropdownItem href="/app/contact" class="flex items-center gap-2">
+		<iconify-icon icon="ion:mail" />Contact
+	</DropdownItem>
 	<DropdownDivider />
 	<form method="POST" action="/app?/signOut" use:enhance={signOut}>
-		<DropdownItem type="submit" class="rounded-b-lg text-red-600">
-			<i class="fa-solid fa-right-from-bracket pr-2" />Sign Out
+		<DropdownItem type="submit" class="flex items-center gap-2 rounded-b-lg text-red-600">
+			<iconify-icon icon="ion:log-out" />Log Out
 		</DropdownItem>
 	</form>
 </Dropdown>
 <Modal bind:open size="sm">
-	<i class="fa-solid fa-warning text-center text-3xl dark:text-secondary-300" />
+	<iconify-icon icon="ion:warning" class="text-center text-3xl dark:text-secondary-300"/>
 	<p class="dark:text-secondary-200">
 		You currently have a session running.<br />Would you like to save your current session before
 		signing out?

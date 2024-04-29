@@ -51,15 +51,15 @@
 	<Button
 		size={!$canHover ? 'xs' : 'md'}
 		type="submit"
-		class="w-full bg-secondary-200 dark:bg-secondary-700"
+		class="w-full bg-secondary-200 dark:bg-secondary-700 flex items-center gap-3"
 		buttonStyle="menu"
 		disabled={!$session.id}
 	>
-		<i class="fa-solid fa-pause pr-3" />Interruption
+		<iconify-icon icon="ion:pause" />Interruption
 	</Button>
 </form>
 <Modal bind:open={$session.pause} dismissable={false} size="sm">
-	<i class="fa-solid fa-pause text-3xl dark:text-secondary-300" />
+	<iconify-icon icon="ion:pause" class="text-3xl dark:text-secondary-300" />
 	<p>{millisecondsToClock($milliseconds)}</p>
 	<p class="dark:text-secondary-200">
 		Select the reason for the interruption and resume your session once you are ready.
@@ -75,10 +75,10 @@
 		<Button
 			size={!$canHover ? 'xs' : 'md'}
 			type="submit"
-			class="w-full"
+			class="w-full flex items-center gap-2"
 			disabled={!$sessionInterruptions.currentId}
 		>
-			<i class="fa-solid fa-play pr-2" />Resume
+			<iconify-icon icon="ion:play" />Resume
 		</Button>
 	</form>
 </Modal>

@@ -31,7 +31,7 @@
 			menuOpen = !menuOpen;
 		}}
 	>
-		<i class="fa-solid {menuOpen ? 'fa-x' : 'fa-bars'}" />
+		<iconify-icon icon="{menuOpen ? 'ion:close' : 'ion:menu'}" />
 	</Button>
 	<NavUl
 		{hidden}

@@ -5,15 +5,15 @@
 	let menuItems: { title: string; icon: string }[] = [
 		{
 			title: 'session',
-			icon: 'fa-clock'
+			icon: 'ion:time'
 		},
 		{
 			title: 'projects',
-			icon: 'fa-square-check'
+			icon: 'ion:checkbox'
 		},
 		{
 			title: 'dashboard',
-			icon: 'fa-chart-pie'
+			icon: 'ion:pie-chart'
 		}
 	];
 
@@ -26,13 +26,13 @@
 		{#each menuItems as item}
 			<li class="transition-all duration-200 hover:scale-105">
 				<a
-					class="grid aspect-square w-12 cursor-pointer content-center rounded-xl text-center md:w-20 {activeUrl ===
+					class="grid aspect-square w-12 cursor-pointer content-center place-items-center rounded-xl text-center md:w-20 {activeUrl ===
 					'/app/' + item.title
 						? 'bg-primary-500 dark:bg-primary-700'
 						: 'transparent hover:bg-primary-500/50 hover:dark:bg-primary-700/50'}"
 					href="/app/{item.title}"
 				>
-					<i class="fa-solid {item.icon} text-2xl text-secondary-900 dark:text-secondary-50" />
+					<iconify-icon icon={item.icon} class="text-2xl text-secondary-900 dark:text-secondary-50"/>
 					<p class="hidden text-xs capitalize text-secondary-900 dark:text-secondary-50 md:block md:text-sm">{item.title}</p>
 				</a>
 			</li>

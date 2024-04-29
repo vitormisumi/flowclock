@@ -35,7 +35,7 @@
 				action="?/deleteAccount"
 				use:enhance={handleClick}
 			>
-				<i class="fa-solid fa-triangle-exclamation w-full text-center text-3xl dark:text-red-800" />
+				<iconify-icon icon="ion:warning" class="w-full text-center text-3xl dark:text-red-800"/>
 				<p class="text-center dark:text-secondary-200">
 					<span class="font-bold dark:text-red-800">This action cannot be reversed!</span><br /> By deleting
 					your account you will permanently lose access to all your account data. Are you sure you want

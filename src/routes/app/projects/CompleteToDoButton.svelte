@@ -23,6 +23,6 @@
 			? 'text-secondary-600 hover:text-transparent focus:text-transparent focus:ring-2 focus:ring-primary-700 hover:dark:bg-transparent focus:dark:bg-transparent'
 			: 'text-transparent hover:text-primary-50 focus:text-primary-900 focus:ring-2 focus:ring-primary-50 hover:dark:bg-primary-700 focus:dark:bg-primary-50'} transition-all duration-300"
 	>
-		<i class="fa-solid fa-check" />
+		<iconify-icon icon="ion:checkmark" />
 	</button>
 </form>

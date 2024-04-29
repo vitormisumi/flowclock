@@ -39,15 +39,15 @@
 </script>
 
 <Modal bind:open size="xs">
-	<i class="fa-solid fa-warning text-3xl dark:text-secondary-300" />
+	<iconify-icon icon="ion:warning" class="text-3xl dark:text-secondary-300"/>
 	<p class="dark:text-secondary-200">
 		You have reached your session length warning.<br />How about taking a break?
 	</p>
 	<div class="flex justify-around">
 		<Button size="sm" buttonStyle="cancel" on:click={dismiss}>Dismiss</Button>
 		<form method="POST" action="/app/session?/break" use:enhance={handleClick}>
-			<Button size="sm" buttonStyle="accent" type="submit" disabled={loading}>
-				<i class="fa-solid fa-stop pr-2" />Break
+			<Button size="sm" buttonStyle="accent" type="submit" class="flex items-center gap-2" disabled={loading}>
+				<iconify-icon icon="ion:stop" />Break
 			</Button>
 		</form>
 	</div>

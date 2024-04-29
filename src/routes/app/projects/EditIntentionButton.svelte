@@ -22,7 +22,7 @@
 </script>
 
 <Button size="xs" buttonStyle="menu" on:click={() => (open = true)}>
-	<i class="fa-solid fa-pen" />
+	<iconify-icon icon="ion:pencil" />
 </Button>
 {#if $canHover}
 	<Tooltip placement="left">Edit intention</Tooltip>
@@ -62,8 +62,8 @@
 			>
 				Cancel
 			</Button>
-			<Button size="sm" buttonStyle="accent" type="submit" class="self-center">
-				<i class="fa-solid fa-save pr-2" />Save
+			<Button size="sm" buttonStyle="accent" type="submit" class="self-center flex items-center gap-2">
+				<iconify-icon icon="ion:save" />Save
 			</Button>
 		</div>
 	</form>

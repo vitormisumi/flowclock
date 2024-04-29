@@ -1,10 +1,12 @@
 <script lang="ts">
-	import '../app.postcss';
 	import { dev } from '$app/environment';
 	import { invalidate } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import { inject } from '@vercel/analytics';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import 'iconify-icon';
+	import { onMount } from 'svelte';
+	import '../app.postcss';
+
 
 	export let data;
 

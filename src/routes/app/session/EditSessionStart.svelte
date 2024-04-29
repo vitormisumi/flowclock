@@ -42,10 +42,10 @@
 {:else}
 	<Button
 		buttonStyle="transparent"
-		class="col-start-1 row-start-2 cursor-text font-light text-secondary-700 dark:text-secondary-200"
+		class="col-start-1 row-start-2 cursor-text font-light text-secondary-700 dark:text-secondary-200 flex items-center gap-1"
 		on:click={() => (startEdit = true)}
 	>
-		<i class="fa-solid fa-play pr-1" />{timeFromTimestamp(session.start, $settings.clock_format)}
+		<iconify-icon icon="ion:play" />{timeFromTimestamp(session.start, $settings.clock_format)}
 	</Button>
 	{#if $canHover}
 		<Tooltip>Edit start time</Tooltip>

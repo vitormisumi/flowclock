@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Label, Input } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
 	import logo from '$lib/assets/logo.png';
 	import Button from '$lib/components/Button.svelte';
-	import Providers from '../oauth/Providers.svelte';
-	import Notification from '../Notification.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Input, Label } from 'flowbite-svelte';
+	import Notification from '../Notification.svelte';
+	import Providers from '../oauth/Providers.svelte';
 
 	export let form;
 
@@ -20,7 +20,7 @@
 	};
 </script>
 
-<div class="grid h-screen content-start justify-items-center md:content-center bg-secondary-900">
+<div class="grid h-screen content-start justify-items-center bg-secondary-900 md:content-center">
 	<div class="grid w-screen max-w-lg justify-items-center gap-8 p-4">
 		<a href="/">
 			<img src={logo} alt="FlowClock logo" class="w-32 md:w-40 lg:w-48" />
@@ -36,8 +36,8 @@
 					value={form?.email ?? ''}
 					placeholder="Type your email"
 				>
-					<i class="fa-solid fa-envelope" aria-hidden="true" slot="left" /></Input
-				>
+					<iconify-icon icon="ion:mail" aria-hidden="true" slot="left" />
+				</Input>
 			</div>
 			<div>
 				<Label for="password" class="mb-2 text-primary-50">Password</Label>
@@ -47,8 +47,8 @@
 					type="password"
 					placeholder="Type your password"
 				>
-					<i class="fa-solid fa-lock" aria-hidden="true" slot="left" /></Input
-				>
+					<iconify-icon icon="ion:lock-closed" aria-hidden="true" slot="left" />
+				</Input>
 			</div>
 			<Button type="submit" buttonStyle="accent" disabled={loading}>Sign In</Button>
 		</form>

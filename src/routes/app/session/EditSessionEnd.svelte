@@ -42,10 +42,10 @@
 {:else}
 	<Button
 		buttonStyle="transparent"
-		class="col-start-2 row-start-2 cursor-text font-light text-secondary-700 dark:text-secondary-200"
+		class="col-start-2 row-start-2 cursor-text font-light text-secondary-700 dark:text-secondary-200 flex items-center gap-1"
 		on:click={() => (endEdit = true)}
 	>
-		<i class="fa-solid fa-stop pr-1" />{timeFromTimestamp(session.end, $settings.clock_format)}
+		<iconify-icon icon="ion:stop" />{timeFromTimestamp(session.end, $settings.clock_format)}
 	</Button>
 	{#if $canHover}
 		<Tooltip>Edit end time</Tooltip>

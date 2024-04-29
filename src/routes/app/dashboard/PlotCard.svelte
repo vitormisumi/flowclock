@@ -44,7 +44,7 @@
 	class="col-span-2 row-span-6 flex min-w-full flex-col gap-2 border-0 bg-secondary-100 dark:bg-secondary-800 md:col-span-3 md:row-span-4"
 >
 	<div class="flex justify-end">
-		<Button id="groupby" size="xs" buttonStyle="menu"><i class="fa-solid fa-sort" /></Button>
+		<Button id="groupby" size="xs" buttonStyle="menu"><iconify-icon icon="ion:filter" /></Button>
 		<Dropdown class="grid gap-2 rounded-lg bg-secondary-200 p-3 dark:bg-secondary-700" bind:open>
 			{#if $selectedPlot === 'timeframe'}
 				{#each Object.keys(periods) as period}
