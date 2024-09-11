@@ -13,7 +13,7 @@
 	let showMenu: number | null = null;
 </script>
 
-<ul class="grid max-h-96 w-full gap-1 overflow-scroll">
+<ul class="grid max-h-96 w-full gap-1 overflow-auto">
 	{#each $intentions as intention, i}
 		{#if intention.project_id === $selectedProject.id}
 			<li

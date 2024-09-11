@@ -111,7 +111,7 @@
 	bind:this={features}
 >
 	<div class="grid max-w-4xl gap-4 overflow-hidden">
-		<div class="flex gap-4 overflow-scroll" bind:this={container}>
+		<div class="flex gap-4 overflow-auto" bind:this={container}>
 			{#each images as image, i}
 				<button
 					class="grid w-full min-w-[80%] content-start gap-2 rounded-lg p-4 text-left transition-colors sm:min-w-min {selected ===

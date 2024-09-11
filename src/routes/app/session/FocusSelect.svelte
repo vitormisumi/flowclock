@@ -40,7 +40,7 @@
 </Button>
 <Dropdown
 	placement="top"
-	class="max-h-60 w-60 max-w-xs overflow-y-scroll rounded-b-md bg-secondary-200 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
+	class="max-h-60 w-60 max-w-xs overflow-y-auto rounded-b-md bg-secondary-200 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50"
 	containerClass=""
 	headerClass="bg-secondary-200 dark:bg-secondary-700 rounded-t-md"
 	bind:open
@@ -56,7 +56,7 @@
 		</DropdownItem>
 		<Dropdown
 			placement="top"
-			class="max-h-60 w-60 max-w-xs overflow-x-clip overflow-y-scroll rounded-md bg-secondary-200 p-2 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50 md:w-96"
+			class="max-h-60 w-60 max-w-xs overflow-y-auto overflow-x-clip rounded-md bg-secondary-200 p-2 text-secondary-900 dark:bg-secondary-700 dark:text-secondary-50 md:w-96"
 		>
 			{#if $tasks.filter((task) => task.project_id === project.id).length > 0}
 				<h3 class="px-4 py-2 text-sm font-bold">Tasks</h3>

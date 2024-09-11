@@ -2,9 +2,9 @@
 	<slot name="top-bar" />
 </div>
 <div
-	class="h-[100dvh] w-screen bg-secondary-50 py-16 dark:bg-secondary-900 md:pb-24 md:pt-20 landscape:pb-0 landscape:pl-16 landscape:pt-12 landscape:md:pl-24 landscape:md:pt-16 landscape:lg:pt-20 flex justify-center"
+	class="flex h-[100dvh] w-screen justify-center bg-secondary-50 py-16 dark:bg-secondary-900 md:pb-24 md:pt-20 landscape:pb-0 landscape:pl-16 landscape:pt-12 landscape:md:pl-24 landscape:md:pt-16 landscape:lg:pt-20"
 >
-	<div class="relative h-full w-full overflow-y-scroll p-4 pt-0 max-w-7xl">
+	<div class="relative h-full w-full max-w-7xl overflow-y-auto p-4 pt-0">
 		<slot name="main" />
 	</div>
 </div>

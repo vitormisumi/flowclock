@@ -42,7 +42,7 @@
 	}
 </script>
 
-<ul class="grid max-h-96 w-full gap-1 overflow-scroll">
+<ul class="grid max-h-96 w-full gap-1 overflow-auto">
 	{#each $toDos as toDo (toDo.id)}
 		<li
 			class="grid w-full rounded-lg border border-secondary-50 bg-secondary-50 px-2 dark:border-secondary-900 dark:bg-secondary-900 {toDo.description
