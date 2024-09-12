@@ -1,7 +1,7 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ request, url, locals: { supabase } }) => {
+	default: async ({ request, locals }) => {
 		const formData = await request.formData();
 		const email = formData.get('email') as string;
 		const password = formData.get('password') as string;
@@ -16,22 +16,30 @@ export const actions = {
 			});
 		}
 
-		const { error } = await supabase.auth.signUp({
-			email,
-			password,
-			options: {
-				emailRedirectTo: `${url.origin}/auth/callback`
-			}
-		});
+		const data = {
+			email: email,
+			emailVisibility: true,
+			password: password,
+			passwordConfirm: passwordConfirmation
+		};
 
-		if (error) {
-			console.log(error);
-			return fail(500, { message: error.message, success: false, email });
+		try {
+			const record = await locals.pb.collection('users').create(data);
+
+			const { token, user } = await locals.pb.authStore.model?.authViaEmail(
+				data.email,
+				data.password
+			);
+
+			locals.pb.authStore.clear();
+		} catch (error) {
+			return fail(500, {
+				message: error,
+				success: false,
+				email
+			});
 		}
 
-		return {
-			message: 'Please check your email to confirm your registration.',
-			success: true
-		};
+		throw redirect(303, '/app/session');
 	}
 };

@@ -1,31 +1,24 @@
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
-import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
-import { type Handle, redirect } from '@sveltejs/kit';
+import PocketBase from 'pocketbase';
 
-export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createSupabaseServerClient<Database>({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
-		event
-	});
+/** @type {import('@sveltejs/kit').Handle} */
+export async function handle({ event, resolve }) {
+	event.locals.pb = new PocketBase('https://flowclock-pocketbase.vitormisumi.com');
 
-	event.locals.getSession = async () => {
-		const {
-			data: { session }
-		} = await event.locals.supabase.auth.getSession();
-		return session;
-	};
+	// load the store data from the request cookie string
+	event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
 
-	if (event.url.pathname.startsWith('/app')) {
-		const session = await event.locals.getSession();
-		if (!session) {
-			throw redirect(303, '/');
-		}
+	try {
+		// get an up-to-date auth store state by verifying and refreshing the loaded auth model (if any)
+		event.locals.pb.authStore.isValid && (await event.locals.pb.collection('users').authRefresh());
+	} catch (_) {
+		// clear the auth store on failed refresh
+		event.locals.pb.authStore.clear();
 	}
 
-	return resolve(event, {
-		filterSerializedResponseHeaders(name) {
-			return name === 'content-range';
-		}
-	});
-};
+	const response = await resolve(event);
+
+	// send back the default 'pb_auth' cookie to the client with the latest store state
+	response.headers.append('set-cookie', event.locals.pb.authStore.exportToCookie());
+
+	return response;
+}

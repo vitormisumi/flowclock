@@ -40,7 +40,7 @@
 
 	let darkMode: boolean = $settings.dark_mode;
 
-	let clockFormat: boolean = $settings.clock_format;
+	let clockFormat: boolean = $settings.twenty_four_hour_clock;
 
 	let loading = false;
 </script>

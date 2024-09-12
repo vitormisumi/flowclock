@@ -14,7 +14,7 @@
 	$: activeUrl = $page.url.pathname;
 
 	const user: User = getContext('user');
-	const sessions: Writable<UserSession[]> = getContext('sessions');
+	const sessions: Writable<Session[]> = getContext('sessions');
 
 	let open = false;
 
