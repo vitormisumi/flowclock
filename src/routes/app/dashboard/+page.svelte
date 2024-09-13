@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import { dateFromTimestamp } from '$lib/functions/functions';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
 	import Clock from '../Clock.svelte';
@@ -11,8 +9,7 @@
 	import PlotCard from './PlotCard.svelte';
 	import { filteredInterruptions, filteredSessions } from './stores';
 
-	const sessions: Writable<UserSession[]> = getContext('sessions');
-	const settings: Writable<Settings> = getContext('settings');
+	export let data;
 
 	export let form;
 
@@ -36,23 +33,25 @@
 		} else {
 			const startDate = dateFromTimestamp(
 				$filteredSessions.slice(-1)[0].start,
-				$settings.date_format,
-				$settings.separator
+				data.settings?.date_format,
+				data.settings?.separator
 			);
 			const endDate = dateFromTimestamp(
 				$filteredSessions[0].start,
-				$settings.date_format,
-				$settings.separator
+				data.settings?.date_format,
+				data.settings?.separator
 			);
 
 			dates = startDate !== endDate ? `${startDate} - ${endDate}` : startDate;
 		}
 	}
 
-	$: numberOfDays = new Set($filteredSessions.map(session => {
-        const date = new Date(session.start);
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    })).size;
+	$: numberOfDays = new Set(
+		$filteredSessions.map((session) => {
+			const date = new Date(session.start);
+			return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+		})
+	).size;
 
 	$: perSession = $filteredSessions.length
 		? ($filteredInterruptions.length / $filteredSessions.length).toFixed(2)
@@ -65,7 +64,7 @@
 >
 	<Clock />
 </div>
-{#if $sessions.length === 0}
+{#if data.sessions?.length === 0}
 	<div class="absolute inset-0 flex items-center justify-center">
 		<p class="text-center text-lg dark:text-secondary-100">
 			You have no sessions yet. <br />Complete your first session to start analysing your data.

@@ -1,5 +1,4 @@
 export const load = async ({ locals }) => {
-	console.log(locals.pb.authStore.model);
 	if (locals.pb.authStore.model) {
 		const [
 			user,
@@ -17,32 +16,32 @@ export const load = async ({ locals }) => {
 			locals.pb.collection('users').getOne(locals.pb.authStore.model.id),
 			locals.pb.collection('sessions').getFullList({
 				sort: '-start'
-			}),
+			}) as unknown as Session[],
 			locals.pb.collection('breaks').getFullList({
 				sort: '-id'
-			}),
+			}) as unknown as Break[],
 			locals.pb.collection('interruptions').getFullList({
 				sort: '-id'
-			}),
+			}) as unknown as Interruption[],
 			locals.pb
 				.collection('user_settings')
-				.getFirstListItem(`user_id="${locals.pb.authStore.model.id}"`),
+				.getFirstListItem(`user_id="${locals.pb.authStore.model.id}"`) as unknown as Settings,
 			locals.pb.collection('projects').getFullList({
 				sort: '-updated'
-			}),
+			}) as unknown as Project[],
 			locals.pb.collection('project_groups').getFullList({
 				sort: 'name'
-			}),
+			}) as unknown as ProjectGroup[],
 			locals.pb.collection('tasks').getFullList({
 				sort: 'order'
-			}),
+			}) as unknown as Task[],
 			locals.pb.collection('to_dos').getFullList({
 				sort: 'priority'
-			}),
-			locals.pb.collection('intentions').getFullList(),
+			}) as unknown as ToDo[],
+			locals.pb.collection('intentions').getFullList() as unknown as Intention[],
 			locals.pb.collection('task_statuses').getFullList({
 				sort: 'order'
-			})
+			}) as unknown as TaskStatus[]
 		]);
 		return {
 			sessions,

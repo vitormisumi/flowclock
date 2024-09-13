@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { fade, slide } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
 	import Clock from '../Clock.svelte';
@@ -12,24 +10,24 @@
 	import ToDosCard from './ToDosCard.svelte';
 	import { selectedProject, selectedProjectId } from './stores';
 
-	const projects: Writable<Project[]> = getContext('projects');
+	export let data;
 
 	export let form;
 
-	if ($projects.length && !$selectedProject.id) {
-		selectedProject.select($projects[0]);
+	if (data.projects?.length && !$selectedProject.id) {
+		selectedProject.select(data.projects?[0]);
 	}
 
 	$: if (form?.success) {
-		if ($projects.length) {
-			selectedProject.select($projects[0]);
+		if (data.projects?.length) {
+			selectedProject.select(data.projects?[0]);
 		} else {
 			selectedProject.reset();
 		}
 	}
 
 	$: if ($selectedProjectId && $selectedProjectId != $selectedProject.id) {
-		selectedProject.select($projects.filter((x) => x.id === $selectedProjectId)[0]);
+		selectedProject.select(data.projects?.filter((x) => x.id === $selectedProjectId)[0]);
 	}
 </script>
 
@@ -42,7 +40,7 @@
 <div class="flex w-full justify-end pb-4">
 	<SelectProjectButton />
 </div>
-{#if $projects.length}
+{#if data.projects?.length}
 	<div class="grid gap-2 md:gap-4">
 		<ProjectCard />
 		{#if $selectedProject.tasks}

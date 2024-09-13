@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { getContext, onMount } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import {
 		endSession,
@@ -14,33 +13,33 @@
 		startSession
 	} from './session/stores';
 
-	const settings: Writable<Settings> = getContext('settings');
-	const sessions: Writable<UserSession[]> = getContext('sessions');
-	const breaks: Writable<Break[]> = getContext('breaks');
+	export let settings: Settings;
+	export let sessions: Session[];
+	export let breaks: Break[];
 
 	let alarm: HTMLAudioElement;
 	let warning: HTMLAudioElement;
 
 	onMount(() => {
-		if ($sessions[0].end === null) {
-			startSession($sessions[0].id, Date.parse($sessions[0].start));
+		if (sessions[0].end === null) {
+			startSession(sessions[0].id, Date.parse(sessions[0].start));
 			sessionFocus.set(
-				$sessions[0].task_id ? 'task' : $sessions[0].intention_id ? 'intention' : '',
-				$sessions[0].task_id ?? $sessions[0].intention_id ?? 0,
-				$sessions[0].project_id ?? 0
+				sessions[0].task_id ? 'task' : sessions[0].intention_id ? 'intention' : '',
+				sessions[0].task_id ?? sessions[0].intention_id ?? 0,
+				sessions[0].project_id ?? ''
 			);
 		} else if (
-			$sessions[0].id === $breaks[0].session_id &&
-			Date.parse($breaks[0].start) + $breaks[0].calculated_duration > Date.now()
+			sessions[0].id === breaks[0].session_id &&
+			Date.parse(breaks[0].start) + breaks[0].calculated_duration > Date.now()
 		) {
-			endSession(Date.parse($sessions[0].end), $breaks[0].calculated_duration);
+			endSession(Date.parse(sessions[0].end), breaks[0].calculated_duration);
 			$milliseconds = $sessionBreak.duration - (Date.now() - $session.end);
 		}
 
 		const interval = setInterval(() => {
 			if ($session.running && !$session.pause) {
 				$milliseconds = Date.now() - $session.start - $sessionInterruptions.duration;
-				if ($milliseconds >= $settings.warning * 60000 && !$session.warning && !$session.dismiss) {
+				if ($milliseconds >= settings.warning * 60000 && !$session.warning && !$session.dismiss) {
 					warning.play();
 					session.warning();
 				}
@@ -64,7 +63,7 @@
 </script>
 
 <div
-	class="pointer-events-none flex items-center justify-center divide-x text-center transition-all delay-500 duration-500 text-4xl lg:text-6xl
+	class="pointer-events-none flex items-center justify-center divide-x text-center text-4xl transition-all delay-500 duration-500 lg:text-6xl
 	{$session.running
 		? 'divide-primary-500 text-primary-500'
 		: 'divide-secondary-500 text-secondary-500'}"

@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { Label, Popover, Toggle } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Select from '$lib/components/Select.svelte';
+	import { Label, Popover, Toggle } from 'flowbite-svelte';
 	import DarkMode from './DarkMode.svelte';
-	import type { Writable } from 'svelte/store';
 
 	let ratios = [
 		{ value: 1, name: '1:1' },
@@ -34,13 +32,13 @@
 		{ value: 2, name: '.' }
 	];
 
-	const settings: Writable<Settings> = getContext('settings');
+	export let settings: Settings;
 
-	let warning: boolean = $settings.warning != 0 ? true : false;
+	let warning: boolean = settings.warning != 0 ? true : false;
 
-	let darkMode: boolean = $settings.dark_mode;
+	let darkMode: boolean = settings.dark_mode;
 
-	let clockFormat: boolean = $settings.twenty_four_hour_clock;
+	let clockFormat: boolean = settings.twenty_four_hour_clock;
 
 	let loading = false;
 </script>
@@ -49,7 +47,7 @@
 	<div class="relative">
 		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50">
 			Session duration : break duration
-			<Select name="ratio" underline items={ratios} value={$settings.ratio} />
+			<Select name="ratio" underline items={ratios} value={settings.ratio} />
 		</Label>
 		<i
 			class="fa-regular fa-circle-question absolute right-0 top-0 dark:text-secondary-500"
@@ -76,7 +74,7 @@
 			name="warning"
 			min="1"
 			max="720"
-			value={$settings.warning}
+			value={settings.warning}
 			class="peer w-full appearance-none border-0 border-b-2 border-secondary-100 bg-transparent pl-0 font-thin focus:border-primary-500 focus:outline-none focus:ring-0 dark:border-secondary-700 dark:bg-transparent dark:text-secondary-50 focus:dark:border-primary-500"
 			disabled={!warning}
 		/>
@@ -102,7 +100,7 @@
 			<input
 				type="text"
 				name="break_message"
-				value={$settings.break_message}
+				value={settings.break_message}
 				class="peer w-full appearance-none border-0 border-b-2 border-secondary-100 bg-transparent pl-0 font-thin focus:border-primary-500 focus:outline-none focus:ring-0 dark:border-secondary-700 dark:bg-transparent dark:text-secondary-50 focus:dark:border-primary-500"
 			/>
 		</Label>
@@ -122,11 +120,11 @@
 	<div class="flex gap-4">
 		<Label class="text-md w-full text-secondary-900 dark:text-secondary-50"
 			>Date format
-			<Select name="date_format" underline items={formats} value={$settings.date_format} />
+			<Select name="date_format" underline items={formats} value={settings.date_format} />
 		</Label>
 		<Label class="text-md text-secondary-900 dark:text-secondary-50"
 			>Separator
-			<Select name="separator" underline items={separators} value={$settings.separator} />
+			<Select name="separator" underline items={separators} value={settings.separator} />
 		</Label>
 	</div>
 	<Toggle

@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { navigating } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
-	import { navigating } from '$app/stores';
 	import Settings from './Settings.svelte';
+
+	export let data;
 
 	export let form;
 </script>
@@ -14,8 +16,12 @@
 			? { duration: 500, delay: 500 }
 			: { duration: 0 }}
 	>
-		<h1 class="text-center text-xl font-bold text-secondary-900 dark:text-secondary-50">Settings</h1>
-		<Settings />
+		<h1 class="text-center text-xl font-bold text-secondary-900 dark:text-secondary-50">
+			Settings
+		</h1>
+		{#if data.settings}
+			<Settings settings={data.settings} />
+		{/if}
 	</div>
 </div>
 {#if form}

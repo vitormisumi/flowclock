@@ -7,7 +7,7 @@
 	import { getContext } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	const user: User = getContext('user');
+	export let data;
 
 	let selectedSubject: string;
 
@@ -44,7 +44,7 @@
 			method="POST"
 			class="grid gap-4 md:gap-8"
 		>
-			<input type="email" name="email" value={user.email} required hidden />
+			<input type="email" name="email" value={data.user?.email} required hidden />
 			<div>
 				<Label
 					for="_subject"

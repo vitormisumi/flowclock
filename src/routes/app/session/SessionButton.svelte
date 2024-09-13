@@ -2,8 +2,6 @@
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import {
 		endSession,
 		session,
@@ -13,14 +11,14 @@
 		startSession
 	} from './stores';
 
-	const settings: Writable<Settings> = getContext('settings');
+	export let settings: Settings;
 
 	let loading = false;
 
 	const handleStart: SubmitFunction = ({ formData }) => {
 		loading = true;
 		const start = Date.now();
-		startSession(0, start, true);
+		startSession('', start, true);
 		formData.append('start', new Date(start).toISOString());
 		formData.append('focus_type', String($sessionFocus.type));
 		formData.append('focus_id', String($sessionFocus.id));
@@ -38,7 +36,7 @@
 		formData.append('end', new Date(end).toISOString());
 		endSession(
 			end,
-			Math.round((end - $session.start - $sessionInterruptions.duration) / $settings.ratio)
+			Math.round((end - $session.start - $sessionInterruptions.duration) / settings.ratio)
 		);
 		return async ({ update }) => {
 			loading = false;

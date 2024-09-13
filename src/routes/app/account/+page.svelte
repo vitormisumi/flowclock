@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { navigating } from '$app/stores';
+	import { fade } from 'svelte/transition';
 	import Notification from '../../Notification.svelte';
-	import UpdateEmail from './UpdateEmail.svelte';
 	import ResetPassword from './ResetPassword.svelte';
-	import DeleteAccount from './DeleteAccount.svelte';
+	import UpdateEmail from './UpdateEmail.svelte';
 
 	export let form;
 </script>
@@ -21,8 +20,6 @@
 			<UpdateEmail />
 			<ResetPassword />
 		</div>
-		<!-- <hr class="my-4 dark:border-secondary-800" />
-		<DeleteAccount /> -->
 	</div>
 </div>
 {#if form}

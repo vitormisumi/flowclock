@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { dateFromTimestamp, millisecondsToClock } from '$lib/functions/functions';
 	import { Button, ButtonGroup } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 	import { endRow, filteredSessions, openRow, startRow } from '../dashboard/stores';
 	import DeleteSessionButton from './DeleteSessionButton.svelte';
 	import SessionDetails from './SessionDetails.svelte';
 
-	const settings: Writable<Settings> = getContext('settings');
+	export let settings: Settings;
+	export let tasks: Task[];
 
 	let edit: number | null = null;
 
@@ -77,7 +76,7 @@
 						on:mouseleave={mouseLeave}
 					>
 						<td class="p-2">
-							{dateFromTimestamp(session.start, $settings.date_format, $settings.separator)}
+							{dateFromTimestamp(session.start, settings.date_format, settings.separator)}
 						</td>
 						<td class="p-2">
 							{millisecondsToClock(session.focused_duration)}
@@ -90,7 +89,7 @@
 					</tr>
 				{/if}
 				{#if $openRow === i}
-					<SessionDetails {session} />
+					<SessionDetails {session} {settings} {tasks}/>
 				{/if}
 			{/each}
 		</tbody>

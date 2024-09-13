@@ -3,8 +3,6 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { periods } from '$lib/constants/constants';
 	import { Dropdown, DropdownDivider } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import {
 		endRow,
 		filter,
@@ -27,8 +25,8 @@
 		filterSessionsByYear
 	} from './filter';
 
-	const sessions: Writable<UserSession[]> = getContext('sessions');
-	const interruptions: Writable<Interruption[]> = getContext('interruptions');
+	export let sessions: Session[];
+	export let interruptions: Interruption[];
 
 	function applyFilter(period: Period) {
 		$filter = { timeframe: period.timeframe, current: period.current };
@@ -37,9 +35,9 @@
 		$openRow = null;
 	}
 
-	let finishedSessions: FilteredSession[];
-	$: finishedSessions = $sessions.filter(
-		(x): x is FilteredSession => x.focused_duration !== null && x.end !== null
+	let finishedSessions: Session[];
+	$: finishedSessions = sessions.filter(
+		(x): x is Session => x.focused_duration !== null && x.end !== null
 	);
 
 	const today = new Date();
@@ -49,28 +47,28 @@
 		switch ($filter.timeframe) {
 			case 'day':
 				$filteredSessions = filterSessionsByDay(finishedSessions, today, current);
-				$filteredInterruptions = filterInterruptionsByDay($interruptions, today, current);
+				$filteredInterruptions = filterInterruptionsByDay(interruptions, today, current);
 				break;
 			case 'week':
 				if (current) {
 					$filteredSessions = filterSessionsByCurrentWeek(finishedSessions, today);
-					$filteredInterruptions = filterInterruptionsByCurrentWeek($interruptions, today);
+					$filteredInterruptions = filterInterruptionsByCurrentWeek(interruptions, today);
 				} else {
 					$filteredSessions = filterSessionsByLastWeek(finishedSessions, today);
-					$filteredInterruptions = filterInterruptionsByLastWeek($interruptions, today);
+					$filteredInterruptions = filterInterruptionsByLastWeek(interruptions, today);
 				}
 				break;
 			case 'month':
 				$filteredSessions = filterSessionsByMonth(finishedSessions, today, current);
-				$filteredInterruptions = filterInterruptionsByMonth($interruptions, today, current);
+				$filteredInterruptions = filterInterruptionsByMonth(interruptions, today, current);
 				break;
 			case 'year':
 				$filteredSessions = filterSessionsByYear(finishedSessions, today, current);
-				$filteredInterruptions = filterInterruptionsByYear($interruptions, today, current);
+				$filteredInterruptions = filterInterruptionsByYear(interruptions, today, current);
 				break;
 			default:
 				$filteredSessions = finishedSessions;
-				$filteredInterruptions = $interruptions;
+				$filteredInterruptions = interruptions;
 		}
 	}
 
@@ -121,7 +119,7 @@
 			open = false;
 		}}
 	>
-		<iconify-icon icon="{hidden ? 'ion:eye' : 'ion:eye-off'}" />
+		<iconify-icon icon={hidden ? 'ion:eye' : 'ion:eye-off'} />
 	</Button>
 	{#if $canHover}
 		<Tooltip placement="left">

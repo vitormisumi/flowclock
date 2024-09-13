@@ -4,7 +4,7 @@ export const milliseconds = writable(0);
 
 function createSession() {
 	const { subscribe, set, update } = writable({
-		id: 0,
+		id: '',
 		running: false,
 		start: 0,
 		end: 0,
@@ -16,7 +16,7 @@ function createSession() {
 	
 	return {
 		subscribe,
-		start: (id: number = 0, start: number = Date.now(), local: boolean) =>
+		start: (id: string = '', start: number = Date.now(), local: boolean) =>
 			set({
 				id: id,
 				running: true,
@@ -31,7 +31,7 @@ function createSession() {
 			update((x) => {
 				return {
 					...x,
-					id: 0,
+					id: '',
 					running: false,
 					end: end,
 					warning: false,
@@ -40,7 +40,7 @@ function createSession() {
 			}),
 		reset: () =>
 			set({
-				id: 0,
+				id: '',
 				running: false,
 				start: 0,
 				end: 0,
@@ -167,13 +167,13 @@ export const sessionInterruptions = createInterruptions();
 function createFocus() {
 	const { subscribe, set } = writable({
 		type: '',
-		id: 0,
-		projectId: 0,
+		id: '',
+		projectId: '',
 	})
 	
 	return {
 		subscribe,
-		set: (type: 'task' | 'intention' | '', id: number, projectId: number) =>
+		set: (type: 'task' | 'intention' | '', id: string, projectId: string) =>
 			set({
 				type: type,
 				id: id,
@@ -182,15 +182,15 @@ function createFocus() {
 		reset: () =>
 			set({
 				type: '',
-				id: 0,
-				projectId: 0,
+				id: '',
+				projectId: '',
 				}),
 	}
 }
 
 export const sessionFocus = createFocus();
 
-export function startSession(id: number, start: number, local: boolean = false) {
+export function startSession(id: string, start: number, local: boolean = false) {
 	sessionBreak.end();
 	session.start(id, start, local);
 }

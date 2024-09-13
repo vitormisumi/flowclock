@@ -70,9 +70,10 @@ declare global {
 		user_id: string;
 		start: string;
 		end: string | null;
-		intentions_id: string;
+		intention_id: string;
 		interruption_duration: number;
 		total_duration: number;
+		focused_duration: number;
 		project_id: string | null;
 		task_id: string | null;
 		created: string;

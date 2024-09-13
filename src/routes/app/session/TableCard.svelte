@@ -6,6 +6,11 @@
 	import SessionsTable from './SessionsTable.svelte';
 	import TableMenu from './TableMenu.svelte';
 
+	export let sessions: Session[];
+	export let tasks: Task[];
+	export let interruptions: Interruption[];
+	export let settings: Settings;
+
 	let hidden = false;
 
 	$: duration = $filteredSessions.reduce((accumulator, object) => {
@@ -19,7 +24,7 @@
 		<p class="text-base font-light text-secondary-900 dark:text-secondary-50 md:text-lg">
 			{$selectedPeriod?.name}
 		</p>
-		<TableMenu bind:hidden />
+		<TableMenu {sessions} {interruptions} bind:hidden />
 	</div>
 	<div class="flex flex-wrap items-center justify-between gap-2 p-2 text-center">
 		<div>
@@ -55,7 +60,7 @@
 	</div>
 	{#if !hidden}
 		<div transition:slide>
-			<SessionsTable />
+			<SessionsTable {settings} {tasks} />
 		</div>
 	{/if}
 </Card>

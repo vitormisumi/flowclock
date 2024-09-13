@@ -1,24 +1,22 @@
 <script lang="ts">
 	import { Popover } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 	import { milliseconds, session, sessionBreak, sessionFocus } from './stores';
 
-	const settings: Writable<Settings> = getContext('settings');
-	const tasks: Writable<Task[]> = getContext('tasks');
-	const intentions: Writable<Intention[]> = getContext('intentions');
+	export let settings: Settings;
+	export let tasks: Task[];
+	export let intentions: Intention[];
 
-	$: breakMinutes = Math.floor($milliseconds / 60000 / $settings.ratio);
+	$: breakMinutes = Math.floor($milliseconds / 60000 / settings.ratio);
 
 	let focusName: string | undefined;
 
 	$: switch ($sessionFocus.type) {
 		case 'task':
-			focusName = $tasks.find((task) => task.id === $sessionFocus.id)?.name;
+			focusName = tasks.find((task) => task.id === $sessionFocus.id)?.name;
 			break;
 		case 'intention':
-			focusName = $intentions.find((intention) => intention.id === $sessionFocus.id)?.name;
+			focusName = intentions.find((intention) => intention.id === $sessionFocus.id)?.name;
 			break;
 		default:
 			focusName = undefined;
@@ -39,7 +37,7 @@
 			</p>
 		</Popover>
 	{:else if $sessionBreak.running && !$sessionBreak.alarmPlayed}
-		<p class="text-accent-500 dark:text-accent-500" in:fade>{$settings.break_message}</p>
+		<p class="text-accent-500 dark:text-accent-500" in:fade>{settings.break_message}</p>
 	{:else}
 		<p in:fade>Time for your next session!</p>
 	{/if}
