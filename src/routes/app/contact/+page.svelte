@@ -2,9 +2,7 @@
 	import { navigating, page } from '$app/stores';
 	import Button from '$lib/components/Button.svelte';
 	import Select from '$lib/components/Select.svelte';
-	import type { User } from '@supabase/supabase-js';
 	import { Label, Textarea } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	export let data;

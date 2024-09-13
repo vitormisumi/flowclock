@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
-	import type { User } from '@supabase/supabase-js';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Input } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
 	import Modal from '../../../lib/components/Modal.svelte';
 
-	const user: User = getContext('user');
+	export let user: User;
 
 	let open = false;
 

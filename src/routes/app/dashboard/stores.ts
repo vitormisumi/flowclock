@@ -3,7 +3,7 @@ import { periods } from "$lib/constants/constants";
 
 export const filter = writable<Filter>({timeframe: 'all', current: true});
 
-export const filteredSessions = writable<FilteredSession[]>([]);
+export const filteredSessions = writable<Session[]>([]);
 
 export const filteredInterruptions = writable<Interruption[]>([]);
 

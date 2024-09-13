@@ -1,17 +1,16 @@
 <script lang="ts">
-	import { flip } from 'svelte/animate';
-	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
-	import { drag } from './drag';
-	import { getContext, onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
-	import AddTaskButton from './AddTaskButton.svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import type { DndEvent } from 'svelte-dnd-action';
+	import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
+	import { flip } from 'svelte/animate';
 	import AddStatusButton from './AddStatusButton.svelte';
+	import AddTaskButton from './AddTaskButton.svelte';
+	import { drag } from './drag';
 	import EditStatusButton from './EditStatusButton.svelte';
 	import TaskList from './TaskList.svelte';
-	import type { DndEvent } from 'svelte-dnd-action';
-	import type { Writable } from 'svelte/store';
 
-	const status: Writable<TaskStatuses[]> = getContext('status');
+	export let status: TaskStatus[];
 
 	export let notifications: number;
 	export let success: boolean | undefined;
@@ -25,7 +24,7 @@
 	const pixelsFromEdge = 30;
 	const scrollSpeed = 2;
 
-	function handleConsider(e: CustomEvent<DndEvent<TaskStatuses>>) {
+	function handleConsider(e: CustomEvent<DndEvent<TaskStatus>>) {
 		const {
 			items: newItems,
 			info: { source, trigger }
@@ -34,10 +33,10 @@
 		if (source === SOURCES.KEYBOARD && trigger === TRIGGERS.DRAG_STOPPED) {
 			dragDisabled = true;
 		}
-		$status = newItems;
+		status = newItems;
 	}
 
-	async function handleFinalize(e: CustomEvent<DndEvent<TaskStatuses>>) {
+	async function handleFinalize(e: CustomEvent<DndEvent<TaskStatus>>) {
 		const {
 			items: newItems,
 			info: { source }
@@ -53,7 +52,7 @@
 		}));
 
 		const orderedStatus = newItems.map((item, index) => ({ ...item, order: index + 1 }));
-		$status = orderedStatus;
+		status = orderedStatus;
 
 		const response = await fetch('/api/status', {
 			method: 'POST',
@@ -114,7 +113,7 @@
 <section
 	class="flex justify-stretch gap-2 overflow-auto"
 	use:dndzone={{
-		items: $status,
+		items: status,
 		type: 'columns',
 		dragDisabled,
 		dropTargetStyle: { outline: '#309FB6 solid 2px' }
@@ -123,7 +122,7 @@
 	on:finalize={handleFinalize}
 	bind:this={board}
 >
-	{#each $status as s (s.id)}
+	{#each status as s (s.id)}
 		<div
 			class="grid max-h-96 w-52 shrink-0 grow content-start justify-items-center gap-1 overflow-hidden rounded-lg bg-secondary-50 p-2 hover:cursor-grab dark:bg-secondary-900 landscape:w-80"
 			animate:flip
@@ -142,5 +141,5 @@
 			<AddTaskButton status={s.id} />
 		</div>
 	{/each}
-	<AddStatusButton />
+	<AddStatusButton {status} />
 </section>

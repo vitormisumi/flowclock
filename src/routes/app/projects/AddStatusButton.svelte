@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { selectedProject } from './stores';
-	import { afterUpdate, getContext } from 'svelte';
-	import { fade } from 'svelte/transition';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { Writable } from 'svelte/store';
+	import { afterUpdate } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { selectedProject } from './stores';
 
-	const status: Writable<TaskStatuses[]> = getContext('status');
+	export let status: TaskStatus[];
 
 	let open = false;
 
@@ -15,7 +14,7 @@
 
 	const handleClick: SubmitFunction = ({ formData }) => {
 		formData.append('project_id', String($selectedProject.id));
-		formData.append('order', String($status.length + 1));
+		formData.append('order', String(status.length + 1));
 		return async ({ update }) => {
 			open = false;
 			loading = false;
@@ -51,7 +50,9 @@
 				class="h-8 w-20 rounded-md bg-transparent pl-1 focus:ring-0 dark:bg-transparent dark:text-secondary-300 focus:dark:border-secondary-700"
 			/>
 			<div class="flex justify-end gap-1">
-				<Button size="xs" buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}>Cancel</Button>
+				<Button size="xs" buttonStyle="cancel" disabled={loading} on:click={() => (open = false)}
+					>Cancel</Button
+				>
 				<Button
 					size="xs"
 					buttonStyle="accent"
@@ -67,7 +68,7 @@
 		<Button
 			size="xs"
 			buttonStyle="add"
-			class="h-full w-full rounded-r-none flex items-center gap-2"
+			class="flex h-full w-full items-center gap-2 rounded-r-none"
 			on:click={() => (open = true)}
 		>
 			<iconify-icon icon="ion:add" />add status

@@ -15,9 +15,9 @@
 		startSession(form.startData.id, Date.parse(form.startData.start), true);
 	}
 
-	$: if (form?.interruptionData) {
-		startInterruption(form.interruptionData.id, Date.parse(form.interruptionData.start));
-	}
+	// $: if (form?.interruptionData) {
+	// 	startInterruption(form.interruptionData.id, Date.parse(form.interruptionData.start));
+	// }
 </script>
 
 <div

@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { filteredSessions } from './stores';
 
-	const tasks: Writable<Task[]> = getContext('tasks');
-	const intentions: Writable<Intention[]> = getContext('intentions');
+	export let tasks: Task[];
+	export let intentions: Intention[];
 
 	export let group: string;
 
@@ -14,9 +12,9 @@
 			$filteredSessions.reduce(
 				(distribution, item) => {
 					const focus = item.task_id
-						? ' ' + $tasks.find((x) => x.id === item.task_id)?.name
+						? ' ' + tasks.find((x) => x.id === item.task_id)?.name
 						: item.intention_id
-						? ' ' + $intentions.find((x) => x.id === item.intention_id)?.name
+						? ' ' + intentions.find((x) => x.id === item.intention_id)?.name
 						: 'no focus';
 					if (focus) {
 						distribution[focus] =

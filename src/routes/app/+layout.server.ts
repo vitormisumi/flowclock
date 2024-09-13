@@ -13,7 +13,7 @@ export const load = async ({ locals }) => {
 			intentions,
 			status
 		] = await Promise.all([
-			locals.pb.collection('users').getOne(locals.pb.authStore.model.id),
+			locals.pb.collection('users').getOne(locals.pb.authStore.model.id) as unknown as User,
 			locals.pb.collection('sessions').getFullList({
 				sort: '-start'
 			}) as unknown as Session[],

@@ -30,16 +30,16 @@
 	$: {
 		if ($filteredSessions.length === 0) {
 			dates = '-';
-		} else {
+		} else if (data.settings) {
 			const startDate = dateFromTimestamp(
 				$filteredSessions.slice(-1)[0].start,
-				data.settings?.date_format,
-				data.settings?.separator
+				data.settings.date_format,
+				data.settings.separator
 			);
 			const endDate = dateFromTimestamp(
 				$filteredSessions[0].start,
-				data.settings?.date_format,
-				data.settings?.separator
+				data.settings.date_format,
+				data.settings.separator
 			);
 
 			dates = startDate !== endDate ? `${startDate} - ${endDate}` : startDate;
@@ -62,7 +62,9 @@
 	class="fixed top-0 w-screen scale-50 landscape:left-8 landscape:md:left-12"
 	in:fade={$navigating?.from?.url.pathname === '/app/session' ? { duration: 500 } : { duration: 0 }}
 >
-	<Clock />
+	{#if data.settings && data.sessions && data.breaks}
+		<Clock settings={data.settings} sessions={data.sessions} breaks={data.breaks} />
+	{/if}
 </div>
 {#if data.sessions?.length === 0}
 	<div class="absolute inset-0 flex items-center justify-center">
@@ -72,7 +74,9 @@
 	</div>
 {:else}
 	<div class="flex justify-end pb-4">
-		<Filter />
+		{#if data.sessions && data.interruptions}
+			<Filter sessions={data.sessions} interruptions={data.interruptions} />
+		{/if}
 	</div>
 	<div
 		class="grid grid-flow-row auto-rows-fr grid-cols-2 gap-2 md:h-5/6 md:grid-flow-col md:grid-cols-4 md:gap-4"
@@ -101,7 +105,14 @@
 			<span slot="popover_title"> per Session </span>
 			<span slot="popover_value">{perSession}</span>
 		</Card>
-		<PlotCard />
+		{#if data.projects && data.settings && data.tasks && data.intentions}
+			<PlotCard
+				projects={data.projects}
+				settings={data.settings}
+				tasks={data.tasks}
+				intentions={data.intentions}
+			/>
+		{/if}
 	</div>
 {/if}
 {#if form}

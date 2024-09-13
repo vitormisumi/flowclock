@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { filteredSessions } from './stores';
-	import { getContext } from 'svelte';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import type { Writable } from 'svelte/store';
+	import { filteredSessions } from './stores';
 
-	const projects: Writable<Project[]> = getContext('projects');
+	export let projects: Project[];
 
 	export let group: string;
 
@@ -56,8 +54,7 @@
 	function handleTooltip(i: number) {
 		tooltip = true;
 		tooltipData = {
-			project:
-				$projects.find((x) => x.id === Number(Object.keys(distribution)[i]))?.name || 'No project',
+			project: projects.find((x) => x.id === Object.keys(distribution)[i])?.name || 'No project',
 			total: Object.values(distribution)[i],
 			percentage: percentages[i]
 		};

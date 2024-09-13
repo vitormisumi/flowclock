@@ -15,7 +15,8 @@
 
 	let loading = false;
 
-	const handleStart: SubmitFunction = ({ formData }) => {
+	const handleStart: SubmitFunction = async ({ formData }) => {
+		console.log('a');
 		loading = true;
 		const start = Date.now();
 		startSession('', start, true);
@@ -29,7 +30,7 @@
 		};
 	};
 
-	const handleBreak: SubmitFunction = ({ formData }) => {
+	const handleBreak: SubmitFunction = async ({ formData }) => {
 		loading = true;
 		const end = Date.now();
 		formData.append('id', String($session.id));

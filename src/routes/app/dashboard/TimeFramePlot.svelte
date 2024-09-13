@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { monthMap, weekdayMap } from '$lib/constants/constants';
 	import { millisecondsToClock } from '$lib/functions/functions';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { filteredSessions } from './stores';
 
-	const settings: Writable<Settings> = getContext('settings');
+	export let settings: Settings;
 
 	export let periods: {
 		hour: number[];
@@ -65,7 +63,7 @@
 	}
 
 	function hourFormat(period: number) {
-		const is24HourFormat = $settings.clock_format;
+		const is24HourFormat = settings.twenty_four_hour_clock;
 		const isMidnight = period === 0;
 		const isNoon = period === 12;
 		const isMorning = period < 12;

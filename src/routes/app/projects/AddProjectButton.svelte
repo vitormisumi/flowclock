@@ -4,12 +4,9 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Input, Popover, Select, Textarea, Toggle } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 
+	export let projectGroups: ProjectGroup[];
 	export let group: ProjectGroup;
-
-	const projectGroups: Writable<ProjectGroup[]> = getContext('projectGroups');
 
 	let open = false;
 
@@ -22,9 +19,9 @@
 		{ name: 'cancelled', value: 'cancelled' }
 	];
 
-	let groupOptions: { name: string; value: number }[] = [];
+	let groupOptions: { name: string; value: string }[] = [];
 
-	$: groupOptions = $projectGroups.map((x) => {
+	$: groupOptions = projectGroups.map((x) => {
 		return { name: x.name, value: x.id };
 	});
 
@@ -46,7 +43,7 @@
 <Button
 	size="xs"
 	buttonStyle="add"
-	class="hover:bg-secondary-100/50 hover:dark:bg-secondary-700/50 flex items-center gap-2"
+	class="flex items-center gap-2 hover:bg-secondary-100/50 hover:dark:bg-secondary-700/50"
 	on:click={() => (open = true)}
 >
 	<iconify-icon icon="ion:add" />new project
@@ -140,7 +137,7 @@
 			value={group.id}
 			class="border-0 bg-transparent dark:bg-transparent dark:text-secondary-200 placeholder:dark:text-secondary-500"
 		/>
-		<Button type="submit" buttonStyle="accent" class="w-fit self-center flex items-center gap-2">
+		<Button type="submit" buttonStyle="accent" class="flex w-fit items-center gap-2 self-center">
 			<iconify-icon icon="ion:save" />Save new project
 		</Button>
 	</form>

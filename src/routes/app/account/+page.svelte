@@ -5,6 +5,8 @@
 	import ResetPassword from './ResetPassword.svelte';
 	import UpdateEmail from './UpdateEmail.svelte';
 
+	export let data;
+
 	export let form;
 </script>
 
@@ -17,7 +19,9 @@
 	>
 		<h1 class="text-center text-xl font-bold text-secondary-900 dark:text-secondary-50">Account</h1>
 		<div class="grid gap-4 md:gap-8">
-			<UpdateEmail />
+			{#if data.user}
+				<UpdateEmail user={data.user} />
+			{/if}
 			<ResetPassword />
 		</div>
 	</div>

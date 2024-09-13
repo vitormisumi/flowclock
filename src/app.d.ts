@@ -1,12 +1,24 @@
-import { SupabaseClient, Session } from '@supabase/supabase-js';
-import type { Database as DB } from '$lib/db/database.types';
 import Pocketbase from 'pocketbase';
 
 declare global {
 	namespace App {
 		interface Locals {
-			pb: Pocketbase
+			pb: Pocketbase;
 		}
+	}
+
+	interface User {
+		id: string;
+		collectionId: string;
+		collectionName: string;
+		username: string;
+		verified: boolean;
+		emailVisibility: boolean;
+		email: string;
+		created: string;
+		updated: string;
+		name: string;
+		avatar: string;
 	}
 
 	interface Break {
@@ -49,13 +61,14 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface Project {
 		id: string;
 		user_id: string;
 		name: string;
 		goal: string | null;
 		description: string | null;
+		focus: string | null;
 		project_group_id: string;
 		status: 'idea' | 'on going' | 'completed' | 'suspended' | 'planning';
 		tasks: boolean;
@@ -64,7 +77,7 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface Session {
 		id: string;
 		user_id: string;
@@ -79,7 +92,7 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface TaskStatus {
 		id: string;
 		project_id: string;
@@ -89,7 +102,7 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface Task {
 		id: string;
 		user_id: string;
@@ -103,7 +116,7 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface ToDo {
 		id: string;
 		user_id: string;
@@ -116,7 +129,7 @@ declare global {
 		created: string;
 		updated: string;
 	}
-	
+
 	interface Settings {
 		id: string;
 		user_id: string;
@@ -140,22 +153,22 @@ declare global {
 		name: string;
 		timeframe: string;
 		current: boolean;
-	}
+	};
 	type Filter = {
 		timeframe: string;
 		current: boolean;
-	}
+	};
 	type Post = {
 		author: { _ref: string; _type: string };
 		title: string;
 		body: InputValue;
 		_createdAt: string;
 		estimatedReadingTime: number;
-	}
+	};
 
 	type Author = {
 		name: string;
 		_id: string;
 		imageUrl: string;
-	}
+	};
 }

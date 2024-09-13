@@ -10,7 +10,7 @@
 	import SetPriority from './SetPriority.svelte';
 	import { selectedProject } from './stores';
 
-	export let status: number;
+	export let status: string;
 
 	let dueDate: Date | null;
 

@@ -4,17 +4,14 @@
 	import avatar from '$lib/assets/avatar.png';
 	import Button from '$lib/components/Button.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import type { User } from '@supabase/supabase-js';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { session } from './session/stores';
 
 	$: activeUrl = $page.url.pathname;
 
-	const user: User = getContext('user');
-	const sessions: Writable<Session[]> = getContext('sessions');
+	export let user: User;
+	export let sessions: Session[];
 
 	let open = false;
 
@@ -33,7 +30,7 @@
 	const saveAndSignOut: SubmitFunction = ({ formData }) => {
 		loading = true;
 		session.end();
-		formData.append('id', String($sessions[0].id));
+		formData.append('id', String(sessions[0].id));
 		formData.append('session_end', new Date().toISOString());
 		return async ({ update }) => {
 			loading = false;
@@ -76,7 +73,7 @@
 	</form>
 </Dropdown>
 <Modal bind:open size="sm">
-	<iconify-icon icon="ion:warning" class="text-center text-3xl dark:text-secondary-300"/>
+	<iconify-icon icon="ion:warning" class="text-center text-3xl dark:text-secondary-300" />
 	<p class="dark:text-secondary-200">
 		You currently have a session running.<br />Would you like to save your current session before
 		signing out?

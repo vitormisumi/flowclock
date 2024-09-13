@@ -24,7 +24,11 @@
 		<slot />
 	</span>
 	<span slot="menu">
-		<Menu />
+		{#if data.user && data.sessions}
+			<Menu user={data.user} sessions={data.sessions} />
+		{/if}
 	</span>
 </Screen>
-<Warning />
+{#if data.settings}
+	<Warning settings={data.settings} />
+{/if}

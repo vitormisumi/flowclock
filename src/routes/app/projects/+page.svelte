@@ -14,20 +14,20 @@
 
 	export let form;
 
-	if (data.projects?.length && !$selectedProject.id) {
-		selectedProject.select(data.projects?[0]);
+	if (data.projects && !$selectedProject.id) {
+		selectedProject.select(data.projects[0]);
 	}
 
 	$: if (form?.success) {
-		if (data.projects?.length) {
-			selectedProject.select(data.projects?[0]);
+		if (data.projects) {
+			selectedProject.select(data.projects[0]);
 		} else {
 			selectedProject.reset();
 		}
 	}
 
-	$: if ($selectedProjectId && $selectedProjectId != $selectedProject.id) {
-		selectedProject.select(data.projects?.filter((x) => x.id === $selectedProjectId)[0]);
+	$: if (data.projects && $selectedProjectId && $selectedProjectId != $selectedProject.id) {
+		selectedProject.select(data.projects.filter((x) => x.id === $selectedProjectId)[0]);
 	}
 </script>
 
@@ -35,7 +35,9 @@
 	class="fixed top-0 w-screen scale-50 landscape:left-8 landscape:md:left-12"
 	in:fade={$navigating?.from?.url.pathname === '/app/session' ? { duration: 500 } : { duration: 0 }}
 >
-	<Clock />
+	{#if data.settings && data.sessions && data.breaks}
+		<Clock settings={data.settings} sessions={data.sessions} breaks={data.breaks} />
+	{/if}
 </div>
 <div class="flex w-full justify-end pb-4">
 	<SelectProjectButton />

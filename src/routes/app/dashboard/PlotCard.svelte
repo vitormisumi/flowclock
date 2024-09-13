@@ -9,6 +9,11 @@
 	import TimeFramePlot from './TimeFramePlot.svelte';
 	import { filteredSessions, selectedPlot } from './stores';
 
+	export let projects: Project[]
+	export let settings: Settings
+	export let intentions: Intention[]
+	export let tasks: Task[]
+
 	let years: number[];
 
 	let group: 'frequency' | 'duration' = 'frequency';
@@ -81,11 +86,11 @@
 		{/if}
 	</div>
 	{#if $selectedPlot === 'focus'}
-		<FocusPlot {group} />
+		<FocusPlot {group} {tasks} {intentions}/>
 	{:else if $selectedPlot === 'projects'}
-		<ProjectsPlot {group} />
+		<ProjectsPlot {group} {projects}/>
 	{:else if $selectedPlot === 'timeframe'}
-		<TimeFramePlot {periods} {timeFrameGroup} />
+		<TimeFramePlot {periods} {timeFrameGroup} {settings}/>
 	{:else if $selectedPlot === 'interruptions'}
 		<InterruptionsPlot {group} />
 	{/if}

@@ -2,6 +2,9 @@
 	import { page } from '$app/stores';
 	import UserMenu from './UserMenu.svelte';
 
+	export let user: User;
+	export let sessions: Session[];
+
 	let menuItems: { title: string; icon: string }[] = [
 		{
 			title: 'session',
@@ -22,7 +25,7 @@
 
 <nav>
 	<ul class="flex justify-around p-2 sm:justify-center sm:gap-4 landscape:flex-col">
-		<UserMenu />
+		<UserMenu {user} {sessions}/>
 		{#each menuItems as item}
 			<li class="transition-all duration-200 hover:scale-105">
 				<a
